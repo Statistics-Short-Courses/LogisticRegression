@@ -1,0 +1,36 @@
+---
+title: "Module 3: Model Assessment and Diagnostics"
+format: live-html
+---
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+## Learning outcomes
+
+- Use likelihood-based measures to compare models.
+- Build a confusion matrix from predicted probabilities.
+- Explain sensitivity, specificity, and accuracy.
+
+## Comparing models
+
+```{r}
+fit_simple <- glm(am ~ wt, data = mtcars, family = binomial)
+fit_full <- glm(am ~ wt + hp + factor(cyl), data = mtcars, family = binomial)
+AIC(fit_simple, fit_full)
+```
+
+## Classification diagnostics
+
+```{r}
+prob <- predict(fit_full, type = "response")
+class_hat <- ifelse(prob >= 0.5, 1, 0)
+conf_mat <- table(Predicted = class_hat, Actual = mtcars$am)
+conf_mat
+
+accuracy <- sum(diag(conf_mat)) / sum(conf_mat)
+accuracy
+```
+
+## Practice prompts
+
+- How would you pick a threshold other than 0.5?
+- What trade-offs exist between sensitivity and specificity?

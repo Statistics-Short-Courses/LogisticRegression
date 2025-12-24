@@ -1,0 +1,24 @@
+---
+format: live-html
+---
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+# Course Overview {.unnumbered}
+
+## What you will learn
+
+- Describe when logistic regression is appropriate for binary and
+  categorical outcomes.
+- Interpret odds, odds ratios, and predicted probabilities.
+- Fit logistic models in R using `glm()` with the binomial family.
+- Assess model fit with likelihood-based measures and classification
+  diagnostics.
+- Communicate results with clear effect summaries and visualizations.
+
+## How to use this book
+
+- Each chapter is a short module with a focused set of concepts and
+  practice prompts.
+- Code examples use built-in R datasets so you can run them immediately.
+- The final module shows a compact end-to-end workflow on a realistic
+  classification task.

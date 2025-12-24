@@ -1,0 +1,35 @@
+---
+title: "Module 2: Odds, Odds Ratios, and Interpretation"
+format: live-html
+---
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+## Learning outcomes
+
+- Convert between probabilities and odds.
+- Interpret logistic regression coefficients as odds ratios.
+- Generate predicted probabilities for new cases.
+
+## Coefficients as odds ratios
+
+A one-unit increase in a predictor multiplies the odds by
+`exp(coefficient)` when other variables are held constant.
+
+```{r}
+fit <- glm(am ~ wt + hp, data = mtcars, family = binomial)
+exp(coef(fit))
+```
+
+## Predicted probabilities
+
+```{r}
+new_cars <- data.frame(wt = c(2.2, 3.5), hp = c(110, 110))
+prob <- predict(fit, newdata = new_cars, type = "response")
+prob
+```
+
+## Practice prompts
+
+- How do the odds change when weight increases by 0.5?
+- Why is it misleading to interpret logistic coefficients directly on the
+  probability scale?

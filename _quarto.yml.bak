@@ -1,0 +1,29 @@
+project:
+  type: book
+  output-dir: docs
+engine: knitr
+
+book:
+  title: Introduction to Linear Regression in R
+  chapters:
+  - index.qmd
+  - LinearModels.qmd
+  - FittingSLR.qmd
+  - MultipleLinearRegression.qmd
+  - RegressionCase.qmd
+format:
+  live-html:
+    toc: true
+    number-sections: true
+    toc-depth: 1
+    toc-expand: 2
+    toc-title: Contents
+    number-depth: 2
+css: 
+ - include/webex.css
+ - include/style.css
+include-after-body:
+ - include/webex.js
+ - include/displayall.js
+ - include/gating.js
+

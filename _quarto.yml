@@ -1,0 +1,31 @@
+project:
+  type: book
+  output-dir: docs
+engine: knitr
+
+book:
+  title: "Logistic Regression with R"
+  chapters:
+    - index.qmd
+    - module01-logistic-fundamentals.qmd
+    - module02-odds-interpretation.qmd
+    - module03-model-assessment.qmd
+    - module04-extensions-case-study.qmd
+  page-navigation: false
+format:
+  live-html:
+    toc: true
+    number-sections: true
+    toc-depth: 2
+    toc-expand: 3
+    toc-title: Contents
+    number-depth: 4
+
+css:
+ - include/webex.css
+ - include/style.css
+include-after-body:
+ - include/webex.js
+ - include/displayall.js
+ - include/gating.js
+ - include/skip-exercises.js

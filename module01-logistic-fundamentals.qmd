@@ -1,0 +1,32 @@
+---
+title: "Module 1: Logistic Regression Fundamentals"
+format: live-html
+---
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+## Learning outcomes
+
+- Identify response variables suited to logistic regression.
+- Explain the link between probability, odds, and the logit function.
+- Fit a basic logistic model in R.
+
+## Core ideas
+
+Logistic regression models the log-odds of an event as a linear function
+of predictors. The model guarantees predicted probabilities stay between
+0 and 1 while allowing flexible relationships on the logit scale.
+
+## First model in R
+
+```{r}
+# Binary outcome: am (0 = automatic, 1 = manual)
+fit <- glm(am ~ wt, data = mtcars, family = binomial)
+summary(fit)
+```
+
+## Practice prompts
+
+- What does a positive slope on `wt` imply for the probability of a
+  manual transmission?
+- How would you describe the model in one sentence to a non-technical
+  audience?

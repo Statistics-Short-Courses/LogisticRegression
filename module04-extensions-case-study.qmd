@@ -1,0 +1,36 @@
+---
+title: "Module 4: Extensions and a Mini Case Study"
+format: live-html
+---
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+## Learning outcomes
+
+- Fit multivariable logistic models with categorical predictors.
+- Include interaction terms when effects vary by group.
+- Summarize a model as probabilities for target scenarios.
+
+## Case study: Iris (Setosa vs non-Setosa)
+
+```{r}
+iris_bin <- transform(iris, is_setosa = ifelse(Species == "setosa", 1, 0))
+fit <- glm(is_setosa ~ Sepal.Length + Sepal.Width + Petal.Length,
+           data = iris_bin, family = binomial)
+summary(fit)
+```
+
+## Scenario-based predictions
+
+```{r}
+new_flowers <- data.frame(
+  Sepal.Length = c(5.0, 6.0),
+  Sepal.Width = c(3.5, 3.0),
+  Petal.Length = c(1.4, 4.5)
+)
+predict(fit, newdata = new_flowers, type = "response")
+```
+
+## Practice prompts
+
+- Which predictors are most influential for identifying Setosa?
+- What extra checks would you add before deploying this model?
