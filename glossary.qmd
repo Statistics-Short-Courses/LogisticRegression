@@ -1,0 +1,86 @@
+---
+glossary-include: auto
+glossary-sort: yaml
+glossary:
+  - term: Logistic regression
+    definition: |
+      A regression model for binary outcomes that models the log-odds of an event as a linear function of predictors.
+  - term: Binary outcome
+    definition: |
+      A response variable with two possible values, often coded as 0 and 1.
+  - term: Probability
+    definition: |
+      A number between 0 and 1 that represents the chance of an event.
+  - term: Odds
+    definition: |
+      The ratio of the probability of an event to the probability of it not occurring: p / (1 - p).
+  - term: Logit
+    definition: |
+      The log of the odds: log(p / (1 - p)).
+  - term: Link function
+    definition: |
+      A function that connects the mean of the response to the linear predictor; for logistic regression the link is the logit.
+  - term: Linear predictor
+    definition: |
+      The linear combination of predictors, for example beta0 + beta1 x.
+  - term: Coefficient
+    definition: |
+      A model parameter that describes how a predictor changes the log-odds, holding other predictors constant.
+  - term: Odds ratio
+    definition: |
+      The multiplicative change in odds for a one-unit increase in a predictor; exp(coefficient).
+  - term: Predicted probability
+    definition: |
+      The model's estimate of the probability of an event for a given set of predictors.
+  - term: Likelihood
+    definition: |
+      A measure of how well a model explains the observed data; higher is better.
+  - term: Deviance
+    definition: |
+      A goodness-of-fit measure based on the likelihood; lower is better.
+  - term: Akaike Information Criterion
+    definition: |
+      A model comparison metric that balances fit and complexity; lower values indicate a preferred model among those compared.
+    aliases:
+      - AIC
+  - term: Confusion matrix
+    definition: |
+      A table of predicted versus actual outcomes used to summarize classification performance.
+  - term: Sensitivity
+    definition: |
+      The proportion of true positives correctly identified by the model.
+  - term: Specificity
+    definition: |
+      The proportion of true negatives correctly identified by the model.
+  - term: Accuracy
+    definition: |
+      The proportion of all predictions that are correct.
+  - term: ROC curve
+    definition: |
+      A curve showing the trade-off between sensitivity and 1 - specificity across thresholds.
+    aliases:
+      - Receiver operating characteristic curve
+  - term: AUC
+    definition: |
+      Area under the ROC curve; a summary of classification performance across thresholds.
+  - term: Calibration
+    definition: |
+      How closely predicted probabilities match observed event rates.
+  - term: Separation
+    definition: |
+      A situation where predictors perfectly separate outcomes, leading to unstable estimates.
+  - term: Class imbalance
+    definition: |
+      When one outcome class is much more frequent than the other.
+  - term: Interaction
+    definition: |
+      A term that allows the effect of one predictor to depend on another.
+  - term: Factor
+    definition: |
+      A categorical predictor in R that is represented by discrete levels.
+---
+
+# Glossary {#sec-glossary .unnumbered}
+
+::: {#glossary}
+:::

@@ -1,35 +1,192 @@
 ---
 title: "Module 2: Odds, Odds Ratios, and Interpretation"
-format: live-html
+format:
+  live-html:
+    toc: true
+execute:
+  echo: true
+  warning: false
+  message: false
+embed-resources: true
+filters:
+  - custom-numbered-blocks
+custom-numbered-blocks:
+  classes:
+    Assumption:
+      colors: [FFCDD2, F44336]
+      boxstyle: foldbox.simple
+      collapse: false
+    Example:
+      colors: [BBDEFB, 2196F3]
+      boxstyle: foldbox.simple
+      collapse: false
+    Exercise:
+      colors: [C8E6C9, 4CAF50]
+      boxstyle: foldbox.simple
+      collapse: false
+    Note:
+      colors: [FFF9C4, FFEB3B]
+      boxstyle: foldbox.simple
+      collapse: false
+    Key-point:
+      colors: [FFF9C4, FFEB3B]
+      boxstyle: foldbox.simple
+      collapse: false
+    Key-term:
+      colors: [FFF9C4, FFEB3B]
+      boxstyle: foldbox.simple
+      collapse: false
 ---
 {{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+{{< include ./_extensions/r-wasm/live/_gradethis.qmd >}}
+
+```{webr module02-exercises-setup}
+#| include: false
+#| envir: ex2
+fit <- glm(am ~ wt + hp, data = mtcars, family = binomial)
+```
+
+# Odds Ratios and Interpretation {#sec-odds-interpretation}
 
 ## Learning outcomes
 
-- Convert between probabilities and odds.
-- Interpret logistic regression coefficients as odds ratios.
-- Generate predicted probabilities for new cases.
+- Interpret coefficients as odds ratios.
+- Explain why logistic effects are nonlinear on the probability scale.
+- Generate scenario-based predictions for communication.
 
-## Coefficients as odds ratios
+## Coefficients and odds ratios
 
-A one-unit increase in a predictor multiplies the odds by
-`exp(coefficient)` when other variables are held constant.
+Logistic regression coefficients are changes in log-odds. Exponentiating a coefficient gives an [odds ratio]{.glossary term="Odds ratio"}.
 
-```{r}
+```{r module02-fit}
 fit <- glm(am ~ wt + hp, data = mtcars, family = binomial)
+coef(fit)
 exp(coef(fit))
 ```
 
-## Predicted probabilities
+::: Key-point
+`exp(beta)` is the multiplicative change in odds for a one-unit increase in a predictor, holding others constant.
+:::
 
-```{r}
-new_cars <- data.frame(wt = c(2.2, 3.5), hp = c(110, 110))
-prob <- predict(fit, newdata = new_cars, type = "response")
-prob
+::: Exercise
+Compute the odds ratio for `wt` and store it as `or_wt`.
+
+```{webr module02-odds-exercise}
+#| exercise: ex_2_1
+#| envir: ex2
+or_wt <- ______
 ```
+
+:::: {.solution exercise="ex_2_1"}
+```{webr module02-odds-exercise-solution}
+#| exercise: ex_2_1
+#| solution: true
+or_wt <- exp(coef(fit)["wt"])
+or_wt
+```
+::::
+```{webr module02-odds-exercise-check}
+#| exercise: ex_2_1
+#| envir: ex2
+#| check: true
+#| class: wait
+grade_this({
+  if (!exists("or_wt")) {
+    fail("Define `or_wt` and try again.")
+  }
+  target <- exp(coef(fit)["wt"])
+  if (is.numeric(or_wt) && abs(or_wt - target) < 0.01) {
+    pass("Nice. That matches the odds ratio for weight.")
+  }
+  fail("Try `exp(coef(fit)[\"wt\"])` and make sure `or_wt` is numeric.")
+})
+```
+:::
+
+## Odds ratios are not probability differences
+
+A fixed change in log-odds produces different changes in probability depending on the starting point.
+
+```{r module02-odds}
+p <- c(0.1, 0.2, 0.4)
+odds <- p / (1 - p)
+cbind(p = p, odds = odds)
+```
+
+::: Note
+Odds ratios can look large even when the absolute probability change is modest. Always translate to predicted probabilities for interpretation.
+:::
+
+- [ ] Continue
+
+## Scenario-based predictions
+
+```{r module02-scenarios}
+new_cars <- data.frame(wt = c(2.2, 3.2, 3.8), hp = c(110, 110, 110))
+predict(fit, newdata = new_cars, type = "response")
+```
+
+You can also visualize how the probability changes with weight while holding horsepower constant.
+
+```{r module02-curve}
+grid <- data.frame(
+  wt = seq(min(mtcars$wt), max(mtcars$wt), length.out = 50),
+  hp = mean(mtcars$hp)
+)
+grid$prob <- predict(fit, newdata = grid, type = "response")
+plot(grid$wt, grid$prob, type = "l", lwd = 2,
+     xlab = "Weight", ylab = "Predicted probability")
+```
+
+::: Exercise
+Compute the predicted probability for a car with weight 3.0 and horsepower 110. Store it as `p_case`.
+
+```{webr module02-scenario-exercise}
+#| exercise: ex_2_2
+#| envir: ex2
+new_case <- data.frame(wt = 3.0, hp = 110)
+p_case <- ______
+```
+
+:::: {.solution exercise="ex_2_2"}
+```{webr module02-scenario-exercise-solution}
+#| exercise: ex_2_2
+#| solution: true
+new_case <- data.frame(wt = 3.0, hp = 110)
+p_case <- predict(fit, newdata = new_case, type = "response")
+p_case
+```
+::::
+```{webr module02-scenario-exercise-check}
+#| exercise: ex_2_2
+#| envir: ex2
+#| check: true
+#| class: wait
+grade_this({
+  if (!exists("p_case")) {
+    fail("Define `p_case` and try again.")
+  }
+  new_case_target <- data.frame(wt = 3.0, hp = 110)
+  target <- as.numeric(predict(fit, newdata = new_case_target, type = "response"))
+  if (is.numeric(p_case) && abs(p_case - target) < 0.02) {
+    pass("Nice. That is the model's predicted probability for this scenario.")
+  }
+  fail("Check your `predict()` call and return a single numeric value.")
+})
+```
+:::
+
+## Categorical predictors
+
+```{r module02-categorical}
+fit_cat <- glm(am ~ wt + factor(cyl), data = mtcars, family = binomial)
+summary(fit_cat)
+```
+
+When a predictor is a [factor]{.glossary term="Factor"}, coefficients compare each level to a reference level. Interpret them as odds ratios relative to that baseline.
 
 ## Practice prompts
 
-- How do the odds change when weight increases by 0.5?
-- Why is it misleading to interpret logistic coefficients directly on the
-  probability scale?
+- Interpret `exp(coef(fit)["wt"])` in plain language.
+- How does the predicted probability change between weights 2.2 and 3.8 in the curve above?
+- Fit a model with `factor(gear)` instead of `factor(cyl)`. Which baseline does R pick?

@@ -5,20 +5,32 @@ format: live-html
 
 # Course Overview {.unnumbered}
 
+## Who this course is for
+
+This short course is for graduate learners who want an intuition-first introduction to logistic regression and the confidence to fit and interpret models in R. We keep the math light and focus on practical interpretation.
+
 ## What you will learn
 
-- Describe when logistic regression is appropriate for binary and
-  categorical outcomes.
-- Interpret odds, odds ratios, and predicted probabilities.
-- Fit logistic models in R using `glm()` with the binomial family.
-- Assess model fit with likelihood-based measures and classification
-  diagnostics.
-- Communicate results with clear effect summaries and visualizations.
+- Recognize when logistic regression is appropriate for binary outcomes.
+- Translate between probability, odds, and log-odds.
+- Fit logistic models in R with `glm()` and read the output.
+- Interpret coefficients as odds ratios and communicate effects clearly.
+- Assess model performance with likelihood measures and classification metrics.
+
+## Prerequisites
+
+- You have completed the Linear Regression short course (or equivalent).
+- You can run basic R scripts and read simple model summaries.
+
+## Course map
+
+- Module 1: Logistic regression fundamentals (outcomes, odds, logit, first model).
+- Module 2: Odds ratios and interpretation (effects, scenarios, categorical predictors).
+- Module 3: Model assessment and diagnostics (deviance, AIC, confusion matrix, thresholds).
+- Module 4: Extensions and mini case study (multivariable models, interactions, reporting).
 
 ## How to use this book
 
-- Each chapter is a short module with a focused set of concepts and
-  practice prompts.
-- Code examples use built-in R datasets so you can run them immediately.
-- The final module shows a compact end-to-end workflow on a realistic
-  classification task.
+- Each module introduces a compact set of concepts with worked R examples.
+- Follow the interpretation steps after each model fit and practice with the prompts.
+- The final module provides a reusable template for your own datasets.

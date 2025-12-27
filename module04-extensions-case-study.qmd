@@ -1,36 +1,116 @@
 ---
 title: "Module 4: Extensions and a Mini Case Study"
-format: live-html
+format:
+  live-html:
+    toc: true
+execute:
+  echo: true
+  warning: false
+  message: false
+embed-resources: true
+filters:
+  - custom-numbered-blocks
+custom-numbered-blocks:
+  classes:
+    Assumption:
+      colors: [FFCDD2, F44336]
+      boxstyle: foldbox.simple
+      collapse: false
+    Example:
+      colors: [BBDEFB, 2196F3]
+      boxstyle: foldbox.simple
+      collapse: false
+    Exercise:
+      colors: [C8E6C9, 4CAF50]
+      boxstyle: foldbox.simple
+      collapse: false
+    Note:
+      colors: [FFF9C4, FFEB3B]
+      boxstyle: foldbox.simple
+      collapse: false
+    Key-point:
+      colors: [FFF9C4, FFEB3B]
+      boxstyle: foldbox.simple
+      collapse: false
+    Key-term:
+      colors: [FFF9C4, FFEB3B]
+      boxstyle: foldbox.simple
+      collapse: false
 ---
 {{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+# Extensions and a Mini Case Study {#sec-extensions-case-study}
 
 ## Learning outcomes
 
 - Fit multivariable logistic models with categorical predictors.
-- Include interaction terms when effects vary by group.
-- Summarize a model as probabilities for target scenarios.
+- Use interactions when effects differ by group.
+- Summarize results as predicted probabilities for realistic scenarios.
 
-## Case study: Iris (Setosa vs non-Setosa)
+## Multivariable logistic regression
 
-```{r}
-iris_bin <- transform(iris, is_setosa = ifelse(Species == "setosa", 1, 0))
-fit <- glm(is_setosa ~ Sepal.Length + Sepal.Width + Petal.Length,
-           data = iris_bin, family = binomial)
-summary(fit)
+```{r module04-multivariable}
+fit_multi <- glm(am ~ wt + hp + factor(cyl), data = mtcars, family = binomial)
+summary(fit_multi)
 ```
 
-## Scenario-based predictions
+::: Key-point
+Each coefficient is a partial effect on the log-odds scale, holding the other predictors constant.
+:::
 
-```{r}
-new_flowers <- data.frame(
-  Sepal.Length = c(5.0, 6.0),
-  Sepal.Width = c(3.5, 3.0),
-  Petal.Length = c(1.4, 4.5)
+## Interactions for subgroup effects
+
+If the effect of a predictor changes across groups, use an interaction term.
+
+```{r module04-interaction}
+fit_interaction <- glm(am ~ wt * factor(cyl), data = mtcars, family = binomial)
+summary(fit_interaction)
+```
+
+## Communicating results with scenarios
+
+```{r module04-scenarios}
+new_cars <- data.frame(
+  wt = c(2.4, 3.2),
+  hp = c(100, 150),
+  cyl = factor(c(4, 6))
 )
-predict(fit, newdata = new_flowers, type = "response")
+
+predict(fit_multi, newdata = new_cars, type = "response")
 ```
+
+## Mini case study template (dataset to be added)
+
+Use this checklist to structure the final case study once the dataset is chosen.
+
+1. Define the outcome variable and clarify what counts as an event.
+2. Summarize the baseline event rate and missing data.
+3. Choose a small set of predictors with clear interpretations.
+4. Fit a logistic model and report odds ratios and predicted probabilities.
+5. Evaluate the model with an appropriate threshold and a confusion matrix.
+6. Communicate results in plain language with scenario predictions.
+
+::: Note
+The final case study will be updated once the outcome variable is confirmed for the selected research dataset.
+:::
+
+## Reporting template
+
+Use this outline to write up results in plain language.
+
+- Outcome definition, sample size, and event rate.
+- Model specification (predictors and reference levels).
+- Key effects as odds ratios with a short interpretation.
+- Predicted probabilities for 2 to 3 realistic scenarios.
+- Performance summary (threshold, confusion matrix metrics, AUC).
+- Limitations and next steps.
+
+Template paragraph:
+
+"We modeled [outcome] using logistic regression with predictors [list]. The event rate was [rate]. A one-unit increase in [predictor] was associated with [odds ratio] times the odds of the event, holding other variables constant. For a typical case ([scenario]), the predicted probability was [probability]. Using a threshold of [threshold], the model achieved [accuracy/sensitivity/specificity] and an AUC of [AUC]. Key limitations include [limitations]."
 
 ## Practice prompts
 
-- Which predictors are most influential for identifying Setosa?
-- What extra checks would you add before deploying this model?
+- Fit the model with `factor(gear)` instead of `factor(cyl)`. What changes?
+- Compare predictions from `fit_multi` and `fit_interaction` for the same scenario.
+- Draft a one-paragraph summary for a non-technical audience.

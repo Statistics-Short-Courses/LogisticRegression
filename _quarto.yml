@@ -2,6 +2,8 @@ project:
   type: book
   output-dir: docs
 engine: knitr
+filters:
+  - glossary
 
 book:
   title: "Logistic Regression with R"
@@ -11,6 +13,7 @@ book:
     - module02-odds-interpretation.qmd
     - module03-model-assessment.qmd
     - module04-extensions-case-study.qmd
+    - glossary.qmd
   page-navigation: false
 format:
   live-html:

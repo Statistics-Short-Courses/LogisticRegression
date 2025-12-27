@@ -1,0 +1,232 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Logistic Regression with R",
+    "section": "",
+    "text": "Course Overview",
+    "crumbs": [
+      "Course Overview"
+    ]
+  },
+  {
+    "objectID": "index.html#what-you-will-learn",
+    "href": "index.html#what-you-will-learn",
+    "title": "Logistic Regression with R",
+    "section": "What you will learn",
+    "text": "What you will learn\n\nDescribe when logistic regression is appropriate for binary and categorical outcomes.\nInterpret odds, odds ratios, and predicted probabilities.\nFit logistic models in R using glm() with the binomial family.\nAssess model fit with likelihood-based measures and classification diagnostics.\nCommunicate results with clear effect summaries and visualizations.",
+    "crumbs": [
+      "Course Overview"
+    ]
+  },
+  {
+    "objectID": "index.html#how-to-use-this-book",
+    "href": "index.html#how-to-use-this-book",
+    "title": "Logistic Regression with R",
+    "section": "How to use this book",
+    "text": "How to use this book\n\nEach chapter is a short module with a focused set of concepts and practice prompts.\nCode examples use built-in R datasets so you can run them immediately.\nThe final module shows a compact end-to-end workflow on a realistic classification task.",
+    "crumbs": [
+      "Course Overview"
+    ]
+  },
+  {
+    "objectID": "module01-logistic-fundamentals.html",
+    "href": "module01-logistic-fundamentals.html",
+    "title": "1  Module 1: Logistic Regression Fundamentals",
+    "section": "",
+    "text": "1.1 Learning outcomes",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 1: Logistic Regression Fundamentals</span>"
+    ]
+  },
+  {
+    "objectID": "module01-logistic-fundamentals.html#learning-outcomes",
+    "href": "module01-logistic-fundamentals.html#learning-outcomes",
+    "title": "1  Module 1: Logistic Regression Fundamentals",
+    "section": "",
+    "text": "Identify response variables suited to logistic regression.\nExplain the link between probability, odds, and the logit function.\nFit a basic logistic model in R.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 1: Logistic Regression Fundamentals</span>"
+    ]
+  },
+  {
+    "objectID": "module01-logistic-fundamentals.html#core-ideas",
+    "href": "module01-logistic-fundamentals.html#core-ideas",
+    "title": "1  Module 1: Logistic Regression Fundamentals",
+    "section": "1.2 Core ideas",
+    "text": "1.2 Core ideas\nLogistic regression models the log-odds of an event as a linear function of predictors. The model guarantees predicted probabilities stay between 0 and 1 while allowing flexible relationships on the logit scale.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 1: Logistic Regression Fundamentals</span>"
+    ]
+  },
+  {
+    "objectID": "module01-logistic-fundamentals.html#first-model-in-r",
+    "href": "module01-logistic-fundamentals.html#first-model-in-r",
+    "title": "1  Module 1: Logistic Regression Fundamentals",
+    "section": "1.3 First model in R",
+    "text": "1.3 First model in R\n\n# Binary outcome: am (0 = automatic, 1 = manual)\nfit &lt;- glm(am ~ wt, data = mtcars, family = binomial)\nsummary(fit)\n\n\nCall:\nglm(formula = am ~ wt, family = binomial, data = mtcars)\n\nCoefficients:\n            Estimate Std. Error z value Pr(&gt;|z|)   \n(Intercept)   12.040      4.510   2.670  0.00759 **\nwt            -4.024      1.436  -2.801  0.00509 **\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 43.230  on 31  degrees of freedom\nResidual deviance: 19.176  on 30  degrees of freedom\nAIC: 23.176\n\nNumber of Fisher Scoring iterations: 6",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 1: Logistic Regression Fundamentals</span>"
+    ]
+  },
+  {
+    "objectID": "module01-logistic-fundamentals.html#practice-prompts",
+    "href": "module01-logistic-fundamentals.html#practice-prompts",
+    "title": "1  Module 1: Logistic Regression Fundamentals",
+    "section": "1.4 Practice prompts",
+    "text": "1.4 Practice prompts\n\nWhat does a positive slope on wt imply for the probability of a manual transmission?\nHow would you describe the model in one sentence to a non-technical audience?",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 1: Logistic Regression Fundamentals</span>"
+    ]
+  },
+  {
+    "objectID": "module02-odds-interpretation.html",
+    "href": "module02-odds-interpretation.html",
+    "title": "2  Module 2: Odds, Odds Ratios, and Interpretation",
+    "section": "",
+    "text": "2.1 Learning outcomes",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Module 2: Odds, Odds Ratios, and Interpretation</span>"
+    ]
+  },
+  {
+    "objectID": "module02-odds-interpretation.html#learning-outcomes",
+    "href": "module02-odds-interpretation.html#learning-outcomes",
+    "title": "2  Module 2: Odds, Odds Ratios, and Interpretation",
+    "section": "",
+    "text": "Convert between probabilities and odds.\nInterpret logistic regression coefficients as odds ratios.\nGenerate predicted probabilities for new cases.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Module 2: Odds, Odds Ratios, and Interpretation</span>"
+    ]
+  },
+  {
+    "objectID": "module02-odds-interpretation.html#coefficients-as-odds-ratios",
+    "href": "module02-odds-interpretation.html#coefficients-as-odds-ratios",
+    "title": "2  Module 2: Odds, Odds Ratios, and Interpretation",
+    "section": "2.2 Coefficients as odds ratios",
+    "text": "2.2 Coefficients as odds ratios\nA one-unit increase in a predictor multiplies the odds by exp(coefficient) when other variables are held constant.\n\nfit &lt;- glm(am ~ wt + hp, data = mtcars, family = binomial)\nexp(coef(fit))\n\n (Intercept)           wt           hp \n1.561455e+08 3.085967e-04 1.036921e+00",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Module 2: Odds, Odds Ratios, and Interpretation</span>"
+    ]
+  },
+  {
+    "objectID": "module02-odds-interpretation.html#predicted-probabilities",
+    "href": "module02-odds-interpretation.html#predicted-probabilities",
+    "title": "2  Module 2: Odds, Odds Ratios, and Interpretation",
+    "section": "2.3 Predicted probabilities",
+    "text": "2.3 Predicted probabilities\n\nnew_cars &lt;- data.frame(wt = c(2.2, 3.5), hp = c(110, 110))\nprob &lt;- predict(fit, newdata = new_cars, type = \"response\")\nprob\n\n          1           2 \n0.993761571 0.004330429",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Module 2: Odds, Odds Ratios, and Interpretation</span>"
+    ]
+  },
+  {
+    "objectID": "module02-odds-interpretation.html#practice-prompts",
+    "href": "module02-odds-interpretation.html#practice-prompts",
+    "title": "2  Module 2: Odds, Odds Ratios, and Interpretation",
+    "section": "2.4 Practice prompts",
+    "text": "2.4 Practice prompts\n\nHow do the odds change when weight increases by 0.5?\nWhy is it misleading to interpret logistic coefficients directly on the probability scale?",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Module 2: Odds, Odds Ratios, and Interpretation</span>"
+    ]
+  },
+  {
+    "objectID": "module03-model-assessment.html",
+    "href": "module03-model-assessment.html",
+    "title": "3  Module 3: Model Assessment and Diagnostics",
+    "section": "",
+    "text": "3.1 Learning outcomes",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Module 3: Model Assessment and Diagnostics</span>"
+    ]
+  },
+  {
+    "objectID": "module03-model-assessment.html#learning-outcomes",
+    "href": "module03-model-assessment.html#learning-outcomes",
+    "title": "3  Module 3: Model Assessment and Diagnostics",
+    "section": "",
+    "text": "Use likelihood-based measures to compare models.\nBuild a confusion matrix from predicted probabilities.\nExplain sensitivity, specificity, and accuracy.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Module 3: Model Assessment and Diagnostics</span>"
+    ]
+  },
+  {
+    "objectID": "module03-model-assessment.html#comparing-models",
+    "href": "module03-model-assessment.html#comparing-models",
+    "title": "3  Module 3: Model Assessment and Diagnostics",
+    "section": "3.2 Comparing models",
+    "text": "3.2 Comparing models\n\nfit_simple &lt;- glm(am ~ wt, data = mtcars, family = binomial)\nfit_full &lt;- glm(am ~ wt + hp + factor(cyl), data = mtcars, family = binomial)\nAIC(fit_simple, fit_full)\n\n           df      AIC\nfit_simple  2 23.17608\nfit_full    5 17.25537",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Module 3: Model Assessment and Diagnostics</span>"
+    ]
+  },
+  {
+    "objectID": "module03-model-assessment.html#classification-diagnostics",
+    "href": "module03-model-assessment.html#classification-diagnostics",
+    "title": "3  Module 3: Model Assessment and Diagnostics",
+    "section": "3.3 Classification diagnostics",
+    "text": "3.3 Classification diagnostics\n\nprob &lt;- predict(fit_full, type = \"response\")\nclass_hat &lt;- ifelse(prob &gt;= 0.5, 1, 0)\nconf_mat &lt;- table(Predicted = class_hat, Actual = mtcars$am)\nconf_mat\n\n         Actual\nPredicted  0  1\n        0 18  1\n        1  1 12\n\naccuracy &lt;- sum(diag(conf_mat)) / sum(conf_mat)\naccuracy\n\n[1] 0.9375",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Module 3: Model Assessment and Diagnostics</span>"
+    ]
+  },
+  {
+    "objectID": "module03-model-assessment.html#practice-prompts",
+    "href": "module03-model-assessment.html#practice-prompts",
+    "title": "3  Module 3: Model Assessment and Diagnostics",
+    "section": "3.4 Practice prompts",
+    "text": "3.4 Practice prompts\n\nHow would you pick a threshold other than 0.5?\nWhat trade-offs exist between sensitivity and specificity?",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Module 3: Model Assessment and Diagnostics</span>"
+    ]
+  },
+  {
+    "objectID": "module04-extensions-case-study.html",
+    "href": "module04-extensions-case-study.html",
+    "title": "4  Module 4: Extensions and a Mini Case Study",
+    "section": "",
+    "text": "4.1 Learning outcomes",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Module 4: Extensions and a Mini Case Study</span>"
+    ]
+  },
+  {
+    "objectID": "module04-extensions-case-study.html#learning-outcomes",
+    "href": "module04-extensions-case-study.html#learning-outcomes",
+    "title": "4  Module 4: Extensions and a Mini Case Study",
+    "section": "",
+    "text": "Fit multivariable logistic models with categorical predictors.\nInclude interaction terms when effects vary by group.\nSummarize a model as probabilities for target scenarios.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Module 4: Extensions and a Mini Case Study</span>"
+    ]
+  },
+  {
+    "objectID": "module04-extensions-case-study.html#case-study-iris-setosa-vs-non-setosa",
+    "href": "module04-extensions-case-study.html#case-study-iris-setosa-vs-non-setosa",
+    "title": "4  Module 4: Extensions and a Mini Case Study",
+    "section": "4.2 Case study: Iris (Setosa vs non-Setosa)",
+    "text": "4.2 Case study: Iris (Setosa vs non-Setosa)\n\niris_bin &lt;- transform(iris, is_setosa = ifelse(Species == \"setosa\", 1, 0))\nfit &lt;- glm(is_setosa ~ Sepal.Length + Sepal.Width + Petal.Length,\n           data = iris_bin, family = binomial)\n\nWarning: glm.fit: algorithm did not converge\n\n\nWarning: glm.fit: fitted probabilities numerically 0 or 1 occurred\n\nsummary(fit)\n\n\nCall:\nglm(formula = is_setosa ~ Sepal.Length + Sepal.Width + Petal.Length, \n    family = binomial, data = iris_bin)\n\nCoefficients:\n              Estimate Std. Error z value Pr(&gt;|z|)\n(Intercept)     -71.80  272699.27   0.000    1.000\nSepal.Length     23.91   76100.19   0.000    1.000\nSepal.Width      13.51   48273.94   0.000    1.000\nPetal.Length    -34.95   40571.35  -0.001    0.999\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 1.9095e+02  on 149  degrees of freedom\nResidual deviance: 3.5233e-09  on 146  degrees of freedom\nAIC: 8\n\nNumber of Fisher Scoring iterations: 25",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Module 4: Extensions and a Mini Case Study</span>"
+    ]
+  },
+  {
+    "objectID": "module04-extensions-case-study.html#scenario-based-predictions",
+    "href": "module04-extensions-case-study.html#scenario-based-predictions",
+    "title": "4  Module 4: Extensions and a Mini Case Study",
+    "section": "4.3 Scenario-based predictions",
+    "text": "4.3 Scenario-based predictions\n\nnew_flowers &lt;- data.frame(\n  Sepal.Length = c(5.0, 6.0),\n  Sepal.Width = c(3.5, 3.0),\n  Petal.Length = c(1.4, 4.5)\n)\npredict(fit, newdata = new_flowers, type = \"response\")\n\n           1            2 \n1.000000e+00 2.220446e-16",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Module 4: Extensions and a Mini Case Study</span>"
+    ]
+  },
+  {
+    "objectID": "module04-extensions-case-study.html#practice-prompts",
+    "href": "module04-extensions-case-study.html#practice-prompts",
+    "title": "4  Module 4: Extensions and a Mini Case Study",
+    "section": "4.4 Practice prompts",
+    "text": "4.4 Practice prompts\n\nWhich predictors are most influential for identifying Setosa?\nWhat extra checks would you add before deploying this model?",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Module 4: Extensions and a Mini Case Study</span>"
+    ]
+  }
+]

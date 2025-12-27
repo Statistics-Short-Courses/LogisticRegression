@@ -1,32 +1,137 @@
 ---
 title: "Module 1: Logistic Regression Fundamentals"
-format: live-html
+format:
+  live-html:
+    toc: true
+execute:
+  echo: true
+  warning: false
+  message: false
+embed-resources: true
+filters:
+  - custom-numbered-blocks
+custom-numbered-blocks:
+  classes:
+    Assumption:
+      colors: [FFCDD2, F44336]
+      boxstyle: foldbox.simple
+      collapse: false
+    Example:
+      colors: [BBDEFB, 2196F3]
+      boxstyle: foldbox.simple
+      collapse: false
+    Exercise:
+      colors: [C8E6C9, 4CAF50]
+      boxstyle: foldbox.simple
+      collapse: false
+    Note:
+      colors: [FFF9C4, FFEB3B]
+      boxstyle: foldbox.simple
+      collapse: false
+    Key-point:
+      colors: [FFF9C4, FFEB3B]
+      boxstyle: foldbox.simple
+      collapse: false
+    Key-term:
+      colors: [FFF9C4, FFEB3B]
+      boxstyle: foldbox.simple
+      collapse: false
 ---
 {{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
 
+# Logistic Regression Fundamentals {#sec-logistic-fundamentals}
+
 ## Learning outcomes
 
-- Identify response variables suited to logistic regression.
-- Explain the link between probability, odds, and the logit function.
-- Fit a basic logistic model in R.
+- Identify research questions suited to logistic regression.
+- Understang the 'Generalized Linear Model' framework, and how this extends linear regression.
+- Explain how probabilities map to odds and the logit scale.
+- Fit a basic logistic regression in R and generate predictions.
 
-## Core ideas
+## When to use logistic regression
 
-Logistic regression models the log-odds of an event as a linear function
-of predictors. The model guarantees predicted probabilities stay between
-0 and 1 while allowing flexible relationships on the logit scale.
+Linear regression is a powerful tool for modelling *continuous* outcomes (blood pressure, weight, test scores). But what if your outcome is *categorical*?
 
-## First model in R
 
-```{r}
-# Binary outcome: am (0 = automatic, 1 = manual)
+
+Logistic regression is used when the response variable is binary (0/1, yes/no, success/fail). It models the probability of an event while keeping predictions between 0 and 1.
+
+::: Key-point
+Logistic regression models the [log-odds]{.glossary term="Logit"} of an event as a linear function of predictors, then converts back to probability.
+:::
+
+::: Assumption
+Observations are independent, the outcome is binary, and the log-odds are approximately linear in the predictors.
+:::
+
+### A simple example
+
+In `mtcars`, the variable `am` indicates transmission type (0 = automatic, 1 = manual).
+
+```{r module01-counts}
+table(mtcars$am)
+prop.table(table(mtcars$am))
+```
+
+- [ ] Continue
+
+## From probability to odds and logit
+
+If $p$ is the probability of an event, the [odds]{.glossary term="Odds"} are
+$$
+\text{odds} = \frac{p}{1 - p}
+$$
+The [logit]{.glossary term="Logit"} is the log of the odds:
+$$
+\text{logit}(p) = \log\left(\frac{p}{1 - p}\right)
+$$
+
+```{r module01-odds-logit}
+p <- 0.2
+odds <- p / (1 - p)
+logit <- log(odds)
+c(p = p, odds = odds, logit = logit)
+```
+
+::: Note
+A change of 1 unit in the logit scale multiplies the odds by about 2.72 (because $e^1 \approx 2.72$).
+:::
+
+## The logistic curve
+
+The logit scale is linear, but the probability scale is S-shaped. This is why logistic regression keeps predicted probabilities in the 0 to 1 range.
+
+```{r module01-logistic-curve}
+eta <- seq(-6, 6, length.out = 200)
+plot(eta, plogis(eta), type = "l", lwd = 2,
+     xlab = "Linear predictor (eta)", ylab = "Probability")
+abline(h = c(0, 1), col = "grey80", lty = 3)
+```
+
+- [ ] Continue
+
+## Fit your first model in R
+
+```{r module01-fit}
 fit <- glm(am ~ wt, data = mtcars, family = binomial)
 summary(fit)
 ```
 
+The model estimates how car weight relates to the log-odds of a manual transmission.
+
+## Predicted probabilities
+
+```{r module01-predict}
+new_cars <- data.frame(wt = c(2.2, 3.0, 3.8))
+predict(fit, newdata = new_cars, type = "response")
+```
+
+::: Key-point
+`type = "response"` returns predicted probabilities, not log-odds.
+:::
+
 ## Practice prompts
 
-- What does a positive slope on `wt` imply for the probability of a
-  manual transmission?
-- How would you describe the model in one sentence to a non-technical
-  audience?
+- Interpret the sign of the `wt` coefficient in one sentence.
+- Predict the probability of a manual transmission for a car weighing 3.2.
+- Fit the model with `hp` as the predictor instead of `wt`. How does the fit change?

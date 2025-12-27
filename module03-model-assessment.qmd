@@ -1,36 +1,204 @@
 ---
 title: "Module 3: Model Assessment and Diagnostics"
-format: live-html
+format:
+  live-html:
+    toc: true
+execute:
+  echo: true
+  warning: false
+  message: false
+embed-resources: true
+filters:
+  - custom-numbered-blocks
+custom-numbered-blocks:
+  classes:
+    Assumption:
+      colors: [FFCDD2, F44336]
+      boxstyle: foldbox.simple
+      collapse: false
+    Example:
+      colors: [BBDEFB, 2196F3]
+      boxstyle: foldbox.simple
+      collapse: false
+    Exercise:
+      colors: [C8E6C9, 4CAF50]
+      boxstyle: foldbox.simple
+      collapse: false
+    Note:
+      colors: [FFF9C4, FFEB3B]
+      boxstyle: foldbox.simple
+      collapse: false
+    Key-point:
+      colors: [FFF9C4, FFEB3B]
+      boxstyle: foldbox.simple
+      collapse: false
+    Key-term:
+      colors: [FFF9C4, FFEB3B]
+      boxstyle: foldbox.simple
+      collapse: false
 ---
 {{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+{{< include ./_extensions/r-wasm/live/_gradethis.qmd >}}
+
+```{webr module03-exercises-setup}
+#| include: false
+#| envir: ex3
+fit_full <- glm(am ~ wt + hp + factor(cyl), data = mtcars, family = binomial)
+prob <- predict(fit_full, type = "response")
+actual_num <- mtcars$am
+```
+
+# Model Assessment and Diagnostics {#sec-model-assessment}
 
 ## Learning outcomes
 
-- Use likelihood-based measures to compare models.
-- Build a confusion matrix from predicted probabilities.
-- Explain sensitivity, specificity, and accuracy.
+- Compare models using likelihood-based measures.
+- Build a confusion matrix and compute key classification metrics.
+- Explain how thresholds affect sensitivity and specificity.
 
-## Comparing models
+## Likelihood, deviance, and AIC
 
-```{r}
-fit_simple <- glm(am ~ wt, data = mtcars, family = binomial)
+```{r module03-likelihood}
+fit_null <- glm(am ~ 1, data = mtcars, family = binomial)
 fit_full <- glm(am ~ wt + hp + factor(cyl), data = mtcars, family = binomial)
-AIC(fit_simple, fit_full)
+
+anova(fit_null, fit_full, test = "Chisq")
+AIC(fit_null, fit_full)
 ```
 
-## Classification diagnostics
+::: Key-point
+Logistic regression does not use R-squared. Instead, compare models with deviance and information criteria like [AIC]{.glossary term="Akaike Information Criterion"}.
+:::
 
-```{r}
+- [ ] Continue
+
+## Confusion matrix and metrics
+
+```{r module03-confusion}
 prob <- predict(fit_full, type = "response")
-class_hat <- ifelse(prob >= 0.5, 1, 0)
-conf_mat <- table(Predicted = class_hat, Actual = mtcars$am)
+threshold <- 0.5
+class_hat <- factor(ifelse(prob >= threshold, 1, 0), levels = c(0, 1))
+actual <- factor(mtcars$am, levels = c(0, 1))
+conf_mat <- table(Predicted = class_hat, Actual = actual)
 conf_mat
 
-accuracy <- sum(diag(conf_mat)) / sum(conf_mat)
-accuracy
+true_pos <- conf_mat["1", "1"]
+true_neg <- conf_mat["0", "0"]
+false_pos <- conf_mat["1", "0"]
+false_neg <- conf_mat["0", "1"]
+
+accuracy <- (true_pos + true_neg) / sum(conf_mat)
+sensitivity <- true_pos / (true_pos + false_neg)
+specificity <- true_neg / (true_neg + false_pos)
+
+c(accuracy = accuracy, sensitivity = sensitivity, specificity = specificity)
 ```
+
+## Threshold trade-offs
+
+```{r module03-thresholds}
+thresholds <- c(0.3, 0.5, 0.7)
+metrics <- lapply(thresholds, function(t) {
+  actual <- factor(mtcars$am, levels = c(0, 1))
+  class_hat <- factor(ifelse(prob >= t, 1, 0), levels = c(0, 1))
+  conf_mat <- table(Predicted = class_hat, Actual = actual)
+  tp <- conf_mat["1", "1"]
+  tn <- conf_mat["0", "0"]
+  fp <- conf_mat["1", "0"]
+  fn <- conf_mat["0", "1"]
+  c(accuracy = (tp + tn) / sum(conf_mat),
+    sensitivity = tp / (tp + fn),
+    specificity = tn / (tn + fp))
+})
+metrics
+```
+
+::: Note
+Lower thresholds increase sensitivity but usually reduce specificity. The right choice depends on the problem context.
+:::
+
+::: Exercise
+Using a threshold of 0.6, compute the accuracy and store it as `accuracy_06`.
+
+```{webr module03-accuracy-exercise}
+#| exercise: ex_3_1
+#| envir: ex3
+threshold <- 0.6
+class_hat <- ifelse(prob >= threshold, 1, 0)
+accuracy_06 <- ______
+```
+
+:::: {.solution exercise="ex_3_1"}
+```{webr module03-accuracy-exercise-solution}
+#| exercise: ex_3_1
+#| solution: true
+threshold <- 0.6
+class_hat <- ifelse(prob >= threshold, 1, 0)
+accuracy_06 <- mean(class_hat == actual_num)
+accuracy_06
+```
+::::
+```{webr module03-accuracy-exercise-check}
+#| exercise: ex_3_1
+#| envir: ex3
+#| check: true
+#| class: wait
+grade_this({
+  if (!exists("accuracy_06")) {
+    fail("Define `accuracy_06` and try again.")
+  }
+  target <- mean(ifelse(prob >= 0.6, 1, 0) == actual_num)
+  if (is.numeric(accuracy_06) && abs(accuracy_06 - target) < 0.001) {
+    pass("Nice. That matches the accuracy for a 0.6 threshold.")
+  }
+  fail("Use `mean(class_hat == actual_num)` to compute the accuracy.")
+})
+```
+:::
+
+## ROC curve and AUC
+
+```{r module03-roc}
+roc_thresholds <- seq(1, 0, by = -0.02)
+actual_num <- as.integer(actual) - 1
+
+tpr <- sapply(roc_thresholds, function(t) {
+  pred <- ifelse(prob >= t, 1, 0)
+  tp <- sum(pred == 1 & actual_num == 1)
+  fn <- sum(pred == 0 & actual_num == 1)
+  tp / (tp + fn)
+})
+
+fpr <- sapply(roc_thresholds, function(t) {
+  pred <- ifelse(prob >= t, 1, 0)
+  fp <- sum(pred == 1 & actual_num == 0)
+  tn <- sum(pred == 0 & actual_num == 0)
+  fp / (fp + tn)
+})
+
+roc_df <- data.frame(fpr = fpr, tpr = tpr)
+roc_df <- roc_df[order(roc_df$fpr), ]
+
+plot(roc_df$fpr, roc_df$tpr, type = "l", lwd = 2,
+     xlab = "False positive rate", ylab = "True positive rate")
+abline(0, 1, lty = 3, col = "grey60")
+
+auc <- sum(diff(roc_df$fpr) * (head(roc_df$tpr, -1) + tail(roc_df$tpr, -1)) / 2)
+auc
+```
+
+::: Key-point
+AUC near 0.5 indicates random guessing, while values closer to 1 indicate stronger discrimination.
+:::
+
+## Diagnostics and common pitfalls
+
+- [Separation]{.glossary term="Separation"} can make estimates unstable or infinite.
+- Class imbalance can inflate accuracy even when a model is poor.
+- The log-odds should be approximately linear in continuous predictors.
 
 ## Practice prompts
 
-- How would you pick a threshold other than 0.5?
-- What trade-offs exist between sensitivity and specificity?
+- Compare `fit_full` to a model with only `wt`. How does the AIC change?
+- Try thresholds 0.4 and 0.6. Which metric moves most?
+- What would you prioritise: sensitivity or specificity? Explain why.
