@@ -1,0 +1,28 @@
+# Intro/overview/index
+## Brief intro
+## Overview of Structure module
+## learning objectives
+## How to use this book
+# Motivation - when to use logistic regression 
+## when linear regression is not appropriate
+## examples of binary outcomes
+## Why linear regression fails for binary outcomes
+# Introduction to logistic regression
+## Generalising linear models
+## The logistic function
+## Binomial distribution
+# Fitting logistic regression models
+## Maximum likelihood estimation
+## Interpreting coefficients
+### Odds 
+## Inference in logistic regression
+### Hypothesis testing
+### Confidence intervals
+# Assessing model fit
+## Deviance
+## Goodness-of-fit tests
+## Pseudo R-squared
+# Predictions from logistic regression models
+## Generating predicted probabilities
+## Classification thresholds
+## ROC curves and AUC
