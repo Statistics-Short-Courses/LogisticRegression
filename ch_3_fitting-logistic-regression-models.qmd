@@ -1,0 +1,131 @@
+---
+title: "Fitting Logistic Regression Models"
+format:
+  live-html:
+    toc: true
+execute:
+  echo: true
+  warning: false
+  message: false
+embed-resources: true
+filters:
+  - custom-numbered-blocks
+custom-numbered-blocks:
+  classes:
+    Assumption:
+      colors: [FFCDD2, F44336]
+      boxstyle: foldbox.simple
+      collapse: false
+    Example:
+      colors: [BBDEFB, 2196F3]
+      boxstyle: foldbox.simple
+      collapse: false
+    Exercise:
+      colors: [C8E6C9, 4CAF50]
+      boxstyle: foldbox.simple
+      collapse: false
+    Note:
+      colors: [FFF9C4, FFEB3B]
+      boxstyle: foldbox.simple
+      collapse: false
+    Key-point:
+      colors: [FFF9C4, FFEB3B]
+      boxstyle: foldbox.simple
+      collapse: false
+    Key-term:
+      colors: [FFF9C4, FFEB3B]
+      boxstyle: foldbox.simple
+      collapse: false
+---
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+{{< include ./_extensions/r-wasm/live/_gradethis.qmd >}}
+
+```{webr fitting-exercises-setup}
+#| include: false
+#| envir: ex_fit
+fit_ex <- glm(am ~ wt + hp, data = mtcars, family = binomial)
+```
+
+# Fitting Logistic Regression Models {#sec-fitting}
+
+## Maximum likelihood estimation
+
+Logistic regression parameters are typically estimated by *maximum likelihood*. In R, `glm(..., family = binomial)` fits logistic regression models using likelihood-based methods.
+
+```{r fitting-loglik}
+fit_wt <- glm(am ~ wt, data = mtcars, family = binomial)
+logLik(fit_wt)
+```
+
+## Fitting a model in R
+
+```{r fitting-first-model}
+fit_wt <- glm(am ~ wt, data = mtcars, family = binomial)
+summary(fit_wt)
+```
+
+::: Key-point
+Coefficients are on the **log-odds** scale. To interpret them as **odds ratios**, exponentiate with `exp()`.
+:::
+
+## Interpreting coefficients
+
+```{r fitting-coefs}
+fit_ex <- glm(am ~ wt + hp, data = mtcars, family = binomial)
+coef(fit_ex)
+exp(coef(fit_ex))
+```
+
+::: Exercise
+Compute the odds ratio for `wt` and store it as `or_wt`.
+
+```{webr fitting-odds-exercise}
+#| exercise: ex_fit_1
+#| envir: ex_fit
+or_wt <- ______
+```
+
+:::: {.solution exercise="ex_fit_1"}
+```{webr fitting-odds-exercise-solution}
+#| exercise: ex_fit_1
+#| solution: true
+or_wt <- exp(coef(fit_ex)["wt"])
+or_wt
+```
+::::
+```{webr fitting-odds-exercise-check}
+#| exercise: ex_fit_1
+#| envir: ex_fit
+#| check: true
+#| class: wait
+grade_this({
+  if (!exists("or_wt")) {
+    fail("Define `or_wt` and try again.")
+  }
+  target <- exp(coef(fit_ex)["wt"])
+  if (is.numeric(or_wt) && abs(or_wt - target) < 0.01) {
+    pass("Nice. That matches the odds ratio for weight.")
+  }
+  fail("Try `exp(coef(fit_ex)[\"wt\"])` and make sure `or_wt` is numeric.")
+})
+```
+:::
+
+## Inference in logistic regression
+
+For quick inference, you can use Wald tests from `summary()` and Wald confidence intervals via `confint.default()`.
+
+```{r fitting-inference}
+summary(fit_ex)
+confint.default(fit_ex)
+```
+
+## Categorical predictors
+
+```{r fitting-categorical}
+fit_cat <- glm(am ~ wt + factor(cyl), data = mtcars, family = binomial)
+summary(fit_cat)
+```
+
+When a predictor is a [factor]{.glossary term="Factor"}, coefficients compare each level to a reference level. Interpret them as odds ratios relative to that baseline.
+

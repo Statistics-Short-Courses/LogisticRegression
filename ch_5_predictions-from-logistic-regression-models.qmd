@@ -1,0 +1,178 @@
+---
+title: "Predictions from Logistic Regression Models"
+format:
+  live-html:
+    toc: true
+execute:
+  echo: true
+  warning: false
+  message: false
+embed-resources: true
+filters:
+  - custom-numbered-blocks
+custom-numbered-blocks:
+  classes:
+    Assumption:
+      colors: [FFCDD2, F44336]
+      boxstyle: foldbox.simple
+      collapse: false
+    Example:
+      colors: [BBDEFB, 2196F3]
+      boxstyle: foldbox.simple
+      collapse: false
+    Exercise:
+      colors: [C8E6C9, 4CAF50]
+      boxstyle: foldbox.simple
+      collapse: false
+    Note:
+      colors: [FFF9C4, FFEB3B]
+      boxstyle: foldbox.simple
+      collapse: false
+    Key-point:
+      colors: [FFF9C4, FFEB3B]
+      boxstyle: foldbox.simple
+      collapse: false
+    Key-term:
+      colors: [FFF9C4, FFEB3B]
+      boxstyle: foldbox.simple
+      collapse: false
+---
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+{{< include ./_extensions/r-wasm/live/_gradethis.qmd >}}
+
+```{r predictions-setup}
+#| include: false
+fit_full <- glm(am ~ wt + hp + factor(cyl), data = mtcars, family = binomial)
+prob <- predict(fit_full, type = "response")
+```
+
+```{webr predictions-exercises-setup}
+#| include: false
+#| envir: ex_pred
+fit_full <- glm(am ~ wt + hp + factor(cyl), data = mtcars, family = binomial)
+prob <- predict(fit_full, type = "response")
+actual_num <- mtcars$am
+```
+
+# Predictions from Logistic Regression Models {#sec-predictions}
+
+## Generating predicted probabilities
+
+```{r predictions-scenarios}
+fit <- glm(am ~ wt + hp, data = mtcars, family = binomial)
+new_cars <- data.frame(wt = c(2.2, 3.2, 3.8), hp = c(110, 110, 110))
+predict(fit, newdata = new_cars, type = "response")
+```
+
+You can also visualise how predicted probability changes with a predictor (holding other predictors constant).
+
+```{r predictions-curve}
+fit <- glm(am ~ wt + hp, data = mtcars, family = binomial)
+grid <- data.frame(
+  wt = seq(min(mtcars$wt), max(mtcars$wt), length.out = 50),
+  hp = mean(mtcars$hp)
+)
+grid$prob <- predict(fit, newdata = grid, type = "response")
+plot(grid$wt, grid$prob, type = "l", lwd = 2,
+     xlab = "Weight", ylab = "Predicted probability")
+```
+
+## Classification thresholds
+
+If you turn probabilities into classes (0/1), you need a threshold. Changing the threshold trades sensitivity against specificity.
+
+```{r predictions-confusion}
+threshold <- 0.5
+class_hat <- factor(ifelse(prob >= threshold, 1, 0), levels = c(0, 1))
+actual <- factor(mtcars$am, levels = c(0, 1))
+conf_mat <- table(Predicted = class_hat, Actual = actual)
+conf_mat
+```
+
+```{r predictions-metrics}
+true_pos <- conf_mat["1", "1"]
+true_neg <- conf_mat["0", "0"]
+false_pos <- conf_mat["1", "0"]
+false_neg <- conf_mat["0", "1"]
+
+accuracy <- (true_pos + true_neg) / sum(conf_mat)
+sensitivity <- true_pos / (true_pos + false_neg)
+specificity <- true_neg / (true_neg + false_pos)
+
+c(accuracy = accuracy, sensitivity = sensitivity, specificity = specificity)
+```
+
+## ROC curves and AUC
+
+```{r predictions-roc}
+roc_thresholds <- seq(1, 0, by = -0.02)
+actual <- factor(mtcars$am, levels = c(0, 1))
+actual_num <- as.integer(actual) - 1
+
+tpr <- sapply(roc_thresholds, function(t) {
+  pred <- ifelse(prob >= t, 1, 0)
+  tp <- sum(pred == 1 & actual_num == 1)
+  fn <- sum(pred == 0 & actual_num == 1)
+  tp / (tp + fn)
+})
+
+fpr <- sapply(roc_thresholds, function(t) {
+  pred <- ifelse(prob >= t, 1, 0)
+  fp <- sum(pred == 1 & actual_num == 0)
+  tn <- sum(pred == 0 & actual_num == 0)
+  fp / (fp + tn)
+})
+
+roc_df <- data.frame(fpr = fpr, tpr = tpr)
+roc_df <- roc_df[order(roc_df$fpr), ]
+
+plot(roc_df$fpr, roc_df$tpr, type = "l", lwd = 2,
+     xlab = "False positive rate", ylab = "True positive rate")
+abline(0, 1, lty = 3, col = "grey60")
+
+auc <- sum(diff(roc_df$fpr) * (head(roc_df$tpr, -1) + tail(roc_df$tpr, -1)) / 2)
+auc
+```
+
+::: Key-point
+AUC near 0.5 indicates random guessing, while values closer to 1 indicate stronger discrimination.
+:::
+
+::: Exercise
+Using a threshold of 0.6, compute the accuracy and store it as `accuracy_06`.
+
+```{webr predictions-accuracy-exercise}
+#| exercise: ex_pred_1
+#| envir: ex_pred
+threshold <- 0.6
+class_hat <- ifelse(prob >= threshold, 1, 0)
+accuracy_06 <- ______
+```
+
+:::: {.solution exercise="ex_pred_1"}
+```{webr predictions-accuracy-exercise-solution}
+#| exercise: ex_pred_1
+#| solution: true
+threshold <- 0.6
+class_hat <- ifelse(prob >= threshold, 1, 0)
+accuracy_06 <- mean(class_hat == actual_num)
+accuracy_06
+```
+::::
+```{webr predictions-accuracy-exercise-check}
+#| exercise: ex_pred_1
+#| envir: ex_pred
+#| check: true
+#| class: wait
+grade_this({
+  if (!exists("accuracy_06")) {
+    fail("Define `accuracy_06` and try again.")
+  }
+  target <- mean(ifelse(prob >= 0.6, 1, 0) == actual_num)
+  if (is.numeric(accuracy_06) && abs(accuracy_06 - target) < 0.001) {
+    pass("Nice. That matches the accuracy for a 0.6 threshold.")
+  }
+  fail("Use `mean(class_hat == actual_num)` to compute the accuracy.")
+})
+```
+:::

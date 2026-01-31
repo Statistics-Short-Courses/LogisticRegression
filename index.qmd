@@ -7,15 +7,17 @@ format: live-html
 
 ## Who this course is for
 
-This short course is for graduate learners who want an intuition-first introduction to logistic regression and the confidence to fit and interpret models in R. We keep the math light and focus on practical interpretation.
+This short course is for graduate learners who want an intuition-first introduction to logistic regression and the confidence to fit and interpret models in R.
 
 ## What you will learn
 
+- Understand the difference between linear and logistic regression.
 - Recognize when logistic regression is appropriate for binary outcomes.
 - Translate between probability, odds, and log-odds.
 - Fit logistic models in R with `glm()` and read the output.
 - Interpret coefficients as odds ratios and communicate effects clearly.
 - Assess model performance with likelihood measures and classification metrics.
+- Make predictions and evaluate classification accuracy.
 
 ## Prerequisites
 
@@ -24,13 +26,15 @@ This short course is for graduate learners who want an intuition-first introduct
 
 ## Course map
 
-- Module 1: Logistic regression fundamentals (outcomes, odds, logit, first model).
-- Module 2: Odds ratios and interpretation (effects, scenarios, categorical predictors).
-- Module 3: Model assessment and diagnostics (deviance, AIC, confusion matrix, thresholds).
-- Module 4: Extensions and mini case study (multivariable models, interactions, reporting).
+- Motivation: when to use logistic regression (and when linear regression fails).
+- Introduction to logistic regression (GLMs, odds/logit, logistic function).
+- Fitting logistic regression models (estimation, interpretation, inference).
+- Assessing model fit (deviance, model comparison, pseudo R-squared).
+- Predictions from logistic regression models (probabilities, thresholds, ROC/AUC).
+- Extensions and mini case study (optional: multivariable models, interactions, reporting).
 
 ## How to use this book
 
 - Each module introduces a compact set of concepts with worked R examples.
 - Follow the interpretation steps after each model fit and practice with the prompts.
-- The final module provides a reusable template for your own datasets.
+

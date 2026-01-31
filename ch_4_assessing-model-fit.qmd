@@ -1,0 +1,84 @@
+---
+title: "Assessing Model Fit"
+format:
+  live-html:
+    toc: true
+execute:
+  echo: true
+  warning: false
+  message: false
+embed-resources: true
+filters:
+  - custom-numbered-blocks
+custom-numbered-blocks:
+  classes:
+    Assumption:
+      colors: [FFCDD2, F44336]
+      boxstyle: foldbox.simple
+      collapse: false
+    Example:
+      colors: [BBDEFB, 2196F3]
+      boxstyle: foldbox.simple
+      collapse: false
+    Exercise:
+      colors: [C8E6C9, 4CAF50]
+      boxstyle: foldbox.simple
+      collapse: false
+    Note:
+      colors: [FFF9C4, FFEB3B]
+      boxstyle: foldbox.simple
+      collapse: false
+    Key-point:
+      colors: [FFF9C4, FFEB3B]
+      boxstyle: foldbox.simple
+      collapse: false
+    Key-term:
+      colors: [FFF9C4, FFEB3B]
+      boxstyle: foldbox.simple
+      collapse: false
+---
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+# Assessing Model Fit {#sec-assessing-fit}
+
+## Deviance
+
+Deviance compares a fitted model to a saturated model (perfect fit). Smaller deviance generally indicates better fit, and differences in deviance can be used for likelihood ratio tests.
+
+```{r assessing-deviance}
+fit_null <- glm(am ~ 1, data = mtcars, family = binomial)
+fit_full <- glm(am ~ wt + hp + factor(cyl), data = mtcars, family = binomial)
+
+anova(fit_null, fit_full, test = "Chisq")
+```
+
+::: Key-point
+Logistic regression does not use R-squared in the same way as linear regression. Model comparison is typically done with likelihood-based tools (deviance, likelihood ratio tests) and information criteria (AIC).
+:::
+
+## Goodness-of-fit tests
+
+Some goodness-of-fit tests (e.g., Hosmer–Lemeshow) require additional packages and choices about grouping. In practice, you should combine multiple checks:
+
+- Likelihood-based comparisons between nested models
+- Predictive performance (next chapter)
+- Residual and influence diagnostics for unusual points
+
+## Pseudo R-squared
+
+Pseudo R-squared measures (e.g., McFadden's) are based on likelihoods and are best used for *rough* comparisons rather than as a direct analogue of linear-model R-squared.
+
+```{r assessing-pseudo-r2}
+fit_null <- glm(am ~ 1, data = mtcars, family = binomial)
+fit_full <- glm(am ~ wt + hp + factor(cyl), data = mtcars, family = binomial)
+
+mcfadden_r2 <- 1 - as.numeric(logLik(fit_full) / logLik(fit_null))
+mcfadden_r2
+```
+
+## AIC
+
+```{r assessing-aic}
+AIC(fit_null, fit_full)
+```
+

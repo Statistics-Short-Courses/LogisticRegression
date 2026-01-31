@@ -1,0 +1,42 @@
+---
+title: "Motivation: When to Use Logistic Regression"
+format:
+  live-html:
+    toc: true
+execute:
+  echo: true
+  warning: false
+  message: false
+embed-resources: true
+---
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+# Motivation: When to Use Logistic Regression {#sec-motivation}
+
+## When linear regression is not appropriate
+
+Linear regression is designed for *continuous* outcomes. When the outcome is binary (0/1, yes/no), linear regression can:
+
+- Predict values outside the 0–1 range
+- Imply constant variance when variance actually depends on the mean
+- Produce errors that are strongly non-normal (especially near 0 and 1)
+
+## Examples of binary outcomes
+
+Binary outcomes show up in many applied settings:
+
+- Disease status (yes/no)
+- Admission (accepted/rejected)
+- Survival (alive/dead)
+- Purchase (bought/did not buy)
+
+## Why linear regression fails for binary outcomes
+
+With a binary outcome, the relationship between predictors and probability is typically nonlinear: the “same” change in a predictor cannot produce the same change in probability at every starting probability (e.g., you can’t increase a 0.95 probability by +0.2).
+
+Logistic regression fixes this by modeling a *linear* relationship on the log-odds (logit) scale, then converting back to the probability scale.
+
+## What logistic regression provides
+
+Logistic regression models the probability of an event while ensuring predictions stay between 0 and 1. It also supports effect interpretation via odds ratios and provides likelihood-based tools for inference and model assessment.
+
