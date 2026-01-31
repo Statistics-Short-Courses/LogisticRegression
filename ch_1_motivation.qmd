@@ -1,42 +1,190 @@
 ---
-title: "Motivation: When to Use Logistic Regression"
 format:
   live-html:
     toc: true
+
 execute:
-  echo: true
+  echo: false
   warning: false
   message: false
+
 embed-resources: true
+
+filters:
+  - custom-numbered-blocks
+
+custom-numbered-blocks:
+  classes:
+    Assumption:
+      colors: ["#FFCDD2", "#F44336"]
+      boxstyle: foldbox.simple
+      collapse: false
+      numbered: false
+    Example:
+      colors: ["#BBDEFB", "#2196F3"]
+      boxstyle: foldbox.simple
+      collapse: false
+    Exercise:
+      colors: ["#C8E6C9", "#4CAF50"]
+      boxstyle: foldbox.simple
+      collapse: false
+    Note:
+      colors: ["#FFF9C4", "#FFEB3B"]
+      boxstyle: foldbox.simple
+      collapse: false
+      numbered: false
+    Key-term:
+      colors: ["#D1C4E9", "#673AB7"]
+      boxstyle: foldbox.simple
+      collapse: false
+      numbered: false
+    Key-point:
+      colors: ["#FFF9C4", "#FFEB3B"]
+      boxstyle: foldbox.simple
+      collapse: false
+      numbered: false
+
+webr:
+  render-df: gt-interactive
+
+resources:
+  Data
 ---
+
 {{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
 
-# Motivation: When to Use Logistic Regression {#sec-motivation}
+```{r}
+library(readr)
+library(dplyr)
+```
 
-## When linear regression is not appropriate
+# Introduction to Logistic Regression
 
-Linear regression is designed for *continuous* outcomes. When the outcome is binary (0/1, yes/no), linear regression can:
+## Motivation: modeling binary outcomes {#sec-motivation}
 
-- Predict values outside the 0–1 range
-- Imply constant variance when variance actually depends on the mean
-- Produce errors that are strongly non-normal (especially near 0 and 1)
+In the Linear Regression Short Course (LRSC), we used a linear model to predict a variable Y from one or more predictors X. Something like this:
 
-## Examples of binary outcomes
+$$
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + ... + \epsilon
+$$
+
+In the cases we considered, Y was a [continuous variable]{.glossary} (e.g., salary, Naplan score, etc.), and the model described how the *expected value* of $Y$ changed as the predictors varied. 
+
+In many real-world situations, however, we want to predict an outcome that is not continuous. Instead, often our what we want to predict or explain is a *categorical variable*. The simplest and most common case is a *binary outcome* — that is, an outcome with only two possible categories (e.g. success/failure, yes/no, 0/1) [^ch_1_motivation-1].
+
+::: Example
+### A binary outcome: pass or fail
+
+Johno is a student studying for an important exam. He wants to understand how his study time affects his chances of passing the exam. To this end, he collects data on previous students' study times and whether they passed or failed the exam. Here is a sample of the data Johno collected:
+
+```{r}
+student_performance <- read_csv2("Data/student/student-mat.csv") |> 
+  mutate(pass_fail = if_else(G3 >= 10, "pass", "fail")) |> 
+  select(studytime, pass_fail) 
+
+student_performance
+```
+
+Johno wants to use this data to model the relationship between study time and the probability of passing the exam. He identifies his outcome variable, $Y$, as the binary variable indicating whether a student passed or failed the exam, and his predictor variable, $X$, as the amount of time spent studying. Therefore, Johno's goal is to produce a statistical model that predicts Y (pass/fail) based on X (study time): 
+$$
+Y = f(X) + \epsilon
+$$
+:::
+
+### From categories to probabilities
+
+To model a binary outcome statistically, we have to represent it as a [Random Variable]{.glossary} rather than just a label. We can do this by coding the two categories as $0$ and $1$[^ch_1_recall_dummy_variables]. For example, in Johno's case
+
+::: Example
+### Coding the binary outcome
+We can code the outcome variable $Y$ as follows:
+$$
+Y =
+\\begin{cases} 
+\\text{1} & \\text{if student passes the exam} \\\\
+\\text{0} & \\text{if student fails the exam}
+\\end{cases}
+$$ 
+
+in R, 
+
+```{r}
+student_performance <- student_performance |>
+  mutate(pass_fail_num = if_else(pass_fail == "pass", 1, 0))
+student_performance
+```
+:::
+
+[^ch_1_recall_dummy_variables]: The use of 0/1 coding for binary outcomes is similar to the use of *dummy variables* for categorical predictors in linear regression, where each category is represented by a separate binary variable coded as 0 or 1.
+
+
+
+::: Example
+### When linear regression is not appropriate
+
+Suppose we want to predict whether a student passes or fails a course based on their study hours and have obtained a dataset like this:
+
+```{r}
+student_performance <- read_csv2("Data/student/student-mat.csv") |> 
+  mutate(pass_fail = if_else(G3 >= 10, "pass", "fail")) |> 
+  select(studytime, pass_fail) 
+
+student_performance
+```
+
+Let's follow the steps we might take if we tried to use linear regression here. First, we convert the categorical outcome into a numeric 0/1 variable (remember: the mean of a 0/1 variable is a probability). As in previous courses, we can use 1 for "pass" and 0 for "fail":
+
+```{r}
+student_performance <- student_performance |> 
+  mutate(pass_fail_num = if_else(pass_fail == "pass", 1, 0))
+```
+
+Let's plot the data in a scatter plot with a fitted linear regression line:
+
+```{r}
+library(ggplot2)
+ggplot(student_performance, aes(x = studytime, y = pass_fail_num)) +
+  geom_jitter(height = 0.05, width = 0.1, alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE, color = "blue")+
+  labs(x = "Study Time", y = "Pass/Fail (1/0)")
+```
+
+(note the use of `geom_jitter()` to add some random noise to the points so they don't overlap exactly).
+
+How do we interpret the fitted line? Notice that for any of the study times in our data, the predicted value from the linear regression line is between 0 (fail) and 1(pass).
+
+```{r}
+model <- lm(pass_fail_num ~ studytime, data = student_performance)
+predicted_values <- predict(model, newdata = data.frame(studytime = unique(student_performance$studytime)))
+predicted_values  
+```
+
+This makes sense since the 'highest score' of any student in our dataset is 1 (i.e. a pass), and the 'lowest score' is 0 (a fail). No student has a predicted score of exactly 0 or 1, but the predicted values are between these two extremes. We might reasonably interpret the predicted value as the *probability* of passing the course given the study time (i.e. the coefficient for study time indicates how much the probability of passing increases for each additional hour of study time).
+
+For example, a student who studies for 2 hours has a predicted probability of passing of about `r predict(model, newdata = data.frame(studytime = 2))`, while a student who studies for 4 hours has a predicted probability of passing of about `r predict(model, newdata = data.frame(studytime = 4))`.
+
+However, the linear regression line can produce predicted values outside this range (less than 0 or greater than 1), which does not make sense for probabilities.
+
+For example, a student who studies for 0 hours has a predicted probability of passing of about `r predict(model, newdata = data.frame(studytime = 0))`, which is less than 0, and a student who studies for 10 hours has a predicted probability of passing of about `r predict(model, newdata = data.frame(studytime = 10))`, which is greater than 1. With a binary outcome, the relationship between predictors and probability is typically nonlinear: the “same” change in a predictor cannot produce the same change in probability at every starting probability (e.g., you can’t increase a 0.95 probability by +0.2).
+:::
+
+### Examples of binary outcomes
 
 Binary outcomes show up in many applied settings:
 
-- Disease status (yes/no)
-- Admission (accepted/rejected)
-- Survival (alive/dead)
-- Purchase (bought/did not buy)
+-   Disease status (yes/no)
+-   Admission (accepted/rejected)
+-   Survival (alive/dead)
+-   Purchase (bought/did not buy)
 
-## Why linear regression fails for binary outcomes
+### Why linear regression fails for binary outcomes
 
 With a binary outcome, the relationship between predictors and probability is typically nonlinear: the “same” change in a predictor cannot produce the same change in probability at every starting probability (e.g., you can’t increase a 0.95 probability by +0.2).
 
 Logistic regression fixes this by modeling a *linear* relationship on the log-odds (logit) scale, then converting back to the probability scale.
 
-## What logistic regression provides
+### What logistic regression provides
 
 Logistic regression models the probability of an event while ensuring predictions stay between 0 and 1. It also supports effect interpretation via odds ratios and provides likelihood-based tools for inference and model assessment.
 
+## Generalised Linear Models {#sec-glm}

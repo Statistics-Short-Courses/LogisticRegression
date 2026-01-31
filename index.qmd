@@ -7,7 +7,7 @@ format: live-html
 
 ## Who this course is for
 
-This short course is for graduate learners who want an intuition-first introduction to logistic regression and the confidence to fit and interpret models in R.
+If you have completed the Linear Regression Short Course, you have the foundation to build a wide range of statistical models for data analysis. However, linear regression is not suitable for all types of data, and it is common to encounter data in which the outcome variable is binary (e.g., success/failure, yes/no). Logistic regression is a powerful tool for modeling binary outcomes, and this course will guide you through its concepts and applications.
 
 ## What you will learn
 
@@ -26,15 +26,16 @@ This short course is for graduate learners who want an intuition-first introduct
 
 ## Course map
 
-- Motivation: when to use logistic regression (and when linear regression fails).
-- Introduction to logistic regression (GLMs, odds/logit, logistic function).
-- Fitting logistic regression models (estimation, interpretation, inference).
-- Assessing model fit (deviance, model comparison, pseudo R-squared).
-- Predictions from logistic regression models (probabilities, thresholds, ROC/AUC).
-- Extensions and mini case study (optional: multivariable models, interactions, reporting).
+- @sec-motivation when to use logistic regression (and when linear regression fails).
+- @sec-introduction (GLMs, odds/logit, logistic function).
+- @sec-fitting logistic regression models (estimation, interpretation, inference).
+- @sec-assessing model fit (deviance, model comparison, pseudo R-squared).
+- @sec-predictions from logistic regression models (probabilities, thresholds, ROC/AUC).
+- @sec-extensions and mini case study (optional: multivariable models, interactions, reporting).
 
 ## How to use this book
 
-- Each module introduces a compact set of concepts with worked R examples.
-- Follow the interpretation steps after each model fit and practice with the prompts.
+- The course is designed to be completed sequentially: successive chapters build on prior concepts. However, it is possible to jump to specific sections as needed.
+- There is a glossary at the end for quick reference of key terms.
+- Each chapter includes excersises which should be attempted before continuing. 
 
