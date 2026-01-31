@@ -6,5 +6,6 @@
 /.quarto/
 
 .Datasets
+.Resources/
 
 **/*.quarto_ipynb
