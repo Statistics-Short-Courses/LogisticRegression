@@ -14,7 +14,7 @@
     "href": "index.html#what-you-will-learn",
     "title": "Logistic Regression with R",
     "section": "What you will learn",
-    "text": "What you will learn\n\nDescribe when logistic regression is appropriate for binary and categorical outcomes.\nInterpret odds, odds ratios, and predicted probabilities.\nFit logistic models in R using glm() with the binomial family.\nAssess model fit with likelihood-based measures and classification diagnostics.\nCommunicate results with clear effect summaries and visualizations.",
+    "text": "What you will learn\n\nRecognize when logistic regression is appropriate for binary outcomes.\nTranslate between probability, odds, and log-odds.\nFit logistic models in R with glm() and read the output.\nInterpret coefficients as odds ratios and communicate effects clearly.\nAssess model performance with likelihood measures and classification metrics.",
     "crumbs": [
       "Course Overview"
     ]
@@ -24,7 +24,7 @@
     "href": "index.html#how-to-use-this-book",
     "title": "Logistic Regression with R",
     "section": "How to use this book",
-    "text": "How to use this book\n\nEach chapter is a short module with a focused set of concepts and practice prompts.\nCode examples use built-in R datasets so you can run them immediately.\nThe final module shows a compact end-to-end workflow on a realistic classification task.",
+    "text": "How to use this book\n\nEach module introduces a compact set of concepts with worked R examples.\nFollow the interpretation steps after each model fit and practice with the prompts.\nThe final module provides a reusable template for your own datasets.",
     "crumbs": [
       "Course Overview"
     ]
@@ -34,7 +34,7 @@
     "href": "module01-logistic-fundamentals.html",
     "title": "1  Module 1: Logistic Regression Fundamentals",
     "section": "",
-    "text": "1.1 Learning outcomes",
+    "text": "2 Logistic Regression Fundamentals",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 1: Logistic Regression Fundamentals</span>"
     ]
@@ -43,8 +43,8 @@
     "objectID": "module01-logistic-fundamentals.html#learning-outcomes",
     "href": "module01-logistic-fundamentals.html#learning-outcomes",
     "title": "1  Module 1: Logistic Regression Fundamentals",
-    "section": "",
-    "text": "Identify response variables suited to logistic regression.\nExplain the link between probability, odds, and the logit function.\nFit a basic logistic model in R.",
+    "section": "2.1 Learning outcomes",
+    "text": "2.1 Learning outcomes\n\nIdentify research questions suited to logistic regression.\nUnderstang the ‘Generalized Linear Model’ framework, and how this extends linear regression.\nExplain how probabilities map to odds and the logit scale.\nFit a basic logistic regression in R and generate predictions.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 1: Logistic Regression Fundamentals</span>"
     ]
@@ -73,8 +73,8 @@
     "objectID": "module01-logistic-fundamentals.html#practice-prompts",
     "href": "module01-logistic-fundamentals.html#practice-prompts",
     "title": "1  Module 1: Logistic Regression Fundamentals",
-    "section": "1.4 Practice prompts",
-    "text": "1.4 Practice prompts\n\nWhat does a positive slope on wt imply for the probability of a manual transmission?\nHow would you describe the model in one sentence to a non-technical audience?",
+    "section": "2.7 Practice prompts",
+    "text": "2.7 Practice prompts\n\nInterpret the sign of the wt coefficient in one sentence.\nPredict the probability of a manual transmission for a car weighing 3.2.\nFit the model with hp as the predictor instead of wt. How does the fit change?",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 1: Logistic Regression Fundamentals</span>"
     ]
@@ -84,7 +84,7 @@
     "href": "module02-odds-interpretation.html",
     "title": "2  Module 2: Odds, Odds Ratios, and Interpretation",
     "section": "",
-    "text": "2.1 Learning outcomes",
+    "text": "3 Odds Ratios and Interpretation",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Module 2: Odds, Odds Ratios, and Interpretation</span>"
     ]
@@ -93,8 +93,8 @@
     "objectID": "module02-odds-interpretation.html#learning-outcomes",
     "href": "module02-odds-interpretation.html#learning-outcomes",
     "title": "2  Module 2: Odds, Odds Ratios, and Interpretation",
-    "section": "",
-    "text": "Convert between probabilities and odds.\nInterpret logistic regression coefficients as odds ratios.\nGenerate predicted probabilities for new cases.",
+    "section": "3.1 Learning outcomes",
+    "text": "3.1 Learning outcomes\n\nInterpret coefficients as odds ratios.\nExplain why logistic effects are nonlinear on the probability scale.\nGenerate scenario-based predictions for communication.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Module 2: Odds, Odds Ratios, and Interpretation</span>"
     ]
@@ -123,8 +123,8 @@
     "objectID": "module02-odds-interpretation.html#practice-prompts",
     "href": "module02-odds-interpretation.html#practice-prompts",
     "title": "2  Module 2: Odds, Odds Ratios, and Interpretation",
-    "section": "2.4 Practice prompts",
-    "text": "2.4 Practice prompts\n\nHow do the odds change when weight increases by 0.5?\nWhy is it misleading to interpret logistic coefficients directly on the probability scale?",
+    "section": "3.6 Practice prompts",
+    "text": "3.6 Practice prompts\n\nInterpret exp(coef(fit)[\"wt\"]) in plain language.\nHow does the predicted probability change between weights 2.2 and 3.8 in the curve above?\nFit a model with factor(gear) instead of factor(cyl). Which baseline does R pick?",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Module 2: Odds, Odds Ratios, and Interpretation</span>"
     ]
@@ -134,7 +134,7 @@
     "href": "module03-model-assessment.html",
     "title": "3  Module 3: Model Assessment and Diagnostics",
     "section": "",
-    "text": "3.1 Learning outcomes",
+    "text": "4 Model Assessment and Diagnostics",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Module 3: Model Assessment and Diagnostics</span>"
     ]
@@ -143,8 +143,8 @@
     "objectID": "module03-model-assessment.html#learning-outcomes",
     "href": "module03-model-assessment.html#learning-outcomes",
     "title": "3  Module 3: Model Assessment and Diagnostics",
-    "section": "",
-    "text": "Use likelihood-based measures to compare models.\nBuild a confusion matrix from predicted probabilities.\nExplain sensitivity, specificity, and accuracy.",
+    "section": "4.1 Learning outcomes",
+    "text": "4.1 Learning outcomes\n\nCompare models using likelihood-based measures.\nBuild a confusion matrix and compute key classification metrics.\nExplain how thresholds affect sensitivity and specificity.",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Module 3: Model Assessment and Diagnostics</span>"
     ]
@@ -173,8 +173,8 @@
     "objectID": "module03-model-assessment.html#practice-prompts",
     "href": "module03-model-assessment.html#practice-prompts",
     "title": "3  Module 3: Model Assessment and Diagnostics",
-    "section": "3.4 Practice prompts",
-    "text": "3.4 Practice prompts\n\nHow would you pick a threshold other than 0.5?\nWhat trade-offs exist between sensitivity and specificity?",
+    "section": "4.7 Practice prompts",
+    "text": "4.7 Practice prompts\n\nCompare fit_full to a model with only wt. How does the AIC change?\nTry thresholds 0.4 and 0.6. Which metric moves most?\nWhat would you prioritise: sensitivity or specificity? Explain why.",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Module 3: Model Assessment and Diagnostics</span>"
     ]
@@ -184,7 +184,7 @@
     "href": "module04-extensions-case-study.html",
     "title": "4  Module 4: Extensions and a Mini Case Study",
     "section": "",
-    "text": "4.1 Learning outcomes",
+    "text": "5 Extensions and a Mini Case Study",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Module 4: Extensions and a Mini Case Study</span>"
     ]
@@ -193,8 +193,8 @@
     "objectID": "module04-extensions-case-study.html#learning-outcomes",
     "href": "module04-extensions-case-study.html#learning-outcomes",
     "title": "4  Module 4: Extensions and a Mini Case Study",
-    "section": "",
-    "text": "Fit multivariable logistic models with categorical predictors.\nInclude interaction terms when effects vary by group.\nSummarize a model as probabilities for target scenarios.",
+    "section": "5.1 Learning outcomes",
+    "text": "5.1 Learning outcomes\n\nFit multivariable logistic models with categorical predictors.\nUse interactions when effects differ by group.\nSummarize results as predicted probabilities for realistic scenarios.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Module 4: Extensions and a Mini Case Study</span>"
     ]
@@ -223,10 +223,230 @@
     "objectID": "module04-extensions-case-study.html#practice-prompts",
     "href": "module04-extensions-case-study.html#practice-prompts",
     "title": "4  Module 4: Extensions and a Mini Case Study",
-    "section": "4.4 Practice prompts",
-    "text": "4.4 Practice prompts\n\nWhich predictors are most influential for identifying Setosa?\nWhat extra checks would you add before deploying this model?",
+    "section": "5.7 Practice prompts",
+    "text": "5.7 Practice prompts\n\nFit the model with factor(gear) instead of factor(cyl). What changes?\nCompare predictions from fit_multi and fit_interaction for the same scenario.\nDraft a one-paragraph summary for a non-technical audience.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Module 4: Extensions and a Mini Case Study</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#who-this-course-is-for",
+    "href": "index.html#who-this-course-is-for",
+    "title": "Logistic Regression with R",
+    "section": "Who this course is for",
+    "text": "Who this course is for\nThis short course is for graduate learners who want an intuition-first introduction to logistic regression and the confidence to fit and interpret models in R. We keep the math light and focus on practical interpretation.",
+    "crumbs": [
+      "Course Overview"
+    ]
+  },
+  {
+    "objectID": "index.html#prerequisites",
+    "href": "index.html#prerequisites",
+    "title": "Logistic Regression with R",
+    "section": "Prerequisites",
+    "text": "Prerequisites\n\nYou have completed the Linear Regression short course (or equivalent).\nYou can run basic R scripts and read simple model summaries.",
+    "crumbs": [
+      "Course Overview"
+    ]
+  },
+  {
+    "objectID": "index.html#course-map",
+    "href": "index.html#course-map",
+    "title": "Logistic Regression with R",
+    "section": "Course map",
+    "text": "Course map\n\nModule 1: Logistic regression fundamentals (outcomes, odds, logit, first model).\nModule 2: Odds ratios and interpretation (effects, scenarios, categorical predictors).\nModule 3: Model assessment and diagnostics (deviance, AIC, confusion matrix, thresholds).\nModule 4: Extensions and mini case study (multivariable models, interactions, reporting).",
+    "crumbs": [
+      "Course Overview"
+    ]
+  },
+  {
+    "objectID": "module02-odds-interpretation.html#coefficients-and-odds-ratios",
+    "href": "module02-odds-interpretation.html#coefficients-and-odds-ratios",
+    "title": "2  Module 2: Odds, Odds Ratios, and Interpretation",
+    "section": "3.2 Coefficients and odds ratios",
+    "text": "3.2 Coefficients and odds ratios\nLogistic regression coefficients are changes in log-odds. Exponentiating a coefficient gives an odds ratio.\n\nfit &lt;- glm(am ~ wt + hp, data = mtcars, family = binomial)\ncoef(fit)\n\n(Intercept)          wt          hp \n 18.8662987  -8.0834752   0.0362556 \n\nexp(coef(fit))\n\n (Intercept)           wt           hp \n1.561455e+08 3.085967e-04 1.036921e+00 \n\n\n\nKey-point 1exp(beta) is the multiplicative change in odds for a one-unit increase in a predictor, holding others constant.\n\n\n\nExercise 1\nCompute the odds ratio for wt and store it as or_wt.\n\n\n\n\n\n\n\n\n\n\n\nor_wt &lt;- exp(coef(fit)[\"wt\"])\nor_wt\nor_wt &lt;- exp(coef(fit)[\"wt\"])\nor_wt",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Module 2: Odds, Odds Ratios, and Interpretation</span>"
+    ]
+  },
+  {
+    "objectID": "module02-odds-interpretation.html#odds-ratios-are-not-probability-differences",
+    "href": "module02-odds-interpretation.html#odds-ratios-are-not-probability-differences",
+    "title": "2  Module 2: Odds, Odds Ratios, and Interpretation",
+    "section": "3.3 Odds ratios are not probability differences",
+    "text": "3.3 Odds ratios are not probability differences\nA fixed change in log-odds produces different changes in probability depending on the starting point.\n\np &lt;- c(0.1, 0.2, 0.4)\nodds &lt;- p / (1 - p)\ncbind(p = p, odds = odds)\n\n       p      odds\n[1,] 0.1 0.1111111\n[2,] 0.2 0.2500000\n[3,] 0.4 0.6666667\n\n\n\nNote 1Odds ratios can look large even when the absolute probability change is modest. Always translate to predicted probabilities for interpretation.\n\n\n\nContinue",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Module 2: Odds, Odds Ratios, and Interpretation</span>"
+    ]
+  },
+  {
+    "objectID": "module02-odds-interpretation.html#scenario-based-predictions",
+    "href": "module02-odds-interpretation.html#scenario-based-predictions",
+    "title": "2  Module 2: Odds, Odds Ratios, and Interpretation",
+    "section": "3.4 Scenario-based predictions",
+    "text": "3.4 Scenario-based predictions\n\nnew_cars &lt;- data.frame(wt = c(2.2, 3.2, 3.8), hp = c(110, 110, 110))\npredict(fit, newdata = new_cars, type = \"response\")\n\n           1            2            3 \n0.9937615708 0.0468551348 0.0003846502 \n\n\nYou can also visualize how the probability changes with weight while holding horsepower constant.\n\ngrid &lt;- data.frame(\n  wt = seq(min(mtcars$wt), max(mtcars$wt), length.out = 50),\n  hp = mean(mtcars$hp)\n)\ngrid$prob &lt;- predict(fit, newdata = grid, type = \"response\")\nplot(grid$wt, grid$prob, type = \"l\", lwd = 2,\n     xlab = \"Weight\", ylab = \"Predicted probability\")\n\n\n\n\n\n\n\n\n\nExercise 2\nCompute the predicted probability for a car with weight 3.0 and horsepower 110. Store it as p_case.\n\n\n\n\n\n\n\n\n\n\n\nnew_case &lt;- data.frame(wt = 3.0, hp = 110)\np_case &lt;- predict(fit, newdata = new_case, type = \"response\")\np_case\nnew_case &lt;- data.frame(wt = 3.0, hp = 110)\np_case &lt;- predict(fit, newdata = new_case, type = \"response\")\np_case",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Module 2: Odds, Odds Ratios, and Interpretation</span>"
+    ]
+  },
+  {
+    "objectID": "module02-odds-interpretation.html#categorical-predictors",
+    "href": "module02-odds-interpretation.html#categorical-predictors",
+    "title": "2  Module 2: Odds, Odds Ratios, and Interpretation",
+    "section": "3.5 Categorical predictors",
+    "text": "3.5 Categorical predictors\n\nfit_cat &lt;- glm(am ~ wt + factor(cyl), data = mtcars, family = binomial)\nsummary(fit_cat)\n\n\nCall:\nglm(formula = am ~ wt + factor(cyl), family = binomial, data = mtcars)\n\nCoefficients:\n             Estimate Std. Error z value Pr(&gt;|z|)   \n(Intercept)    20.853      8.032   2.596  0.00942 **\nwt             -7.859      3.055  -2.573  0.01009 * \nfactor(cyl)6    3.105      2.425   1.280  0.20042   \nfactor(cyl)8    5.379      3.201   1.681  0.09281 . \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 43.230  on 31  degrees of freedom\nResidual deviance: 14.661  on 28  degrees of freedom\nAIC: 22.661\n\nNumber of Fisher Scoring iterations: 7\n\n\nWhen a predictor is a factor, coefficients compare each level to a reference level. Interpret them as odds ratios relative to that baseline.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Module 2: Odds, Odds Ratios, and Interpretation</span>"
+    ]
+  },
+  {
+    "objectID": "module03-model-assessment.html#likelihood-deviance-and-aic",
+    "href": "module03-model-assessment.html#likelihood-deviance-and-aic",
+    "title": "3  Module 3: Model Assessment and Diagnostics",
+    "section": "4.2 Likelihood, deviance, and AIC",
+    "text": "4.2 Likelihood, deviance, and AIC\n\nfit_null &lt;- glm(am ~ 1, data = mtcars, family = binomial)\nfit_full &lt;- glm(am ~ wt + hp + factor(cyl), data = mtcars, family = binomial)\n\nanova(fit_null, fit_full, test = \"Chisq\")\n\nAnalysis of Deviance Table\n\nModel 1: am ~ 1\nModel 2: am ~ wt + hp + factor(cyl)\n  Resid. Df Resid. Dev Df Deviance  Pr(&gt;Chi)    \n1        31     43.230                          \n2        27      7.255  4   35.974 2.929e-07 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nAIC(fit_null, fit_full)\n\n         df      AIC\nfit_null  1 45.22973\nfit_full  5 17.25537\n\n\n\nKey-point 1Logistic regression does not use R-squared. Instead, compare models with deviance and information criteria like AIC.\n\n\n\nContinue",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Module 3: Model Assessment and Diagnostics</span>"
+    ]
+  },
+  {
+    "objectID": "module03-model-assessment.html#confusion-matrix-and-metrics",
+    "href": "module03-model-assessment.html#confusion-matrix-and-metrics",
+    "title": "3  Module 3: Model Assessment and Diagnostics",
+    "section": "4.3 Confusion matrix and metrics",
+    "text": "4.3 Confusion matrix and metrics\n\nprob &lt;- predict(fit_full, type = \"response\")\nthreshold &lt;- 0.5\nclass_hat &lt;- factor(ifelse(prob &gt;= threshold, 1, 0), levels = c(0, 1))\nactual &lt;- factor(mtcars$am, levels = c(0, 1))\nconf_mat &lt;- table(Predicted = class_hat, Actual = actual)\nconf_mat\n\n         Actual\nPredicted  0  1\n        0 18  1\n        1  1 12\n\ntrue_pos &lt;- conf_mat[\"1\", \"1\"]\ntrue_neg &lt;- conf_mat[\"0\", \"0\"]\nfalse_pos &lt;- conf_mat[\"1\", \"0\"]\nfalse_neg &lt;- conf_mat[\"0\", \"1\"]\n\naccuracy &lt;- (true_pos + true_neg) / sum(conf_mat)\nsensitivity &lt;- true_pos / (true_pos + false_neg)\nspecificity &lt;- true_neg / (true_neg + false_pos)\n\nc(accuracy = accuracy, sensitivity = sensitivity, specificity = specificity)\n\n   accuracy sensitivity specificity \n  0.9375000   0.9230769   0.9473684",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Module 3: Model Assessment and Diagnostics</span>"
+    ]
+  },
+  {
+    "objectID": "module03-model-assessment.html#threshold-trade-offs",
+    "href": "module03-model-assessment.html#threshold-trade-offs",
+    "title": "3  Module 3: Model Assessment and Diagnostics",
+    "section": "4.4 Threshold trade-offs",
+    "text": "4.4 Threshold trade-offs\n\nthresholds &lt;- c(0.3, 0.5, 0.7)\nmetrics &lt;- lapply(thresholds, function(t) {\n  actual &lt;- factor(mtcars$am, levels = c(0, 1))\n  class_hat &lt;- factor(ifelse(prob &gt;= t, 1, 0), levels = c(0, 1))\n  conf_mat &lt;- table(Predicted = class_hat, Actual = actual)\n  tp &lt;- conf_mat[\"1\", \"1\"]\n  tn &lt;- conf_mat[\"0\", \"0\"]\n  fp &lt;- conf_mat[\"1\", \"0\"]\n  fn &lt;- conf_mat[\"0\", \"1\"]\n  c(accuracy = (tp + tn) / sum(conf_mat),\n    sensitivity = tp / (tp + fn),\n    specificity = tn / (tn + fp))\n})\nmetrics\n\n[[1]]\n   accuracy sensitivity specificity \n  0.9687500   1.0000000   0.9473684 \n\n[[2]]\n   accuracy sensitivity specificity \n  0.9375000   0.9230769   0.9473684 \n\n[[3]]\n   accuracy sensitivity specificity \n  0.9375000   0.9230769   0.9473684 \n\n\n\nNote 1Lower thresholds increase sensitivity but usually reduce specificity. The right choice depends on the problem context.\n\n\n\nExercise 1\nUsing a threshold of 0.6, compute the accuracy and store it as accuracy_06.\n\n\n\n\n\n\n\n\n\n\n\nthreshold &lt;- 0.6\nclass_hat &lt;- ifelse(prob &gt;= threshold, 1, 0)\naccuracy_06 &lt;- mean(class_hat == actual_num)\naccuracy_06\nthreshold &lt;- 0.6\nclass_hat &lt;- ifelse(prob &gt;= threshold, 1, 0)\naccuracy_06 &lt;- mean(class_hat == actual_num)\naccuracy_06",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Module 3: Model Assessment and Diagnostics</span>"
+    ]
+  },
+  {
+    "objectID": "module03-model-assessment.html#roc-curve-and-auc",
+    "href": "module03-model-assessment.html#roc-curve-and-auc",
+    "title": "3  Module 3: Model Assessment and Diagnostics",
+    "section": "4.5 ROC curve and AUC",
+    "text": "4.5 ROC curve and AUC\n\nroc_thresholds &lt;- seq(1, 0, by = -0.02)\nactual_num &lt;- as.integer(actual) - 1\n\ntpr &lt;- sapply(roc_thresholds, function(t) {\n  pred &lt;- ifelse(prob &gt;= t, 1, 0)\n  tp &lt;- sum(pred == 1 & actual_num == 1)\n  fn &lt;- sum(pred == 0 & actual_num == 1)\n  tp / (tp + fn)\n})\n\nfpr &lt;- sapply(roc_thresholds, function(t) {\n  pred &lt;- ifelse(prob &gt;= t, 1, 0)\n  fp &lt;- sum(pred == 1 & actual_num == 0)\n  tn &lt;- sum(pred == 0 & actual_num == 0)\n  fp / (fp + tn)\n})\n\nroc_df &lt;- data.frame(fpr = fpr, tpr = tpr)\nroc_df &lt;- roc_df[order(roc_df$fpr), ]\n\nplot(roc_df$fpr, roc_df$tpr, type = \"l\", lwd = 2,\n     xlab = \"False positive rate\", ylab = \"True positive rate\")\nabline(0, 1, lty = 3, col = \"grey60\")\n\n\n\n\n\n\n\nauc &lt;- sum(diff(roc_df$fpr) * (head(roc_df$tpr, -1) + tail(roc_df$tpr, -1)) / 2)\nauc\n\n[1] 0.9878543\n\n\n\nKey-point 2AUC near 0.5 indicates random guessing, while values closer to 1 indicate stronger discrimination.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Module 3: Model Assessment and Diagnostics</span>"
+    ]
+  },
+  {
+    "objectID": "module03-model-assessment.html#diagnostics-and-common-pitfalls",
+    "href": "module03-model-assessment.html#diagnostics-and-common-pitfalls",
+    "title": "3  Module 3: Model Assessment and Diagnostics",
+    "section": "4.6 Diagnostics and common pitfalls",
+    "text": "4.6 Diagnostics and common pitfalls\n\nSeparation can make estimates unstable or infinite.\nClass imbalance can inflate accuracy even when a model is poor.\nThe log-odds should be approximately linear in continuous predictors.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Module 3: Model Assessment and Diagnostics</span>"
+    ]
+  },
+  {
+    "objectID": "module04-extensions-case-study.html#multivariable-logistic-regression",
+    "href": "module04-extensions-case-study.html#multivariable-logistic-regression",
+    "title": "4  Module 4: Extensions and a Mini Case Study",
+    "section": "5.2 Multivariable logistic regression",
+    "text": "5.2 Multivariable logistic regression\n\nfit_multi &lt;- glm(am ~ wt + hp + factor(cyl), data = mtcars, family = binomial)\nsummary(fit_multi)\n\n\nCall:\nglm(formula = am ~ wt + hp + factor(cyl), family = binomial, \n    data = mtcars)\n\nCoefficients:\n              Estimate Std. Error z value Pr(&gt;|z|)  \n(Intercept)   18.09383    9.46271   1.912   0.0559 .\nwt           -10.67598    5.44182  -1.962   0.0498 *\nhp             0.10321    0.09606   1.074   0.2826  \nfactor(cyl)6   2.76575    3.15679   0.876   0.3810  \nfactor(cyl)8  -8.38896   13.16709  -0.637   0.5240  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 43.2297  on 31  degrees of freedom\nResidual deviance:  7.2554  on 27  degrees of freedom\nAIC: 17.255\n\nNumber of Fisher Scoring iterations: 9\n\n\n\nKey-point 1Each coefficient is a partial effect on the log-odds scale, holding the other predictors constant.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Module 4: Extensions and a Mini Case Study</span>"
+    ]
+  },
+  {
+    "objectID": "module04-extensions-case-study.html#interactions-for-subgroup-effects",
+    "href": "module04-extensions-case-study.html#interactions-for-subgroup-effects",
+    "title": "4  Module 4: Extensions and a Mini Case Study",
+    "section": "5.3 Interactions for subgroup effects",
+    "text": "5.3 Interactions for subgroup effects\nIf the effect of a predictor changes across groups, use an interaction term.\n\nfit_interaction &lt;- glm(am ~ wt * factor(cyl), data = mtcars, family = binomial)\nsummary(fit_interaction)\n\n\nCall:\nglm(formula = am ~ wt * factor(cyl), family = binomial, data = mtcars)\n\nCoefficients:\n                 Estimate Std. Error z value Pr(&gt;|z|)  \n(Intercept)        13.758      7.787   1.767   0.0773 .\nwt                 -5.116      2.984  -1.714   0.0865 .\nfactor(cyl)6      313.415  71542.593   0.004   0.9965  \nfactor(cyl)8       14.544     22.810   0.638   0.5237  \nwt:factor(cyl)6  -102.300  23338.031  -0.004   0.9965  \nwt:factor(cyl)8    -3.340      6.854  -0.487   0.6261  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 43.230  on 31  degrees of freedom\nResidual deviance: 12.593  on 26  degrees of freedom\nAIC: 24.593\n\nNumber of Fisher Scoring iterations: 19",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Module 4: Extensions and a Mini Case Study</span>"
+    ]
+  },
+  {
+    "objectID": "module04-extensions-case-study.html#communicating-results-with-scenarios",
+    "href": "module04-extensions-case-study.html#communicating-results-with-scenarios",
+    "title": "4  Module 4: Extensions and a Mini Case Study",
+    "section": "5.4 Communicating results with scenarios",
+    "text": "5.4 Communicating results with scenarios\n\nnew_cars &lt;- data.frame(\n  wt = c(2.4, 3.2),\n  hp = c(100, 150),\n  cyl = factor(c(4, 6))\n)\n\npredict(fit_multi, newdata = new_cars, type = \"response\")\n\n        1         2 \n0.9422625 0.8982382",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Module 4: Extensions and a Mini Case Study</span>"
+    ]
+  },
+  {
+    "objectID": "module04-extensions-case-study.html#mini-case-study-template-dataset-to-be-added",
+    "href": "module04-extensions-case-study.html#mini-case-study-template-dataset-to-be-added",
+    "title": "4  Module 4: Extensions and a Mini Case Study",
+    "section": "5.5 Mini case study template (dataset to be added)",
+    "text": "5.5 Mini case study template (dataset to be added)\nUse this checklist to structure the final case study once the dataset is chosen.\n\nDefine the outcome variable and clarify what counts as an event.\nSummarize the baseline event rate and missing data.\nChoose a small set of predictors with clear interpretations.\nFit a logistic model and report odds ratios and predicted probabilities.\nEvaluate the model with an appropriate threshold and a confusion matrix.\nCommunicate results in plain language with scenario predictions.\n\n\nNote 1The final case study will be updated once the outcome variable is confirmed for the selected research dataset.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Module 4: Extensions and a Mini Case Study</span>"
+    ]
+  },
+  {
+    "objectID": "module04-extensions-case-study.html#reporting-template",
+    "href": "module04-extensions-case-study.html#reporting-template",
+    "title": "4  Module 4: Extensions and a Mini Case Study",
+    "section": "5.6 Reporting template",
+    "text": "5.6 Reporting template\nUse this outline to write up results in plain language.\n\nOutcome definition, sample size, and event rate.\nModel specification (predictors and reference levels).\nKey effects as odds ratios with a short interpretation.\nPredicted probabilities for 2 to 3 realistic scenarios.\nPerformance summary (threshold, confusion matrix metrics, AUC).\nLimitations and next steps.\n\nTemplate paragraph:\n“We modeled [outcome] using logistic regression with predictors [list]. The event rate was [rate]. A one-unit increase in [predictor] was associated with [odds ratio] times the odds of the event, holding other variables constant. For a typical case ([scenario]), the predicted probability was [probability]. Using a threshold of [threshold], the model achieved [accuracy/sensitivity/specificity] and an AUC of [AUC]. Key limitations include [limitations].”",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Module 4: Extensions and a Mini Case Study</span>"
+    ]
+  },
+  {
+    "objectID": "module01-logistic-fundamentals.html#when-to-use-logistic-regression",
+    "href": "module01-logistic-fundamentals.html#when-to-use-logistic-regression",
+    "title": "1  Module 1: Logistic Regression Fundamentals",
+    "section": "2.2 When to use logistic regression",
+    "text": "2.2 When to use logistic regression\nLinear regression is a powerful tool for modelling continuous outcomes (blood pressure, weight, test scores). But what if your outcome is categorical?\nLogistic regression is used when the response variable is binary (0/1, yes/no, success/fail). It models the probability of an event while keeping predictions between 0 and 1.\n\nKey-point 1Logistic regression models the log-odds of an event as a linear function of predictors, then converts back to probability.\n\n\n\nAssumption 1Observations are independent, the outcome is binary, and the log-odds are approximately linear in the predictors.\n\n\n\n2.2.1 A simple example\nIn mtcars, the variable am indicates transmission type (0 = automatic, 1 = manual).\n\ntable(mtcars$am)\n\n\n 0  1 \n19 13 \n\nprop.table(table(mtcars$am))\n\n\n      0       1 \n0.59375 0.40625 \n\n\n\nContinue",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 1: Logistic Regression Fundamentals</span>"
+    ]
+  },
+  {
+    "objectID": "module01-logistic-fundamentals.html#from-probability-to-odds-and-logit",
+    "href": "module01-logistic-fundamentals.html#from-probability-to-odds-and-logit",
+    "title": "1  Module 1: Logistic Regression Fundamentals",
+    "section": "2.3 From probability to odds and logit",
+    "text": "2.3 From probability to odds and logit\nIf \\(p\\) is the probability of an event, the odds are \\[\n\\text{odds} = \\frac{p}{1 - p}\n\\] The logit is the log of the odds: \\[\n\\text{logit}(p) = \\log\\left(\\frac{p}{1 - p}\\right)\n\\]\n\np &lt;- 0.2\nodds &lt;- p / (1 - p)\nlogit &lt;- log(odds)\nc(p = p, odds = odds, logit = logit)\n\n        p      odds     logit \n 0.200000  0.250000 -1.386294 \n\n\n\nNote 1A change of 1 unit in the logit scale multiplies the odds by about 2.72 (because \\(e^1 \\approx 2.72\\)).",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 1: Logistic Regression Fundamentals</span>"
+    ]
+  },
+  {
+    "objectID": "module01-logistic-fundamentals.html#the-logistic-curve",
+    "href": "module01-logistic-fundamentals.html#the-logistic-curve",
+    "title": "1  Module 1: Logistic Regression Fundamentals",
+    "section": "2.4 The logistic curve",
+    "text": "2.4 The logistic curve\nThe logit scale is linear, but the probability scale is S-shaped. This is why logistic regression keeps predicted probabilities in the 0 to 1 range.\n\neta &lt;- seq(-6, 6, length.out = 200)\nplot(eta, plogis(eta), type = \"l\", lwd = 2,\n     xlab = \"Linear predictor (eta)\", ylab = \"Probability\")\nabline(h = c(0, 1), col = \"grey80\", lty = 3)\n\n\n\n\n\n\n\n\n\nContinue",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 1: Logistic Regression Fundamentals</span>"
+    ]
+  },
+  {
+    "objectID": "module01-logistic-fundamentals.html#fit-your-first-model-in-r",
+    "href": "module01-logistic-fundamentals.html#fit-your-first-model-in-r",
+    "title": "1  Module 1: Logistic Regression Fundamentals",
+    "section": "2.5 Fit your first model in R",
+    "text": "2.5 Fit your first model in R\n\nfit &lt;- glm(am ~ wt, data = mtcars, family = binomial)\nsummary(fit)\n\n\nCall:\nglm(formula = am ~ wt, family = binomial, data = mtcars)\n\nCoefficients:\n            Estimate Std. Error z value Pr(&gt;|z|)   \n(Intercept)   12.040      4.510   2.670  0.00759 **\nwt            -4.024      1.436  -2.801  0.00509 **\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 43.230  on 31  degrees of freedom\nResidual deviance: 19.176  on 30  degrees of freedom\nAIC: 23.176\n\nNumber of Fisher Scoring iterations: 6\n\n\nThe model estimates how car weight relates to the log-odds of a manual transmission.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 1: Logistic Regression Fundamentals</span>"
+    ]
+  },
+  {
+    "objectID": "module01-logistic-fundamentals.html#predicted-probabilities",
+    "href": "module01-logistic-fundamentals.html#predicted-probabilities",
+    "title": "1  Module 1: Logistic Regression Fundamentals",
+    "section": "2.6 Predicted probabilities",
+    "text": "2.6 Predicted probabilities\n\nnew_cars &lt;- data.frame(wt = c(2.2, 3.0, 3.8))\npredict(fit, newdata = new_cars, type = \"response\")\n\n         1          2          3 \n0.96036633 0.49211561 0.03730116 \n\n\n\nKey-point 2type = \"response\" returns predicted probabilities, not log-odds.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 1: Logistic Regression Fundamentals</span>"
     ]
   }
 ]
