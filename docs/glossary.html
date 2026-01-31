@@ -120,26 +120,38 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module01-logistic-fundamentals.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Module 1: Logistic Regression Fundamentals</span></span></a>
+  <a href="./ch_1_motivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Motivation: When to Use Logistic Regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module02-odds-interpretation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Module 2: Odds, Odds Ratios, and Interpretation</span></span></a>
+  <a href="./ch_2_introduction-to-logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to Logistic Regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module03-model-assessment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Module 3: Model Assessment and Diagnostics</span></span></a>
+  <a href="./ch_3_fitting-logistic-regression-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Fitting Logistic Regression Models</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module04-extensions-case-study.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Module 4: Extensions and a Mini Case Study</span></span></a>
+  <a href="./ch_4_assessing-model-fit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Assessing Model Fit</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch_5_predictions-from-logistic-regression-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictions from Logistic Regression Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch_6_extensions-case-study.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Module 4: Extensions and a Mini Case Study</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -179,7 +191,102 @@ ul.task-list li input[type="checkbox"] {
 
 
 <div id="glossary">
-
+<div id="glossary-logistic-regression" class="glossary-entry">
+<p><strong>Logistic regression</strong></p>
+<p>A regression model for binary outcomes that models the log-odds of an event as a linear function of predictors.</p>
+</div>
+<div id="glossary-binary-outcome" class="glossary-entry">
+<p><strong>Binary outcome</strong></p>
+<p>A response variable with two possible values, often coded as 0 and 1.</p>
+</div>
+<div id="glossary-probability" class="glossary-entry">
+<p><strong>Probability</strong></p>
+<p>A number between 0 and 1 that represents the chance of an event.</p>
+</div>
+<div id="glossary-odds" class="glossary-entry">
+<p><strong>Odds</strong></p>
+<p>The ratio of the probability of an event to the probability of it not occurring: p / (1 - p).</p>
+</div>
+<div id="glossary-logit" class="glossary-entry">
+<p><strong>Logit</strong></p>
+<p>The log of the odds: log(p / (1 - p)).</p>
+</div>
+<div id="glossary-link-function" class="glossary-entry">
+<p><strong>Link function</strong></p>
+<p>A function that connects the mean of the response to the linear predictor; for logistic regression the link is the logit.</p>
+</div>
+<div id="glossary-linear-predictor" class="glossary-entry">
+<p><strong>Linear predictor</strong></p>
+<p>The linear combination of predictors, for example beta0 + beta1 x.</p>
+</div>
+<div id="glossary-coefficient" class="glossary-entry">
+<p><strong>Coefficient</strong></p>
+<p>A model parameter that describes how a predictor changes the log-odds, holding other predictors constant.</p>
+</div>
+<div id="glossary-odds-ratio" class="glossary-entry">
+<p><strong>Odds ratio</strong></p>
+<p>The multiplicative change in odds for a one-unit increase in a predictor; exp(coefficient).</p>
+</div>
+<div id="glossary-predicted-probability" class="glossary-entry">
+<p><strong>Predicted probability</strong></p>
+<p>The model’s estimate of the probability of an event for a given set of predictors.</p>
+</div>
+<div id="glossary-likelihood" class="glossary-entry">
+<p><strong>Likelihood</strong></p>
+<p>A measure of how well a model explains the observed data; higher is better.</p>
+</div>
+<div id="glossary-deviance" class="glossary-entry">
+<p><strong>Deviance</strong></p>
+<p>A goodness-of-fit measure based on the likelihood; lower is better.</p>
+</div>
+<div id="glossary-akaike-information-criterion" class="glossary-entry">
+<p><strong>Akaike Information Criterion</strong></p>
+<p>A model comparison metric that balances fit and complexity; lower values indicate a preferred model among those compared.</p>
+</div>
+<div id="glossary-confusion-matrix" class="glossary-entry">
+<p><strong>Confusion matrix</strong></p>
+<p>A table of predicted versus actual outcomes used to summarize classification performance.</p>
+</div>
+<div id="glossary-sensitivity" class="glossary-entry">
+<p><strong>Sensitivity</strong></p>
+<p>The proportion of true positives correctly identified by the model.</p>
+</div>
+<div id="glossary-specificity" class="glossary-entry">
+<p><strong>Specificity</strong></p>
+<p>The proportion of true negatives correctly identified by the model.</p>
+</div>
+<div id="glossary-accuracy" class="glossary-entry">
+<p><strong>Accuracy</strong></p>
+<p>The proportion of all predictions that are correct.</p>
+</div>
+<div id="glossary-roc-curve" class="glossary-entry">
+<p><strong>ROC curve</strong></p>
+<p>A curve showing the trade-off between sensitivity and 1 - specificity across thresholds.</p>
+</div>
+<div id="glossary-auc" class="glossary-entry">
+<p><strong>AUC</strong></p>
+<p>Area under the ROC curve; a summary of classification performance across thresholds.</p>
+</div>
+<div id="glossary-calibration" class="glossary-entry">
+<p><strong>Calibration</strong></p>
+<p>How closely predicted probabilities match observed event rates.</p>
+</div>
+<div id="glossary-separation" class="glossary-entry">
+<p><strong>Separation</strong></p>
+<p>A situation where predictors perfectly separate outcomes, leading to unstable estimates.</p>
+</div>
+<div id="glossary-class-imbalance" class="glossary-entry">
+<p><strong>Class imbalance</strong></p>
+<p>When one outcome class is much more frequent than the other.</p>
+</div>
+<div id="glossary-interaction" class="glossary-entry">
+<p><strong>Interaction</strong></p>
+<p>A term that allows the effect of one predictor to depend on another.</p>
+</div>
+<div id="glossary-factor" class="glossary-entry">
+<p><strong>Factor</strong></p>
+<p>A categorical predictor in R that is represented by discrete levels.</p>
+</div>
 </div>
 
 

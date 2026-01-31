@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; Module 4: Extensions and a Mini Case Study – Logistic Regression with R</title>
+<title>6&nbsp; Module 4: Extensions and a Mini Case Study – Logistic Regression with R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -28072,11 +28072,11 @@ initializeRuntime();
 
 </script>
 <style>
-.Note {
---color1: #FFF9C4;
---color2: #FFEB3B;
+.Example {
+--color1: #BBDEFB;
+--color2: #2196F3;
 }
-.Key-term {
+.Key-point {
 --color1: #FFF9C4;
 --color2: #FFEB3B;
 }
@@ -28084,17 +28084,17 @@ initializeRuntime();
 --color1: #C8E6C9;
 --color2: #4CAF50;
 }
-.Key-point {
---color1: #FFF9C4;
---color2: #FFEB3B;
-}
-.Example {
---color1: #BBDEFB;
---color2: #2196F3;
-}
 .Assumption {
 --color1: #FFCDD2;
 --color2: #F44336;
+}
+.Key-term {
+--color1: #FFF9C4;
+--color2: #FFEB3B;
+}
+.Note {
+--color1: #FFF9C4;
+--color2: #FFEB3B;
 }
 </style>
 
@@ -28120,7 +28120,7 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./module04-extensions-case-study.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Module 4: Extensions and a Mini Case Study</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_6_extensions-case-study.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Module 4: Extensions and a Mini Case Study</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -28153,26 +28153,38 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module01-logistic-fundamentals.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Module 1: Logistic Regression Fundamentals</span></span></a>
+  <a href="./ch_1_motivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Motivation: When to Use Logistic Regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module02-odds-interpretation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Module 2: Odds, Odds Ratios, and Interpretation</span></span></a>
+  <a href="./ch_2_introduction-to-logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to Logistic Regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module03-model-assessment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Module 3: Model Assessment and Diagnostics</span></span></a>
+  <a href="./ch_3_fitting-logistic-regression-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Fitting Logistic Regression Models</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module04-extensions-case-study.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Module 4: Extensions and a Mini Case Study</span></span></a>
+  <a href="./ch_4_assessing-model-fit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Assessing Model Fit</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch_5_predictions-from-logistic-regression-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictions from Logistic Regression Models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch_6_extensions-case-study.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Module 4: Extensions and a Mini Case Study</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -28191,15 +28203,15 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
     <h2 id="toc-title">Contents</h2>
    
   <ul class="collapse">
-  <li><a href="#sec-extensions-case-study" id="toc-sec-extensions-case-study" class="nav-link active" data-scroll-target="#sec-extensions-case-study"><span class="header-section-number">5</span> Extensions and a Mini Case Study</a>
+  <li><a href="#sec-extensions-case-study" id="toc-sec-extensions-case-study" class="nav-link active" data-scroll-target="#sec-extensions-case-study"><span class="header-section-number">7</span> Extensions and a Mini Case Study</a>
   <ul class="collapse">
-  <li><a href="#learning-outcomes" id="toc-learning-outcomes" class="nav-link" data-scroll-target="#learning-outcomes"><span class="header-section-number">5.1</span> Learning outcomes</a></li>
-  <li><a href="#multivariable-logistic-regression" id="toc-multivariable-logistic-regression" class="nav-link" data-scroll-target="#multivariable-logistic-regression"><span class="header-section-number">5.2</span> Multivariable logistic regression</a></li>
-  <li><a href="#interactions-for-subgroup-effects" id="toc-interactions-for-subgroup-effects" class="nav-link" data-scroll-target="#interactions-for-subgroup-effects"><span class="header-section-number">5.3</span> Interactions for subgroup effects</a></li>
-  <li><a href="#communicating-results-with-scenarios" id="toc-communicating-results-with-scenarios" class="nav-link" data-scroll-target="#communicating-results-with-scenarios"><span class="header-section-number">5.4</span> Communicating results with scenarios</a></li>
-  <li><a href="#mini-case-study-template-dataset-to-be-added" id="toc-mini-case-study-template-dataset-to-be-added" class="nav-link" data-scroll-target="#mini-case-study-template-dataset-to-be-added"><span class="header-section-number">5.5</span> Mini case study template (dataset to be added)</a></li>
-  <li><a href="#reporting-template" id="toc-reporting-template" class="nav-link" data-scroll-target="#reporting-template"><span class="header-section-number">5.6</span> Reporting template</a></li>
-  <li><a href="#practice-prompts" id="toc-practice-prompts" class="nav-link" data-scroll-target="#practice-prompts"><span class="header-section-number">5.7</span> Practice prompts</a></li>
+  <li><a href="#learning-outcomes" id="toc-learning-outcomes" class="nav-link" data-scroll-target="#learning-outcomes"><span class="header-section-number">7.1</span> Learning outcomes</a></li>
+  <li><a href="#multivariable-logistic-regression" id="toc-multivariable-logistic-regression" class="nav-link" data-scroll-target="#multivariable-logistic-regression"><span class="header-section-number">7.2</span> Multivariable logistic regression</a></li>
+  <li><a href="#interactions-for-subgroup-effects" id="toc-interactions-for-subgroup-effects" class="nav-link" data-scroll-target="#interactions-for-subgroup-effects"><span class="header-section-number">7.3</span> Interactions for subgroup effects</a></li>
+  <li><a href="#communicating-results-with-scenarios" id="toc-communicating-results-with-scenarios" class="nav-link" data-scroll-target="#communicating-results-with-scenarios"><span class="header-section-number">7.4</span> Communicating results with scenarios</a></li>
+  <li><a href="#mini-case-study-template-dataset-to-be-added" id="toc-mini-case-study-template-dataset-to-be-added" class="nav-link" data-scroll-target="#mini-case-study-template-dataset-to-be-added"><span class="header-section-number">7.5</span> Mini case study template (dataset to be added)</a></li>
+  <li><a href="#reporting-template" id="toc-reporting-template" class="nav-link" data-scroll-target="#reporting-template"><span class="header-section-number">7.6</span> Reporting template</a></li>
+  <li><a href="#practice-prompts" id="toc-practice-prompts" class="nav-link" data-scroll-target="#practice-prompts"><span class="header-section-number">7.7</span> Practice prompts</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -28209,7 +28221,7 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Module 4: Extensions and a Mini Case Study</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Module 4: Extensions and a Mini Case Study</span></h1>
 </div>
 
 
@@ -28226,18 +28238,18 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
 </header>
 
 
-<section id="sec-extensions-case-study" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Extensions and a Mini Case Study</h1>
-<section id="learning-outcomes" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="learning-outcomes"><span class="header-section-number">5.1</span> Learning outcomes</h2>
+<section id="sec-extensions-case-study" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Extensions and a Mini Case Study</h1>
+<section id="learning-outcomes" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="learning-outcomes"><span class="header-section-number">7.1</span> Learning outcomes</h2>
 <ul>
 <li>Fit multivariable logistic models with categorical predictors.</li>
 <li>Use interactions when effects differ by group.</li>
 <li>Summarize results as predicted probabilities for realistic scenarios.</li>
 </ul>
 </section>
-<section id="multivariable-logistic-regression" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="multivariable-logistic-regression"><span class="header-section-number">5.2</span> Multivariable logistic regression</h2>
+<section id="multivariable-logistic-regression" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="multivariable-logistic-regression"><span class="header-section-number">7.2</span> Multivariable logistic regression</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fit_multi <span class="ot">&lt;-</span> <span class="fu">glm</span>(am <span class="sc">~</span> wt <span class="sc">+</span> hp <span class="sc">+</span> <span class="fu">factor</span>(cyl), <span class="at">data =</span> mtcars, <span class="at">family =</span> binomial)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_multi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -28271,8 +28283,8 @@ Number of Fisher Scoring iterations: 9</code></pre>
 </div></details>
 </div>
 </section>
-<section id="interactions-for-subgroup-effects" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="interactions-for-subgroup-effects"><span class="header-section-number">5.3</span> Interactions for subgroup effects</h2>
+<section id="interactions-for-subgroup-effects" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="interactions-for-subgroup-effects"><span class="header-section-number">7.3</span> Interactions for subgroup effects</h2>
 <p>If the effect of a predictor changes across groups, use an interaction term.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fit_interaction <span class="ot">&lt;-</span> <span class="fu">glm</span>(am <span class="sc">~</span> wt <span class="sc">*</span> <span class="fu">factor</span>(cyl), <span class="at">data =</span> mtcars, <span class="at">family =</span> binomial)</span>
@@ -28303,8 +28315,8 @@ Number of Fisher Scoring iterations: 19</code></pre>
 </div>
 </div>
 </section>
-<section id="communicating-results-with-scenarios" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="communicating-results-with-scenarios"><span class="header-section-number">5.4</span> Communicating results with scenarios</h2>
+<section id="communicating-results-with-scenarios" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="communicating-results-with-scenarios"><span class="header-section-number">7.4</span> Communicating results with scenarios</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>new_cars <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">wt =</span> <span class="fu">c</span>(<span class="fl">2.4</span>, <span class="fl">3.2</span>),</span>
@@ -28319,8 +28331,8 @@ Number of Fisher Scoring iterations: 19</code></pre>
 </div>
 </div>
 </section>
-<section id="mini-case-study-template-dataset-to-be-added" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="mini-case-study-template-dataset-to-be-added"><span class="header-section-number">5.5</span> Mini case study template (dataset to be added)</h2>
+<section id="mini-case-study-template-dataset-to-be-added" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="mini-case-study-template-dataset-to-be-added"><span class="header-section-number">7.5</span> Mini case study template (dataset to be added)</h2>
 <p>Use this checklist to structure the final case study once the dataset is chosen.</p>
 <ol type="1">
 <li>Define the outcome variable and clarify what counts as an event.</li>
@@ -28335,8 +28347,8 @@ Number of Fisher Scoring iterations: 19</code></pre>
 </div></details>
 </div>
 </section>
-<section id="reporting-template" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="reporting-template"><span class="header-section-number">5.6</span> Reporting template</h2>
+<section id="reporting-template" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="reporting-template"><span class="header-section-number">7.6</span> Reporting template</h2>
 <p>Use this outline to write up results in plain language.</p>
 <ul>
 <li>Outcome definition, sample size, and event rate.</li>
@@ -28349,8 +28361,8 @@ Number of Fisher Scoring iterations: 19</code></pre>
 <p>Template paragraph:</p>
 <p>“We modeled [outcome] using logistic regression with predictors [list]. The event rate was [rate]. A one-unit increase in [predictor] was associated with [odds ratio] times the odds of the event, holding other variables constant. For a typical case ([scenario]), the predicted probability was [probability]. Using a threshold of [threshold], the model achieved [accuracy/sensitivity/specificity] and an AUC of [AUC]. Key limitations include [limitations].”</p>
 </section>
-<section id="practice-prompts" class="level2" data-number="5.7">
-<h2 data-number="5.7" class="anchored" data-anchor-id="practice-prompts"><span class="header-section-number">5.7</span> Practice prompts</h2>
+<section id="practice-prompts" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="practice-prompts"><span class="header-section-number">7.7</span> Practice prompts</h2>
 <ul>
 <li>Fit the model with <code>factor(gear)</code> instead of <code>factor(cyl)</code>. What changes?</li>
 <li>Compare predictions from <code>fit_multi</code> and <code>fit_interaction</code> for the same scenario.</li>
