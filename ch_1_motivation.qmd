@@ -70,7 +70,11 @@ $$
 
 In the cases we considered, Y was a [continuous variable]{.glossary} (e.g., salary, Naplan score, etc.), and the model described how the *expected value* of $Y$ changed as the predictors varied. 
 
+In particular, we 
+
 In many real-world situations, however, we want to predict an outcome that is not continuous. Instead, often our what we want to predict or explain is a *categorical variable*. The simplest and most common case is a *binary outcome* — that is, an outcome with only two possible categories (e.g. success/failure, yes/no, 0/1) [^ch_1_motivation-1].
+
+[^ch_1_motivation-1]: types of random variables are covered in more detail in the Inferential Statistics Short Course. 
 
 ::: Example
 ### A binary outcome: pass or fail
@@ -93,6 +97,9 @@ $$
 
 ### From categories to probabilities
 
+#### The average of a binary outcome
+Recall that the *error term* $\epsilon$ in a regression model captures the difference between the observed outcome $Y$ and the *mean*, or [*expected*]{.glossary expected_value} outcome $E[Y]$ from the model. When $Y$ was continuous, $E[Y]$ represented the average value of $Y$ for given values of the predictors. What does $E[Y]$ represent when $Y$ is a binary outcome?
+
 To model a binary outcome statistically, we have to represent it as a [Random Variable]{.glossary} rather than just a label. We can do this by coding the two categories as $0$ and $1$[^ch_1_recall_dummy_variables]. For example, in Johno's case
 
 ::: Example
@@ -100,10 +107,10 @@ To model a binary outcome statistically, we have to represent it as a [Random Va
 We can code the outcome variable $Y$ as follows:
 $$
 Y =
-\\begin{cases} 
-\\text{1} & \\text{if student passes the exam} \\\\
-\\text{0} & \\text{if student fails the exam}
-\\end{cases}
+\begin{cases} 
+\text{1} & \text{if student passes the exam} \\
+\text{0} & \text{if student fails the exam}
+\end{cases}
 $$ 
 
 in R, 
@@ -117,29 +124,40 @@ student_performance
 
 [^ch_1_recall_dummy_variables]: The use of 0/1 coding for binary outcomes is similar to the use of *dummy variables* for categorical predictors in linear regression, where each category is represented by a separate binary variable coded as 0 or 1.
 
+The choice of using 0 and 1 is not arbitrary. When we code a binary outcome this way, the mean of the outcome variable, $E[Y]$ has a direct interpretation:
+$$
+E[Y] = P(Y=1) = p
+$$
+
+That is, the expected value (mean) of a binary variable coded as 0/1 is equal to the *probability* of the outcome being 1.
+
+In Johno's case, $E[Y]$ represents the probability of passing the exam:
+::: Example
+### Mean of a binary variable as a probability
+If we ignore study time for a moment and just look at the overall pass/fail rates in Johno's dataset, we can calculate the mean of the binary outcome variable:
+```{r}
+mean_pass_rate <- mean(student_performance$pass_fail_num)
+mean_pass_rate
+```
+This means that, on average, the probability of a student passing the exam in Johno's dataset is approximately `r round(mean_pass_rate * 100, 2)`%.
+:::
+
+::: key-point
+Once a binary outcome is coded as 0/1,  modelling the expected value $E[Y]$ is equivalent to modeling the *probability* of the outcome being 1 (e.g., passing the exam).
+:::
+
+- [ ] Continue
+
+### Why not use linear regression?
+
+A natural question at this point is: why not just use linear regression to model the relationship between $X$ and $E[Y]$? After all, probabilities are continuous values between 0 and 1.
 
 
 ::: Example
 ### When linear regression is not appropriate
+Having completed the Linear Regression Short Course, Johno considers using linear regression to model the relationship between study time and the probability of passing the exam.
 
-Suppose we want to predict whether a student passes or fails a course based on their study hours and have obtained a dataset like this:
-
-```{r}
-student_performance <- read_csv2("Data/student/student-mat.csv") |> 
-  mutate(pass_fail = if_else(G3 >= 10, "pass", "fail")) |> 
-  select(studytime, pass_fail) 
-
-student_performance
-```
-
-Let's follow the steps we might take if we tried to use linear regression here. First, we convert the categorical outcome into a numeric 0/1 variable (remember: the mean of a 0/1 variable is a probability). As in previous courses, we can use 1 for "pass" and 0 for "fail":
-
-```{r}
-student_performance <- student_performance |> 
-  mutate(pass_fail_num = if_else(pass_fail == "pass", 1, 0))
-```
-
-Let's plot the data in a scatter plot with a fitted linear regression line:
+He first plots the data in a scatter plot with a fitted linear regression line:
 
 ```{r}
 library(ggplot2)
@@ -150,6 +168,12 @@ ggplot(student_performance, aes(x = studytime, y = pass_fail_num)) +
 ```
 
 (note the use of `geom_jitter()` to add some random noise to the points so they don't overlap exactly).
+
+And obtains the following linear regression model:
+```{r}
+model <- lm(pass_fail_num ~ studytime, data = student_performance)
+summary(model)
+```
 
 How do we interpret the fitted line? Notice that for any of the study times in our data, the predicted value from the linear regression line is between 0 (fail) and 1(pass).
 
