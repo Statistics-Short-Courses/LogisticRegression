@@ -68,11 +68,9 @@ $$
 Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + ... + \epsilon
 $$
 
-In the cases we considered, Y was a [continuous variable]{.glossary} (e.g., salary, Naplan score, etc.), and the model described how the *expected value* of $Y$ changed as the predictors varied. 
+In the cases we considered, Y was a [continuous variable]{.glossary} (e.g., salary, Naplan score, etc.), and the model described how the *expected value* of the outcome, $E[Y]$, changed as the predictors varied. 
 
-In particular, we 
-
-In many real-world situations, however, we want to predict an outcome that is not continuous. Instead, often our what we want to predict or explain is a *categorical variable*. The simplest and most common case is a *binary outcome* — that is, an outcome with only two possible categories (e.g. success/failure, yes/no, 0/1) [^ch_1_motivation-1].
+In many real-world situations, however, *we want to predict an outcome that is not continuous*. Instead, often our what we want to predict or explain is a *categorical variable*. The simplest and most common case is a *binary outcome* — that is, an outcome with only two possible categories (e.g. success/failure, yes/no, 0/1) [^ch_1_motivation-1].
 
 [^ch_1_motivation-1]: types of random variables are covered in more detail in the Inferential Statistics Short Course. 
 
@@ -91,16 +89,28 @@ student_performance
 
 Johno wants to use this data to model the relationship between study time and the probability of passing the exam. He identifies his outcome variable, $Y$, as the binary variable indicating whether a student passed or failed the exam, and his predictor variable, $X$, as the amount of time spent studying. Therefore, Johno's goal is to produce a statistical model that predicts Y (pass/fail) based on X (study time): 
 $$
-Y = f(X) + \epsilon
-$$
+Y = f(X) + \varepsilon
+$$ {.}
 :::
 
 ### From categories to probabilities
 
 #### The average of a binary outcome
-Recall that the *error term* $\epsilon$ in a regression model captures the difference between the observed outcome $Y$ and the *mean*, or [*expected*]{.glossary expected_value} outcome $E[Y]$ from the model. When $Y$ was continuous, $E[Y]$ represented the average value of $Y$ for given values of the predictors. What does $E[Y]$ represent when $Y$ is a binary outcome?
+Recall that the *error term* $\epsilon$ in a regression model captures the difference between the observed outcome $Y$ and the *mean*, or [*expected*]{.glossary} outcome $E[Y]$ from the model. 
 
-To model a binary outcome statistically, we have to represent it as a [Random Variable]{.glossary} rather than just a label. We can do this by coding the two categories as $0$ and $1$[^ch_1_recall_dummy_variables]. For example, in Johno's case
+::: Key-point
+#### Expected value and error term
+The *expected value* of a random variable $Y$, denoted $E[Y]$, is the long-run average value of $Y$ if we were to repeat the process that generates $Y$ many times.
+That is, if we were to collect many samples of $Y$ under the same conditions, the average of those samples would converge to $E[Y]$. The error term $\varepsilon$ represents the deviation of an observed value of $Y$ from its expected value $E[Y]$.
+
+The Error term $\varepsilon$ is the difference between the observed value of $Y$ and its expected value $E[Y]$ i.e. $\varepsilon = Y - E[Y]$. It captures the variability in $Y$ that is not explained by the predictors in the model. 
+
+In regression models, we typically assume that the error term $\varepsilon$ has a mean of zero (i.e., $E[\varepsilon] = 0$), which implies that the expected value of $Y$ given the predictors is equal to the predicted value from the model (i.e., $E[Y] = f(X)$).
+:::
+
+When $Y$ was continuous, $E[Y]$ represented the average value of $Y$ for given values of the predictors (e.g. the average (AKA expected, or predicted) salary of a worker of 9 years experience). But what is the 'average' of a binary (categorical) variable? 
+
+To model a binary outcome statistically, we have to represent it as a [Random Variable]{.glossary} rather than just a label. We can do this by coding the two categories as numbers, e.g. $0$ and $1$[^ch_1_recall_dummy_variables]. For example, in Johno's case
 
 ::: Example
 ### Coding the binary outcome
@@ -117,40 +127,51 @@ in R,
 
 ```{r}
 student_performance <- student_performance |>
-  mutate(pass_fail_num = if_else(pass_fail == "pass", 1, 0))
+  mutate(pass_fail_num = case_when(pass_fail == "pass" ~ 1,
+                                pass_fail == "fail" ~ 0))
 student_performance
 ```
 :::
 
 [^ch_1_recall_dummy_variables]: The use of 0/1 coding for binary outcomes is similar to the use of *dummy variables* for categorical predictors in linear regression, where each category is represented by a separate binary variable coded as 0 or 1.
 
-The choice of using 0 and 1 is not arbitrary. When we code a binary outcome this way, the mean of the outcome variable, $E[Y]$ has a direct interpretation:
+- [ ] Continue
+
+The choice of using 0 and 1 here is not arbitrary. While we could have coded the categories as -1 and 1, or 0 and 2, the 0/1 coding has a special property that makes it particularly useful for modeling. In particular, when we code a binary outcome this way, the mean of the outcome variable, $E[Y]$ has a direct interpretation:
 $$
 E[Y] = P(Y=1) = p
 $$
 
-That is, the expected value (mean) of a binary variable coded as 0/1 is equal to the *probability* of the outcome being 1.
+That is, 
+
+::: Key-point
+The expected value (mean) of a binary variable coded as 0/1 is the *probability* of the outcome being 1.
+:::
 
 In Johno's case, $E[Y]$ represents the probability of passing the exam:
+
 ::: Example
 ### Mean of a binary variable as a probability
 If we ignore study time for a moment and just look at the overall pass/fail rates in Johno's dataset, we can calculate the mean of the binary outcome variable:
 ```{r}
-mean_pass_rate <- mean(student_performance$pass_fail_num)
-mean_pass_rate
+#| echo: true
+mean(student_performance$pass_fail_num)
 ```
-This means that, on average, the probability of a student passing the exam in Johno's dataset is approximately `r round(mean_pass_rate * 100, 2)`%.
-:::
-
-::: key-point
-Once a binary outcome is coded as 0/1,  modelling the expected value $E[Y]$ is equivalent to modeling the *probability* of the outcome being 1 (e.g., passing the exam).
+This means that, on average, the probability of a student passing the exam in Johno's dataset is approximately `r round(mean(student_performance$pass_fail_num) * 100, 2)`%.
 :::
 
 - [ ] Continue
 
 ### Why not use linear regression?
 
+We now have a way to represent our binary outcome variable as a random variable, and we understand that the expected value of this variable has a meaningful interpretation as a probability. 
+
 A natural question at this point is: why not just use linear regression to model the relationship between $X$ and $E[Y]$? After all, probabilities are continuous values between 0 and 1.
+We could fit a linear model like this:
+$$
+p= E[Y] = \beta_0 + \beta_1 X
+$$
+
 
 
 ::: Example
@@ -169,13 +190,23 @@ ggplot(student_performance, aes(x = studytime, y = pass_fail_num)) +
 
 (note the use of `geom_jitter()` to add some random noise to the points so they don't overlap exactly).
 
-And obtains the following linear regression model:
+And obtains the following estimate for the effect of study time on the probability of passing:
 ```{r}
+library(broom)
 model <- lm(pass_fail_num ~ studytime, data = student_performance)
-summary(model)
+tidy(model)
 ```
 
-How do we interpret the fitted line? Notice that for any of the study times in our data, the predicted value from the linear regression line is between 0 (fail) and 1(pass).
+The estimated equation for the relationship between study time and the probability of passing is:
+$$
+p = 0.586 + 0.0418 \times \text{studytime}
+$$
+
+i.e. The model predicts that a student who does not study at all (study time = 0)[^extrapolation_example] has a probability of passing of about 0.586, and that for each additional hour of study time, the probability of passing increases by about 0.0418 (i.e. 4.18 percentage points).
+
+[^extrapolation_example]: Note that no student in the dataset has 0 study time, so this is an [extrapolation]{.glossary}.
+
+In particular, over the range of study times in the dataset, the model produces predicted probabilities of passing that are between 0 and 1:
 
 ```{r}
 model <- lm(pass_fail_num ~ studytime, data = student_performance)
@@ -183,23 +214,18 @@ predicted_values <- predict(model, newdata = data.frame(studytime = unique(stude
 predicted_values  
 ```
 
-This makes sense since the 'highest score' of any student in our dataset is 1 (i.e. a pass), and the 'lowest score' is 0 (a fail). No student has a predicted score of exactly 0 or 1, but the predicted values are between these two extremes. We might reasonably interpret the predicted value as the *probability* of passing the course given the study time (i.e. the coefficient for study time indicates how much the probability of passing increases for each additional hour of study time).
+This makes sense since the 'highest score' of any student in our dataset is 1 (i.e. a pass), and the 'lowest score' is 0 (a fail). No student has a predicted score of exactly 0 or 1, but the predicted values are between these two extremes. 
 
-For example, a student who studies for 2 hours has a predicted probability of passing of about `r predict(model, newdata = data.frame(studytime = 2))`, while a student who studies for 4 hours has a predicted probability of passing of about `r predict(model, newdata = data.frame(studytime = 4))`.
+However, Johno is a dedicated student and wants to know what happens if he studies for more hours than any student in the dataset. If we use the linear model to predict probabilities for study times outside the range of the data, we get some nonsensical predictions:
 
-However, the linear regression line can produce predicted values outside this range (less than 0 or greater than 1), which does not make sense for probabilities.
+For example, a student who studies for 10 hours has a predicted probability of passing of
+``` r
+predict(model, newdata = data.frame(studytime = 10))
+```
 
-For example, a student who studies for 0 hours has a predicted probability of passing of about `r predict(model, newdata = data.frame(studytime = 0))`, which is less than 0, and a student who studies for 10 hours has a predicted probability of passing of about `r predict(model, newdata = data.frame(studytime = 10))`, which is greater than 1. With a binary outcome, the relationship between predictors and probability is typically nonlinear: the “same” change in a predictor cannot produce the same change in probability at every starting probability (e.g., you can’t increase a 0.95 probability by +0.2).
+which is greater than 1 (impossible for a probability). 
+
 :::
-
-### Examples of binary outcomes
-
-Binary outcomes show up in many applied settings:
-
--   Disease status (yes/no)
--   Admission (accepted/rejected)
--   Survival (alive/dead)
--   Purchase (bought/did not buy)
 
 ### Why linear regression fails for binary outcomes
 
