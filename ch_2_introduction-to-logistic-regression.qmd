@@ -140,12 +140,27 @@ This variance is not constant. A probability near 0.5 gives more binary variatio
 For binary outcomes, the randomness is not represented by adding a normally distributed $\varepsilon_i$ to a straight line. Instead, the observed 0/1 outcome is treated as a Bernoulli draw with event probability $p_i$.
 :::
 
+:::: {.panel-tabset}
+### Plot
+
 ```{r chapter02-bernoulli-variance}
+#| echo: false
 p <- seq(0.01, 0.99, by = 0.01)
 plot(p, p * (1 - p), type = "l", lwd = 2,
      xlab = "Probability of passing (p)",
      ylab = "Bernoulli variance: p(1 - p)")
 ```
+
+### Code
+
+```{r chapter02-bernoulli-variance-code}
+#| eval: false
+p <- seq(0.01, 0.99, by = 0.01)
+plot(p, p * (1 - p), type = "l", lwd = 2,
+     xlab = "Probability of passing (p)",
+     ylab = "Bernoulli variance: p(1 - p)")
+```
+::::
 
 - [ ] Continue
 
@@ -218,13 +233,29 @@ $$
 
 In R, the inverse-logit transformation is `plogis()`.
 
+:::: {.panel-tabset}
+### Plot
+
 ```{r chapter02-logistic-function}
+#| echo: false
 eta <- seq(-6, 6, length.out = 200)
 plot(eta, plogis(eta), type = "l", lwd = 2,
      xlab = "Linear predictor (eta)",
      ylab = "Probability")
 abline(h = c(0, 1), col = "grey80", lty = 3)
 ```
+
+### Code
+
+```{r chapter02-logistic-function-code}
+#| eval: false
+eta <- seq(-6, 6, length.out = 200)
+plot(eta, plogis(eta), type = "l", lwd = 2,
+     xlab = "Linear predictor (eta)",
+     ylab = "Probability")
+abline(h = c(0, 1), col = "grey80", lty = 3)
+```
+::::
 
 The curve is S-shaped on the probability scale, but the model is still straight on the log-odds scale.
 
@@ -234,12 +265,27 @@ The curve is S-shaped on the probability scale, but the model is still straight 
 
 The R formula looks almost the same as the formula for `lm()`:
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter02-first-glm}
+#| echo: false
 fit_study <- glm(pass_exam ~ studytime,
                  data = students,
                  family = binomial)
 summary(fit_study)
 ```
+
+### Code
+
+```{r chapter02-first-glm-code}
+#| eval: false
+fit_study <- glm(pass_exam ~ studytime,
+                 data = students,
+                 family = binomial)
+summary(fit_study)
+```
+::::
 
 The formula `pass_exam ~ studytime` gives the linear predictor:
 

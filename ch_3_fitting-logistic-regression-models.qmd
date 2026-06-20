@@ -91,12 +91,27 @@ If student $i$ has predicted probability $p_i$, then a pass contributes probabil
 
 We fit Johno's first model with `glm()`:
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter03-fit-study}
+#| echo: false
 fit_study <- glm(pass_exam ~ studytime,
                  data = students,
                  family = binomial)
 summary(fit_study)
 ```
+
+### Code
+
+```{r chapter03-fit-study-code}
+#| eval: false
+fit_study <- glm(pass_exam ~ studytime,
+                 data = students,
+                 family = binomial)
+summary(fit_study)
+```
+::::
 
 The estimated model is
 
@@ -113,9 +128,21 @@ As in the Linear Regression Short Course, we use Greek letters for unknown true 
 | $b_0$ | Estimated intercept |
 | $b_1$ | Estimated slope for study time |
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter03-coef-table}
+#| echo: false
 coef(fit_study)
 ```
+
+### Code
+
+```{r chapter03-coef-table-code}
+#| eval: false
+coef(fit_study)
+```
+::::
 
 - [ ] Continue
 
@@ -141,9 +168,21 @@ $$
 \text{odds ratio} = e^{b_1}.
 $$
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter03-odds-ratio}
+#| echo: false
 exp(coef(fit_study))
 ```
+
+### Code
+
+```{r chapter03-odds-ratio-code}
+#| eval: false
+exp(coef(fit_study))
+```
+::::
 
 For `studytime`, the odds ratio compares two students who differ by one study-time category. If the odds ratio is greater than 1, the model estimates higher odds of passing for the student in the higher study-time category.
 
@@ -191,21 +230,57 @@ grade_this({
 
 The `summary()` output includes a standard error, a test statistic, and a p-value for each coefficient. These are Wald tests. They test whether a coefficient differs from zero on the log-odds scale.
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter03-wald-table}
+#| echo: false
 coef(summary(fit_study))
 ```
 
+### Code
+
+```{r chapter03-wald-table-code}
+#| eval: false
+coef(summary(fit_study))
+```
+::::
+
 Wald confidence intervals can be computed with `confint.default()`:
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter03-wald-ci}
+#| echo: false
 confint.default(fit_study)
 ```
 
+### Code
+
+```{r chapter03-wald-ci-code}
+#| eval: false
+confint.default(fit_study)
+```
+::::
+
 It is often easier to report intervals on the odds-ratio scale:
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter03-or-ci}
+#| echo: false
 exp(confint.default(fit_study))
 ```
+
+### Code
+
+```{r chapter03-or-ci-code}
+#| eval: false
+exp(confint.default(fit_study))
+```
+::::
 
 ::: Note
 Confidence intervals for logistic regression coefficients are intervals for log-odds changes. Applying `exp()` converts them to odds-ratio intervals.
@@ -223,12 +298,27 @@ $$
 \beta_3 \text{absences}_i.
 $$
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter03-fit-multiple}
+#| echo: false
 fit_multi <- glm(pass_exam ~ studytime + failures + absences,
                  data = students,
                  family = binomial)
 summary(fit_multi)
 ```
+
+### Code
+
+```{r chapter03-fit-multiple-code}
+#| eval: false
+fit_multi <- glm(pass_exam ~ studytime + failures + absences,
+                 data = students,
+                 family = binomial)
+summary(fit_multi)
+```
+::::
 
 Each coefficient is a partial effect on the log-odds scale, holding the other predictors in the model constant.
 
@@ -236,12 +326,27 @@ Each coefficient is a partial effect on the log-odds scale, holding the other pr
 
 Categorical predictors work as they did in linear regression. R chooses a reference level and estimates comparisons against that level.
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter03-fit-categorical}
+#| echo: false
 fit_support <- glm(pass_exam ~ studytime + failures + schoolsup,
                    data = students,
                    family = binomial)
 summary(fit_support)
 ```
+
+### Code
+
+```{r chapter03-fit-categorical-code}
+#| eval: false
+fit_support <- glm(pass_exam ~ studytime + failures + schoolsup,
+                   data = students,
+                   family = binomial)
+summary(fit_support)
+```
+::::
 
 Here, `schoolsupyes` compares students with extra educational support to the reference group `schoolsup = "no"`, after adjusting for study time and previous failures.
 

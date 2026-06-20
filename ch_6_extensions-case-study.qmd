@@ -76,10 +76,23 @@ Y_i =
 \end{cases}
 $$
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter06-event-rate}
+#| echo: false
 table(students$pass_exam)
 prop.table(table(students$pass_exam))
 ```
+
+### Code
+
+```{r chapter06-event-rate-code}
+#| eval: false
+table(students$pass_exam)
+prop.table(table(students$pass_exam))
+```
+::::
 
 Always report the event definition. Different cutoffs can answer different questions.
 
@@ -93,21 +106,51 @@ A compact first model uses:
 
 These predictors are easy to explain and available before the final grade is known.
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter06-fit-main}
+#| echo: false
 fit_case <- glm(pass_exam ~ studytime + failures + absences,
                 data = students,
                 family = binomial)
 summary(fit_case)
 ```
 
+### Code
+
+```{r chapter06-fit-main-code}
+#| eval: false
+fit_case <- glm(pass_exam ~ studytime + failures + absences,
+                data = students,
+                family = binomial)
+summary(fit_case)
+```
+::::
+
 Odds ratios give a first interpretation:
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter06-case-odds-ratios}
+#| echo: false
 exp(cbind(
   estimate = coef(fit_case),
   confint.default(fit_case)
 ))
 ```
+
+### Code
+
+```{r chapter06-case-odds-ratios-code}
+#| eval: false
+exp(cbind(
+  estimate = coef(fit_case),
+  confint.default(fit_case)
+))
+```
+::::
 
 ::: Key-point
 Use odds ratios to summarise model coefficients, but use predicted probabilities to communicate the practical size of effects.
@@ -119,7 +162,11 @@ Use odds ratios to summarise model coefficients, but use predicted probabilities
 
 We compare three models:
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter06-model-comparison}
+#| echo: false
 fit_null <- glm(pass_exam ~ 1, data = students, family = binomial)
 fit_study <- glm(pass_exam ~ studytime, data = students, family = binomial)
 fit_case <- glm(pass_exam ~ studytime + failures + absences,
@@ -130,13 +177,32 @@ AIC(fit_null, fit_study, fit_case)
 anova(fit_study, fit_case, test = "Chisq")
 ```
 
+### Code
+
+```{r chapter06-model-comparison-code}
+#| eval: false
+fit_null <- glm(pass_exam ~ 1, data = students, family = binomial)
+fit_study <- glm(pass_exam ~ studytime, data = students, family = binomial)
+fit_case <- glm(pass_exam ~ studytime + failures + absences,
+                data = students,
+                family = binomial)
+
+AIC(fit_null, fit_study, fit_case)
+anova(fit_study, fit_case, test = "Chisq")
+```
+::::
+
 This mirrors the model-building logic from the Linear Regression Short Course: start simple, add predictors for clear reasons, and check whether the added complexity is useful.
 
 ## Consider interactions carefully {#sec-case-interactions}
 
 An interaction allows the effect of one predictor to depend on another. For example, the association between absences and passing might differ depending on whether a student has previous failures.
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter06-interaction}
+#| echo: false
 fit_interaction <- glm(pass_exam ~ studytime + failures * high_absence,
                        data = students,
                        family = binomial)
@@ -144,6 +210,19 @@ fit_interaction <- glm(pass_exam ~ studytime + failures * high_absence,
 AIC(fit_case, fit_interaction)
 summary(fit_interaction)
 ```
+
+### Code
+
+```{r chapter06-interaction-code}
+#| eval: false
+fit_interaction <- glm(pass_exam ~ studytime + failures * high_absence,
+                       data = students,
+                       family = binomial)
+
+AIC(fit_case, fit_interaction)
+summary(fit_interaction)
+```
+::::
 
 Interactions can be useful, but they make interpretation harder and require enough data in each subgroup.
 
@@ -155,7 +234,11 @@ Add interaction terms when they answer a real question or are strongly motivated
 
 Scenario predictions translate the model back to the probability scale.
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter06-scenarios}
+#| echo: false
 scenarios <- data.frame(
   studytime = c(1, 2, 4),
   failures = c(0, 0, 0),
@@ -171,11 +254,35 @@ scenarios$predicted_probability <- predict(
 scenarios
 ```
 
+### Code
+
+```{r chapter06-scenarios-code}
+#| eval: false
+scenarios <- data.frame(
+  studytime = c(1, 2, 4),
+  failures = c(0, 0, 0),
+  absences = c(2, 2, 2)
+)
+
+scenarios$predicted_probability <- predict(
+  fit_case,
+  newdata = scenarios,
+  type = "response"
+)
+
+scenarios
+```
+::::
+
 For a non-technical audience, this table is usually more useful than a coefficient table.
 
 ## Summarise predictive performance {#sec-case-performance}
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter06-performance}
+#| echo: false
 prob <- predict(fit_case, type = "response")
 threshold <- 0.5
 pred <- ifelse(prob >= threshold, 1, 0)
@@ -193,6 +300,29 @@ c(accuracy = accuracy,
   sensitivity = sensitivity,
   specificity = specificity)
 ```
+
+### Code
+
+```{r chapter06-performance-code}
+#| eval: false
+prob <- predict(fit_case, type = "response")
+threshold <- 0.5
+pred <- ifelse(prob >= threshold, 1, 0)
+cm <- table(
+  Predicted = factor(pred, levels = c(0, 1)),
+  Actual = factor(students$pass_exam, levels = c(0, 1))
+)
+cm
+
+accuracy <- sum(diag(cm)) / sum(cm)
+sensitivity <- cm["1", "1"] / sum(cm[, "1"])
+specificity <- cm["0", "0"] / sum(cm[, "0"])
+
+c(accuracy = accuracy,
+  sensitivity = sensitivity,
+  specificity = specificity)
+```
+::::
 
 This is an in-sample summary, so it is optimistic. In a real predictive project, we would use a validation set or cross-validation.
 

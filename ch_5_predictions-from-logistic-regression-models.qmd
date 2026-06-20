@@ -91,7 +91,11 @@ $$
 
 By default, `predict()` returns values on the link scale:
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter05-predict-link}
+#| echo: false
 new_students <- data.frame(
   studytime = c(1, 2, 3, 4),
   failures = 0,
@@ -101,11 +105,37 @@ new_students <- data.frame(
 predict(fit_multi, newdata = new_students)
 ```
 
+### Code
+
+```{r chapter05-predict-link-code}
+#| eval: false
+new_students <- data.frame(
+  studytime = c(1, 2, 3, 4),
+  failures = 0,
+  absences = 4
+)
+
+predict(fit_multi, newdata = new_students)
+```
+::::
+
 For logistic regression, the link scale is the log-odds scale. To get predicted probabilities, use `type = "response"`:
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter05-predict-response}
+#| echo: false
 predict(fit_multi, newdata = new_students, type = "response")
 ```
+
+### Code
+
+```{r chapter05-predict-response-code}
+#| eval: false
+predict(fit_multi, newdata = new_students, type = "response")
+```
+::::
 
 ::: Key-point
 Use `type = "response"` when you want predicted probabilities from a logistic regression model.
@@ -117,7 +147,11 @@ Use `type = "response"` when you want predicted probabilities from a logistic re
 
 Predicted probabilities are often the clearest way to communicate a logistic regression model. We choose realistic predictor values and compare the model's predictions.
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter05-scenario-table}
+#| echo: false
 scenarios <- data.frame(
   studytime = c(1, 2, 4),
   failures = c(0, 0, 0),
@@ -132,6 +166,26 @@ scenarios$predicted_probability <- predict(
 
 scenarios
 ```
+
+### Code
+
+```{r chapter05-scenario-table-code}
+#| eval: false
+scenarios <- data.frame(
+  studytime = c(1, 2, 4),
+  failures = c(0, 0, 0),
+  absences = c(4, 4, 4)
+)
+
+scenarios$predicted_probability <- predict(
+  fit_multi,
+  newdata = scenarios,
+  type = "response"
+)
+
+scenarios
+```
+::::
 
 These are model-based probabilities, not guarantees. A student with a high predicted probability can still fail, and a student with a low predicted probability can still pass.
 
@@ -183,7 +237,11 @@ grade_this({
 
 Sometimes we need to turn probabilities into predicted classes. To do this, we choose a **classification threshold**. With a threshold of 0.5, we predict a pass when $\hat{p} \ge 0.5$.
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter05-confusion}
+#| echo: false
 threshold <- 0.5
 class_hat <- ifelse(prob >= threshold, 1, 0)
 conf_mat <- table(
@@ -193,9 +251,27 @@ conf_mat <- table(
 conf_mat
 ```
 
+### Code
+
+```{r chapter05-confusion-code}
+#| eval: false
+threshold <- 0.5
+class_hat <- ifelse(prob >= threshold, 1, 0)
+conf_mat <- table(
+  Predicted = factor(class_hat, levels = c(0, 1)),
+  Actual = factor(students$pass_exam, levels = c(0, 1))
+)
+conf_mat
+```
+::::
+
 From the confusion matrix we can calculate performance measures:
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter05-metrics}
+#| echo: false
 true_pos <- conf_mat["1", "1"]
 true_neg <- conf_mat["0", "0"]
 false_pos <- conf_mat["1", "0"]
@@ -210,6 +286,25 @@ c(accuracy = accuracy,
   specificity = specificity)
 ```
 
+### Code
+
+```{r chapter05-metrics-code}
+#| eval: false
+true_pos <- conf_mat["1", "1"]
+true_neg <- conf_mat["0", "0"]
+false_pos <- conf_mat["1", "0"]
+false_neg <- conf_mat["0", "1"]
+
+accuracy <- (true_pos + true_neg) / sum(conf_mat)
+sensitivity <- true_pos / (true_pos + false_neg)
+specificity <- true_neg / (true_neg + false_pos)
+
+c(accuracy = accuracy,
+  sensitivity = sensitivity,
+  specificity = specificity)
+```
+::::
+
 ::: Key-point
 The threshold is a decision rule, not part of the fitted logistic regression model. Changing the threshold changes the classifications but not the predicted probabilities.
 :::
@@ -218,7 +313,11 @@ The threshold is a decision rule, not part of the fitted logistic regression mod
 
 Lower thresholds predict more passes. Higher thresholds predict fewer passes. The right threshold depends on the cost of different mistakes.
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter05-threshold-table}
+#| echo: false
 thresholds <- c(0.3, 0.5, 0.7)
 
 threshold_summary <- do.call(rbind, lapply(thresholds, function(t) {
@@ -242,11 +341,43 @@ threshold_summary <- do.call(rbind, lapply(thresholds, function(t) {
 threshold_summary
 ```
 
+### Code
+
+```{r chapter05-threshold-table-code}
+#| eval: false
+thresholds <- c(0.3, 0.5, 0.7)
+
+threshold_summary <- do.call(rbind, lapply(thresholds, function(t) {
+  pred <- ifelse(prob >= t, 1, 0)
+  cm <- table(
+    Predicted = factor(pred, levels = c(0, 1)),
+    Actual = factor(students$pass_exam, levels = c(0, 1))
+  )
+  tp <- cm["1", "1"]
+  tn <- cm["0", "0"]
+  fp <- cm["1", "0"]
+  fn <- cm["0", "1"]
+  data.frame(
+    threshold = t,
+    accuracy = (tp + tn) / sum(cm),
+    sensitivity = tp / (tp + fn),
+    specificity = tn / (tn + fp)
+  )
+}))
+
+threshold_summary
+```
+::::
+
 ## ROC curves and AUC {#sec-roc-auc}
 
 An ROC curve shows the trade-off between sensitivity and false positive rate across many thresholds. AUC summarises that curve.
 
+:::: {.panel-tabset}
+### Plot
+
 ```{r chapter05-roc}
+#| echo: false
 roc_thresholds <- seq(1, 0, by = -0.02)
 actual <- students$pass_exam
 
@@ -276,6 +407,41 @@ auc <- sum(diff(roc_df$fpr) *
              (head(roc_df$tpr, -1) + tail(roc_df$tpr, -1)) / 2)
 auc
 ```
+
+### Code
+
+```{r chapter05-roc-code}
+#| eval: false
+roc_thresholds <- seq(1, 0, by = -0.02)
+actual <- students$pass_exam
+
+tpr <- sapply(roc_thresholds, function(t) {
+  pred <- ifelse(prob >= t, 1, 0)
+  tp <- sum(pred == 1 & actual == 1)
+  fn <- sum(pred == 0 & actual == 1)
+  tp / (tp + fn)
+})
+
+fpr <- sapply(roc_thresholds, function(t) {
+  pred <- ifelse(prob >= t, 1, 0)
+  fp <- sum(pred == 1 & actual == 0)
+  tn <- sum(pred == 0 & actual == 0)
+  fp / (fp + tn)
+})
+
+roc_df <- data.frame(fpr = fpr, tpr = tpr)
+roc_df <- roc_df[order(roc_df$fpr), ]
+
+plot(roc_df$fpr, roc_df$tpr, type = "l", lwd = 2,
+     xlab = "False positive rate",
+     ylab = "True positive rate")
+abline(0, 1, lty = 3, col = "grey60")
+
+auc <- sum(diff(roc_df$fpr) *
+             (head(roc_df$tpr, -1) + tail(roc_df$tpr, -1)) / 2)
+auc
+```
+::::
 
 ::: Key-point
 AUC near 0.5 indicates little discrimination. Values closer to 1 indicate stronger discrimination between students who passed and students who failed.

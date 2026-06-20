@@ -70,13 +70,29 @@ This chapter focuses on the first three questions. The next chapter focuses on p
 
 Because logistic regression is fitted by maximum likelihood, model fit is naturally measured through the likelihood. R reports a related quantity called **deviance**.
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter04-deviance-values}
+#| echo: false
 c(
   null_deviance = fit_null$deviance,
   studytime_deviance = fit_study$deviance,
   multivariable_deviance = fit_multi$deviance
 )
 ```
+
+### Code
+
+```{r chapter04-deviance-values-code}
+#| eval: false
+c(
+  null_deviance = fit_null$deviance,
+  studytime_deviance = fit_study$deviance,
+  multivariable_deviance = fit_multi$deviance
+)
+```
+::::
 
 Smaller deviance indicates a better fit to the observed data. The null model has only an intercept, so it represents a baseline model that predicts the same probability for every student.
 
@@ -92,9 +108,21 @@ Two models are nested when one can be obtained from the other by removing predic
 
 We can compare nested logistic regression models with a likelihood ratio test:
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter04-lrt}
+#| echo: false
 anova(fit_study, fit_multi, test = "Chisq")
 ```
+
+### Code
+
+```{r chapter04-lrt-code}
+#| eval: false
+anova(fit_study, fit_multi, test = "Chisq")
+```
+::::
 
 The test asks whether the added predictors improve the model enough to justify the extra complexity.
 
@@ -106,9 +134,21 @@ Use likelihood ratio tests for nested models. For non-nested models, use informa
 
 The Akaike Information Criterion (AIC) balances model fit and complexity. Lower AIC is preferred among the models being compared.
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter04-aic}
+#| echo: false
 AIC(fit_null, fit_study, fit_multi)
 ```
+
+### Code
+
+```{r chapter04-aic-code}
+#| eval: false
+AIC(fit_null, fit_study, fit_multi)
+```
+::::
 
 AIC is useful when comparing several plausible models, but it is not a substitute for subject-matter judgement. A model with a slightly lower AIC but unclear interpretation may not be the best model for communication.
 
@@ -124,10 +164,23 @@ $$
 R^2_{\text{McFadden}} = 1 - \frac{\log L_{\text{model}}}{\log L_{\text{null}}}.
 $$
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter04-mcfadden}
+#| echo: false
 mcfadden_r2 <- 1 - as.numeric(logLik(fit_multi) / logLik(fit_null))
 mcfadden_r2
 ```
+
+### Code
+
+```{r chapter04-mcfadden-code}
+#| eval: false
+mcfadden_r2 <- 1 - as.numeric(logLik(fit_multi) / logLik(fit_null))
+mcfadden_r2
+```
+::::
 
 ::: Key-point
 Do not interpret pseudo $R^2$ as "the percentage of variance explained". For logistic regression, likelihood-based comparisons and prediction checks are usually more informative.
@@ -137,7 +190,11 @@ Do not interpret pseudo $R^2$ as "the percentage of variance explained". For log
 
 Logistic regression residuals are less visually intuitive than linear regression residuals because the observed outcomes are only 0 or 1. Still, residual and influence diagnostics can help identify observations the model struggles to fit.
 
+:::: {.panel-tabset}
+### Output
+
 ```{r chapter04-residuals}
+#| echo: false
 diagnostics <- data.frame(
   fitted = fitted(fit_multi),
   pearson_residual = residuals(fit_multi, type = "pearson"),
@@ -147,12 +204,41 @@ diagnostics <- data.frame(
 head(diagnostics)
 ```
 
+### Code
+
+```{r chapter04-residuals-code}
+#| eval: false
+diagnostics <- data.frame(
+  fitted = fitted(fit_multi),
+  pearson_residual = residuals(fit_multi, type = "pearson"),
+  deviance_residual = residuals(fit_multi, type = "deviance"),
+  cooks_distance = cooks.distance(fit_multi)
+)
+head(diagnostics)
+```
+::::
+
+:::: {.panel-tabset}
+### Plot
+
 ```{r chapter04-residual-plot}
+#| echo: false
 plot(diagnostics$fitted, diagnostics$deviance_residual,
      xlab = "Fitted probability",
      ylab = "Deviance residual")
 abline(h = 0, col = "grey70", lty = 2)
 ```
+
+### Code
+
+```{r chapter04-residual-plot-code}
+#| eval: false
+plot(diagnostics$fitted, diagnostics$deviance_residual,
+     xlab = "Fitted probability",
+     ylab = "Deviance residual")
+abline(h = 0, col = "grey70", lty = 2)
+```
+::::
 
 Large residuals mark cases where the observed outcome was surprising under the fitted model. Large Cook's distances mark cases with unusual influence on the fitted coefficients.
 

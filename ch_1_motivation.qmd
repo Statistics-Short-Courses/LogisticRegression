@@ -66,6 +66,8 @@ library(ggplot2)
 
 # Motivation: modeling binary outcomes {#sec-motivation}
 
+## A quick review of linear regression
+
 In the Linear Regression Short Course (LRSC), we used a linear model to predict an [outcome variable]{.glossary} $Y$ from one or more [predictor variables]{.glossary}, $X_1, X_2, \ldots, X_p$. Something like this:
 
 $$
@@ -74,6 +76,8 @@ $$
 
 where $\epsilon$ is an [error term]{.glossary} that captures the variability in $Y$ that is not explained by the predictors.
 In the cases we considered, Y was a [continuous variable]{.glossary} (e.g., salary, Naplan score, etc.), and the model described how the *expected value* of the outcome, $E[Y]$, changed as the predictors varied. For example, in the case of salary, the model described how the expected salary ($E[Y]$) of a worker changed as their years of experience ($X$) increased.
+
+- [ ] Continue
 
 In many real-world situations, however, *we want to predict an outcome that is not continuous*. Instead, often what we want to predict or explain is a [categorical variable]{.glossary}. The simplest case of this is a [binary outcome]{.glossary} — that is, an outcome with only two possible categories (e.g. success/failure, yes/no, 0/1) [^ch_1_motivation-1].
 
@@ -84,20 +88,36 @@ In many real-world situations, however, *we want to predict an outcome that is n
 
 Johno is a student studying for an important exam. He wants to understand how his study time affects his chances of passing the exam. To this end, he collects data on previous students' study times and whether they passed or failed the exam. Here is a sample of the data Johno collected:
 
+:::: {.panel-tabset}
+### Data
+
 ```{webr}
+#| echo: false
 #| message: false
 #| warning: false
-student_performance <- read_csv("Data/student/student-mat.csv") |> 
+student_performance <- read_delim("Data/student/student-mat.csv", delim = ";") |> 
   mutate(pass_fail = if_else(G3 >= 10, "pass", "fail")) |> 
   select(studytime, pass_fail) 
 
 student_performance
 ```
 
-Johno wants to use this data to model the relationship between study time and the probability of passing the exam. He identifies his outcome variable, $Y_i$, as the binary variable indicating whether student $i$ passed or failed the exam, and his predictor variable, $X_i$, as the amount of time that student spent studying. Therefore, Johno's goal is to produce a statistical model that predicts Y_i (pass/fail) based on X_i (study time): 
+### Code
+
+```{r chapter01-student-performance-code}
+#| eval: false
+student_performance <- read_delim("Data/student/student-mat.csv", delim = ";") |> 
+  mutate(pass_fail = if_else(G3 >= 10, "pass", "fail")) |> 
+  select(studytime, pass_fail) 
+
+student_performance
+```
+::::
+
+Johno wants to use this data to model the relationship between study time and the probability of passing the exam. He identifies his outcome variable, $Y_i$, as the binary variable indicating whether student $i$ passed or failed the exam, and his predictor variable, $X_i$, as the amount of time that student spent studying. Therefore, Johno's goal is to produce a statistical model that predicts $Y_i$ (pass/fail) based on $X_i$ (study time): 
 $$
 Y_i = f(X_i) + \varepsilon
-$$ {.}
+$$
 :::
 
 ### From categories to probabilities
@@ -134,7 +154,11 @@ $$
 
 in R, 
 
+:::: {.panel-tabset}
+### Data
+
 ```{webr}
+#| echo: false
 #| include: true
 student_performance <- student_performance |>
   mutate(
@@ -145,6 +169,21 @@ student_performance <- student_performance |>
   )
 student_performance
 ```
+
+### Code
+
+```{r chapter01-binary-coding-code}
+#| eval: false
+student_performance <- student_performance |>
+  mutate(
+    pass_fail_num = case_when(
+      pass_fail == "pass" ~ 1,
+      pass_fail == "fail" ~ 0
+    )
+  )
+student_performance
+```
+::::
 :::
 
 [^ch_1_recall_dummy_variables]: The use of 0/1 coding for binary outcomes is similar to the use of *dummy variables* for categorical predictors in linear regression, where each category is represented by a separate binary variable coded as 0 or 1.
@@ -169,10 +208,22 @@ In Johno's case, $E[Y]$ represents the probability of passing the exam.
 ::: Example
 ### Mean of a binary variable as a probability
 If we ignore study time for a moment and just look at the overall pass/fail rates in Johno's dataset, we can calculate the mean of the binary outcome variable:
+:::: {.panel-tabset}
+### Output
+
 ```{webr}
-#| echo: true
+#| echo: false
 mean(student_performance$pass_fail_num)
 ```
+
+### Code
+
+```{r chapter01-mean-binary-code}
+#| eval: false
+mean(student_performance$pass_fail_num)
+```
+::::
+
 This means that the probability of a randomly selected student in Johno's dataset passing the exam  is approximately `webr round(mean(student_performance$pass_fail_num), 2)`.
 
 :::
@@ -195,7 +246,11 @@ Having completed the Linear Regression Short Course, Johno considers using linea
 
 He first plots the data in a scatter plot with a fitted linear regression line:
 
+:::: {.panel-tabset}
+### Plot
+
 ```{webr}
+#| echo: false
 library(ggplot2)
 ggplot(student_performance, aes(x = studytime, y = pass_fail_num)) +
   geom_jitter(height = 0.05, width = 0.1, alpha = 0.5) +
@@ -203,14 +258,39 @@ ggplot(student_performance, aes(x = studytime, y = pass_fail_num)) +
   labs(x = "Study Time", y = "Pass/Fail (1/0)")
 ```
 
+### Code
+
+```{r chapter01-linear-probability-plot-code}
+#| eval: false
+ggplot(student_performance, aes(x = studytime, y = pass_fail_num)) +
+  geom_jitter(height = 0.05, width = 0.1, alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE, color = "blue") +
+  labs(x = "Study Time", y = "Pass/Fail (1/0)")
+```
+::::
+
 (note the use of `geom_jitter()` to add some random noise to the points so they don't overlap exactly).
 
 And obtains the following estimate for the effect of study time on the probability of passing:
+:::: {.panel-tabset}
+### Output
+
 ```{webr}
+#| echo: false
 library(broom)
 model <- lm(pass_fail_num ~ studytime, data = student_performance)
 tidy(model)
 ```
+
+### Code
+
+```{r chapter01-linear-probability-model-code}
+#| eval: false
+library(broom)
+model <- lm(pass_fail_num ~ studytime, data = student_performance)
+tidy(model)
+```
+::::
 
 The estimated equation for the relationship between study time and the probability of passing is:
 $$
@@ -223,7 +303,11 @@ i.e. The model predicts that a student who does not study at all (study time = 0
 
 Over the range of study times in the dataset, the model produces predicted probabilities that are between 0 and 1:
 
+:::: {.panel-tabset}
+### Output
+
 ```{webr}
+#| echo: false
 predicted_values <- predict(
   model,
   newdata = data.frame(
@@ -233,20 +317,46 @@ predicted_values <- predict(
 predicted_values  
 ```
 
-This makes sense since the 'highest' score' of any student in our dataset is 1 (i.e. a pass), and the 'lowest score' is 0 (a fail) - so there average should fall somewhere in between. No student has a predicted score of exactly 0 or 1, but the predicted values are between these two extremes. 
+### Code
+
+```{r chapter01-linear-probability-predictions-code}
+#| eval: false
+predicted_values <- predict(
+  model,
+  newdata = data.frame(
+    studytime = unique(student_performance$studytime)),
+  )
+
+predicted_values  
+```
+::::
+
+This makes sense since the highest score of any student in our dataset is 1 (i.e. a pass), and the lowest score is 0 (a fail), so their average should fall somewhere in between. No student has a predicted score of exactly 0 or 1, but the predicted values are between these two extremes. 
 
 However, Johno is a dedicated student and wants to know what happens *if he studies for more hours than any student in the dataset*. If we use the linear model to predict probabilities for study times outside the range of the data, we get some nonsensical predictions.
 
 For example, a student who studies for 10 hours has a predicted probability of passing of
 
+:::: {.panel-tabset}
+### Output
+
 ```{webr}
+#| echo: false
 predict(model, newdata = data.frame(studytime = 10))
 ```
+
+### Code
+
+```{r chapter01-linear-probability-extrapolation-code}
+#| eval: false
+predict(model, newdata = data.frame(studytime = 10))
+```
+::::
 which is greater than 1 (impossible for a probability). 
 
 :::
 
-The problem here is that probabilities do not act like the continuous variables we covered in the LRSC. For one, probabilities cant be greater than one or less than zero - a hard limitation that isn't well modelled by simple linear functions (e.g., you can’t increase a 0.95 probability by +0.2). 
+The problem here is that probabilities do not act like the continuous variables we covered in the LRSC. For one, probabilities cannot be greater than one or less than zero - a hard limitation that is not well modelled by simple linear functions (e.g., you cannot increase a 0.95 probability by +0.2). 
 With a binary outcome, then, the relationship between predictors and probability is typically nonlinear: *the same change in a predictor does not produce the same change in probability*.
 
 - [ ] Continue
@@ -261,13 +371,31 @@ The odds of an event are defined as the ratio of the probability of the event oc
 $$
 \text{odds} = \frac{p}{1 - p}
 $$
-```{webr }
+:::: {.panel-tabset}
+### Plot
+
+```{webr}
+#| echo: false
 ggplot() +
   geom_line(aes(x = seq(0, 1, by = 0.01), y = seq(0, 1, by = 0.01) / (1 - seq(0, 1, by = 0.01))), color = "red") +
   labs(x = "Probability", y = "Odds") +
   xlim(0, 1) +
   ylim(0, 10)
 ```
+
+### Code
+
+```{r chapter01-odds-plot-code}
+#| eval: false
+ggplot() +
+  geom_line(aes(x = seq(0, 1, by = 0.01),
+                y = seq(0, 1, by = 0.01) / (1 - seq(0, 1, by = 0.01))),
+            color = "red") +
+  labs(x = "Probability", y = "Odds") +
+  xlim(0, 1) +
+  ylim(0, 10)
+```
+::::
 :::
 
 Odds take values from 0 to $\infty$, and are greater than 1 when the probability of the event is greater than 0.5. Therefore, if we model a linear relationship between the predictors and the *odds* of the outcome, we can avoid the problem of predicted probabilities being greater than 1. 
@@ -382,7 +510,11 @@ $$
 \text{logit}(p) = \log\left(\frac{p}{1-p}\right)
 $$
 
+:::: {.panel-tabset}
+### Plot
+
 ```{webr}
+#| echo: false
 #| edit: false
 #| autorun: true
 p_vals <- seq(0.01, 0.99, by = 0.01)
@@ -390,6 +522,17 @@ ggplot(data.frame(p = p_vals, logit = log(p_vals / (1 - p_vals))), aes(x = p, y 
   geom_line(color = "steelblue") +
   labs(x = "Probability (p)", y = "Log-odds  logit(p)")
 ```
+
+### Code
+
+```{r chapter01-logit-plot-code}
+#| eval: false
+p_vals <- seq(0.01, 0.99, by = 0.01)
+ggplot(data.frame(p = p_vals, logit = log(p_vals / (1 - p_vals))), aes(x = p, y = logit)) +
+  geom_line(color = "steelblue") +
+  labs(x = "Probability (p)", y = "Log-odds  logit(p)")
+```
+::::
 :::
 
 Because the logarithm stretches the odds scale — which runs from 0 to $\infty$ — the log-odds scale runs from $-\infty$ to $+\infty$. This means we can safely model log-odds with a linear predictor without worrying about impossible predictions.
@@ -458,7 +601,11 @@ $$
 
 where $\eta$ (eta) is the log-odds value. In R, this is `plogis()`.
 
+:::: {.panel-tabset}
+### Plot
+
 ```{webr}
+#| echo: false
 #| edit: false
 #| autorun: true
 eta_vals <- seq(-6, 6, by = 0.05)
@@ -468,6 +615,19 @@ ggplot(data.frame(eta = eta_vals, p = plogis(eta_vals)), aes(x = eta, y = p)) +
   labs(x = "Log-odds (η)", y = "Probability (p)",
        title = "The logistic function")
 ```
+
+### Code
+
+```{r chapter01-logistic-function-code}
+#| eval: false
+eta_vals <- seq(-6, 6, by = 0.05)
+ggplot(data.frame(eta = eta_vals, p = plogis(eta_vals)), aes(x = eta, y = p)) +
+  geom_line(color = "steelblue") +
+  geom_hline(yintercept = c(0, 1), linetype = "dashed", color = "grey50") +
+  labs(x = "Log-odds (eta)", y = "Probability (p)",
+       title = "The logistic function")
+```
+::::
 
 The S-shaped curve of the logistic function captures exactly the kind of nonlinear relationship we expect between a predictor and a probability: as the log-odds increase, the probability rises steeply near 0.5 but flattens as it approaches 0 or 1.
 
