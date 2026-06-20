@@ -1,0 +1,13 @@
+{
+  "permission": {
+    "bash": {
+      "powershell *": "allow"
+    },
+    "executeCode": {
+      "*": "allow"
+    },
+    "edit": {
+      "*.qmd": "allow"
+    }
+  }
+}

@@ -1,5 +1,5 @@
 ---
-title: "Module 4: Extensions and a Mini Case Study"
+title: "Model Building and a Mini Case Study"
 format:
   live-html:
     toc: true
@@ -13,104 +13,204 @@ filters:
 custom-numbered-blocks:
   classes:
     Assumption:
-      colors: [FFCDD2, F44336]
+      colors: ["#FFCDD2", "#F44336"]
       boxstyle: foldbox.simple
       collapse: false
     Example:
-      colors: [BBDEFB, 2196F3]
+      colors: ["#BBDEFB", "#2196F3"]
       boxstyle: foldbox.simple
       collapse: false
     Exercise:
-      colors: [C8E6C9, 4CAF50]
+      colors: ["#C8E6C9", "#4CAF50"]
       boxstyle: foldbox.simple
       collapse: false
     Note:
-      colors: [FFF9C4, FFEB3B]
+      colors: ["#FFF9C4", "#FFEB3B"]
       boxstyle: foldbox.simple
       collapse: false
+      numbered: false
     Key-point:
-      colors: [FFF9C4, FFEB3B]
+      colors: ["#FFF9C4", "#FFEB3B"]
       boxstyle: foldbox.simple
       collapse: false
+      numbered: false
     Key-term:
-      colors: [FFF9C4, FFEB3B]
+      colors: ["#D1C4E9", "#673AB7"]
       boxstyle: foldbox.simple
       collapse: false
+      numbered: false
+resources:
+  - Data
 ---
 {{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
 
-# Extensions and a Mini Case Study {#sec-extensions-case-study}
+```{r chapter06-setup}
+#| include: false
+students <- read.csv("Data/student/student-mat.csv", sep = ";")
+students$pass_exam <- ifelse(students$G3 >= 10, 1, 0)
+students$high_absence <- ifelse(students$absences > median(students$absences), "high", "low")
+```
 
-## Learning outcomes
+# Model building and a mini case study {#sec-extensions-case-study}
 
-- Fit multivariable logistic models with categorical predictors.
-- Use interactions when effects differ by group.
-- Summarize results as predicted probabilities for realistic scenarios.
+The earlier chapters developed the pieces of logistic regression one at a time. This chapter brings them together into a short analysis workflow:
 
-## Multivariable logistic regression
+1. Define the event.
+2. Choose a small set of interpretable predictors.
+3. Fit and compare models.
+4. Report effects as odds ratios and predicted probabilities.
+5. Check predictive performance.
+6. Communicate limitations.
 
-```{r module04-multivariable}
-fit_multi <- glm(am ~ wt + hp + factor(cyl), data = mtcars, family = binomial)
-summary(fit_multi)
+The goal is not to find the "best possible" student-performance model. The goal is to practise a defensible modelling workflow.
+
+## Define the outcome {#sec-case-define-outcome}
+
+We define the event as passing the final mathematics grade:
+
+$$
+Y_i =
+\begin{cases}
+1 & \text{if } G3_i \ge 10,\\
+0 & \text{if } G3_i < 10.
+\end{cases}
+$$
+
+```{r chapter06-event-rate}
+table(students$pass_exam)
+prop.table(table(students$pass_exam))
+```
+
+Always report the event definition. Different cutoffs can answer different questions.
+
+## Choose predictors {#sec-case-choose-predictors}
+
+A compact first model uses:
+
+- `studytime`: weekly study-time category.
+- `failures`: number of previous class failures.
+- `absences`: number of school absences.
+
+These predictors are easy to explain and available before the final grade is known.
+
+```{r chapter06-fit-main}
+fit_case <- glm(pass_exam ~ studytime + failures + absences,
+                data = students,
+                family = binomial)
+summary(fit_case)
+```
+
+Odds ratios give a first interpretation:
+
+```{r chapter06-case-odds-ratios}
+exp(cbind(
+  estimate = coef(fit_case),
+  confint.default(fit_case)
+))
 ```
 
 ::: Key-point
-Each coefficient is a partial effect on the log-odds scale, holding the other predictors constant.
+Use odds ratios to summarise model coefficients, but use predicted probabilities to communicate the practical size of effects.
 :::
 
-## Interactions for subgroup effects
+- [ ] Continue
 
-If the effect of a predictor changes across groups, use an interaction term.
+## Compare a small set of models {#sec-case-compare-models}
 
-```{r module04-interaction}
-fit_interaction <- glm(am ~ wt * factor(cyl), data = mtcars, family = binomial)
+We compare three models:
+
+```{r chapter06-model-comparison}
+fit_null <- glm(pass_exam ~ 1, data = students, family = binomial)
+fit_study <- glm(pass_exam ~ studytime, data = students, family = binomial)
+fit_case <- glm(pass_exam ~ studytime + failures + absences,
+                data = students,
+                family = binomial)
+
+AIC(fit_null, fit_study, fit_case)
+anova(fit_study, fit_case, test = "Chisq")
+```
+
+This mirrors the model-building logic from the Linear Regression Short Course: start simple, add predictors for clear reasons, and check whether the added complexity is useful.
+
+## Consider interactions carefully {#sec-case-interactions}
+
+An interaction allows the effect of one predictor to depend on another. For example, the association between absences and passing might differ depending on whether a student has previous failures.
+
+```{r chapter06-interaction}
+fit_interaction <- glm(pass_exam ~ studytime + failures * high_absence,
+                       data = students,
+                       family = binomial)
+
+AIC(fit_case, fit_interaction)
 summary(fit_interaction)
 ```
 
-## Communicating results with scenarios
-
-```{r module04-scenarios}
-new_cars <- data.frame(
-  wt = c(2.4, 3.2),
-  hp = c(100, 150),
-  cyl = factor(c(4, 6))
-)
-
-predict(fit_multi, newdata = new_cars, type = "response")
-```
-
-## Mini case study template (dataset to be added)
-
-Use this checklist to structure the final case study once the dataset is chosen.
-
-1. Define the outcome variable and clarify what counts as an event.
-2. Summarize the baseline event rate and missing data.
-3. Choose a small set of predictors with clear interpretations.
-4. Fit a logistic model and report odds ratios and predicted probabilities.
-5. Evaluate the model with an appropriate threshold and a confusion matrix.
-6. Communicate results in plain language with scenario predictions.
+Interactions can be useful, but they make interpretation harder and require enough data in each subgroup.
 
 ::: Note
-The final case study will be updated once the outcome variable is confirmed for the selected research dataset.
+Add interaction terms when they answer a real question or are strongly motivated by the context. Do not add them only to search for significance.
 :::
 
-## Reporting template
+## Communicate with scenarios {#sec-case-scenarios}
 
-Use this outline to write up results in plain language.
+Scenario predictions translate the model back to the probability scale.
 
-- Outcome definition, sample size, and event rate.
-- Model specification (predictors and reference levels).
-- Key effects as odds ratios with a short interpretation.
-- Predicted probabilities for 2 to 3 realistic scenarios.
-- Performance summary (threshold, confusion matrix metrics, AUC).
-- Limitations and next steps.
+```{r chapter06-scenarios}
+scenarios <- data.frame(
+  studytime = c(1, 2, 4),
+  failures = c(0, 0, 0),
+  absences = c(2, 2, 2)
+)
+
+scenarios$predicted_probability <- predict(
+  fit_case,
+  newdata = scenarios,
+  type = "response"
+)
+
+scenarios
+```
+
+For a non-technical audience, this table is usually more useful than a coefficient table.
+
+## Summarise predictive performance {#sec-case-performance}
+
+```{r chapter06-performance}
+prob <- predict(fit_case, type = "response")
+threshold <- 0.5
+pred <- ifelse(prob >= threshold, 1, 0)
+cm <- table(
+  Predicted = factor(pred, levels = c(0, 1)),
+  Actual = factor(students$pass_exam, levels = c(0, 1))
+)
+cm
+
+accuracy <- sum(diag(cm)) / sum(cm)
+sensitivity <- cm["1", "1"] / sum(cm[, "1"])
+specificity <- cm["0", "0"] / sum(cm[, "0"])
+
+c(accuracy = accuracy,
+  sensitivity = sensitivity,
+  specificity = specificity)
+```
+
+This is an in-sample summary, so it is optimistic. In a real predictive project, we would use a validation set or cross-validation.
+
+## Reporting template {#sec-case-reporting-template}
+
+Use this structure for a short logistic regression report:
+
+1. **Outcome:** Define the event and report the event rate.
+2. **Model:** State the predictors and the link function.
+3. **Effects:** Report key odds ratios with confidence intervals.
+4. **Predictions:** Give predicted probabilities for realistic scenarios.
+5. **Performance:** Report threshold, confusion matrix metrics, and any AUC or validation results.
+6. **Limitations:** Note missing predictors, observational design, sample size, class imbalance, and any modelling assumptions.
 
 Template paragraph:
 
-"We modeled [outcome] using logistic regression with predictors [list]. The event rate was [rate]. A one-unit increase in [predictor] was associated with [odds ratio] times the odds of the event, holding other variables constant. For a typical case ([scenario]), the predicted probability was [probability]. Using a threshold of [threshold], the model achieved [accuracy/sensitivity/specificity] and an AUC of [AUC]. Key limitations include [limitations]."
+> We modelled the probability of passing the final mathematics assessment using logistic regression. The event was defined as `G3 >= 10`. The model included study time, previous failures, and absences. Coefficients were estimated on the log-odds scale and reported as odds ratios. To make the results easier to interpret, we also calculated predicted probabilities for representative student profiles. Using a threshold of 0.5, we summarised classification performance with accuracy, sensitivity, and specificity. These performance results are in-sample and should be validated before using the model for decision making.
 
-## Practice prompts
+## Chapter summary {#sec-chapter06-summary}
 
-- Fit the model with `factor(gear)` instead of `factor(cyl)`. What changes?
-- Compare predictions from `fit_multi` and `fit_interaction` for the same scenario.
-- Draft a one-paragraph summary for a non-technical audience.
+Logistic regression analysis follows the same disciplined pattern as linear regression: define the response, build interpretable models, compare alternatives, check assumptions and performance, and communicate effects on a scale the audience can understand. The main difference is the scale: coefficients live on the log-odds scale, while conclusions are usually clearest as predicted probabilities.

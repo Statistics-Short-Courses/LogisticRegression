@@ -13,119 +13,238 @@ filters:
 custom-numbered-blocks:
   classes:
     Assumption:
-      colors: [FFCDD2, F44336]
+      colors: ["#FFCDD2", "#F44336"]
       boxstyle: foldbox.simple
       collapse: false
     Example:
-      colors: [BBDEFB, 2196F3]
+      colors: ["#BBDEFB", "#2196F3"]
       boxstyle: foldbox.simple
       collapse: false
     Exercise:
-      colors: [C8E6C9, 4CAF50]
+      colors: ["#C8E6C9", "#4CAF50"]
       boxstyle: foldbox.simple
       collapse: false
     Note:
-      colors: [FFF9C4, FFEB3B]
+      colors: ["#FFF9C4", "#FFEB3B"]
       boxstyle: foldbox.simple
       collapse: false
+      numbered: false
     Key-point:
-      colors: [FFF9C4, FFEB3B]
+      colors: ["#FFF9C4", "#FFEB3B"]
       boxstyle: foldbox.simple
       collapse: false
+      numbered: false
     Key-term:
-      colors: [FFF9C4, FFEB3B]
+      colors: ["#D1C4E9", "#673AB7"]
       boxstyle: foldbox.simple
       collapse: false
+      numbered: false
+webr:
+  render-df: gt-interactive
+resources:
+  - Data
 ---
 {{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
 {{< include ./_extensions/r-wasm/live/_gradethis.qmd >}}
 
-```{webr fitting-exercises-setup}
+```{r chapter03-setup}
+#| include: false
+students <- read.csv("Data/student/student-mat.csv", sep = ";")
+students$pass_exam <- ifelse(students$G3 >= 10, 1, 0)
+```
+
+```{webr chapter03-exercises-setup}
 #| include: false
 #| envir: ex_fit
-fit_ex <- glm(am ~ wt + hp, data = mtcars, family = binomial)
+students <- read.csv("Data/student/student-mat.csv", sep = ";")
+students$pass_exam <- ifelse(students$G3 >= 10, 1, 0)
+fit_study <- glm(pass_exam ~ studytime, data = students, family = binomial)
 ```
 
-# Fitting Logistic Regression Models {#sec-fitting}
+# Fitting logistic regression models {#sec-fitting}
 
-## Maximum likelihood estimation
+In @sec-introduction we wrote the logistic regression model as
 
-Logistic regression parameters are typically estimated by *maximum likelihood*. In R, `glm(..., family = binomial)` fits logistic regression models using likelihood-based methods.
+$$
+Y_i \sim \text{Bernoulli}(p_i),
+\qquad
+\text{logit}(p_i) = \beta_0 + \beta_1 X_i.
+$$
 
-```{r fitting-loglik}
-fit_wt <- glm(am ~ wt, data = mtcars, family = binomial)
-logLik(fit_wt)
-```
+The coefficients $\beta_0$ and $\beta_1$ are the unknown parameters of the data-generating model. Fitting a logistic regression means estimating those parameters from the observed data.
 
-## Fitting a model in R
+## From least squares to likelihood {#sec-logistic-likelihood}
 
-```{r fitting-first-model}
-fit_wt <- glm(am ~ wt, data = mtcars, family = binomial)
-summary(fit_wt)
-```
+For linear regression, `lm()` chooses the line that minimises the sum of squared residuals. This works because the model assumes normally distributed errors around a mean line.
+
+For logistic regression, the outcome is 0 or 1, so squared residuals are no longer the natural fitting criterion. Instead, `glm()` uses **maximum likelihood estimation**. It chooses the coefficient estimates that make the observed sequence of passes and fails most likely under the Bernoulli model.
 
 ::: Key-point
-Coefficients are on the **log-odds** scale. To interpret them as **odds ratios**, exponentiate with `exp()`.
+Maximum likelihood asks: among all possible coefficient values, which values make the observed data most plausible under the model?
 :::
 
-## Interpreting coefficients
+If student $i$ has predicted probability $p_i$, then a pass contributes probability $p_i$ to the likelihood and a fail contributes probability $1-p_i$. A good model gives high probabilities to the events that actually occurred.
 
-```{r fitting-coefs}
-fit_ex <- glm(am ~ wt + hp, data = mtcars, family = binomial)
-coef(fit_ex)
-exp(coef(fit_ex))
+- [ ] Continue
+
+## Fitting the study-time model {#sec-fitting-study-model}
+
+We fit Johno's first model with `glm()`:
+
+```{r chapter03-fit-study}
+fit_study <- glm(pass_exam ~ studytime,
+                 data = students,
+                 family = binomial)
+summary(fit_study)
 ```
 
-::: Exercise
-Compute the odds ratio for `wt` and store it as `or_wt`.
+The estimated model is
 
-```{webr fitting-odds-exercise}
+$$
+\widehat{\text{logit}(p_i)} = b_0 + b_1 \text{studytime}_i.
+$$
+
+As in the Linear Regression Short Course, we use Greek letters for unknown true parameters and Latin letters for estimates:
+
+| Symbol | Meaning |
+|---|---|
+| $\beta_0$ | True intercept |
+| $\beta_1$ | True slope for study time |
+| $b_0$ | Estimated intercept |
+| $b_1$ | Estimated slope for study time |
+
+```{r chapter03-coef-table}
+coef(fit_study)
+```
+
+- [ ] Continue
+
+## Reading coefficients on the log-odds scale {#sec-log-odds-coefficients}
+
+The intercept is the estimated log-odds of passing when `studytime = 0`. In this dataset, no student has study time equal to 0, so the intercept is mainly needed to position the fitted curve.
+
+The slope is the estimated change in log-odds for a one-unit increase in study time:
+
+$$
+b_1 = \widehat{\Delta \text{log-odds}}.
+$$
+
+::: Key-point
+A positive coefficient means the predicted probability increases as the predictor increases. A negative coefficient means the predicted probability decreases. The coefficient itself is on the log-odds scale, not the probability scale.
+:::
+
+## Odds ratios {#sec-fitting-odds-ratios}
+
+Exponentiating a coefficient converts it from a change in log-odds to an odds ratio:
+
+$$
+\text{odds ratio} = e^{b_1}.
+$$
+
+```{r chapter03-odds-ratio}
+exp(coef(fit_study))
+```
+
+For `studytime`, the odds ratio compares two students who differ by one study-time category. If the odds ratio is greater than 1, the model estimates higher odds of passing for the student in the higher study-time category.
+
+::: Exercise
+### Compute an odds ratio
+
+Compute the odds ratio for `studytime` and store it as `or_studytime`.
+
+```{webr chapter03-odds-exercise}
 #| exercise: ex_fit_1
 #| envir: ex_fit
-or_wt <- ______
+or_studytime <- ______
 ```
 
 :::: {.solution exercise="ex_fit_1"}
-```{webr fitting-odds-exercise-solution}
+```{webr chapter03-odds-exercise-solution}
 #| exercise: ex_fit_1
 #| solution: true
-or_wt <- exp(coef(fit_ex)["wt"])
-or_wt
+or_studytime <- exp(coef(fit_study)["studytime"])
+or_studytime
 ```
 ::::
-```{webr fitting-odds-exercise-check}
+
+```{webr chapter03-odds-exercise-check}
 #| exercise: ex_fit_1
 #| envir: ex_fit
 #| check: true
 #| class: wait
 grade_this({
-  if (!exists("or_wt")) {
-    fail("Define `or_wt` and try again.")
+  if (!exists("or_studytime")) {
+    fail("Define `or_studytime` and try again.")
   }
-  target <- exp(coef(fit_ex)["wt"])
-  if (is.numeric(or_wt) && abs(or_wt - target) < 0.01) {
-    pass("Nice. That matches the odds ratio for weight.")
+  target <- exp(coef(fit_study)["studytime"])
+  if (is.numeric(or_studytime) && abs(or_studytime - target) < 0.001) {
+    pass("That is the odds ratio for study time.")
   }
-  fail("Try `exp(coef(fit_ex)[\"wt\"])` and make sure `or_wt` is numeric.")
+  fail("Use `exp(coef(fit_study)[\"studytime\"])`.")
 })
 ```
 :::
 
-## Inference in logistic regression
+- [ ] Continue
 
-For quick inference, you can use Wald tests from `summary()` and Wald confidence intervals via `confint.default()`.
+## Inference for coefficients {#sec-logistic-inference}
 
-```{r fitting-inference}
-summary(fit_ex)
-confint.default(fit_ex)
+The `summary()` output includes a standard error, a test statistic, and a p-value for each coefficient. These are Wald tests. They test whether a coefficient differs from zero on the log-odds scale.
+
+```{r chapter03-wald-table}
+coef(summary(fit_study))
 ```
 
-## Categorical predictors
+Wald confidence intervals can be computed with `confint.default()`:
 
-```{r fitting-categorical}
-fit_cat <- glm(am ~ wt + factor(cyl), data = mtcars, family = binomial)
-summary(fit_cat)
+```{r chapter03-wald-ci}
+confint.default(fit_study)
 ```
 
-When a predictor is a [factor]{.glossary term="Factor"}, coefficients compare each level to a reference level. Interpret them as odds ratios relative to that baseline.
+It is often easier to report intervals on the odds-ratio scale:
 
+```{r chapter03-or-ci}
+exp(confint.default(fit_study))
+```
+
+::: Note
+Confidence intervals for logistic regression coefficients are intervals for log-odds changes. Applying `exp()` converts them to odds-ratio intervals.
+:::
+
+## Adding predictors {#sec-adding-predictors}
+
+The formula interface extends in the same way as multiple linear regression. A model with previous failures and absences is
+
+$$
+\text{logit}(p_i) =
+\beta_0 +
+\beta_1 \text{studytime}_i +
+\beta_2 \text{failures}_i +
+\beta_3 \text{absences}_i.
+$$
+
+```{r chapter03-fit-multiple}
+fit_multi <- glm(pass_exam ~ studytime + failures + absences,
+                 data = students,
+                 family = binomial)
+summary(fit_multi)
+```
+
+Each coefficient is a partial effect on the log-odds scale, holding the other predictors in the model constant.
+
+## Categorical predictors {#sec-logistic-categorical-predictors}
+
+Categorical predictors work as they did in linear regression. R chooses a reference level and estimates comparisons against that level.
+
+```{r chapter03-fit-categorical}
+fit_support <- glm(pass_exam ~ studytime + failures + schoolsup,
+                   data = students,
+                   family = binomial)
+summary(fit_support)
+```
+
+Here, `schoolsupyes` compares students with extra educational support to the reference group `schoolsup = "no"`, after adjusting for study time and previous failures.
+
+## Chapter summary {#sec-chapter03-summary}
+
+Fitting a logistic regression means estimating a linear predictor for log-odds. `glm()` handles the estimation using maximum likelihood. Coefficients are read on the log-odds scale, exponentiated coefficients are odds ratios, and predicted probabilities require the inverse-logit transformation. The next chapter asks whether the fitted model is adequate.

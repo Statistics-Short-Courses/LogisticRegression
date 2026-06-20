@@ -7,13 +7,14 @@ format: live-html
 
 ## Who this course is for
 
-If you have completed the Linear Regression Short Course, you have the foundation to build a wide range of statistical models for data analysis. However, linear regression is not suitable for all types of data, and it is common to encounter data in which the outcome variable is binary (e.g., success/failure, yes/no). Logistic regression is a powerful tool for modeling binary outcomes, and this course will guide you through its concepts and applications.
+If you have completed the Linear Regression Short Course, you already have the main modelling idea: describe how an outcome changes with predictors, estimate the unknown parameters from data, and check whether the fitted model is useful. This course keeps that structure but changes the outcome model. Logistic regression is used when the outcome is binary, such as success/failure, yes/no, or pass/fail.
 
 ## What you will learn
 
-- Understand the difference between linear and logistic regression.
+- Understand how logistic regression extends the linear-model framework.
 - Recognize when logistic regression is appropriate for binary outcomes.
 - Translate between probability, odds, and log-odds.
+- Explain the Bernoulli/binomial error model for binary data.
 - Fit logistic models in R with `glm()` and read the output.
 - Interpret coefficients as odds ratios and communicate effects clearly.
 - Assess model performance with likelihood measures and classification metrics.
@@ -26,16 +27,16 @@ If you have completed the Linear Regression Short Course, you have the foundatio
 
 ## Course map
 
-- @sec-motivation when to use logistic regression (and when linear regression fails).
-- @sec-introduction (GLMs, odds/logit, logistic function).
-- @sec-fitting logistic regression models (estimation, interpretation, inference).
-- @sec-assessing model fit (deviance, model comparison, pseudo R-squared).
-- @sec-predictions from logistic regression models (probabilities, thresholds, ROC/AUC).
-- @sec-extensions and mini case study (optional: multivariable models, interactions, reporting).
+- @sec-motivation motivates binary outcomes and introduces probability, odds, log-odds, and the logistic function.
+- @sec-introduction maps logistic regression onto the linear-model framework using GLMs, the logit link, and a Bernoulli/binomial error model.
+- @sec-fitting fits logistic regression models with `glm()` and interprets coefficients, odds ratios, and confidence intervals.
+- @sec-assessing-fit assesses model fit with deviance, likelihood ratio tests, AIC, pseudo R-squared, and diagnostics.
+- @sec-predictions generates predicted probabilities, classifications, confusion matrices, ROC curves, and AUC.
+- @sec-extensions-case-study brings the workflow together in a mini case study with multivariable models, interactions, and reporting.
 
 ## How to use this book
 
 - The course is designed to be completed sequentially: successive chapters build on prior concepts. However, it is possible to jump to specific sections as needed.
 - There is a glossary at the end for quick reference of key terms.
-- Each chapter includes excersises which should be attempted before continuing. 
+- Each chapter includes exercises which should be attempted before continuing.
 

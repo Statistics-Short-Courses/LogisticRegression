@@ -52,8 +52,13 @@ resources:
 ---
 
 {{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+{{< include ./_extensions/r-wasm/live/_gradethis.qmd >}}
 
-```{r}
+```{webr}
+#| edit: false
+#| autorun: true
+#| message: false
+#| warning: false
 library(readr)
 library(dplyr)
 library(ggplot2)
@@ -79,31 +84,33 @@ In many real-world situations, however, *we want to predict an outcome that is n
 
 Johno is a student studying for an important exam. He wants to understand how his study time affects his chances of passing the exam. To this end, he collects data on previous students' study times and whether they passed or failed the exam. Here is a sample of the data Johno collected:
 
-```{r}
-student_performance <- read_csv2("Data/student/student-mat.csv") |> 
+```{webr}
+#| message: false
+#| warning: false
+student_performance <- read_csv("Data/student/student-mat.csv") |> 
   mutate(pass_fail = if_else(G3 >= 10, "pass", "fail")) |> 
   select(studytime, pass_fail) 
 
 student_performance
 ```
 
-Johno wants to use this data to model the relationship between study time and the probability of passing the exam. He identifies his outcome variable, $Y$, as the binary variable indicating whether a student passed or failed the exam, and his predictor variable, $X$, as the amount of time spent studying. Therefore, Johno's goal is to produce a statistical model that predicts Y (pass/fail) based on X (study time): 
+Johno wants to use this data to model the relationship between study time and the probability of passing the exam. He identifies his outcome variable, $Y_i$, as the binary variable indicating whether student $i$ passed or failed the exam, and his predictor variable, $X_i$, as the amount of time that student spent studying. Therefore, Johno's goal is to produce a statistical model that predicts Y_i (pass/fail) based on X_i (study time): 
 $$
-Y = f(X) + \varepsilon
+Y_i = f(X_i) + \varepsilon
 $$ {.}
 :::
 
 ### From categories to probabilities
 
 #### The average of a binary outcome
-Recall that the *error term* $\epsilon$ in a regression model captures the difference between the observed outcome $Y$ and the *mean*, or [*expected*]{.glossary} outcome $E[Y]$ from the model. 
+Recall that the *error term* $\epsilon$ in a regression model captures the difference between the observed outcome $Y$ and the [*expected*]{.glossary} outcome $E[Y]$ from the model. 
 
 ::: Key-point
 #### Expected value and error term
 The *expected value* of a random variable $Y$, denoted $E[Y]$, can be thought of as the long-run average value of $Y$ if we were to repeat the process that generates $Y$ many times.
 That is, if we were to collect many samples of $Y$ under the same conditions, the average of those samples would converge to $E[Y]$. The error term $\varepsilon$ represents the deviation of an observed value of $Y$ from its expected value $E[Y]$.
 
-The Error term $\varepsilon$ is the difference between the observed value of $Y$ and its expected value $E[Y]$ i.e. $\varepsilon = Y - E[Y]$. It captures the variability in $Y$ that is not explained by the predictors in the model. 
+The error term $\varepsilon$ is the difference between the observed value of $Y$ and its expected value $E[Y]$ i.e. $\varepsilon = Y - E[Y]$. It captures the variability in $Y$ that is not explained by the predictors in the model. 
 
 In regression models, we typically assume that the error term $\varepsilon$ has a mean of zero (i.e., $E[\varepsilon] = 0$), which implies that the expected value of $Y$ given the predictors is equal to the predicted value from the model (i.e., $E[Y] = f(X)$).
 :::
@@ -127,7 +134,8 @@ $$
 
 in R, 
 
-```{r}
+```{webr}
+#| include: true
 student_performance <- student_performance |>
   mutate(
     pass_fail_num = case_when(
@@ -145,25 +153,28 @@ student_performance
 
 The choice of using 0 and 1 here is not arbitrary. While we could have coded the categories as -1 and 1, or 0 and 2, the 0/1 coding has a special property that makes it particularly useful for modeling. In particular, when we code a binary outcome this way, the mean of the outcome variable, $E[Y]$ has a direct interpretation:
 $$
-E[Y] = P(Y=1) = p
+E[Y] = P(Y=1)
 $$
 
 That is, 
 
 ::: Key-point
-The expected value (mean) of a binary variable coded as 0/1 is the *probability* of the outcome being 1.
+The expected value (mean) of a binary variable coded as 0/1 is the *probability* of the outcome being 1. We label this probability as $p$:
+$$
+p = \Pr(Y=1) = E[Y]
+$$
 :::
 
-In Johno's case, $E[Y]$ represents the probability of passing the exam:
-
+In Johno's case, $E[Y]$ represents the probability of passing the exam.
 ::: Example
 ### Mean of a binary variable as a probability
 If we ignore study time for a moment and just look at the overall pass/fail rates in Johno's dataset, we can calculate the mean of the binary outcome variable:
-```{r}
+```{webr}
 #| echo: true
 mean(student_performance$pass_fail_num)
 ```
-This means that the probability of a randomly selected student in Johno's dataset passing the exam  is approximately `r round(mean(student_performance$pass_fail_num) * 100, 2)`%.
+This means that the probability of a randomly selected student in Johno's dataset passing the exam  is approximately `webr round(mean(student_performance$pass_fail_num), 2)`.
+
 :::
 
 - [ ] Continue
@@ -184,7 +195,7 @@ Having completed the Linear Regression Short Course, Johno considers using linea
 
 He first plots the data in a scatter plot with a fitted linear regression line:
 
-```{r}
+```{webr}
 library(ggplot2)
 ggplot(student_performance, aes(x = studytime, y = pass_fail_num)) +
   geom_jitter(height = 0.05, width = 0.1, alpha = 0.5) +
@@ -195,7 +206,7 @@ ggplot(student_performance, aes(x = studytime, y = pass_fail_num)) +
 (note the use of `geom_jitter()` to add some random noise to the points so they don't overlap exactly).
 
 And obtains the following estimate for the effect of study time on the probability of passing:
-```{r}
+```{webr}
 library(broom)
 model <- lm(pass_fail_num ~ studytime, data = student_performance)
 tidy(model)
@@ -212,7 +223,7 @@ i.e. The model predicts that a student who does not study at all (study time = 0
 
 Over the range of study times in the dataset, the model produces predicted probabilities that are between 0 and 1:
 
-```{r}
+```{webr}
 predicted_values <- predict(
   model,
   newdata = data.frame(
@@ -228,18 +239,21 @@ However, Johno is a dedicated student and wants to know what happens *if he stud
 
 For example, a student who studies for 10 hours has a predicted probability of passing of
 
-``` r
+```{webr}
 predict(model, newdata = data.frame(studytime = 10))
 ```
-
 which is greater than 1 (impossible for a probability). 
+
 :::
 
-With a binary outcome, the relationship between predictors and probability is typically nonlinear: *the same change in a predictor cannot produce the same change in probability at every starting probability* (e.g., you can’t increase a 0.95 probability by +0.2).
+The problem here is that probabilities do not act like the continuous variables we covered in the LRSC. For one, probabilities cant be greater than one or less than zero - a hard limitation that isn't well modelled by simple linear functions (e.g., you can’t increase a 0.95 probability by +0.2). 
+With a binary outcome, then, the relationship between predictors and probability is typically nonlinear: *the same change in a predictor does not produce the same change in probability*.
 
-### from probabilties to odds
+- [ ] Continue
 
-One way to address this issue is to model the relationship between the predictors and the *odds* of the outcome, rather than the probability itself.
+### From probabilities to odds
+
+One way to address this issue is to change what we are modelling so that it behaves more nicely with a linear predictor. For example, we might model the relationship between the predictors and the *odds* of the outcome, rather than the probability itself.
 
 ::: Key-term
 # Odds
@@ -247,7 +261,7 @@ The odds of an event are defined as the ratio of the probability of the event oc
 $$
 \text{odds} = \frac{p}{1 - p}
 $$
-```{r 1. odds_plot}
+```{webr }
 ggplot() +
   geom_line(aes(x = seq(0, 1, by = 0.01), y = seq(0, 1, by = 0.01) / (1 - seq(0, 1, by = 0.01))), color = "red") +
   labs(x = "Probability", y = "Odds") +
@@ -256,44 +270,217 @@ ggplot() +
 ```
 :::
 
-Odds take values from 0 to $\infty$, and are be greater than 1 when the probability of the event is greater than 0.5. Therefore, if we model a linear relationship between the predictors and the *odds* of the outcome, we can avoid the problem of predicted probabilities being greater than 1. 
+Odds take values from 0 to $\infty$, and are greater than 1 when the probability of the event is greater than 0.5. Therefore, if we model a linear relationship between the predictors and the *odds* of the outcome, we can avoid the problem of predicted probabilities being greater than 1. 
 
-::: Example
-### Modeling odds instead of probabilities
-Johno decides to model the relationship between study time and the odds of passing the exam instead of
-the probability of passing. He first calculates the odds of passing for each student in his dataset:
-```{r}
-student_performance <- student_performance |>
-  mutate(odds_pass = pass_fail_num / (1 - pass_fail_num))
-student_performance
-```
-Then, he fits a linear model to predict the odds of passing based on study time:
-```{r}
-model_odds <- lm(odds_pass ~ studytime, data = student_performance)
-tidy(model_odds)
-```
-The estimated equation for the relationship between study time and the odds of passing is:
-$$
-\text{odds}(p) = 0.586 + 0.0418
-\times \text{studytime}
-$$
+::: Exercise
+### Probabilities to odds
+Calculate the odds that a randomly selected student from Johno's sample passed the exam
 
-For a student who studies for 10 hours, the predicted odds of passing are:
-```{r}
-0.586 + 0.0418 * 10
-```
-We can convert odds back to a probability using the formula:
-$$
-p = \frac{\text{odds}}{1 + \text{odds}}
-$$[^odds_to_probability]
+::: {.cell exercise='ex_1.1' envir='Ex1'}
+```{webr}
+#| exercise: ex_1.1
+#| envir: Ex1
 
-So, according to our model, a student who studies for 10 hours has a predicted probability of passing of:
-```{r}
-odds_10_hours <- 0.586 + 0.0418 * 10
-probability_10_hours <- odds_10_hours / (1 + odds_10_hours)
-probability_10_hours
+pass_odds <- ____
 ```
 :::
 
-[^odds_to_probability]: For the mathematically inclined, see if you can derive this formula for probability from the definition of odds.
 
+::: {.solution exercise="ex_1.1"}
+
+::: {.cell exercise='ex_1.1' solution='true'}
+```{webr}
+#| exercise: ex_1.1
+#| solution: true
+pass_odds <- mean(student_performance$pass_fail_num)/ (1- mean(student_performance$pass_fail_num))
+```
+:::
+
+:::
+
+::: {.cell exercise='ex_1.1' envir='Ex1' check='true' class='wait'}
+```{webr}
+#| exercise: ex_1.1
+#| envir: Ex1
+#| check: true
+#| class: wait
+grade_this_code()
+```
+:::
+
+:::
+
+When using odds, we avoid the problem of predicting probabilities greater than one, because a probability of 1 is equivalent to an odds of $\infty$. 
+
+Moreover, we can easily transform our result in odds back to probabilities for interpretation. Since 
+$$
+\text{odds} = \frac{p}{1-p},
+$$
+we can solve for $p$:
+$$
+p = \frac{\text{odds}}{1 + \text{odds}}.
+$$
+
+::: Exercise
+### Odds back to probability
+
+Suppose a student has odds of passing the exam of **9** (i.e. for every 1 student who fails, 9 pass). Use the formula below to back-transform this to a probability:
+
+$$
+p = \frac{\text{odds}}{1 + \text{odds}}
+$$
+
+::: {.cell exercise='ex_2.1' envir='Ex3'}
+```{webr}
+#| exercise: ex_2.1
+#| envir: Ex3
+
+odds_value <- 9
+p <- ____
+p
+```
+:::
+
+::: {.solution exercise="ex_2.1"}
+
+::: {.cell exercise='ex_2.1' solution='true'}
+```{webr}
+#| exercise: ex_2.1
+#| solution: true
+odds_value <- 9
+p <- odds_value / (1 + odds_value)
+p
+```
+:::
+
+::::
+
+::: {.cell exercise='ex_2.1' envir='Ex3' check='true' class='wait'}
+```{webr}
+#| exercise: ex_2.1
+#| envir: Ex3
+#| check: true
+#| class: wait
+grade_this_code()
+```
+:::
+
+:::
+
+Notice that even with very high odds of 9, the corresponding probability is 0.9 — not 1. No matter how large the odds become, the probability is always bounded below 1. This is a key property that motivates moving from the probability scale to the odds scale when building a linear model for binary outcomes.
+
+## Log-odds (logit)
+
+While odds are an improvement over raw probabilities, they are still bounded below by zero — which means a linear model for the odds could still, in principle, produce impossible negative predictions. We can fix this by taking one more step: the *logarithm* of the odds.
+
+::: Key-term
+### Log-odds (logit)
+
+The **log-odds**, or **logit**, of a probability $p$ is defined as the natural log of the odds:
+
+$$
+\text{logit}(p) = \log\left(\frac{p}{1-p}\right)
+$$
+
+```{webr}
+#| edit: false
+#| autorun: true
+p_vals <- seq(0.01, 0.99, by = 0.01)
+ggplot(data.frame(p = p_vals, logit = log(p_vals / (1 - p_vals))), aes(x = p, y = logit)) +
+  geom_line(color = "steelblue") +
+  labs(x = "Probability (p)", y = "Log-odds  logit(p)")
+```
+:::
+
+Because the logarithm stretches the odds scale — which runs from 0 to $\infty$ — the log-odds scale runs from $-\infty$ to $+\infty$. This means we can safely model log-odds with a linear predictor without worrying about impossible predictions.
+
+::: Key-point
+### The three scales
+
+| Scale | Range | Formula |
+|---|---|---|
+| Probability | $[0, 1]$ | $p$ |
+| Odds | $[0, \infty)$ | $p / (1-p)$ |
+| Log-odds | $(-\infty, +\infty)$ | $\log(p / (1-p))$ |
+
+Moving from probability → odds → log-odds trades interpretability for a scale that plays nicely with a linear model.
+:::
+
+::: Exercise
+### Computing log-odds
+
+A student has a probability of passing of $p = 0.75$. Using the logit formula, calculate their log-odds of passing.
+
+::: {.cell exercise='ex_3.1' envir='Ex4'}
+```{webr}
+#| exercise: ex_3.1
+#| envir: Ex4
+
+p <- 0.75
+log_odds <- ____
+log_odds
+```
+:::
+
+::: {.solution exercise="ex_3.1"}
+
+::: {.cell exercise='ex_3.1' solution='true'}
+```{webr}
+#| exercise: ex_3.1
+#| solution: true
+p <- 0.75
+log_odds <- log(p / (1 - p))
+log_odds
+```
+:::
+
+:::
+
+::: {.cell exercise='ex_3.1' envir='Ex4' check='true' class='wait'}
+```{webr}
+#| exercise: ex_3.1
+#| envir: Ex4
+#| check: true
+#| class: wait
+grade_this_code()
+```
+:::
+
+:::
+
+### The logistic function
+
+If we model log-odds with a linear predictor, we need a way to convert predicted log-odds back into a probability. The function that does this is the **logistic function** (also called the *inverse logit*):
+
+$$
+p = \frac{e^{\eta}}{1 + e^{\eta}} = \frac{1}{1 + e^{-\eta}}
+$$
+
+where $\eta$ (eta) is the log-odds value. In R, this is `plogis()`.
+
+```{webr}
+#| edit: false
+#| autorun: true
+eta_vals <- seq(-6, 6, by = 0.05)
+ggplot(data.frame(eta = eta_vals, p = plogis(eta_vals)), aes(x = eta, y = p)) +
+  geom_line(color = "steelblue") +
+  geom_hline(yintercept = c(0, 1), linetype = "dashed", color = "grey50") +
+  labs(x = "Log-odds (η)", y = "Probability (p)",
+       title = "The logistic function")
+```
+
+The S-shaped curve of the logistic function captures exactly the kind of nonlinear relationship we expect between a predictor and a probability: as the log-odds increase, the probability rises steeply near 0.5 but flattens as it approaches 0 or 1.
+
+::: Note
+### A useful symmetry
+
+The logit and the logistic function are inverses of each other:
+
+$$
+\text{logit}(p) = \eta \quad \Longleftrightarrow \quad p = \text{plogis}(\eta)
+$$
+
+You can think of the logit as the *link* from probability to the linear predictor, and the logistic function as the *back-transform* from the linear predictor to a probability.
+:::
+
+This pair — a linear predictor on the log-odds scale, combined with the logistic function to convert back to probabilities — is the foundation of **logistic regression**, which we cover in the next chapter.

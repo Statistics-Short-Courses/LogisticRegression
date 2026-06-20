@@ -13,83 +13,189 @@ filters:
 custom-numbered-blocks:
   classes:
     Assumption:
-      colors: [FFCDD2, F44336]
+      colors: ["#FFCDD2", "#F44336"]
       boxstyle: foldbox.simple
       collapse: false
     Example:
-      colors: [BBDEFB, 2196F3]
+      colors: ["#BBDEFB", "#2196F3"]
       boxstyle: foldbox.simple
       collapse: false
     Exercise:
-      colors: [C8E6C9, 4CAF50]
+      colors: ["#C8E6C9", "#4CAF50"]
       boxstyle: foldbox.simple
       collapse: false
     Note:
-      colors: [FFF9C4, FFEB3B]
+      colors: ["#FFF9C4", "#FFEB3B"]
       boxstyle: foldbox.simple
       collapse: false
+      numbered: false
     Key-point:
-      colors: [FFF9C4, FFEB3B]
+      colors: ["#FFF9C4", "#FFEB3B"]
       boxstyle: foldbox.simple
       collapse: false
+      numbered: false
     Key-term:
-      colors: [FFF9C4, FFEB3B]
+      colors: ["#D1C4E9", "#673AB7"]
       boxstyle: foldbox.simple
       collapse: false
+      numbered: false
+webr:
+  render-df: gt-interactive
+resources:
+  - Data
 ---
 {{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
 {{< include ./_extensions/r-wasm/live/_gradethis.qmd >}}
 
-```{r predictions-setup}
+```{r chapter05-setup}
 #| include: false
-fit_full <- glm(am ~ wt + hp + factor(cyl), data = mtcars, family = binomial)
-prob <- predict(fit_full, type = "response")
+students <- read.csv("Data/student/student-mat.csv", sep = ";")
+students$pass_exam <- ifelse(students$G3 >= 10, 1, 0)
+fit_multi <- glm(pass_exam ~ studytime + failures + absences,
+                 data = students,
+                 family = binomial)
+prob <- predict(fit_multi, type = "response")
 ```
 
-```{webr predictions-exercises-setup}
+```{webr chapter05-exercises-setup}
 #| include: false
 #| envir: ex_pred
-fit_full <- glm(am ~ wt + hp + factor(cyl), data = mtcars, family = binomial)
-prob <- predict(fit_full, type = "response")
-actual_num <- mtcars$am
+students <- read.csv("Data/student/student-mat.csv", sep = ";")
+students$pass_exam <- ifelse(students$G3 >= 10, 1, 0)
+fit_multi <- glm(pass_exam ~ studytime + failures + absences,
+                 data = students,
+                 family = binomial)
+prob <- predict(fit_multi, type = "response")
+actual_num <- students$pass_exam
 ```
 
-# Predictions from Logistic Regression Models {#sec-predictions}
+# Predictions from logistic regression models {#sec-predictions}
 
-## Generating predicted probabilities
+The fitted model gives a linear predictor on the log-odds scale:
 
-```{r predictions-scenarios}
-fit <- glm(am ~ wt + hp, data = mtcars, family = binomial)
-new_cars <- data.frame(wt = c(2.2, 3.2, 3.8), hp = c(110, 110, 110))
-predict(fit, newdata = new_cars, type = "response")
-```
+$$
+\hat{\eta}_i =
+b_0 +
+b_1 \text{studytime}_i +
+b_2 \text{failures}_i +
+b_3 \text{absences}_i.
+$$
 
-You can also visualise how predicted probability changes with a predictor (holding other predictors constant).
+For most audiences, the useful output is not the log-odds. It is the predicted probability:
 
-```{r predictions-curve}
-fit <- glm(am ~ wt + hp, data = mtcars, family = binomial)
-grid <- data.frame(
-  wt = seq(min(mtcars$wt), max(mtcars$wt), length.out = 50),
-  hp = mean(mtcars$hp)
+$$
+\hat{p}_i = \frac{1}{1 + e^{-\hat{\eta}_i}}.
+$$
+
+## Predicting on different scales {#sec-predicting-scales}
+
+By default, `predict()` returns values on the link scale:
+
+```{r chapter05-predict-link}
+new_students <- data.frame(
+  studytime = c(1, 2, 3, 4),
+  failures = 0,
+  absences = 4
 )
-grid$prob <- predict(fit, newdata = grid, type = "response")
-plot(grid$wt, grid$prob, type = "l", lwd = 2,
-     xlab = "Weight", ylab = "Predicted probability")
+
+predict(fit_multi, newdata = new_students)
 ```
 
-## Classification thresholds
+For logistic regression, the link scale is the log-odds scale. To get predicted probabilities, use `type = "response"`:
 
-If you turn probabilities into classes (0/1), you need a threshold. Changing the threshold trades sensitivity against specificity.
+```{r chapter05-predict-response}
+predict(fit_multi, newdata = new_students, type = "response")
+```
 
-```{r predictions-confusion}
+::: Key-point
+Use `type = "response"` when you want predicted probabilities from a logistic regression model.
+:::
+
+- [ ] Continue
+
+## Scenario-based predictions {#sec-scenario-predictions}
+
+Predicted probabilities are often the clearest way to communicate a logistic regression model. We choose realistic predictor values and compare the model's predictions.
+
+```{r chapter05-scenario-table}
+scenarios <- data.frame(
+  studytime = c(1, 2, 4),
+  failures = c(0, 0, 0),
+  absences = c(4, 4, 4)
+)
+
+scenarios$predicted_probability <- predict(
+  fit_multi,
+  newdata = scenarios,
+  type = "response"
+)
+
+scenarios
+```
+
+These are model-based probabilities, not guarantees. A student with a high predicted probability can still fail, and a student with a low predicted probability can still pass.
+
+::: Exercise
+### Predict a probability
+
+Compute the predicted probability for a student with `studytime = 3`, `failures = 0`, and `absences = 2`. Store it as `p_case`.
+
+```{webr chapter05-predict-exercise}
+#| exercise: ex_pred_1
+#| envir: ex_pred
+new_case <- data.frame(studytime = 3, failures = 0, absences = 2)
+p_case <- ______
+```
+
+:::: {.solution exercise="ex_pred_1"}
+```{webr chapter05-predict-exercise-solution}
+#| exercise: ex_pred_1
+#| solution: true
+new_case <- data.frame(studytime = 3, failures = 0, absences = 2)
+p_case <- predict(fit_multi, newdata = new_case, type = "response")
+p_case
+```
+::::
+
+```{webr chapter05-predict-exercise-check}
+#| exercise: ex_pred_1
+#| envir: ex_pred
+#| check: true
+#| class: wait
+grade_this({
+  if (!exists("p_case")) {
+    fail("Define `p_case` and try again.")
+  }
+  target <- as.numeric(predict(fit_multi,
+                               newdata = data.frame(studytime = 3, failures = 0, absences = 2),
+                               type = "response"))
+  if (is.numeric(p_case) && abs(as.numeric(p_case) - target) < 0.001) {
+    pass("That is the predicted probability for the scenario.")
+  }
+  fail("Use `predict(fit_multi, newdata = new_case, type = \"response\")`.")
+})
+```
+:::
+
+- [ ] Continue
+
+## From probabilities to classifications {#sec-classification-thresholds}
+
+Sometimes we need to turn probabilities into predicted classes. To do this, we choose a **classification threshold**. With a threshold of 0.5, we predict a pass when $\hat{p} \ge 0.5$.
+
+```{r chapter05-confusion}
 threshold <- 0.5
-class_hat <- factor(ifelse(prob >= threshold, 1, 0), levels = c(0, 1))
-actual <- factor(mtcars$am, levels = c(0, 1))
-conf_mat <- table(Predicted = class_hat, Actual = actual)
+class_hat <- ifelse(prob >= threshold, 1, 0)
+conf_mat <- table(
+  Predicted = factor(class_hat, levels = c(0, 1)),
+  Actual = factor(students$pass_exam, levels = c(0, 1))
+)
 conf_mat
 ```
 
-```{r predictions-metrics}
+From the confusion matrix we can calculate performance measures:
+
+```{r chapter05-metrics}
 true_pos <- conf_mat["1", "1"]
 true_neg <- conf_mat["0", "0"]
 false_pos <- conf_mat["1", "0"]
@@ -99,27 +205,62 @@ accuracy <- (true_pos + true_neg) / sum(conf_mat)
 sensitivity <- true_pos / (true_pos + false_neg)
 specificity <- true_neg / (true_neg + false_pos)
 
-c(accuracy = accuracy, sensitivity = sensitivity, specificity = specificity)
+c(accuracy = accuracy,
+  sensitivity = sensitivity,
+  specificity = specificity)
 ```
 
-## ROC curves and AUC
+::: Key-point
+The threshold is a decision rule, not part of the fitted logistic regression model. Changing the threshold changes the classifications but not the predicted probabilities.
+:::
 
-```{r predictions-roc}
+## Threshold trade-offs {#sec-threshold-tradeoffs}
+
+Lower thresholds predict more passes. Higher thresholds predict fewer passes. The right threshold depends on the cost of different mistakes.
+
+```{r chapter05-threshold-table}
+thresholds <- c(0.3, 0.5, 0.7)
+
+threshold_summary <- do.call(rbind, lapply(thresholds, function(t) {
+  pred <- ifelse(prob >= t, 1, 0)
+  cm <- table(
+    Predicted = factor(pred, levels = c(0, 1)),
+    Actual = factor(students$pass_exam, levels = c(0, 1))
+  )
+  tp <- cm["1", "1"]
+  tn <- cm["0", "0"]
+  fp <- cm["1", "0"]
+  fn <- cm["0", "1"]
+  data.frame(
+    threshold = t,
+    accuracy = (tp + tn) / sum(cm),
+    sensitivity = tp / (tp + fn),
+    specificity = tn / (tn + fp)
+  )
+}))
+
+threshold_summary
+```
+
+## ROC curves and AUC {#sec-roc-auc}
+
+An ROC curve shows the trade-off between sensitivity and false positive rate across many thresholds. AUC summarises that curve.
+
+```{r chapter05-roc}
 roc_thresholds <- seq(1, 0, by = -0.02)
-actual <- factor(mtcars$am, levels = c(0, 1))
-actual_num <- as.integer(actual) - 1
+actual <- students$pass_exam
 
 tpr <- sapply(roc_thresholds, function(t) {
   pred <- ifelse(prob >= t, 1, 0)
-  tp <- sum(pred == 1 & actual_num == 1)
-  fn <- sum(pred == 0 & actual_num == 1)
+  tp <- sum(pred == 1 & actual == 1)
+  fn <- sum(pred == 0 & actual == 1)
   tp / (tp + fn)
 })
 
 fpr <- sapply(roc_thresholds, function(t) {
   pred <- ifelse(prob >= t, 1, 0)
-  fp <- sum(pred == 1 & actual_num == 0)
-  tn <- sum(pred == 0 & actual_num == 0)
+  fp <- sum(pred == 1 & actual == 0)
+  tn <- sum(pred == 0 & actual == 0)
   fp / (fp + tn)
 })
 
@@ -127,52 +268,19 @@ roc_df <- data.frame(fpr = fpr, tpr = tpr)
 roc_df <- roc_df[order(roc_df$fpr), ]
 
 plot(roc_df$fpr, roc_df$tpr, type = "l", lwd = 2,
-     xlab = "False positive rate", ylab = "True positive rate")
+     xlab = "False positive rate",
+     ylab = "True positive rate")
 abline(0, 1, lty = 3, col = "grey60")
 
-auc <- sum(diff(roc_df$fpr) * (head(roc_df$tpr, -1) + tail(roc_df$tpr, -1)) / 2)
+auc <- sum(diff(roc_df$fpr) *
+             (head(roc_df$tpr, -1) + tail(roc_df$tpr, -1)) / 2)
 auc
 ```
 
 ::: Key-point
-AUC near 0.5 indicates random guessing, while values closer to 1 indicate stronger discrimination.
+AUC near 0.5 indicates little discrimination. Values closer to 1 indicate stronger discrimination between students who passed and students who failed.
 :::
 
-::: Exercise
-Using a threshold of 0.6, compute the accuracy and store it as `accuracy_06`.
+## Chapter summary {#sec-chapter05-summary}
 
-```{webr predictions-accuracy-exercise}
-#| exercise: ex_pred_1
-#| envir: ex_pred
-threshold <- 0.6
-class_hat <- ifelse(prob >= threshold, 1, 0)
-accuracy_06 <- ______
-```
-
-:::: {.solution exercise="ex_pred_1"}
-```{webr predictions-accuracy-exercise-solution}
-#| exercise: ex_pred_1
-#| solution: true
-threshold <- 0.6
-class_hat <- ifelse(prob >= threshold, 1, 0)
-accuracy_06 <- mean(class_hat == actual_num)
-accuracy_06
-```
-::::
-```{webr predictions-accuracy-exercise-check}
-#| exercise: ex_pred_1
-#| envir: ex_pred
-#| check: true
-#| class: wait
-grade_this({
-  if (!exists("accuracy_06")) {
-    fail("Define `accuracy_06` and try again.")
-  }
-  target <- mean(ifelse(prob >= 0.6, 1, 0) == actual_num)
-  if (is.numeric(accuracy_06) && abs(accuracy_06 - target) < 0.001) {
-    pass("Nice. That matches the accuracy for a 0.6 threshold.")
-  }
-  fail("Use `mean(class_hat == actual_num)` to compute the accuracy.")
-})
-```
-:::
+Prediction from logistic regression has two stages. First, use the fitted model to produce predicted probabilities. Second, if a classification is needed, choose a threshold that reflects the decision context. Probability predictions and classification decisions should be reported separately.

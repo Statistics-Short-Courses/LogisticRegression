@@ -1,28 +1,49 @@
-# Intro/overview/index
-## Brief intro
-## Overview of Structure module
-## learning objectives
+# Course overview
+## Audience and prerequisites
+## Learning objectives
+## Course map
 ## How to use this book
-# Motivation - when to use logistic regression 
-## when linear regression is not appropriate
-## examples of binary outcomes
-## Why linear regression fails for binary outcomes
-# Introduction to logistic regression
-## Generalising linear models
-## The logistic function
-## Binomial distribution
+
+# Motivation: modelling binary outcomes
+## Link back to the Linear Regression Short Course
+## Examples of binary outcomes
+## Coding pass/fail as 0/1
+## Expected value of a binary outcome as a probability
+## Why ordinary linear regression is not appropriate
+## Probability, odds, log-odds, and the logistic function
+
+# From linear models to logistic regression
+## Linear regression as a mean model plus an error model
+## The Bernoulli/binomial error model for binary outcomes
+## The GLM framework
+## Logistic regression as a binomial GLM with a logit link
+## The `glm(..., family = binomial)` formula in R
+
 # Fitting logistic regression models
 ## Maximum likelihood estimation
-## Interpreting coefficients
-### Odds 
-## Inference in logistic regression
-### Hypothesis testing
-### Confidence intervals
-# Assessing model fit
-## Deviance
-## Goodness-of-fit tests
+## Estimated coefficients versus true parameters
+## Coefficients on the log-odds scale
+## Odds ratios and confidence intervals
+## Adding multiple predictors and categorical predictors
+
+# Assessing logistic regression models
+## Likelihood and deviance
+## Likelihood ratio tests for nested models
+## AIC and model complexity
 ## Pseudo R-squared
+## Residuals, influence, and common problems
+
 # Predictions from logistic regression models
-## Generating predicted probabilities
+## Predictions on the link scale and probability scale
+## Scenario-based predicted probabilities
 ## Classification thresholds
+## Confusion matrices and classification metrics
 ## ROC curves and AUC
+
+# Model building and mini case study
+## Define the event and event rate
+## Choose interpretable predictors
+## Compare candidate models
+## Consider interactions carefully
+## Communicate with odds ratios and predicted probabilities
+## Report limitations and performance
