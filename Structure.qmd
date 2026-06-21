@@ -25,14 +25,12 @@
 ## Odds ratios and confidence intervals
 ## Adding multiple predictors and categorical predictors
 
-# Assessing logistic regression models
+# Assessing model fit and predictions
 ## Likelihood and deviance
 ## Likelihood ratio tests for nested models
 ## AIC and model complexity
 ## Pseudo R-squared
 ## Residuals, influence, and common problems
-
-# Predictions from logistic regression models
 ## Predictions on the link scale and probability scale
 ## Scenario-based predicted probabilities
 ## Classification thresholds

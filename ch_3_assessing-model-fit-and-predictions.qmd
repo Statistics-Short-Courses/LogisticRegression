@@ -1,5 +1,5 @@
 ---
-title: "Predictions from Logistic Regression Models"
+title: "Assessing Model Fit and Predictions"
 format:
   live-html:
     toc: true
@@ -47,17 +47,19 @@ resources:
 {{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
 {{< include ./_extensions/r-wasm/live/_gradethis.qmd >}}
 
-```{r chapter05-setup}
+```{r chapter03-setup}
 #| include: false
 students <- read.csv("Data/student/student-mat.csv", sep = ";")
 students$pass_exam <- ifelse(students$G3 >= 10, 1, 0)
+fit_null <- glm(pass_exam ~ 1, data = students, family = binomial)
+fit_study <- glm(pass_exam ~ studytime, data = students, family = binomial)
 fit_multi <- glm(pass_exam ~ studytime + failures + absences,
                  data = students,
                  family = binomial)
 prob <- predict(fit_multi, type = "response")
 ```
 
-```{webr chapter05-exercises-setup}
+```{webr chapter03-exercises-setup}
 #| include: false
 #| envir: ex_pred
 students <- read.csv("Data/student/student-mat.csv", sep = ";")
@@ -69,7 +71,214 @@ prob <- predict(fit_multi, type = "response")
 actual_num <- students$pass_exam
 ```
 
-# Predictions from logistic regression models {#sec-predictions}
+# Assessing model fit and predictions {#sec-assessing-fit}
+
+In linear regression, model assessment often starts with residual sums of squares and $R^2$. Logistic regression uses a different error model, so the assessment tools also change. We still ask the same broad questions:
+
+1. Does adding predictors improve the model?
+2. Is the model too simple or unnecessarily complex?
+3. Are there unusual observations or structural problems?
+4. Are the predicted probabilities useful for the purpose at hand?
+
+This chapter first focuses on likelihood-based model assessment, then turns to predicted probabilities, classification thresholds, and predictive performance.
+
+## Likelihood and deviance {#sec-likelihood-deviance}
+
+Because logistic regression is fitted by maximum likelihood, model fit is naturally measured through the likelihood. R reports a related quantity called **deviance**.
+
+:::: {.panel-tabset}
+### Output
+
+```{r chapter03-deviance-values}
+#| echo: false
+c(
+  null_deviance = fit_null$deviance,
+  studytime_deviance = fit_study$deviance,
+  multivariable_deviance = fit_multi$deviance
+)
+```
+
+### Code
+
+```{r chapter03-deviance-values-code}
+#| eval: false
+c(
+  null_deviance = fit_null$deviance,
+  studytime_deviance = fit_study$deviance,
+  multivariable_deviance = fit_multi$deviance
+)
+```
+::::
+
+Smaller deviance indicates a better fit to the observed data. The null model has only an intercept, so it represents a baseline model that predicts the same probability for every student.
+
+::: Key-point
+Deviance plays a role similar to residual sum of squares in linear regression: it is a lack-of-fit measure, so smaller values indicate better fit. It is likelihood-based rather than squared-error-based.
+:::
+
+- [ ] Continue
+
+## Comparing nested models {#sec-logistic-nested-models}
+
+Two models are nested when one can be obtained from the other by removing predictors. The study-time model is nested inside the multivariable model because the multivariable model adds `failures` and `absences`.
+
+We can compare nested logistic regression models with a likelihood ratio test:
+
+:::: {.panel-tabset}
+### Output
+
+```{r chapter03-lrt}
+#| echo: false
+anova(fit_study, fit_multi, test = "Chisq")
+```
+
+### Code
+
+```{r chapter03-lrt-code}
+#| eval: false
+anova(fit_study, fit_multi, test = "Chisq")
+```
+::::
+
+The test asks whether the added predictors improve the model enough to justify the extra complexity.
+
+::: Note
+Use likelihood ratio tests for nested models. For non-nested models, use information criteria such as AIC or compare prediction performance on a validation set.
+:::
+
+## AIC and model complexity {#sec-logistic-aic}
+
+The Akaike Information Criterion (AIC) balances model fit and complexity. Lower AIC is preferred among the models being compared.
+
+:::: {.panel-tabset}
+### Output
+
+```{r chapter03-aic}
+#| echo: false
+AIC(fit_null, fit_study, fit_multi)
+```
+
+### Code
+
+```{r chapter03-aic-code}
+#| eval: false
+AIC(fit_null, fit_study, fit_multi)
+```
+::::
+
+AIC is useful when comparing several plausible models, but it is not a substitute for subject-matter judgement. A model with a slightly lower AIC but unclear interpretation may not be the best model for communication.
+
+- [ ] Continue
+
+## Pseudo R-squared {#sec-logistic-pseudo-r2}
+
+Linear regression's $R^2$ is based on sums of squares. Logistic regression does not have an exact equivalent. Several **pseudo R-squared** measures exist, but they should be treated as rough summaries rather than as direct analogues.
+
+One common option is McFadden's pseudo $R^2$:
+
+$$
+R^2_{\text{McFadden}} = 1 - \frac{\log L_{\text{model}}}{\log L_{\text{null}}}.
+$$
+
+:::: {.panel-tabset}
+### Output
+
+```{r chapter03-mcfadden}
+#| echo: false
+mcfadden_r2 <- 1 - as.numeric(logLik(fit_multi) / logLik(fit_null))
+mcfadden_r2
+```
+
+### Code
+
+```{r chapter03-mcfadden-code}
+#| eval: false
+mcfadden_r2 <- 1 - as.numeric(logLik(fit_multi) / logLik(fit_null))
+mcfadden_r2
+```
+::::
+
+::: Key-point
+Do not interpret pseudo $R^2$ as "the percentage of variance explained". For logistic regression, likelihood-based comparisons and prediction checks are usually more informative.
+:::
+
+## Residuals and influence {#sec-logistic-residuals}
+
+Logistic regression residuals are less visually intuitive than linear regression residuals because the observed outcomes are only 0 or 1. Still, residual and influence diagnostics can help identify observations the model struggles to fit.
+
+:::: {.panel-tabset}
+### Output
+
+```{r chapter03-residuals}
+#| echo: false
+diagnostics <- data.frame(
+  fitted = fitted(fit_multi),
+  pearson_residual = residuals(fit_multi, type = "pearson"),
+  deviance_residual = residuals(fit_multi, type = "deviance"),
+  cooks_distance = cooks.distance(fit_multi)
+)
+head(diagnostics)
+```
+
+### Code
+
+```{r chapter03-residuals-code}
+#| eval: false
+diagnostics <- data.frame(
+  fitted = fitted(fit_multi),
+  pearson_residual = residuals(fit_multi, type = "pearson"),
+  deviance_residual = residuals(fit_multi, type = "deviance"),
+  cooks_distance = cooks.distance(fit_multi)
+)
+head(diagnostics)
+```
+::::
+
+:::: {.panel-tabset}
+### Plot
+
+```{r chapter03-residual-plot}
+#| echo: false
+plot(diagnostics$fitted, diagnostics$deviance_residual,
+     xlab = "Fitted probability",
+     ylab = "Deviance residual")
+abline(h = 0, col = "grey70", lty = 2)
+```
+
+### Code
+
+```{r chapter03-residual-plot-code}
+#| eval: false
+plot(diagnostics$fitted, diagnostics$deviance_residual,
+     xlab = "Fitted probability",
+     ylab = "Deviance residual")
+abline(h = 0, col = "grey70", lty = 2)
+```
+::::
+
+Large residuals mark cases where the observed outcome was surprising under the fitted model. Large Cook's distances mark cases with unusual influence on the fitted coefficients.
+
+## Common problems {#sec-logistic-common-problems}
+
+::: Assumption
+### Independent observations
+
+The usual logistic regression model assumes observations are independent. If the same person, class, school, or site contributes multiple related observations, the model may need to account for clustering.
+:::
+
+::: Assumption
+### Linearity on the log-odds scale
+
+Continuous predictors are assumed to have approximately linear effects on the log-odds. This does not mean a straight line on the probability scale.
+:::
+
+Other common problems include:
+
+- **Separation:** a predictor or combination of predictors perfectly separates passes from fails, leading to unstable or very large estimates.
+- **Class imbalance:** one outcome class is much more common than the other, so simple accuracy can be misleading.
+- **Overfitting:** too many predictors for the amount of data, especially when the event count is small.
+
+## Predictions from logistic regression models {#sec-predictions}
 
 The fitted model gives a linear predictor on the log-odds scale:
 
@@ -94,7 +303,7 @@ By default, `predict()` returns values on the link scale:
 :::: {.panel-tabset}
 ### Output
 
-```{r chapter05-predict-link}
+```{r chapter03-predict-link}
 #| echo: false
 new_students <- data.frame(
   studytime = c(1, 2, 3, 4),
@@ -107,7 +316,7 @@ predict(fit_multi, newdata = new_students)
 
 ### Code
 
-```{r chapter05-predict-link-code}
+```{r chapter03-predict-link-code}
 #| eval: false
 new_students <- data.frame(
   studytime = c(1, 2, 3, 4),
@@ -124,14 +333,14 @@ For logistic regression, the link scale is the log-odds scale. To get predicted 
 :::: {.panel-tabset}
 ### Output
 
-```{r chapter05-predict-response}
+```{r chapter03-predict-response}
 #| echo: false
 predict(fit_multi, newdata = new_students, type = "response")
 ```
 
 ### Code
 
-```{r chapter05-predict-response-code}
+```{r chapter03-predict-response-code}
 #| eval: false
 predict(fit_multi, newdata = new_students, type = "response")
 ```
@@ -150,7 +359,7 @@ Predicted probabilities are often the clearest way to communicate a logistic reg
 :::: {.panel-tabset}
 ### Output
 
-```{r chapter05-scenario-table}
+```{r chapter03-scenario-table}
 #| echo: false
 scenarios <- data.frame(
   studytime = c(1, 2, 4),
@@ -169,7 +378,7 @@ scenarios
 
 ### Code
 
-```{r chapter05-scenario-table-code}
+```{r chapter03-scenario-table-code}
 #| eval: false
 scenarios <- data.frame(
   studytime = c(1, 2, 4),
@@ -194,7 +403,7 @@ These are model-based probabilities, not guarantees. A student with a high predi
 
 Compute the predicted probability for a student with `studytime = 3`, `failures = 0`, and `absences = 2`. Store it as `p_case`.
 
-```{webr chapter05-predict-exercise}
+```{webr chapter03-predict-exercise}
 #| exercise: ex_pred_1
 #| envir: ex_pred
 new_case <- data.frame(studytime = 3, failures = 0, absences = 2)
@@ -202,7 +411,7 @@ p_case <- ______
 ```
 
 :::: {.solution exercise="ex_pred_1"}
-```{webr chapter05-predict-exercise-solution}
+```{webr chapter03-predict-exercise-solution}
 #| exercise: ex_pred_1
 #| solution: true
 new_case <- data.frame(studytime = 3, failures = 0, absences = 2)
@@ -211,7 +420,7 @@ p_case
 ```
 ::::
 
-```{webr chapter05-predict-exercise-check}
+```{webr chapter03-predict-exercise-check}
 #| exercise: ex_pred_1
 #| envir: ex_pred
 #| check: true
@@ -240,7 +449,7 @@ Sometimes we need to turn probabilities into predicted classes. To do this, we c
 :::: {.panel-tabset}
 ### Output
 
-```{r chapter05-confusion}
+```{r chapter03-confusion}
 #| echo: false
 threshold <- 0.5
 class_hat <- ifelse(prob >= threshold, 1, 0)
@@ -253,7 +462,7 @@ conf_mat
 
 ### Code
 
-```{r chapter05-confusion-code}
+```{r chapter03-confusion-code}
 #| eval: false
 threshold <- 0.5
 class_hat <- ifelse(prob >= threshold, 1, 0)
@@ -270,7 +479,7 @@ From the confusion matrix we can calculate performance measures:
 :::: {.panel-tabset}
 ### Output
 
-```{r chapter05-metrics}
+```{r chapter03-metrics}
 #| echo: false
 true_pos <- conf_mat["1", "1"]
 true_neg <- conf_mat["0", "0"]
@@ -288,7 +497,7 @@ c(accuracy = accuracy,
 
 ### Code
 
-```{r chapter05-metrics-code}
+```{r chapter03-metrics-code}
 #| eval: false
 true_pos <- conf_mat["1", "1"]
 true_neg <- conf_mat["0", "0"]
@@ -316,7 +525,7 @@ Lower thresholds predict more passes. Higher thresholds predict fewer passes. Th
 :::: {.panel-tabset}
 ### Output
 
-```{r chapter05-threshold-table}
+```{r chapter03-threshold-table}
 #| echo: false
 thresholds <- c(0.3, 0.5, 0.7)
 
@@ -343,7 +552,7 @@ threshold_summary
 
 ### Code
 
-```{r chapter05-threshold-table-code}
+```{r chapter03-threshold-table-code}
 #| eval: false
 thresholds <- c(0.3, 0.5, 0.7)
 
@@ -374,7 +583,7 @@ threshold_summary
 
 Using a threshold of 0.6, compute the classification accuracy and store it as `accuracy_06`.
 
-```{webr chapter05-accuracy-exercise}
+```{webr chapter03-accuracy-exercise}
 #| exercise: ex_pred_2
 #| envir: ex_pred
 threshold <- 0.6
@@ -383,7 +592,7 @@ accuracy_06 <- ______
 ```
 
 :::: {.solution exercise="ex_pred_2"}
-```{webr chapter05-accuracy-exercise-solution}
+```{webr chapter03-accuracy-exercise-solution}
 #| exercise: ex_pred_2
 #| solution: true
 threshold <- 0.6
@@ -393,7 +602,7 @@ accuracy_06
 ```
 ::::
 
-```{webr chapter05-accuracy-exercise-check}
+```{webr chapter03-accuracy-exercise-check}
 #| exercise: ex_pred_2
 #| envir: ex_pred
 #| check: true
@@ -418,7 +627,7 @@ An ROC curve shows the trade-off between sensitivity and false positive rate acr
 :::: {.panel-tabset}
 ### Plot
 
-```{r chapter05-roc}
+```{r chapter03-roc}
 #| echo: false
 roc_thresholds <- seq(1, 0, by = -0.02)
 actual <- students$pass_exam
@@ -452,7 +661,7 @@ auc
 
 ### Code
 
-```{r chapter05-roc-code}
+```{r chapter03-roc-code}
 #| eval: false
 roc_thresholds <- seq(1, 0, by = -0.02)
 actual <- students$pass_exam
@@ -489,6 +698,8 @@ auc
 AUC near 0.5 indicates little discrimination. Values closer to 1 indicate stronger discrimination between students who passed and students who failed.
 :::
 
-## Chapter summary {#sec-chapter05-summary}
+## Chapter summary {#sec-chapter03-summary}
+
+Assessing logistic regression requires likelihood-based thinking. Deviance, likelihood ratio tests, and AIC replace the least-squares tools used in linear regression. Residuals, influence checks, and assumptions still matter, but they must be interpreted through the binary-outcome model.
 
 Prediction from logistic regression has two stages. First, use the fitted model to produce predicted probabilities. Second, if a classification is needed, choose a threshold that reflects the decision context. Probability predictions and classification decisions should be reported separately.
