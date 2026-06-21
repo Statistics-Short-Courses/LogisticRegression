@@ -38,6 +38,19 @@
     }
   }
 
+  function checkCellsForExercise(exId) {
+    return Array.from(document.querySelectorAll('.cell.wait[data-check="true"]'))
+      .filter(function (cell) {
+        return cell.getAttribute('data-exercise') === exId;
+      });
+  }
+
+  function applySkipAttrToExercise(exId, skipped) {
+    checkCellsForExercise(exId).forEach(function (cell) {
+      applySkipAttr(cell, skipped);
+    });
+  }
+
   function buildButton(el, state, exId) {
     const btn = document.createElement('button');
     btn.type = 'button';
@@ -49,7 +62,7 @@
 
     btn.addEventListener('click', function () {
       const nowSkipped = btn.getAttribute('aria-pressed') !== 'true';
-      applySkipAttr(el, nowSkipped);
+      applySkipAttrToExercise(exId, nowSkipped);
       setSkipped(state, exId, nowSkipped);
       btn.textContent = nowSkipped ? 'Undo skip' : 'Skip exercise';
       btn.setAttribute('aria-pressed', nowSkipped ? 'true' : 'false');
@@ -60,14 +73,18 @@
   document.addEventListener('DOMContentLoaded', function () {
     const state = loadState();
     document.querySelectorAll('.cell.wait[data-check="true"]').forEach(function (cell) {
+      const nestedInCheckCell = cell.parentElement && cell.parentElement.closest('.cell.wait[data-check="true"]');
+      if (nestedInCheckCell || cell.dataset.skipButtonInitialized === 'true') return;
+
       const exId = cell.getAttribute('data-exercise');
       if (!exId) return;
 
       // Reapply stored skip state
-      applySkipAttr(cell, isSkipped(state, exId));
+      applySkipAttrToExercise(exId, isSkipped(state, exId));
 
       // Insert the button just before the exercise cell
       const btn = buildButton(cell, state, exId);
+      cell.dataset.skipButtonInitialized = 'true';
       const parent = cell.parentElement || cell;
       parent.insertBefore(btn, cell);
     });

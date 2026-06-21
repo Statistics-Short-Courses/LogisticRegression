@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; From Linear Models to Fitting Logistic Regression – Logistic Regression with R</title>
+<title>2&nbsp; Generalised Linear Models and Logistic Regression – Logistic Regression with R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -27998,29 +27998,29 @@ initializeRuntime();
 
 </script>
 <style>
-.Example {
---color1: #BBDEFB;
---color2: #2196F3;
-}
-.Assumption {
---color1: #FFCDD2;
---color2: #F44336;
+.Exercise {
+--color1: #C8E6C9;
+--color2: #4CAF50;
 }
 .Key-term {
 --color1: #D1C4E9;
 --color2: #673AB7;
 }
-.Key-point {
---color1: #FFF9C4;
---color2: #FFEB3B;
-}
 .Note {
 --color1: #FFF9C4;
 --color2: #FFEB3B;
 }
-.Exercise {
---color1: #C8E6C9;
---color2: #4CAF50;
+.Key-point {
+--color1: #FFF9C4;
+--color2: #FFEB3B;
+}
+.Assumption {
+--color1: #FFCDD2;
+--color2: #F44336;
+}
+.Example {
+--color1: #BBDEFB;
+--color2: #2196F3;
 }
 </style>
 
@@ -28185,7 +28185,7 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_2_lr.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Linear Models to Fitting Logistic Regression</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_2_lr.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Generalised Linear Models and Logistic Regression</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -28219,31 +28219,25 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch_1_logit.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Motivation: modeling binary outcomes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Motivation &amp; Background: Binary Outcomes and the Logistic Function</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch_2_lr.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Linear Models to Fitting Logistic Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Generalised Linear Models and Logistic Regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_4_assessing-model-fit.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessing Logistic Regression Models</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ch_5_predictions-from-logistic-regression-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Predictions from Logistic Regression Models</span></span></a>
+  <a href="./ch_3_assessing-model-fit-and-predictions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessing Model Fit and Predictions</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch_6_extensions-case-study.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -28264,11 +28258,11 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
   <ul class="collapse">
   <li><a href="#sec-introduction" id="toc-sec-introduction" class="nav-link active" data-scroll-target="#sec-introduction"><span class="header-section-number">3</span> From linear models to fitting logistic regression</a>
   <ul class="collapse">
-  <li><a href="#sec-linear-regression-template" id="toc-sec-linear-regression-template" class="nav-link" data-scroll-target="#sec-linear-regression-template"><span class="header-section-number">3.1</span> The linear regression template</a></li>
+  <li><a href="#sec-GLM" id="toc-sec-GLM" class="nav-link" data-scroll-target="#sec-GLM"><span class="header-section-number">3.1</span> Generalising Linear Regression</a></li>
   <li><a href="#sec-binary-error-model" id="toc-sec-binary-error-model" class="nav-link" data-scroll-target="#sec-binary-error-model"><span class="header-section-number">3.2</span> The error model for a binary outcome</a></li>
   <li><a href="#sec-glm-framework" id="toc-sec-glm-framework" class="nav-link" data-scroll-target="#sec-glm-framework"><span class="header-section-number">3.3</span> Generalised linear models</a></li>
   <li><a href="#sec-logistic-regression-model" id="toc-sec-logistic-regression-model" class="nav-link" data-scroll-target="#sec-logistic-regression-model"><span class="header-section-number">3.4</span> The logistic regression model</a></li>
-  <li><a href="#sec-glm-formula-r" id="toc-sec-glm-formula-r" class="nav-link" data-scroll-target="#sec-glm-formula-r"><span class="header-section-number">3.5</span> The formula in R</a></li>
+  <li><a href="#sec-glm-formula-r" id="toc-sec-glm-formula-r" class="nav-link" data-scroll-target="#sec-glm-formula-r"><span class="header-section-number">3.5</span> Fitting GLMs in R</a></li>
   <li><a href="#sec-fitting" id="toc-sec-fitting" class="nav-link" data-scroll-target="#sec-fitting"><span class="header-section-number">3.6</span> Fitting logistic regression models</a></li>
   <li><a href="#sec-logistic-inference" id="toc-sec-logistic-inference" class="nav-link" data-scroll-target="#sec-logistic-inference"><span class="header-section-number">3.7</span> Inference for coefficients</a></li>
   <li><a href="#sec-adding-predictors" id="toc-sec-adding-predictors" class="nav-link" data-scroll-target="#sec-adding-predictors"><span class="header-section-number">3.8</span> Adding predictors</a></li>
@@ -28283,7 +28277,7 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Linear Models to Fitting Logistic Regression</span></h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Generalised Linear Models and Logistic Regression</span></h1>
 </div>
 
 
@@ -28322,18 +28316,17 @@ eyJhdHRyIjp7ImVjaG8iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZW52aXIiOiJleF9maXQiLCJldmFsIjp0
 </div>
 <section id="sec-introduction" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> From linear models to fitting logistic regression</h1>
-<p>In <a href="ch_1_logit.html" class="quarto-xref"><span>Chapter 1</span></a> we introduced the practical problem: our outcome is binary, so the expected value of the outcome is a probability. We also saw the key mathematical move:</p>
-<p><span class="math display">\[
+<p>In <a href="ch_1_logit.html" class="quarto-xref"><span>Chapter 1</span></a> we introduced the practical problem: our outcome is binary, so the expected value of the outcome is a probability. However, a standard linear regression can output values outside the range of a probability (e.g.&nbsp;we might predict a probability of passing greater than one or less than zero). We also saw that this problem can be resolved by not modelling probability directly, but instead <em>via</em> the logit: <span class="math display">\[
 \text{logit}(p) = \log\left(\frac{p}{1-p}\right),
 \]</span></p>
 <p>which lets us place probabilities on a scale that can be modelled with a straight line.</p>
-<p>This chapter connects that idea to the Linear Regression Short Course. We will first replace the normal error model from linear regression with an error model that makes sense for binary data, then fit the resulting model with <code>glm()</code>.</p>
+<p>This key step allows us to use a <strong>Linear Model</strong> {.glossary } to model a binary categorical outcome!</p>
 <ul class="task-list">
 <li><label><input type="checkbox">Continue</label></li>
 </ul>
-<section id="sec-linear-regression-template" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="sec-linear-regression-template"><span class="header-section-number">3.1</span> The linear regression template</h2>
-<p>In the Linear Regression Short Course, a simple linear model was written as</p>
+<section id="sec-GLM" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="sec-GLM"><span class="header-section-number">3.1</span> Generalising Linear Regression</h2>
+<p>In the Linear Regression Short Course, we presented a ‘simple linear model’ as</p>
 <p><span class="math display">\[
 Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i,
 \qquad \varepsilon_i \sim N(0, \sigma^2).
@@ -28349,13 +28342,30 @@ Y_i \sim N(\mu_i, \sigma^2)
 <p>The first line describes how the observed outcomes vary around their mean. The second line describes how the mean changes with the predictor.</p>
 <div id="cnb-1-Key-point" class="Key-point">
 <details class="Key-point fobx-simplebox fobx-default" open=""><summary><strong>Key-point</strong></summary><div>
-<p>Linear regression has both a <strong>mean model</strong> and an <strong>error model</strong>. The mean model is the straight line. The error model says observations vary around that line with normally distributed errors and constant variance.</p>
+<p>Linear models have both a <strong>mean</strong> and an <strong>error</strong>. In linear regression, the mean model is the straight line. The error model says observations vary around that line with normally distributed errors and constant variance.</p>
 </div></details>
 </div>
-<p>In Chapter 1, we focused on the mean model for binary outcomes: how <span class="math inline">\(p_i = E[Y_i]\)</span> might change with <span class="math inline">\(X_i\)</span>. We now add the missing error model.</p>
+<section id="sec-logit-mean-model" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="sec-logit-mean-model"><span class="header-section-number">3.1.1</span> The mean model on the logit scale</h3>
+<p>In Chapter 1, we focused on the mean model for binary outcomes: how <span class="math inline">\(p_i = E[Y_i]\)</span> might change with <span class="math inline">\(X_i\)</span>. Because <span class="math inline">\(p_i\)</span> is a probability, we do not model it directly with a straight line. Instead, we model its logit:</p>
+<p><span class="math display">\[
+\text{logit}(p_i) = \log\left(\frac{p_i}{1-p_i}\right).
+\]</span></p>
+<p>The logit is the scale on which the linear model lives. We write this linear predictor as the Greek letter eta, <span class="math inline">\(\eta_i\)</span>:</p>
+<p><span class="math display">\[
+\eta_i = \beta_0 + \beta_1 X_i.
+\]</span></p>
+<p>For logistic regression, the mean model is</p>
+<p><span class="math display">\[
+\text{logit}(p_i) = \eta_i,
+\qquad
+\eta_i = \beta_0 + \beta_1 X_i.
+\]</span></p>
+<p>This mean model suits our aims well: it lets predictors combine linearly while still producing probabilities between 0 and 1 after transforming back to the probability scale. The remaining issue is the error model. A normal error distribution works for continuous outcomes with constant variance, but it does not suit an outcome that can only be 0 or 1.</p>
 <ul class="task-list">
 <li><label><input type="checkbox">Continue</label></li>
 </ul>
+</section>
 </section>
 <section id="sec-binary-error-model" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="sec-binary-error-model"><span class="header-section-number">3.2</span> The error model for a binary outcome</h2>
@@ -28367,11 +28377,12 @@ Y_i =
 0 &amp; \text{if student } i \text{ fails}.
 \end{cases}
 \]</span></p>
-<p>If the probability that student <span class="math inline">\(i\)</span> passes is <span class="math inline">\(p_i\)</span>, then the appropriate probability model is</p>
+<p>If the probability that student <span class="math inline">\(i\)</span> passes is <span class="math inline">\(p_i\)</span>, then the probability model describes the outcome <span class="math inline">\(Y_i\)</span> itself:</p>
 <p><span class="math display">\[
 Y_i \sim \text{Bernoulli}(p_i).
 \]</span></p>
-<p>This is the one-trial version of the binomial distribution. It has two useful properties:</p>
+<p>This is the part of the model that replaces the normal error distribution from linear regression. Instead of saying that a continuous outcome varies around a mean with normally distributed errors, we say that the observed 0/1 outcome is generated from a Bernoulli distribution with event probability <span class="math inline">\(p_i\)</span>.</p>
+<p>This is the one-trial version of the binomial distribution.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> It has a single parameter, <span class="math inline">\(p_i\)</span>, and two important properties:</p>
 <p><span class="math display">\[
 E[Y_i] = p_i
 \]</span></p>
@@ -28379,7 +28390,9 @@ E[Y_i] = p_i
 <p><span class="math display">\[
 \text{Var}(Y_i) = p_i(1-p_i).
 \]</span></p>
-<p>This variance is not constant. A probability near 0.5 gives more binary variation than a probability near 0 or 1. That is one reason the linear regression error model is not suitable here.</p>
+<p>This variance is not constant. A probability near 0.5 gives more binary variation than a probability near 0 or 1. Intuitively, if <span class="math inline">\(p_i = 0.5\)</span>, the outcome is highly uncertain: a pass and a fail are both quite plausible. If <span class="math inline">\(p_i\)</span> is close to 0 or 1, the outcome is much more predictable, so there is less variation left in the observed 0/1 result.</p>
+<p>This is a major difference from the normal error model used in linear regression. There, the variance is controlled by a separate parameter, <span class="math inline">\(\sigma^2\)</span>, and is assumed to be the same no matter what the mean is. For a Bernoulli outcome, there is no extra variance parameter: once <span class="math inline">\(p_i\)</span> is known, the variance follows automatically as <span class="math inline">\(p_i(1-p_i)\)</span>.</p>
+<p>Choosing a Bernoulli/binomial error model therefore builds in the fact that the error depends on the predicted probability.</p>
 <div id="cnb-2-Key-point" class="Key-point">
 <details class="Key-point fobx-simplebox fobx-default" open=""><summary><strong>Key-point</strong></summary><div>
 <p>For binary outcomes, the randomness is not represented by adding a normally distributed <span class="math inline">\(\varepsilon_i\)</span> to a straight line. Instead, the observed 0/1 outcome is treated as a Bernoulli draw with event probability <span class="math inline">\(p_i\)</span>.</p>
@@ -28487,9 +28500,396 @@ Y_i \sim \text{Bernoulli}(p_i),
 </table>
 <div id="cnb-3-Key-point" class="Key-point">
 <details class="Key-point fobx-simplebox fobx-default" open=""><summary><strong>Key-point</strong></summary><div>
-<p>Logistic regression is not “nonlinear regression” in the usual sense. It is a linear model for the log-odds, paired with a Bernoulli/binomial error model and a logistic back-transformation to probabilities.</p>
+<p>Linear regression and logistic regression have the same basic GLM form: an outcome distribution, a linear predictor, and a link function. The difference is the choice of link and outcome distribution: linear regression uses a normal distribution with an identity link, while logistic regression uses a Bernoulli/binomial distribution with a logit link.</p>
 </div></details>
 </div>
+<p>The sliders below build that model in three linked steps. First, the coefficients define a straight line on the log-odds scale. Second, the inverse-logit transformation converts that line to probabilities. Third, each binary outcome is treated as a Bernoulli draw with probability <span class="math inline">\(p_i\)</span>.</p>
+<div class="panel-grid layout-sidebar ms-md-0 layout-sidebar-left">
+<div class="cell panel-sidebar card bg-light p-2 g-col-24 g-col-lg-7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="247" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 246;"><span id="cb2-247"><a href="#cb2-247" aria-hidden="true" tabindex="-1"></a>viewof lr_demo_b0 <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="dv">4</span><span class="op">,</span> <span class="dv">4</span>]<span class="op">,</span> {</span>
+<span id="cb2-248"><a href="#cb2-248" aria-hidden="true" tabindex="-1"></a>  <span class="dt">value</span><span class="op">:</span> <span class="op">-</span><span class="fl">1.5</span><span class="op">,</span></span>
+<span id="cb2-249"><a href="#cb2-249" aria-hidden="true" tabindex="-1"></a>  <span class="dt">step</span><span class="op">:</span> <span class="fl">0.1</span><span class="op">,</span></span>
+<span id="cb2-250"><a href="#cb2-250" aria-hidden="true" tabindex="-1"></a>  <span class="dt">label</span><span class="op">:</span> <span class="fu">html</span><span class="vs">`</span><span class="sc">${</span><span class="fu">tex</span><span class="vs">`</span><span class="sc">\b</span><span class="vs">eta_0`</span><span class="sc">}</span><span class="vs">: log-odds intercept`</span></span>
+<span id="cb2-251"><a href="#cb2-251" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb2-252"><a href="#cb2-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-253"><a href="#cb2-253" aria-hidden="true" tabindex="-1"></a>viewof lr_demo_b1 <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="dv">2</span><span class="op">,</span> <span class="dv">2</span>]<span class="op">,</span> {</span>
+<span id="cb2-254"><a href="#cb2-254" aria-hidden="true" tabindex="-1"></a>  <span class="dt">value</span><span class="op">:</span> <span class="fl">0.8</span><span class="op">,</span></span>
+<span id="cb2-255"><a href="#cb2-255" aria-hidden="true" tabindex="-1"></a>  <span class="dt">step</span><span class="op">:</span> <span class="fl">0.1</span><span class="op">,</span></span>
+<span id="cb2-256"><a href="#cb2-256" aria-hidden="true" tabindex="-1"></a>  <span class="dt">label</span><span class="op">:</span> <span class="fu">html</span><span class="vs">`</span><span class="sc">${</span><span class="fu">tex</span><span class="vs">`</span><span class="sc">\b</span><span class="vs">eta_1`</span><span class="sc">}</span><span class="vs">: log-odds slope`</span></span>
+<span id="cb2-257"><a href="#cb2-257" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb2-258"><a href="#cb2-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-259"><a href="#cb2-259" aria-hidden="true" tabindex="-1"></a>viewof lr_demo_focus_x <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="dv">4</span><span class="op">,</span> <span class="dv">4</span>]<span class="op">,</span> {</span>
+<span id="cb2-260"><a href="#cb2-260" aria-hidden="true" tabindex="-1"></a>  <span class="dt">value</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb2-261"><a href="#cb2-261" aria-hidden="true" tabindex="-1"></a>  <span class="dt">step</span><span class="op">:</span> <span class="fl">0.1</span><span class="op">,</span></span>
+<span id="cb2-262"><a href="#cb2-262" aria-hidden="true" tabindex="-1"></a>  <span class="dt">label</span><span class="op">:</span> <span class="st">"Focus x value"</span></span>
+<span id="cb2-263"><a href="#cb2-263" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb2-264"><a href="#cb2-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-265"><a href="#cb2-265" aria-hidden="true" tabindex="-1"></a>viewof lr_demo_n <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">20</span><span class="op">,</span> <span class="dv">200</span>]<span class="op">,</span> {</span>
+<span id="cb2-266"><a href="#cb2-266" aria-hidden="true" tabindex="-1"></a>  <span class="dt">value</span><span class="op">:</span> <span class="dv">80</span><span class="op">,</span></span>
+<span id="cb2-267"><a href="#cb2-267" aria-hidden="true" tabindex="-1"></a>  <span class="dt">step</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span></span>
+<span id="cb2-268"><a href="#cb2-268" aria-hidden="true" tabindex="-1"></a>  <span class="dt">label</span><span class="op">:</span> <span class="st">"Bernoulli draws"</span></span>
+<span id="cb2-269"><a href="#cb2-269" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="panel-fill panel-grid g-col-24 g-col-lg-17 pt-3 pt-lg-0">
+<div class="g-col-24">
+<div class="cell panel-fill">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="276" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 275;"><span id="cb3-276"><a href="#cb3-276" aria-hidden="true" tabindex="-1"></a>lr_demo_logistic <span class="op">=</span> z <span class="kw">=&gt;</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">exp</span>(<span class="op">-</span>z))</span>
+<span id="cb3-277"><a href="#cb3-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-278"><a href="#cb3-278" aria-hidden="true" tabindex="-1"></a>lr_demo_frac <span class="op">=</span> i <span class="kw">=&gt;</span> {</span>
+<span id="cb3-279"><a href="#cb3-279" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> raw <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(i <span class="op">*</span> <span class="fl">12.9898</span>) <span class="op">*</span> <span class="fl">43758.5453</span><span class="op">;</span></span>
+<span id="cb3-280"><a href="#cb3-280" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> raw <span class="op">-</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(raw)<span class="op">;</span></span>
+<span id="cb3-281"><a href="#cb3-281" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-282"><a href="#cb3-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-283"><a href="#cb3-283" aria-hidden="true" tabindex="-1"></a>lr_demo_x_domain <span class="op">=</span> [<span class="op">-</span><span class="dv">4</span><span class="op">,</span> <span class="dv">4</span>]</span>
+<span id="cb3-284"><a href="#cb3-284" aria-hidden="true" tabindex="-1"></a>lr_demo_eta_domain <span class="op">=</span> [<span class="op">-</span><span class="dv">12</span><span class="op">,</span> <span class="dv">12</span>]</span>
+<span id="cb3-285"><a href="#cb3-285" aria-hidden="true" tabindex="-1"></a>lr_demo_curve <span class="op">=</span> d3<span class="op">.</span><span class="fu">range</span>(lr_demo_x_domain[<span class="dv">0</span>]<span class="op">,</span> lr_demo_x_domain[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.02</span><span class="op">,</span> <span class="fl">0.04</span>)<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> {</span>
+<span id="cb3-286"><a href="#cb3-286" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> eta <span class="op">=</span> lr_demo_b0 <span class="op">+</span> lr_demo_b1 <span class="op">*</span> x<span class="op">;</span></span>
+<span id="cb3-287"><a href="#cb3-287" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {x<span class="op">,</span> eta<span class="op">,</span> <span class="dt">p</span><span class="op">:</span> <span class="fu">lr_demo_logistic</span>(eta)}<span class="op">;</span></span>
+<span id="cb3-288"><a href="#cb3-288" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-289"><a href="#cb3-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-290"><a href="#cb3-290" aria-hidden="true" tabindex="-1"></a>lr_demo_focus_eta <span class="op">=</span> lr_demo_b0 <span class="op">+</span> lr_demo_b1 <span class="op">*</span> lr_demo_focus_x</span>
+<span id="cb3-291"><a href="#cb3-291" aria-hidden="true" tabindex="-1"></a>lr_demo_focus_p <span class="op">=</span> <span class="fu">lr_demo_logistic</span>(lr_demo_focus_eta)</span>
+<span id="cb3-292"><a href="#cb3-292" aria-hidden="true" tabindex="-1"></a>lr_demo_focus <span class="op">=</span> [{<span class="dt">x</span><span class="op">:</span> lr_demo_focus_x<span class="op">,</span> <span class="dt">eta</span><span class="op">:</span> lr_demo_focus_eta<span class="op">,</span> <span class="dt">p</span><span class="op">:</span> lr_demo_focus_p}]</span>
+<span id="cb3-293"><a href="#cb3-293" aria-hidden="true" tabindex="-1"></a>lr_demo_link_curve <span class="op">=</span> d3<span class="op">.</span><span class="fu">range</span>(lr_demo_eta_domain[<span class="dv">0</span>]<span class="op">,</span> lr_demo_eta_domain[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.04</span><span class="op">,</span> <span class="fl">0.08</span>)<span class="op">.</span><span class="fu">map</span>(eta <span class="kw">=&gt;</span> ({</span>
+<span id="cb3-294"><a href="#cb3-294" aria-hidden="true" tabindex="-1"></a>  eta<span class="op">,</span></span>
+<span id="cb3-295"><a href="#cb3-295" aria-hidden="true" tabindex="-1"></a>  <span class="dt">p</span><span class="op">:</span> <span class="fu">lr_demo_logistic</span>(eta)</span>
+<span id="cb3-296"><a href="#cb3-296" aria-hidden="true" tabindex="-1"></a>}))</span>
+<span id="cb3-297"><a href="#cb3-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-298"><a href="#cb3-298" aria-hidden="true" tabindex="-1"></a>lr_demo_sample <span class="op">=</span> d3<span class="op">.</span><span class="fu">range</span>(lr_demo_n)<span class="op">.</span><span class="fu">map</span>(i <span class="kw">=&gt;</span> {</span>
+<span id="cb3-299"><a href="#cb3-299" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> x <span class="op">=</span> lr_demo_x_domain[<span class="dv">0</span>] <span class="op">+</span> (lr_demo_x_domain[<span class="dv">1</span>] <span class="op">-</span> lr_demo_x_domain[<span class="dv">0</span>]) <span class="op">*</span> <span class="fu">lr_demo_frac</span>(i <span class="op">+</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb3-300"><a href="#cb3-300" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> p <span class="op">=</span> <span class="fu">lr_demo_logistic</span>(lr_demo_b0 <span class="op">+</span> lr_demo_b1 <span class="op">*</span> x)<span class="op">;</span></span>
+<span id="cb3-301"><a href="#cb3-301" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> y <span class="op">=</span> <span class="fu">lr_demo_frac</span>(i <span class="op">+</span> <span class="dv">2001</span>) <span class="op">&lt;</span> p <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-302"><a href="#cb3-302" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb3-303"><a href="#cb3-303" aria-hidden="true" tabindex="-1"></a>    x<span class="op">,</span></span>
+<span id="cb3-304"><a href="#cb3-304" aria-hidden="true" tabindex="-1"></a>    p<span class="op">,</span></span>
+<span id="cb3-305"><a href="#cb3-305" aria-hidden="true" tabindex="-1"></a>    y<span class="op">,</span></span>
+<span id="cb3-306"><a href="#cb3-306" aria-hidden="true" tabindex="-1"></a>    <span class="dt">y_jitter</span><span class="op">:</span> y <span class="op">+</span> (<span class="fu">lr_demo_frac</span>(i <span class="op">+</span> <span class="dv">4001</span>) <span class="op">-</span> <span class="fl">0.5</span>) <span class="op">*</span> <span class="fl">0.08</span></span>
+<span id="cb3-307"><a href="#cb3-307" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb3-308"><a href="#cb3-308" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-309"><a href="#cb3-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-310"><a href="#cb3-310" aria-hidden="true" tabindex="-1"></a>lr_demo_mass_x <span class="op">=</span> d3<span class="op">.</span><span class="fu">range</span>(lr_demo_x_domain[<span class="dv">0</span>]<span class="op">,</span> lr_demo_x_domain[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dv">1</span>)</span>
+<span id="cb3-311"><a href="#cb3-311" aria-hidden="true" tabindex="-1"></a>lr_demo_mass <span class="op">=</span> lr_demo_mass_x<span class="op">.</span><span class="fu">flatMap</span>(x <span class="kw">=&gt;</span> {</span>
+<span id="cb3-312"><a href="#cb3-312" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> p <span class="op">=</span> <span class="fu">lr_demo_logistic</span>(lr_demo_b0 <span class="op">+</span> lr_demo_b1 <span class="op">*</span> x)<span class="op">;</span></span>
+<span id="cb3-313"><a href="#cb3-313" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [</span>
+<span id="cb3-314"><a href="#cb3-314" aria-hidden="true" tabindex="-1"></a>    {x<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">probability</span><span class="op">:</span> p<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Pass"</span>}<span class="op">,</span></span>
+<span id="cb3-315"><a href="#cb3-315" aria-hidden="true" tabindex="-1"></a>    {x<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">probability</span><span class="op">:</span> <span class="dv">1</span> <span class="op">-</span> p<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Fail"</span>}</span>
+<span id="cb3-316"><a href="#cb3-316" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">;</span></span>
+<span id="cb3-317"><a href="#cb3-317" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-318"><a href="#cb3-318" aria-hidden="true" tabindex="-1"></a>lr_demo_focus_mass <span class="op">=</span> [</span>
+<span id="cb3-319"><a href="#cb3-319" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb3-320"><a href="#cb3-320" aria-hidden="true" tabindex="-1"></a>    <span class="dt">x</span><span class="op">:</span> lr_demo_focus_x<span class="op">,</span></span>
+<span id="cb3-321"><a href="#cb3-321" aria-hidden="true" tabindex="-1"></a>    <span class="dt">y</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb3-322"><a href="#cb3-322" aria-hidden="true" tabindex="-1"></a>    <span class="dt">probability</span><span class="op">:</span> lr_demo_focus_p<span class="op">,</span></span>
+<span id="cb3-323"><a href="#cb3-323" aria-hidden="true" tabindex="-1"></a>    <span class="dt">label</span><span class="op">:</span> <span class="st">"Pass"</span><span class="op">,</span></span>
+<span id="cb3-324"><a href="#cb3-324" aria-hidden="true" tabindex="-1"></a>    <span class="dt">parameter</span><span class="op">:</span> <span class="vs">`p = </span><span class="sc">${</span>lr_demo_focus_p<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)<span class="sc">}</span><span class="vs">`</span></span>
+<span id="cb3-325"><a href="#cb3-325" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb3-326"><a href="#cb3-326" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb3-327"><a href="#cb3-327" aria-hidden="true" tabindex="-1"></a>    <span class="dt">x</span><span class="op">:</span> lr_demo_focus_x<span class="op">,</span></span>
+<span id="cb3-328"><a href="#cb3-328" aria-hidden="true" tabindex="-1"></a>    <span class="dt">y</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb3-329"><a href="#cb3-329" aria-hidden="true" tabindex="-1"></a>    <span class="dt">probability</span><span class="op">:</span> <span class="dv">1</span> <span class="op">-</span> lr_demo_focus_p<span class="op">,</span></span>
+<span id="cb3-330"><a href="#cb3-330" aria-hidden="true" tabindex="-1"></a>    <span class="dt">label</span><span class="op">:</span> <span class="st">"Fail"</span><span class="op">,</span></span>
+<span id="cb3-331"><a href="#cb3-331" aria-hidden="true" tabindex="-1"></a>    <span class="dt">parameter</span><span class="op">:</span> <span class="vs">`1 - p = </span><span class="sc">${</span>(<span class="dv">1</span> <span class="op">-</span> lr_demo_focus_p)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)<span class="sc">}</span><span class="vs">`</span></span>
+<span id="cb3-332"><a href="#cb3-332" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-333"><a href="#cb3-333" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb3-334"><a href="#cb3-334" aria-hidden="true" tabindex="-1"></a>lr_demo_mass_label_anchor <span class="op">=</span> lr_demo_focus_x <span class="op">&gt;</span> <span class="fl">2.4</span> <span class="op">?</span> <span class="st">"end"</span> <span class="op">:</span> <span class="st">"start"</span></span>
+<span id="cb3-335"><a href="#cb3-335" aria-hidden="true" tabindex="-1"></a>lr_demo_mass_label_dx <span class="op">=</span> lr_demo_focus_x <span class="op">&gt;</span> <span class="fl">2.4</span> <span class="op">?</span> <span class="op">-</span><span class="dv">10</span> <span class="op">:</span> <span class="dv">10</span></span>
+<span id="cb3-336"><a href="#cb3-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-337"><a href="#cb3-337" aria-hidden="true" tabindex="-1"></a>lr_demo_logodds_plot <span class="op">=</span> Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb3-338"><a href="#cb3-338" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">250</span><span class="op">,</span></span>
+<span id="cb3-339"><a href="#cb3-339" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">48</span><span class="op">,</span></span>
+<span id="cb3-340"><a href="#cb3-340" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginBottom</span><span class="op">:</span> <span class="dv">42</span><span class="op">,</span></span>
+<span id="cb3-341"><a href="#cb3-341" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> lr_demo_x_domain<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb3-342"><a href="#cb3-342" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> lr_demo_eta_domain<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Linear predictor, η"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb3-343"><a href="#cb3-343" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb3-344"><a href="#cb3-344" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> <span class="st">"#b8b8b8"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 4"</span>})<span class="op">,</span></span>
+<span id="cb3-345"><a href="#cb3-345" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(lr_demo_curve<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"eta"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#2a5599"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.5</span>})<span class="op">,</span></span>
+<span id="cb3-346"><a href="#cb3-346" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(lr_demo_focus<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"eta"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#d95f02"</span>})</span>
+<span id="cb3-347"><a href="#cb3-347" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb3-348"><a href="#cb3-348" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-349"><a href="#cb3-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-350"><a href="#cb3-350" aria-hidden="true" tabindex="-1"></a>lr_demo_probability_plot <span class="op">=</span> Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb3-351"><a href="#cb3-351" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">250</span><span class="op">,</span></span>
+<span id="cb3-352"><a href="#cb3-352" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">48</span><span class="op">,</span></span>
+<span id="cb3-353"><a href="#cb3-353" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginBottom</span><span class="op">:</span> <span class="dv">42</span><span class="op">,</span></span>
+<span id="cb3-354"><a href="#cb3-354" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> lr_demo_eta_domain<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Linear predictor, η"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb3-355"><a href="#cb3-355" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Probability, p"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">percent</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb3-356"><a href="#cb3-356" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb3-357"><a href="#cb3-357" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([<span class="dv">0</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> <span class="st">"#b8b8b8"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 4"</span>})<span class="op">,</span></span>
+<span id="cb3-358"><a href="#cb3-358" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span><span class="op">,</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> <span class="st">"#d9d9d9"</span>})<span class="op">,</span></span>
+<span id="cb3-359"><a href="#cb3-359" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(lr_demo_link_curve<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"eta"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"p"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#00876c"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.5</span>})<span class="op">,</span></span>
+<span id="cb3-360"><a href="#cb3-360" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(lr_demo_focus<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"eta"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"p"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#d95f02"</span>})</span>
+<span id="cb3-361"><a href="#cb3-361" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb3-362"><a href="#cb3-362" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-363"><a href="#cb3-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-364"><a href="#cb3-364" aria-hidden="true" tabindex="-1"></a>lr_demo_bernoulli_plot <span class="op">=</span> Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb3-365"><a href="#cb3-365" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">250</span><span class="op">,</span></span>
+<span id="cb3-366"><a href="#cb3-366" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">48</span><span class="op">,</span></span>
+<span id="cb3-367"><a href="#cb3-367" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginBottom</span><span class="op">:</span> <span class="dv">42</span><span class="op">,</span></span>
+<span id="cb3-368"><a href="#cb3-368" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> lr_demo_x_domain<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb3-369"><a href="#cb3-369" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> [<span class="op">-</span><span class="fl">0.15</span><span class="op">,</span> <span class="fl">1.15</span>]<span class="op">,</span> <span class="dt">ticks</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Observed outcome, Y"</span>}<span class="op">,</span></span>
+<span id="cb3-370"><a href="#cb3-370" aria-hidden="true" tabindex="-1"></a>  <span class="dt">color</span><span class="op">:</span> {</span>
+<span id="cb3-371"><a href="#cb3-371" aria-hidden="true" tabindex="-1"></a>    <span class="dt">domain</span><span class="op">:</span> [<span class="st">"Fail"</span><span class="op">,</span> <span class="st">"Pass"</span>]<span class="op">,</span></span>
+<span id="cb3-372"><a href="#cb3-372" aria-hidden="true" tabindex="-1"></a>    <span class="dt">range</span><span class="op">:</span> [<span class="st">"#b94e48"</span><span class="op">,</span> <span class="st">"#2a5599"</span>]<span class="op">,</span></span>
+<span id="cb3-373"><a href="#cb3-373" aria-hidden="true" tabindex="-1"></a>    <span class="dt">legend</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb3-374"><a href="#cb3-374" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb3-375"><a href="#cb3-375" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb3-376"><a href="#cb3-376" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([lr_demo_focus_x]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> <span class="st">"#d95f02"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"3 3"</span>})<span class="op">,</span></span>
+<span id="cb3-377"><a href="#cb3-377" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(lr_demo_mass<span class="op">,</span> {</span>
+<span id="cb3-378"><a href="#cb3-378" aria-hidden="true" tabindex="-1"></a>      <span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span></span>
+<span id="cb3-379"><a href="#cb3-379" aria-hidden="true" tabindex="-1"></a>      <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span></span>
+<span id="cb3-380"><a href="#cb3-380" aria-hidden="true" tabindex="-1"></a>      <span class="dt">r</span><span class="op">:</span> d <span class="kw">=&gt;</span> <span class="dv">3</span> <span class="op">+</span> <span class="dv">13</span> <span class="op">*</span> d<span class="op">.</span><span class="at">probability</span><span class="op">,</span></span>
+<span id="cb3-381"><a href="#cb3-381" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> <span class="st">"label"</span><span class="op">,</span></span>
+<span id="cb3-382"><a href="#cb3-382" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.2</span><span class="op">,</span></span>
+<span id="cb3-383"><a href="#cb3-383" aria-hidden="true" tabindex="-1"></a>      <span class="dt">stroke</span><span class="op">:</span> <span class="st">"label"</span></span>
+<span id="cb3-384"><a href="#cb3-384" aria-hidden="true" tabindex="-1"></a>    })<span class="op">,</span></span>
+<span id="cb3-385"><a href="#cb3-385" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(lr_demo_focus_mass<span class="op">,</span> {</span>
+<span id="cb3-386"><a href="#cb3-386" aria-hidden="true" tabindex="-1"></a>      <span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span></span>
+<span id="cb3-387"><a href="#cb3-387" aria-hidden="true" tabindex="-1"></a>      <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span></span>
+<span id="cb3-388"><a href="#cb3-388" aria-hidden="true" tabindex="-1"></a>      <span class="dt">r</span><span class="op">:</span> d <span class="kw">=&gt;</span> <span class="dv">4</span> <span class="op">+</span> <span class="dv">15</span> <span class="op">*</span> d<span class="op">.</span><span class="at">probability</span><span class="op">,</span></span>
+<span id="cb3-389"><a href="#cb3-389" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> <span class="st">"label"</span><span class="op">,</span></span>
+<span id="cb3-390"><a href="#cb3-390" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.35</span><span class="op">,</span></span>
+<span id="cb3-391"><a href="#cb3-391" aria-hidden="true" tabindex="-1"></a>      <span class="dt">stroke</span><span class="op">:</span> <span class="st">"label"</span><span class="op">,</span></span>
+<span id="cb3-392"><a href="#cb3-392" aria-hidden="true" tabindex="-1"></a>      <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.5</span></span>
+<span id="cb3-393"><a href="#cb3-393" aria-hidden="true" tabindex="-1"></a>    })<span class="op">,</span></span>
+<span id="cb3-394"><a href="#cb3-394" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>(lr_demo_focus_mass<span class="op">,</span> {</span>
+<span id="cb3-395"><a href="#cb3-395" aria-hidden="true" tabindex="-1"></a>      <span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span></span>
+<span id="cb3-396"><a href="#cb3-396" aria-hidden="true" tabindex="-1"></a>      <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span></span>
+<span id="cb3-397"><a href="#cb3-397" aria-hidden="true" tabindex="-1"></a>      <span class="dt">text</span><span class="op">:</span> <span class="st">"parameter"</span><span class="op">,</span></span>
+<span id="cb3-398"><a href="#cb3-398" aria-hidden="true" tabindex="-1"></a>      <span class="dt">dx</span><span class="op">:</span> lr_demo_mass_label_dx<span class="op">,</span></span>
+<span id="cb3-399"><a href="#cb3-399" aria-hidden="true" tabindex="-1"></a>      <span class="dt">dy</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">y</span> <span class="op">===</span> <span class="dv">1</span> <span class="op">?</span> <span class="op">-</span><span class="dv">12</span> <span class="op">:</span> <span class="dv">14</span><span class="op">,</span></span>
+<span id="cb3-400"><a href="#cb3-400" aria-hidden="true" tabindex="-1"></a>      <span class="dt">textAnchor</span><span class="op">:</span> lr_demo_mass_label_anchor<span class="op">,</span></span>
+<span id="cb3-401"><a href="#cb3-401" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> <span class="st">"label"</span><span class="op">,</span></span>
+<span id="cb3-402"><a href="#cb3-402" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fontWeight</span><span class="op">:</span> <span class="dv">700</span></span>
+<span id="cb3-403"><a href="#cb3-403" aria-hidden="true" tabindex="-1"></a>    })<span class="op">,</span></span>
+<span id="cb3-404"><a href="#cb3-404" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(lr_demo_sample<span class="op">,</span> {</span>
+<span id="cb3-405"><a href="#cb3-405" aria-hidden="true" tabindex="-1"></a>      <span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span></span>
+<span id="cb3-406"><a href="#cb3-406" aria-hidden="true" tabindex="-1"></a>      <span class="dt">y</span><span class="op">:</span> <span class="st">"y_jitter"</span><span class="op">,</span></span>
+<span id="cb3-407"><a href="#cb3-407" aria-hidden="true" tabindex="-1"></a>      <span class="dt">r</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span></span>
+<span id="cb3-408"><a href="#cb3-408" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">y</span> <span class="op">===</span> <span class="dv">1</span> <span class="op">?</span> <span class="st">"Pass"</span> <span class="op">:</span> <span class="st">"Fail"</span><span class="op">,</span></span>
+<span id="cb3-409"><a href="#cb3-409" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.65</span></span>
+<span id="cb3-410"><a href="#cb3-410" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb3-411"><a href="#cb3-411" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb3-412"><a href="#cb3-412" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-413"><a href="#cb3-413" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-414"><a href="#cb3-414" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`</span></span>
+<span id="cb3-415"><a href="#cb3-415" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;style&gt;</span></span>
+<span id="cb3-416"><a href="#cb3-416" aria-hidden="true" tabindex="-1"></a><span class="vs">.lr-demo-grid {</span></span>
+<span id="cb3-417"><a href="#cb3-417" aria-hidden="true" tabindex="-1"></a><span class="vs">  display: grid;</span></span>
+<span id="cb3-418"><a href="#cb3-418" aria-hidden="true" tabindex="-1"></a><span class="vs">  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));</span></span>
+<span id="cb3-419"><a href="#cb3-419" aria-hidden="true" tabindex="-1"></a><span class="vs">  gap: 0.9rem;</span></span>
+<span id="cb3-420"><a href="#cb3-420" aria-hidden="true" tabindex="-1"></a><span class="vs">  align-items: start;</span></span>
+<span id="cb3-421"><a href="#cb3-421" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb3-422"><a href="#cb3-422" aria-hidden="true" tabindex="-1"></a><span class="vs">.lr-demo-panel {</span></span>
+<span id="cb3-423"><a href="#cb3-423" aria-hidden="true" tabindex="-1"></a><span class="vs">  min-width: 0;</span></span>
+<span id="cb3-424"><a href="#cb3-424" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb3-425"><a href="#cb3-425" aria-hidden="true" tabindex="-1"></a><span class="vs">.lr-demo-panel h4 {</span></span>
+<span id="cb3-426"><a href="#cb3-426" aria-hidden="true" tabindex="-1"></a><span class="vs">  margin: 0 0 0.25rem 0;</span></span>
+<span id="cb3-427"><a href="#cb3-427" aria-hidden="true" tabindex="-1"></a><span class="vs">  font-size: 0.95rem;</span></span>
+<span id="cb3-428"><a href="#cb3-428" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb3-429"><a href="#cb3-429" aria-hidden="true" tabindex="-1"></a><span class="vs">.lr-demo-panel p {</span></span>
+<span id="cb3-430"><a href="#cb3-430" aria-hidden="true" tabindex="-1"></a><span class="vs">  margin: 0 0 0.45rem 0;</span></span>
+<span id="cb3-431"><a href="#cb3-431" aria-hidden="true" tabindex="-1"></a><span class="vs">  font-size: 0.85rem;</span></span>
+<span id="cb3-432"><a href="#cb3-432" aria-hidden="true" tabindex="-1"></a><span class="vs">  line-height: 1.3;</span></span>
+<span id="cb3-433"><a href="#cb3-433" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb3-434"><a href="#cb3-434" aria-hidden="true" tabindex="-1"></a><span class="vs">.lr-demo-equations {</span></span>
+<span id="cb3-435"><a href="#cb3-435" aria-hidden="true" tabindex="-1"></a><span class="vs">  margin: 0 0 0.9rem 0;</span></span>
+<span id="cb3-436"><a href="#cb3-436" aria-hidden="true" tabindex="-1"></a><span class="vs">  padding: 0.6rem 0.75rem;</span></span>
+<span id="cb3-437"><a href="#cb3-437" aria-hidden="true" tabindex="-1"></a><span class="vs">  border-left: 4px solid #2a5599;</span></span>
+<span id="cb3-438"><a href="#cb3-438" aria-hidden="true" tabindex="-1"></a><span class="vs">  background: #f7f9fc;</span></span>
+<span id="cb3-439"><a href="#cb3-439" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb3-440"><a href="#cb3-440" aria-hidden="true" tabindex="-1"></a><span class="vs">.lr-demo-equations p {</span></span>
+<span id="cb3-441"><a href="#cb3-441" aria-hidden="true" tabindex="-1"></a><span class="vs">  margin: 0.1rem 0;</span></span>
+<span id="cb3-442"><a href="#cb3-442" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb3-443"><a href="#cb3-443" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/style&gt;</span></span>
+<span id="cb3-444"><a href="#cb3-444" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;div class="lr-demo-equations"&gt;</span></span>
+<span id="cb3-445"><a href="#cb3-445" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;p&gt;</span><span class="sc">${</span><span class="fu">tex</span><span class="vs">`</span><span class="sc">\e</span><span class="vs">ta = </span><span class="sc">${</span>lr_demo_b0<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="sc">}</span><span class="vs"> + </span><span class="sc">${</span>lr_demo_b1<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="sc">}</span><span class="vs">x`</span><span class="sc">}</span><span class="vs">&lt;/p&gt;</span></span>
+<span id="cb3-446"><a href="#cb3-446" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;p&gt;</span><span class="sc">${</span><span class="fu">tex</span><span class="vs">`p = </span><span class="sc">\f</span><span class="vs">rac{1}{1 + e^{-</span><span class="sc">\e</span><span class="vs">ta}}`</span><span class="sc">}</span><span class="vs">&lt;/p&gt;</span></span>
+<span id="cb3-447"><a href="#cb3-447" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;p&gt;</span><span class="sc">${</span><span class="fu">tex</span><span class="vs">`Y </span><span class="sc">\s</span><span class="vs">im </span><span class="sc">\t</span><span class="vs">ext{Bernoulli}(p)`</span><span class="sc">}</span><span class="vs">&lt;/p&gt;</span></span>
+<span id="cb3-448"><a href="#cb3-448" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;p&gt;At x = </span><span class="sc">${</span>lr_demo_focus_x<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="sc">}</span><span class="vs">: </span><span class="sc">${</span><span class="fu">tex</span><span class="vs">`</span><span class="sc">\e</span><span class="vs">ta`</span><span class="sc">}</span><span class="vs"> = </span><span class="sc">${</span>lr_demo_focus_eta<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)<span class="sc">}</span><span class="vs">, p = </span><span class="sc">${</span>lr_demo_focus_p<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>)<span class="sc">}</span><span class="vs">, and </span><span class="sc">${</span><span class="fu">tex</span><span class="vs">`p(1-p)`</span><span class="sc">}</span><span class="vs"> = </span><span class="sc">${</span>(lr_demo_focus_p <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> lr_demo_focus_p))<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>)<span class="sc">}</span><span class="vs">.&lt;/p&gt;</span></span>
+<span id="cb3-449"><a href="#cb3-449" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;</span></span>
+<span id="cb3-450"><a href="#cb3-450" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;div class="lr-demo-grid"&gt;</span></span>
+<span id="cb3-451"><a href="#cb3-451" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div class="lr-demo-panel"&gt;</span></span>
+<span id="cb3-452"><a href="#cb3-452" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;h4&gt;1. Linear predictor&lt;/h4&gt;</span></span>
+<span id="cb3-453"><a href="#cb3-453" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;p&gt;The coefficients move and tilt a straight line on the log-odds scale.&lt;/p&gt;</span></span>
+<span id="cb3-454"><a href="#cb3-454" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span>lr_demo_logodds_plot<span class="sc">}</span></span>
+<span id="cb3-455"><a href="#cb3-455" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
+<span id="cb3-456"><a href="#cb3-456" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div class="lr-demo-panel"&gt;</span></span>
+<span id="cb3-457"><a href="#cb3-457" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;h4&gt;2. Logistic link&lt;/h4&gt;</span></span>
+<span id="cb3-458"><a href="#cb3-458" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;p&gt;The inverse-logit is shown on a fixed, centred log-odds scale.&lt;/p&gt;</span></span>
+<span id="cb3-459"><a href="#cb3-459" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span>lr_demo_probability_plot<span class="sc">}</span></span>
+<span id="cb3-460"><a href="#cb3-460" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
+<span id="cb3-461"><a href="#cb3-461" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div class="lr-demo-panel"&gt;</span></span>
+<span id="cb3-462"><a href="#cb3-462" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;h4&gt;3. Bernoulli error model&lt;/h4&gt;</span></span>
+<span id="cb3-463"><a href="#cb3-463" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;p&gt;The labelled slice shows the Bernoulli probabilities p and 1 - p at the selected x.&lt;/p&gt;</span></span>
+<span id="cb3-464"><a href="#cb3-464" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span>lr_demo_bernoulli_plot<span class="sc">}</span></span>
+<span id="cb3-465"><a href="#cb3-465" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
+<span id="cb3-466"><a href="#cb3-466" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-9" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-10" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-11" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-12" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-13" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-14" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-15" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-16" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-17" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-18" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-19" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>For a Bernoulli outcome, the amount of variation is not controlled by a separate <span class="math inline">\(\sigma\)</span> parameter. Once <span class="math inline">\(p_i\)</span> is set, the variance is fixed at <span class="math inline">\(p_i(1-p_i)\)</span>.</p>
 <ul class="task-list">
 <li><label><input type="checkbox">Continue</label></li>
 </ul>
@@ -28525,11 +28925,11 @@ p_i = \frac{1}{1 + e^{-(\beta_0 + \beta_1 \text{studytime}_i)}}.
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>eta <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="dv">6</span>, <span class="at">length.out =</span> <span class="dv">200</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(eta, <span class="fu">plogis</span>(eta), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Linear predictor (eta)"</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Probability"</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">col =</span> <span class="st">"grey80"</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>eta <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="dv">6</span>, <span class="at">length.out =</span> <span class="dv">200</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(eta, <span class="fu">plogis</span>(eta), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Linear predictor (eta)"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Probability"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">col =</span> <span class="st">"grey80"</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -28540,7 +28940,7 @@ p_i = \frac{1}{1 + e^{-(\beta_0 + \beta_1 \text{studytime}_i)}}.
 </ul>
 </section>
 <section id="sec-glm-formula-r" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="sec-glm-formula-r"><span class="header-section-number">3.5</span> The formula in R</h2>
+<h2 data-number="3.5" class="anchored" data-anchor-id="sec-glm-formula-r"><span class="header-section-number">3.5</span> Fitting GLMs in R</h2>
 <p>The R formula looks almost the same as the formula for <code>lm()</code>:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Code</a></li></ul>
@@ -28569,10 +28969,10 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fit_study <span class="ot">&lt;-</span> <span class="fu">glm</span>(pass_exam <span class="sc">~</span> studytime,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> students,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">family =</span> binomial)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_study)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fit_study <span class="ot">&lt;-</span> <span class="fu">glm</span>(pass_exam <span class="sc">~</span> studytime,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> students,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">family =</span> binomial)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_study)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -28591,22 +28991,20 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <section id="sec-fitting" class="level2" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="sec-fitting"><span class="header-section-number">3.6</span> Fitting logistic regression models</h2>
 <p>The coefficients <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are the unknown parameters of the data-generating model. Fitting a logistic regression means estimating those parameters from the observed data.</p>
-<section id="sec-logistic-likelihood" class="level3" data-number="3.6.1">
-<h3 data-number="3.6.1" class="anchored" data-anchor-id="sec-logistic-likelihood"><span class="header-section-number">3.6.1</span> From least squares to likelihood</h3>
+<div id="cnb-5-Note" class="Note">
+<details class="Note fobx-simplebox fobx-default" open=""><summary><strong>Note</strong></summary><div>
+<p><strong>From least squares to likelihood.</strong></p>
 <p>For linear regression, <code>lm()</code> chooses the line that minimises the sum of squared residuals. This works because the model assumes normally distributed errors around a mean line.</p>
 <p>For logistic regression, the outcome is 0 or 1, so squared residuals are no longer the natural fitting criterion. Instead, <code>glm()</code> uses <strong>maximum likelihood estimation</strong>. It chooses the coefficient estimates that make the observed sequence of passes and fails most likely under the Bernoulli model.</p>
-<div id="cnb-5-Key-point" class="Key-point">
-<details class="Key-point fobx-simplebox fobx-default" open=""><summary><strong>Key-point</strong></summary><div>
 <p>Maximum likelihood asks: among all possible coefficient values, which values make the observed data most plausible under the model?</p>
+<p>If student <span class="math inline">\(i\)</span> has predicted probability <span class="math inline">\(p_i\)</span>, then a pass contributes probability <span class="math inline">\(p_i\)</span> to the likelihood and a fail contributes probability <span class="math inline">\(1-p_i\)</span>. A good model gives high probabilities to the events that actually occurred.</p>
 </div></details>
 </div>
-<p>If student <span class="math inline">\(i\)</span> has predicted probability <span class="math inline">\(p_i\)</span>, then a pass contributes probability <span class="math inline">\(p_i\)</span> to the likelihood and a fail contributes probability <span class="math inline">\(1-p_i\)</span>. A good model gives high probabilities to the events that actually occurred.</p>
 <ul class="task-list">
 <li><label><input type="checkbox">Continue</label></li>
 </ul>
-</section>
-<section id="sec-fitting-study-model" class="level3" data-number="3.6.2">
-<h3 data-number="3.6.2" class="anchored" data-anchor-id="sec-fitting-study-model"><span class="header-section-number">3.6.2</span> Estimated coefficients</h3>
+<section id="sec-fitting-study-model" class="level3" data-number="3.6.1">
+<h3 data-number="3.6.1" class="anchored" data-anchor-id="sec-fitting-study-model"><span class="header-section-number">3.6.1</span> Estimated coefficients</h3>
 <p>The estimated model is</p>
 <p><span class="math display">\[
 \widehat{\text{logit}(p_i)} = b_0 + b_1 \text{studytime}_i.
@@ -28651,7 +29049,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </div>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(fit_study)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(fit_study)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -28660,8 +29058,8 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <li><label><input type="checkbox">Continue</label></li>
 </ul>
 </section>
-<section id="sec-log-odds-coefficients" class="level3" data-number="3.6.3">
-<h3 data-number="3.6.3" class="anchored" data-anchor-id="sec-log-odds-coefficients"><span class="header-section-number">3.6.3</span> Reading coefficients on the log-odds scale</h3>
+<section id="sec-log-odds-coefficients" class="level3" data-number="3.6.2">
+<h3 data-number="3.6.2" class="anchored" data-anchor-id="sec-log-odds-coefficients"><span class="header-section-number">3.6.2</span> Reading coefficients on the log-odds scale</h3>
 <p>The intercept is the estimated log-odds of passing when <code>studytime = 0</code>. In this dataset, no student has study time equal to 0, so the intercept is mainly needed to position the fitted curve.</p>
 <p>The slope is the estimated change in log-odds for a one-unit increase in study time:</p>
 <p><span class="math display">\[
@@ -28673,8 +29071,8 @@ b_1 = \widehat{\Delta \text{log-odds}}.
 </div></details>
 </div>
 </section>
-<section id="sec-fitting-odds-ratios" class="level3" data-number="3.6.4">
-<h3 data-number="3.6.4" class="anchored" data-anchor-id="sec-fitting-odds-ratios"><span class="header-section-number">3.6.4</span> Odds ratios</h3>
+<section id="sec-fitting-odds-ratios" class="level3" data-number="3.6.3">
+<h3 data-number="3.6.3" class="anchored" data-anchor-id="sec-fitting-odds-ratios"><span class="header-section-number">3.6.3</span> Odds ratios</h3>
 <p>Exponentiating a coefficient converts it from a change in log-odds to an odds ratio:</p>
 <p><span class="math display">\[
 \text{odds ratio} = e^{b_1}.
@@ -28692,12 +29090,17 @@ b_1 = \widehat{\Delta \text{log-odds}}.
 </div>
 <div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(fit_study))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(fit_study))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
 </div>
 <p>For <code>studytime</code>, the odds ratio compares two students who differ by one study-time category. If the odds ratio is greater than 1, the model estimates higher odds of passing for the student in the higher study-time category.</p>
+<div id="interpreting-odds-ratios" class="Note">
+<details class="Note fobx-simplebox fobx-default" open=""><summary><strong>Note: </strong>Interpreting odds ratios</summary><div>
+<p>An odds ratio compares two sets of odds. An odds ratio of 1 means the odds are unchanged. An odds ratio above 1 means the odds are higher; for example, 1.5 means the odds are 1.5 times as high, or 50% higher. An odds ratio below 1 means the odds are lower; for example, 0.70 means the odds are 0.70 times as high, or 30% lower. This is a multiplicative change in odds, not a percentage-point change in probability.</p>
+</div></details>
+</div>
 <div id="compute-an-odds-ratio" class="Exercise">
 <details class="Exercise fobx-simplebox fobx-default" open=""><summary><strong>Exercise 2.1: </strong>Compute an odds ratio</summary><div>
 <p>Compute the odds ratio for <code>studytime</code> and store it as <code>or_studytime</code>.</p>
@@ -28732,8 +29135,8 @@ eyJhdHRyIjp7ImNoZWNrIjp0cnVlLCJjbGFzcyI6IndhaXQiLCJlZGl0Ijp0cnVlLCJlbnZpciI6ImV4
 <li><label><input type="checkbox">Continue</label></li>
 </ul>
 </section>
-<section id="sec-odds-ratios-not-probability-differences" class="level3" data-number="3.6.5">
-<h3 data-number="3.6.5" class="anchored" data-anchor-id="sec-odds-ratios-not-probability-differences"><span class="header-section-number">3.6.5</span> Odds ratios are not probability differences</h3>
+<section id="sec-odds-ratios-not-probability-differences" class="level3" data-number="3.6.4">
+<h3 data-number="3.6.4" class="anchored" data-anchor-id="sec-odds-ratios-not-probability-differences"><span class="header-section-number">3.6.4</span> Odds ratios are not probability differences</h3>
 <p>A fixed odds ratio does not correspond to a fixed difference in probability. The same multiplicative change in odds produces different probability changes depending on the starting probability.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Code</a></li></ul>
@@ -28750,22 +29153,22 @@ eyJhdHRyIjp7ImNoZWNrIjp0cnVlLCJjbGFzcyI6IndhaXQiLCJlZGl0Ijp0cnVlLCJlbnZpciI6ImV4
 </div>
 <div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>or_studytime <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">exp</span>(<span class="fu">coef</span>(fit_study)[<span class="st">"studytime"</span>]))</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>starting_probability <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.20</span>, <span class="fl">0.50</span>, <span class="fl">0.80</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>starting_odds <span class="ot">&lt;-</span> starting_probability <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> starting_probability)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>new_odds <span class="ot">&lt;-</span> starting_odds <span class="sc">*</span> or_studytime</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>new_probability <span class="ot">&lt;-</span> new_odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> new_odds)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">starting_probability =</span> starting_probability,</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">probability_after_one_category =</span> new_probability,</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">probability_difference =</span> new_probability <span class="sc">-</span> starting_probability</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>or_studytime <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">exp</span>(<span class="fu">coef</span>(fit_study)[<span class="st">"studytime"</span>]))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>starting_probability <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.20</span>, <span class="fl">0.50</span>, <span class="fl">0.80</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>starting_odds <span class="ot">&lt;-</span> starting_probability <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> starting_probability)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>new_odds <span class="ot">&lt;-</span> starting_odds <span class="sc">*</span> or_studytime</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>new_probability <span class="ot">&lt;-</span> new_odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> new_odds)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">starting_probability =</span> starting_probability,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">probability_after_one_category =</span> new_probability,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">probability_difference =</span> new_probability <span class="sc">-</span> starting_probability</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
 </div>
-<div id="cnb-8-Note" class="Note">
+<div id="cnb-9-Note" class="Note">
 <details class="Note fobx-simplebox fobx-default" open=""><summary><strong>Note</strong></summary><div>
 <p>Odds ratios can look large even when the absolute probability change is modest. For communication, pair odds ratios with predicted probabilities for realistic scenarios.</p>
 </div></details>
@@ -28789,7 +29192,7 @@ studytime   0.1938849  0.1311284 1.478588 0.1392504</code></pre>
 </div>
 <div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(fit_study))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(fit_study))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -28809,7 +29212,7 @@ studytime   -0.06312204 0.4508918</code></pre>
 </div>
 <div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint.default</span>(fit_study)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint.default</span>(fit_study)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -28829,12 +29232,12 @@ studytime   0.9388289 1.569711</code></pre>
 </div>
 <div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint.default</span>(fit_study))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint.default</span>(fit_study))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
 </div>
-<div id="cnb-9-Note" class="Note">
+<div id="cnb-10-Note" class="Note">
 <details class="Note fobx-simplebox fobx-default" open=""><summary><strong>Note</strong></summary><div>
 <p>Confidence intervals for logistic regression coefficients are intervals for log-odds changes. Applying <code>exp()</code> converts them to odds-ratio intervals.</p>
 </div></details>
@@ -28882,10 +29285,10 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </div>
 <div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>fit_multi <span class="ot">&lt;-</span> <span class="fu">glm</span>(pass_exam <span class="sc">~</span> studytime <span class="sc">+</span> failures <span class="sc">+</span> absences,</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> students,</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">family =</span> binomial)</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_multi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fit_multi <span class="ot">&lt;-</span> <span class="fu">glm</span>(pass_exam <span class="sc">~</span> studytime <span class="sc">+</span> failures <span class="sc">+</span> absences,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> students,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">family =</span> binomial)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_multi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -28927,10 +29330,10 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </div>
 <div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fit_support <span class="ot">&lt;-</span> <span class="fu">glm</span>(pass_exam <span class="sc">~</span> studytime <span class="sc">+</span> failures <span class="sc">+</span> schoolsup,</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> students,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">family =</span> binomial)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_support)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>fit_support <span class="ot">&lt;-</span> <span class="fu">glm</span>(pass_exam <span class="sc">~</span> studytime <span class="sc">+</span> failures <span class="sc">+</span> schoolsup,</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> students,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">family =</span> binomial)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_support)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -28947,8 +29350,6 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <li>Use the fitted model for interpretation, prediction, and model checking.</li>
 </ol>
 <p>The difference is that binary outcomes need a Bernoulli/binomial error model and a logit link. <code>glm(..., family = binomial)</code> fits this model by maximum likelihood. Coefficients are read on the log-odds scale, exponentiated coefficients are odds ratios, and predicted probabilities require the inverse-logit transformation. The next chapter asks whether the fitted model is adequate.</p>
-
-
 <script type="webr-data">
 eyJvcHRpb25zIjp7ImJhc2VVcmwiOiJodHRwczovL3dlYnIuci13YXNtLm9yZy92MC42LjAvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsiZXZhbHVhdGUiLCJrbml0ciIsImh0bWx0b29scyIsImd0Il0sInJlcG9zIjpbXX0sInJlbmRlcl9kZiI6Imd0LWludGVyYWN0aXZlIn0=
 </script>
@@ -28966,7 +29367,15 @@ eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zIiwiaW5saW5lIjpmYWxzZSwibWV0
 <script type="vfs-file">
 WyJEYXRhL3N0dWRlbnQvc3R1ZGVudC50eHQiLCJEYXRhL3N0dWRlbnQvc3R1ZGVudC1wb3IuY3N2IiwiRGF0YS9zdHVkZW50L3N0dWRlbnQtbWVyZ2UuUiIsIkRhdGEvc3R1ZGVudC9zdHVkZW50LW1hdC5jc3YiXQ==
 </script>
+
+
 </section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>For an introductory review of binomial random variables, see the <em>Inferential Statistics with R</em> short course.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
@@ -30292,13 +30701,9 @@ if (window.location.href.includes('displayall')) {
 
 
   function applySkipAttr(el, skipped) {
-
     if (skipped) {
-
       el.setAttribute('data-skip', 'true');
-
       el.setAttribute('data-complete', 'true');
-
     } else {
 
       el.removeAttribute('data-skip');
@@ -30312,19 +30717,25 @@ if (window.location.href.includes('displayall')) {
       if (!graded) el.removeAttribute('data-complete');
 
     }
-
   }
 
+  function checkCellsForExercise(exId) {
+    return Array.from(document.querySelectorAll('.cell.wait[data-check="true"]'))
+      .filter(function (cell) {
+        return cell.getAttribute('data-exercise') === exId;
+      });
+  }
 
+  function applySkipAttrToExercise(exId, skipped) {
+    checkCellsForExercise(exId).forEach(function (cell) {
+      applySkipAttr(cell, skipped);
+    });
+  }
 
   function buildButton(el, state, exId) {
-
     const btn = document.createElement('button');
-
     btn.type = 'button';
-
     btn.className = 'btn btn-sm btn-outline-secondary skip-exercise-btn';
-
     const skipped = isSkipped(state, exId);
 
     btn.textContent = skipped ? 'Undo skip' : 'Skip exercise';
@@ -30334,19 +30745,12 @@ if (window.location.href.includes('displayall')) {
     btn.style.margin = '0.5rem 0';
 
 
-
     btn.addEventListener('click', function () {
-
       const nowSkipped = btn.getAttribute('aria-pressed') !== 'true';
-
-      applySkipAttr(el, nowSkipped);
-
+      applySkipAttrToExercise(exId, nowSkipped);
       setSkipped(state, exId, nowSkipped);
-
       btn.textContent = nowSkipped ? 'Undo skip' : 'Skip exercise';
-
       btn.setAttribute('aria-pressed', nowSkipped ? 'true' : 'false');
-
     });
 
     return btn;
@@ -30356,35 +30760,24 @@ if (window.location.href.includes('displayall')) {
 
 
   document.addEventListener('DOMContentLoaded', function () {
-
     const state = loadState();
-
     document.querySelectorAll('.cell.wait[data-check="true"]').forEach(function (cell) {
+      const nestedInCheckCell = cell.parentElement && cell.parentElement.closest('.cell.wait[data-check="true"]');
+      if (nestedInCheckCell || cell.dataset.skipButtonInitialized === 'true') return;
 
       const exId = cell.getAttribute('data-exercise');
-
       if (!exId) return;
 
-
-
       // Reapply stored skip state
-
-      applySkipAttr(cell, isSkipped(state, exId));
-
-
+      applySkipAttrToExercise(exId, isSkipped(state, exId));
 
       // Insert the button just before the exercise cell
-
       const btn = buildButton(cell, state, exId);
-
+      cell.dataset.skipButtonInitialized = 'true';
       const parent = cell.parentElement || cell;
-
       parent.insertBefore(btn, cell);
-
     });
-
   });
-
 })();
 
 </script>
@@ -30392,7 +30785,7 @@ if (window.location.href.includes('displayall')) {
 
 
 <script type="ojs-module-contents">
-eyJjb250ZW50cyI6W119
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBscl9kZW1vX2IwID0gSW5wdXRzLnJhbmdlKFstNCwgNF0sIHtcbiAgdmFsdWU6IC0xLjUsXG4gIHN0ZXA6IDAuMSxcbiAgbGFiZWw6IGh0bWxgJHt0ZXhgXFxiZXRhXzBgfTogbG9nLW9kZHMgaW50ZXJjZXB0YFxufSlcblxudmlld29mIGxyX2RlbW9fYjEgPSBJbnB1dHMucmFuZ2UoWy0yLCAyXSwge1xuICB2YWx1ZTogMC44LFxuICBzdGVwOiAwLjEsXG4gIGxhYmVsOiBodG1sYCR7dGV4YFxcYmV0YV8xYH06IGxvZy1vZGRzIHNsb3BlYFxufSlcblxudmlld29mIGxyX2RlbW9fZm9jdXNfeCA9IElucHV0cy5yYW5nZShbLTQsIDRdLCB7XG4gIHZhbHVlOiAxLFxuICBzdGVwOiAwLjEsXG4gIGxhYmVsOiBcIkZvY3VzIHggdmFsdWVcIlxufSlcblxudmlld29mIGxyX2RlbW9fbiA9IElucHV0cy5yYW5nZShbMjAsIDIwMF0sIHtcbiAgdmFsdWU6IDgwLFxuICBzdGVwOiAxMCxcbiAgbGFiZWw6IFwiQmVybm91bGxpIGRyYXdzXCJcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJcbmxyX2RlbW9fbG9naXN0aWMgPSB6ID0+IDEgLyAoMSArIE1hdGguZXhwKC16KSlcblxubHJfZGVtb19mcmFjID0gaSA9PiB7XG4gIGNvbnN0IHJhdyA9IE1hdGguc2luKGkgKiAxMi45ODk4KSAqIDQzNzU4LjU0NTM7XG4gIHJldHVybiByYXcgLSBNYXRoLmZsb29yKHJhdyk7XG59XG5cbmxyX2RlbW9feF9kb21haW4gPSBbLTQsIDRdXG5scl9kZW1vX2V0YV9kb21haW4gPSBbLTEyLCAxMl1cbmxyX2RlbW9fY3VydmUgPSBkMy5yYW5nZShscl9kZW1vX3hfZG9tYWluWzBdLCBscl9kZW1vX3hfZG9tYWluWzFdICsgMC4wMiwgMC4wNCkubWFwKHggPT4ge1xuICBjb25zdCBldGEgPSBscl9kZW1vX2IwICsgbHJfZGVtb19iMSAqIHg7XG4gIHJldHVybiB7eCwgZXRhLCBwOiBscl9kZW1vX2xvZ2lzdGljKGV0YSl9O1xufSlcblxubHJfZGVtb19mb2N1c19ldGEgPSBscl9kZW1vX2IwICsgbHJfZGVtb19iMSAqIGxyX2RlbW9fZm9jdXNfeFxubHJfZGVtb19mb2N1c19wID0gbHJfZGVtb19sb2dpc3RpYyhscl9kZW1vX2ZvY3VzX2V0YSlcbmxyX2RlbW9fZm9jdXMgPSBbe3g6IGxyX2RlbW9fZm9jdXNfeCwgZXRhOiBscl9kZW1vX2ZvY3VzX2V0YSwgcDogbHJfZGVtb19mb2N1c19wfV1cbmxyX2RlbW9fbGlua19jdXJ2ZSA9IGQzLnJhbmdlKGxyX2RlbW9fZXRhX2RvbWFpblswXSwgbHJfZGVtb19ldGFfZG9tYWluWzFdICsgMC4wNCwgMC4wOCkubWFwKGV0YSA9PiAoe1xuICBldGEsXG4gIHA6IGxyX2RlbW9fbG9naXN0aWMoZXRhKVxufSkpXG5cbmxyX2RlbW9fc2FtcGxlID0gZDMucmFuZ2UobHJfZGVtb19uKS5tYXAoaSA9PiB7XG4gIGNvbnN0IHggPSBscl9kZW1vX3hfZG9tYWluWzBdICsgKGxyX2RlbW9feF9kb21haW5bMV0gLSBscl9kZW1vX3hfZG9tYWluWzBdKSAqIGxyX2RlbW9fZnJhYyhpICsgMSk7XG4gIGNvbnN0IHAgPSBscl9kZW1vX2xvZ2lzdGljKGxyX2RlbW9fYjAgKyBscl9kZW1vX2IxICogeCk7XG4gIGNvbnN0IHkgPSBscl9kZW1vX2ZyYWMoaSArIDIwMDEpIDwgcCA/IDEgOiAwO1xuICByZXR1cm4ge1xuICAgIHgsXG4gICAgcCxcbiAgICB5LFxuICAgIHlfaml0dGVyOiB5ICsgKGxyX2RlbW9fZnJhYyhpICsgNDAwMSkgLSAwLjUpICogMC4wOFxuICB9O1xufSlcblxubHJfZGVtb19tYXNzX3ggPSBkMy5yYW5nZShscl9kZW1vX3hfZG9tYWluWzBdLCBscl9kZW1vX3hfZG9tYWluWzFdICsgMC4wMSwgMSlcbmxyX2RlbW9fbWFzcyA9IGxyX2RlbW9fbWFzc194LmZsYXRNYXAoeCA9PiB7XG4gIGNvbnN0IHAgPSBscl9kZW1vX2xvZ2lzdGljKGxyX2RlbW9fYjAgKyBscl9kZW1vX2IxICogeCk7XG4gIHJldHVybiBbXG4gICAge3gsIHk6IDEsIHByb2JhYmlsaXR5OiBwLCBsYWJlbDogXCJQYXNzXCJ9LFxuICAgIHt4LCB5OiAwLCBwcm9iYWJpbGl0eTogMSAtIHAsIGxhYmVsOiBcIkZhaWxcIn1cbiAgXTtcbn0pXG5scl9kZW1vX2ZvY3VzX21hc3MgPSBbXG4gIHtcbiAgICB4OiBscl9kZW1vX2ZvY3VzX3gsXG4gICAgeTogMSxcbiAgICBwcm9iYWJpbGl0eTogbHJfZGVtb19mb2N1c19wLFxuICAgIGxhYmVsOiBcIlBhc3NcIixcbiAgICBwYXJhbWV0ZXI6IGBwID0gJHtscl9kZW1vX2ZvY3VzX3AudG9GaXhlZCgyKX1gXG4gIH0sXG4gIHtcbiAgICB4OiBscl9kZW1vX2ZvY3VzX3gsXG4gICAgeTogMCxcbiAgICBwcm9iYWJpbGl0eTogMSAtIGxyX2RlbW9fZm9jdXNfcCxcbiAgICBsYWJlbDogXCJGYWlsXCIsXG4gICAgcGFyYW1ldGVyOiBgMSAtIHAgPSAkeygxIC0gbHJfZGVtb19mb2N1c19wKS50b0ZpeGVkKDIpfWBcbiAgfVxuXVxubHJfZGVtb19tYXNzX2xhYmVsX2FuY2hvciA9IGxyX2RlbW9fZm9jdXNfeCA+IDIuNCA/IFwiZW5kXCIgOiBcInN0YXJ0XCJcbmxyX2RlbW9fbWFzc19sYWJlbF9keCA9IGxyX2RlbW9fZm9jdXNfeCA+IDIuNCA/IC0xMCA6IDEwXG5cbmxyX2RlbW9fbG9nb2Rkc19wbG90ID0gUGxvdC5wbG90KHtcbiAgaGVpZ2h0OiAyNTAsXG4gIG1hcmdpbkxlZnQ6IDQ4LFxuICBtYXJnaW5Cb3R0b206IDQyLFxuICB4OiB7ZG9tYWluOiBscl9kZW1vX3hfZG9tYWluLCBsYWJlbDogXCJ4XCIsIGdyaWQ6IHRydWV9LFxuICB5OiB7ZG9tYWluOiBscl9kZW1vX2V0YV9kb21haW4sIGxhYmVsOiBcIkxpbmVhciBwcmVkaWN0b3IsIM63XCIsIGdyaWQ6IHRydWV9LFxuICBtYXJrczogW1xuICAgIFBsb3QucnVsZVkoWzBdLCB7c3Ryb2tlOiBcIiNiOGI4YjhcIiwgc3Ryb2tlRGFzaGFycmF5OiBcIjQgNFwifSksXG4gICAgUGxvdC5saW5lKGxyX2RlbW9fY3VydmUsIHt4OiBcInhcIiwgeTogXCJldGFcIiwgc3Ryb2tlOiBcIiMyYTU1OTlcIiwgc3Ryb2tlV2lkdGg6IDIuNX0pLFxuICAgIFBsb3QuZG90KGxyX2RlbW9fZm9jdXMsIHt4OiBcInhcIiwgeTogXCJldGFcIiwgcjogNSwgZmlsbDogXCIjZDk1ZjAyXCJ9KVxuICBdXG59KVxuXG5scl9kZW1vX3Byb2JhYmlsaXR5X3Bsb3QgPSBQbG90LnBsb3Qoe1xuICBoZWlnaHQ6IDI1MCxcbiAgbWFyZ2luTGVmdDogNDgsXG4gIG1hcmdpbkJvdHRvbTogNDIsXG4gIHg6IHtkb21haW46IGxyX2RlbW9fZXRhX2RvbWFpbiwgbGFiZWw6IFwiTGluZWFyIHByZWRpY3RvciwgzrdcIiwgZ3JpZDogdHJ1ZX0sXG4gIHk6IHtkb21haW46IFswLCAxXSwgbGFiZWw6IFwiUHJvYmFiaWxpdHksIHBcIiwgZ3JpZDogdHJ1ZSwgcGVyY2VudDogdHJ1ZX0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5ydWxlWChbMF0sIHtzdHJva2U6IFwiI2I4YjhiOFwiLCBzdHJva2VEYXNoYXJyYXk6IFwiNCA0XCJ9KSxcbiAgICBQbG90LnJ1bGVZKFswLCAwLjUsIDFdLCB7c3Ryb2tlOiBcIiNkOWQ5ZDlcIn0pLFxuICAgIFBsb3QubGluZShscl9kZW1vX2xpbmtfY3VydmUsIHt4OiBcImV0YVwiLCB5OiBcInBcIiwgc3Ryb2tlOiBcIiMwMDg3NmNcIiwgc3Ryb2tlV2lkdGg6IDIuNX0pLFxuICAgIFBsb3QuZG90KGxyX2RlbW9fZm9jdXMsIHt4OiBcImV0YVwiLCB5OiBcInBcIiwgcjogNSwgZmlsbDogXCIjZDk1ZjAyXCJ9KVxuICBdXG59KVxuXG5scl9kZW1vX2Jlcm5vdWxsaV9wbG90ID0gUGxvdC5wbG90KHtcbiAgaGVpZ2h0OiAyNTAsXG4gIG1hcmdpbkxlZnQ6IDQ4LFxuICBtYXJnaW5Cb3R0b206IDQyLFxuICB4OiB7ZG9tYWluOiBscl9kZW1vX3hfZG9tYWluLCBsYWJlbDogXCJ4XCIsIGdyaWQ6IHRydWV9LFxuICB5OiB7ZG9tYWluOiBbLTAuMTUsIDEuMTVdLCB0aWNrczogWzAsIDFdLCBsYWJlbDogXCJPYnNlcnZlZCBvdXRjb21lLCBZXCJ9LFxuICBjb2xvcjoge1xuICAgIGRvbWFpbjogW1wiRmFpbFwiLCBcIlBhc3NcIl0sXG4gICAgcmFuZ2U6IFtcIiNiOTRlNDhcIiwgXCIjMmE1NTk5XCJdLFxuICAgIGxlZ2VuZDogdHJ1ZVxuICB9LFxuICBtYXJrczogW1xuICAgIFBsb3QucnVsZVgoW2xyX2RlbW9fZm9jdXNfeF0sIHtzdHJva2U6IFwiI2Q5NWYwMlwiLCBzdHJva2VEYXNoYXJyYXk6IFwiMyAzXCJ9KSxcbiAgICBQbG90LmRvdChscl9kZW1vX21hc3MsIHtcbiAgICAgIHg6IFwieFwiLFxuICAgICAgeTogXCJ5XCIsXG4gICAgICByOiBkID0+IDMgKyAxMyAqIGQucHJvYmFiaWxpdHksXG4gICAgICBmaWxsOiBcImxhYmVsXCIsXG4gICAgICBmaWxsT3BhY2l0eTogMC4yLFxuICAgICAgc3Ryb2tlOiBcImxhYmVsXCJcbiAgICB9KSxcbiAgICBQbG90LmRvdChscl9kZW1vX2ZvY3VzX21hc3MsIHtcbiAgICAgIHg6IFwieFwiLFxuICAgICAgeTogXCJ5XCIsXG4gICAgICByOiBkID0+IDQgKyAxNSAqIGQucHJvYmFiaWxpdHksXG4gICAgICBmaWxsOiBcImxhYmVsXCIsXG4gICAgICBmaWxsT3BhY2l0eTogMC4zNSxcbiAgICAgIHN0cm9rZTogXCJsYWJlbFwiLFxuICAgICAgc3Ryb2tlV2lkdGg6IDEuNVxuICAgIH0pLFxuICAgIFBsb3QudGV4dChscl9kZW1vX2ZvY3VzX21hc3MsIHtcbiAgICAgIHg6IFwieFwiLFxuICAgICAgeTogXCJ5XCIsXG4gICAgICB0ZXh0OiBcInBhcmFtZXRlclwiLFxuICAgICAgZHg6IGxyX2RlbW9fbWFzc19sYWJlbF9keCxcbiAgICAgIGR5OiBkID0+IGQueSA9PT0gMSA/IC0xMiA6IDE0LFxuICAgICAgdGV4dEFuY2hvcjogbHJfZGVtb19tYXNzX2xhYmVsX2FuY2hvcixcbiAgICAgIGZpbGw6IFwibGFiZWxcIixcbiAgICAgIGZvbnRXZWlnaHQ6IDcwMFxuICAgIH0pLFxuICAgIFBsb3QuZG90KGxyX2RlbW9fc2FtcGxlLCB7XG4gICAgICB4OiBcInhcIixcbiAgICAgIHk6IFwieV9qaXR0ZXJcIixcbiAgICAgIHI6IDMsXG4gICAgICBmaWxsOiBkID0+IGQueSA9PT0gMSA/IFwiUGFzc1wiIDogXCJGYWlsXCIsXG4gICAgICBmaWxsT3BhY2l0eTogMC42NVxuICAgIH0pXG4gIF1cbn0pXG5cbmh0bWxgXG48c3R5bGU+XG4ubHItZGVtby1ncmlkIHtcbiAgZGlzcGxheTogZ3JpZDtcbiAgZ3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiByZXBlYXQoYXV0by1maXQsIG1pbm1heCgyNDBweCwgMWZyKSk7XG4gIGdhcDogMC45cmVtO1xuICBhbGlnbi1pdGVtczogc3RhcnQ7XG59XG4ubHItZGVtby1wYW5lbCB7XG4gIG1pbi13aWR0aDogMDtcbn1cbi5sci1kZW1vLXBhbmVsIGg0IHtcbiAgbWFyZ2luOiAwIDAgMC4yNXJlbSAwO1xuICBmb250LXNpemU6IDAuOTVyZW07XG59XG4ubHItZGVtby1wYW5lbCBwIHtcbiAgbWFyZ2luOiAwIDAgMC40NXJlbSAwO1xuICBmb250LXNpemU6IDAuODVyZW07XG4gIGxpbmUtaGVpZ2h0OiAxLjM7XG59XG4ubHItZGVtby1lcXVhdGlvbnMge1xuICBtYXJnaW46IDAgMCAwLjlyZW0gMDtcbiAgcGFkZGluZzogMC42cmVtIDAuNzVyZW07XG4gIGJvcmRlci1sZWZ0OiA0cHggc29saWQgIzJhNTU5OTtcbiAgYmFja2dyb3VuZDogI2Y3ZjlmYztcbn1cbi5sci1kZW1vLWVxdWF0aW9ucyBwIHtcbiAgbWFyZ2luOiAwLjFyZW0gMDtcbn1cbjwvc3R5bGU+XG48ZGl2IGNsYXNzPVwibHItZGVtby1lcXVhdGlvbnNcIj5cbiAgPHA+JHt0ZXhgXFxldGEgPSAke2xyX2RlbW9fYjAudG9GaXhlZCgxKX0gKyAke2xyX2RlbW9fYjEudG9GaXhlZCgxKX14YH08L3A+XG4gIDxwPiR7dGV4YHAgPSBcXGZyYWN7MX17MSArIGVeey1cXGV0YX19YH08L3A+XG4gIDxwPiR7dGV4YFkgXFxzaW0gXFx0ZXh0e0Jlcm5vdWxsaX0ocClgfTwvcD5cbiAgPHA+QXQgeCA9ICR7bHJfZGVtb19mb2N1c194LnRvRml4ZWQoMSl9OiAke3RleGBcXGV0YWB9ID0gJHtscl9kZW1vX2ZvY3VzX2V0YS50b0ZpeGVkKDIpfSwgcCA9ICR7bHJfZGVtb19mb2N1c19wLnRvRml4ZWQoMyl9LCBhbmQgJHt0ZXhgcCgxLXApYH0gPSAkeyhscl9kZW1vX2ZvY3VzX3AgKiAoMSAtIGxyX2RlbW9fZm9jdXNfcCkpLnRvRml4ZWQoMyl9LjwvcD5cbjwvZGl2PlxuPGRpdiBjbGFzcz1cImxyLWRlbW8tZ3JpZFwiPlxuICA8ZGl2IGNsYXNzPVwibHItZGVtby1wYW5lbFwiPlxuICAgIDxoND4xLiBMaW5lYXIgcHJlZGljdG9yPC9oND5cbiAgICA8cD5UaGUgY29lZmZpY2llbnRzIG1vdmUgYW5kIHRpbHQgYSBzdHJhaWdodCBsaW5lIG9uIHRoZSBsb2ctb2RkcyBzY2FsZS48L3A+XG4gICAgJHtscl9kZW1vX2xvZ29kZHNfcGxvdH1cbiAgPC9kaXY+XG4gIDxkaXYgY2xhc3M9XCJsci1kZW1vLXBhbmVsXCI+XG4gICAgPGg0PjIuIExvZ2lzdGljIGxpbms8L2g0PlxuICAgIDxwPlRoZSBpbnZlcnNlLWxvZ2l0IGlzIHNob3duIG9uIGEgZml4ZWQsIGNlbnRyZWQgbG9nLW9kZHMgc2NhbGUuPC9wPlxuICAgICR7bHJfZGVtb19wcm9iYWJpbGl0eV9wbG90fVxuICA8L2Rpdj5cbiAgPGRpdiBjbGFzcz1cImxyLWRlbW8tcGFuZWxcIj5cbiAgICA8aDQ+My4gQmVybm91bGxpIGVycm9yIG1vZGVsPC9oND5cbiAgICA8cD5UaGUgbGFiZWxsZWQgc2xpY2Ugc2hvd3MgdGhlIEJlcm5vdWxsaSBwcm9iYWJpbGl0aWVzIHAgYW5kIDEgLSBwIGF0IHRoZSBzZWxlY3RlZCB4LjwvcD5cbiAgICAke2xyX2RlbW9fYmVybm91bGxpX3Bsb3R9XG4gIDwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdscl9kZW1vX2IwJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2xyX2RlbW9fYjEnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnbHJfZGVtb19mb2N1c194JykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2xyX2RlbW9fbicpIn1dfQ==
 </script>
 <script type="module">
 window._ojs.runtime.setLocalResolver({});

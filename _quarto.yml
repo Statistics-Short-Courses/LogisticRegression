@@ -11,8 +11,7 @@ book:
     - index.qmd
     - ch_1_logit.qmd
     - ch_2_lr.qmd
-    - ch_4_assessing-model-fit.qmd
-    - ch_5_predictions-from-logistic-regression-models.qmd
+    - ch_3_assessing-model-fit-and-predictions.qmd
     - ch_6_extensions-case-study.qmd
     - glossary.qmd
   page-navigation: false

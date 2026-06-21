@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Model Building and a Mini Case Study – Logistic Regression with R</title>
+<title>4&nbsp; Model Building and a Mini Case Study – Logistic Regression with R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -28002,17 +28002,9 @@ initializeRuntime();
 --color1: #FFF9C4;
 --color2: #FFEB3B;
 }
-.Example {
---color1: #BBDEFB;
---color2: #2196F3;
-}
 .Key-point {
 --color1: #FFF9C4;
 --color2: #FFEB3B;
-}
-.Key-term {
---color1: #D1C4E9;
---color2: #673AB7;
 }
 .Exercise {
 --color1: #C8E6C9;
@@ -28021,6 +28013,14 @@ initializeRuntime();
 .Assumption {
 --color1: #FFCDD2;
 --color2: #F44336;
+}
+.Key-term {
+--color1: #D1C4E9;
+--color2: #673AB7;
+}
+.Example {
+--color1: #BBDEFB;
+--color2: #2196F3;
 }
 </style>
 
@@ -28185,7 +28185,7 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_6_extensions-case-study.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_6_extensions-case-study.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -28219,31 +28219,25 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch_1_logit.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Motivation: modeling binary outcomes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Motivation &amp; Background: Binary Outcomes and the Logistic Function</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch_2_lr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Linear Models to Fitting Logistic Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Generalised Linear Models and Logistic Regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_4_assessing-model-fit.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessing Logistic Regression Models</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ch_5_predictions-from-logistic-regression-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Predictions from Logistic Regression Models</span></span></a>
+  <a href="./ch_3_assessing-model-fit-and-predictions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessing Model Fit and Predictions</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch_6_extensions-case-study.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -28262,16 +28256,16 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
     <h2 id="toc-title">Contents</h2>
    
   <ul class="collapse">
-  <li><a href="#sec-extensions-case-study" id="toc-sec-extensions-case-study" class="nav-link active" data-scroll-target="#sec-extensions-case-study"><span class="header-section-number">6</span> Model building and a mini case study</a>
+  <li><a href="#sec-extensions-case-study" id="toc-sec-extensions-case-study" class="nav-link active" data-scroll-target="#sec-extensions-case-study"><span class="header-section-number">5</span> Model building and a mini case study</a>
   <ul class="collapse">
-  <li><a href="#sec-case-define-outcome" id="toc-sec-case-define-outcome" class="nav-link" data-scroll-target="#sec-case-define-outcome"><span class="header-section-number">6.1</span> Define the outcome</a></li>
-  <li><a href="#sec-case-choose-predictors" id="toc-sec-case-choose-predictors" class="nav-link" data-scroll-target="#sec-case-choose-predictors"><span class="header-section-number">6.2</span> Choose predictors</a></li>
-  <li><a href="#sec-case-compare-models" id="toc-sec-case-compare-models" class="nav-link" data-scroll-target="#sec-case-compare-models"><span class="header-section-number">6.3</span> Compare a small set of models</a></li>
-  <li><a href="#sec-case-interactions" id="toc-sec-case-interactions" class="nav-link" data-scroll-target="#sec-case-interactions"><span class="header-section-number">6.4</span> Consider interactions carefully</a></li>
-  <li><a href="#sec-case-scenarios" id="toc-sec-case-scenarios" class="nav-link" data-scroll-target="#sec-case-scenarios"><span class="header-section-number">6.5</span> Communicate with scenarios</a></li>
-  <li><a href="#sec-case-performance" id="toc-sec-case-performance" class="nav-link" data-scroll-target="#sec-case-performance"><span class="header-section-number">6.6</span> Summarise predictive performance</a></li>
-  <li><a href="#sec-case-reporting-template" id="toc-sec-case-reporting-template" class="nav-link" data-scroll-target="#sec-case-reporting-template"><span class="header-section-number">6.7</span> Reporting template</a></li>
-  <li><a href="#sec-chapter06-summary" id="toc-sec-chapter06-summary" class="nav-link" data-scroll-target="#sec-chapter06-summary"><span class="header-section-number">6.8</span> Chapter summary</a></li>
+  <li><a href="#sec-case-define-outcome" id="toc-sec-case-define-outcome" class="nav-link" data-scroll-target="#sec-case-define-outcome"><span class="header-section-number">5.1</span> Define the outcome</a></li>
+  <li><a href="#sec-case-choose-predictors" id="toc-sec-case-choose-predictors" class="nav-link" data-scroll-target="#sec-case-choose-predictors"><span class="header-section-number">5.2</span> Choose predictors</a></li>
+  <li><a href="#sec-case-compare-models" id="toc-sec-case-compare-models" class="nav-link" data-scroll-target="#sec-case-compare-models"><span class="header-section-number">5.3</span> Compare a small set of models</a></li>
+  <li><a href="#sec-case-interactions" id="toc-sec-case-interactions" class="nav-link" data-scroll-target="#sec-case-interactions"><span class="header-section-number">5.4</span> Consider interactions carefully</a></li>
+  <li><a href="#sec-case-scenarios" id="toc-sec-case-scenarios" class="nav-link" data-scroll-target="#sec-case-scenarios"><span class="header-section-number">5.5</span> Communicate with scenarios</a></li>
+  <li><a href="#sec-case-performance" id="toc-sec-case-performance" class="nav-link" data-scroll-target="#sec-case-performance"><span class="header-section-number">5.6</span> Summarise predictive performance</a></li>
+  <li><a href="#sec-case-reporting-template" id="toc-sec-case-reporting-template" class="nav-link" data-scroll-target="#sec-case-reporting-template"><span class="header-section-number">5.7</span> Reporting template</a></li>
+  <li><a href="#sec-chapter06-summary" id="toc-sec-chapter06-summary" class="nav-link" data-scroll-target="#sec-chapter06-summary"><span class="header-section-number">5.8</span> Chapter summary</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -28281,7 +28275,7 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></h1>
 </div>
 
 
@@ -28298,8 +28292,8 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
 </header>
 
 
-<section id="sec-extensions-case-study" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Model building and a mini case study</h1>
+<section id="sec-extensions-case-study" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Model building and a mini case study</h1>
 <p>The earlier chapters developed the pieces of logistic regression one at a time. This chapter brings them together into a short analysis workflow:</p>
 <ol type="1">
 <li>Define the event.</li>
@@ -28310,8 +28304,8 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
 <li>Communicate limitations.</li>
 </ol>
 <p>The goal is not to find the “best possible” student-performance model. The goal is to practise a defensible modelling workflow.</p>
-<section id="sec-case-define-outcome" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="sec-case-define-outcome"><span class="header-section-number">6.1</span> Define the outcome</h2>
+<section id="sec-case-define-outcome" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="sec-case-define-outcome"><span class="header-section-number">5.1</span> Define the outcome</h2>
 <p>We define the event as passing the final mathematics grade:</p>
 <p><span class="math display">\[
 Y_i =
@@ -28347,8 +28341,8 @@ Y_i =
 </div>
 <p>Always report the event definition. Different cutoffs can answer different questions.</p>
 </section>
-<section id="sec-case-choose-predictors" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="sec-case-choose-predictors"><span class="header-section-number">6.2</span> Choose predictors</h2>
+<section id="sec-case-choose-predictors" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="sec-case-choose-predictors"><span class="header-section-number">5.2</span> Choose predictors</h2>
 <p>A compact first model uses:</p>
 <ul>
 <li><code>studytime</code>: weekly study-time category.</li>
@@ -28430,8 +28424,8 @@ absences    0.9817405 0.9564488 1.0077010</code></pre>
 <li><label><input type="checkbox">Continue</label></li>
 </ul>
 </section>
-<section id="sec-case-compare-models" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="sec-case-compare-models"><span class="header-section-number">6.3</span> Compare a small set of models</h2>
+<section id="sec-case-compare-models" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="sec-case-compare-models"><span class="header-section-number">5.3</span> Compare a small set of models</h2>
 <p>We compare three models:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Code</a></li></ul>
@@ -28473,8 +28467,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>This mirrors the model-building logic from the Linear Regression Short Course: start simple, add predictors for clear reasons, and check whether the added complexity is useful.</p>
 </section>
-<section id="sec-case-interactions" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="sec-case-interactions"><span class="header-section-number">6.4</span> Consider interactions carefully</h2>
+<section id="sec-case-interactions" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="sec-case-interactions"><span class="header-section-number">5.4</span> Consider interactions carefully</h2>
 <p>An interaction allows the effect of one predictor to depend on another. For example, the association between absences and passing might differ depending on whether a student has previous failures.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Code</a></li></ul>
@@ -28531,8 +28525,8 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </div></details>
 </div>
 </section>
-<section id="sec-case-scenarios" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="sec-case-scenarios"><span class="header-section-number">6.5</span> Communicate with scenarios</h2>
+<section id="sec-case-scenarios" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="sec-case-scenarios"><span class="header-section-number">5.5</span> Communicate with scenarios</h2>
 <p>Scenario predictions translate the model back to the probability scale.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Code</a></li></ul>
@@ -28568,8 +28562,8 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </div>
 <p>For a non-technical audience, this table is usually more useful than a coefficient table.</p>
 </section>
-<section id="sec-case-performance" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="sec-case-performance"><span class="header-section-number">6.6</span> Summarise predictive performance</h2>
+<section id="sec-case-performance" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="sec-case-performance"><span class="header-section-number">5.6</span> Summarise predictive performance</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">
@@ -28611,8 +28605,8 @@ Predicted   0   1
 </div>
 <p>This is an in-sample summary, so it is optimistic. In a real predictive project, we would use a validation set or cross-validation.</p>
 </section>
-<section id="sec-case-reporting-template" class="level2" data-number="6.7">
-<h2 data-number="6.7" class="anchored" data-anchor-id="sec-case-reporting-template"><span class="header-section-number">6.7</span> Reporting template</h2>
+<section id="sec-case-reporting-template" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="sec-case-reporting-template"><span class="header-section-number">5.7</span> Reporting template</h2>
 <p>Use this structure for a short logistic regression report:</p>
 <ol type="1">
 <li><strong>Outcome:</strong> Define the event and report the event rate.</li>
@@ -28627,8 +28621,8 @@ Predicted   0   1
 <p>We modelled the probability of passing the final mathematics assessment using logistic regression. The event was defined as <code>G3 &gt;= 10</code>. The model included study time, previous failures, and absences. Coefficients were estimated on the log-odds scale and reported as odds ratios. To make the results easier to interpret, we also calculated predicted probabilities for representative student profiles. Using a threshold of 0.5, we summarised classification performance with accuracy, sensitivity, and specificity. These performance results are in-sample and should be validated before using the model for decision making.</p>
 </blockquote>
 </section>
-<section id="sec-chapter06-summary" class="level2" data-number="6.8">
-<h2 data-number="6.8" class="anchored" data-anchor-id="sec-chapter06-summary"><span class="header-section-number">6.8</span> Chapter summary</h2>
+<section id="sec-chapter06-summary" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="sec-chapter06-summary"><span class="header-section-number">5.8</span> Chapter summary</h2>
 <p>Logistic regression analysis follows the same disciplined pattern as linear regression: define the response, build interpretable models, compare alternatives, check assumptions and performance, and communicate effects on a scale the audience can understand. The main difference is the scale: coefficients live on the log-odds scale, while conclusions are usually clearest as predicted probabilities.</p>
 
 
@@ -29972,13 +29966,9 @@ if (window.location.href.includes('displayall')) {
 
 
   function applySkipAttr(el, skipped) {
-
     if (skipped) {
-
       el.setAttribute('data-skip', 'true');
-
       el.setAttribute('data-complete', 'true');
-
     } else {
 
       el.removeAttribute('data-skip');
@@ -29992,19 +29982,25 @@ if (window.location.href.includes('displayall')) {
       if (!graded) el.removeAttribute('data-complete');
 
     }
-
   }
 
+  function checkCellsForExercise(exId) {
+    return Array.from(document.querySelectorAll('.cell.wait[data-check="true"]'))
+      .filter(function (cell) {
+        return cell.getAttribute('data-exercise') === exId;
+      });
+  }
 
+  function applySkipAttrToExercise(exId, skipped) {
+    checkCellsForExercise(exId).forEach(function (cell) {
+      applySkipAttr(cell, skipped);
+    });
+  }
 
   function buildButton(el, state, exId) {
-
     const btn = document.createElement('button');
-
     btn.type = 'button';
-
     btn.className = 'btn btn-sm btn-outline-secondary skip-exercise-btn';
-
     const skipped = isSkipped(state, exId);
 
     btn.textContent = skipped ? 'Undo skip' : 'Skip exercise';
@@ -30014,19 +30010,12 @@ if (window.location.href.includes('displayall')) {
     btn.style.margin = '0.5rem 0';
 
 
-
     btn.addEventListener('click', function () {
-
       const nowSkipped = btn.getAttribute('aria-pressed') !== 'true';
-
-      applySkipAttr(el, nowSkipped);
-
+      applySkipAttrToExercise(exId, nowSkipped);
       setSkipped(state, exId, nowSkipped);
-
       btn.textContent = nowSkipped ? 'Undo skip' : 'Skip exercise';
-
       btn.setAttribute('aria-pressed', nowSkipped ? 'true' : 'false');
-
     });
 
     return btn;
@@ -30036,35 +30025,24 @@ if (window.location.href.includes('displayall')) {
 
 
   document.addEventListener('DOMContentLoaded', function () {
-
     const state = loadState();
-
     document.querySelectorAll('.cell.wait[data-check="true"]').forEach(function (cell) {
+      const nestedInCheckCell = cell.parentElement && cell.parentElement.closest('.cell.wait[data-check="true"]');
+      if (nestedInCheckCell || cell.dataset.skipButtonInitialized === 'true') return;
 
       const exId = cell.getAttribute('data-exercise');
-
       if (!exId) return;
 
-
-
       // Reapply stored skip state
-
-      applySkipAttr(cell, isSkipped(state, exId));
-
-
+      applySkipAttrToExercise(exId, isSkipped(state, exId));
 
       // Insert the button just before the exercise cell
-
       const btn = buildButton(cell, state, exId);
-
+      cell.dataset.skipButtonInitialized = 'true';
       const parent = cell.parentElement || cell;
-
       parent.insertBefore(btn, cell);
-
     });
-
   });
-
 })();
 
 </script>

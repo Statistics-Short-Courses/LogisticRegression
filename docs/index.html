@@ -121,31 +121,25 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch_1_logit.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Motivation: modeling binary outcomes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Motivation &amp; Background: Binary Outcomes and the Logistic Function</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch_2_lr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Linear Models to Fitting Logistic Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Generalised Linear Models and Logistic Regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_4_assessing-model-fit.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessing Logistic Regression Models</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ch_5_predictions-from-logistic-regression-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Predictions from Logistic Regression Models</span></span></a>
+  <a href="./ch_3_assessing-model-fit-and-predictions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessing Model Fit and Predictions</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch_6_extensions-case-study.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -226,10 +220,9 @@ ul.task-list li input[type="checkbox"] {
 <section id="course-map" class="level2">
 <h2 class="anchored" data-anchor-id="course-map">Course map</h2>
 <ul>
-<li><a href="ch_1_logit.html" class="quarto-xref"><span>1&nbsp; Motivation: modeling binary outcomes</span></a> motivates binary outcomes and introduces probability, odds, log-odds, and the logistic function.</li>
+<li><a href="ch_1_logit.html" class="quarto-xref"><span>1&nbsp; Motivation &amp; Background: Binary Outcomes and the Logistic Function</span></a> motivates binary outcomes and introduces probability, odds, log-odds, and the logistic function.</li>
 <li><a href="ch_2_lr.html" class="quarto-xref"><span>From linear models to fitting logistic regression</span></a> maps logistic regression onto the linear-model framework using GLMs, the logit link, and a Bernoulli/binomial error model, then <a href="ch_2_lr.html#sec-fitting" class="quarto-xref"><span>Fitting logistic regression models</span></a> fits logistic regression models with <code>glm()</code> and interprets coefficients, odds ratios, and confidence intervals.</li>
-<li><a href="ch_4_assessing-model-fit.html" class="quarto-xref"><span>Assessing logistic regression models</span></a> assesses model fit with deviance, likelihood ratio tests, AIC, pseudo R-squared, and diagnostics.</li>
-<li><a href="ch_5_predictions-from-logistic-regression-models.html" class="quarto-xref"><span>Predictions from logistic regression models</span></a> generates predicted probabilities, classifications, confusion matrices, ROC curves, and AUC.</li>
+<li><a href="ch_3_assessing-model-fit-and-predictions.html" class="quarto-xref"><span>Assessing model fit and predictions</span></a> assesses model fit with deviance, likelihood ratio tests, AIC, pseudo R-squared, and diagnostics, then <a href="ch_3_assessing-model-fit-and-predictions.html#sec-predictions" class="quarto-xref"><span>Predictions from logistic regression models</span></a> generates predicted probabilities, classifications, confusion matrices, ROC curves, and AUC.</li>
 <li><a href="ch_6_extensions-case-study.html" class="quarto-xref"><span>Model building and a mini case study</span></a> brings the workflow together in a mini case study with multivariable models, interactions, and reporting.</li>
 </ul>
 </section>
@@ -1582,13 +1575,9 @@ if (window.location.href.includes('displayall')) {
 
 
   function applySkipAttr(el, skipped) {
-
     if (skipped) {
-
       el.setAttribute('data-skip', 'true');
-
       el.setAttribute('data-complete', 'true');
-
     } else {
 
       el.removeAttribute('data-skip');
@@ -1602,19 +1591,25 @@ if (window.location.href.includes('displayall')) {
       if (!graded) el.removeAttribute('data-complete');
 
     }
-
   }
 
+  function checkCellsForExercise(exId) {
+    return Array.from(document.querySelectorAll('.cell.wait[data-check="true"]'))
+      .filter(function (cell) {
+        return cell.getAttribute('data-exercise') === exId;
+      });
+  }
 
+  function applySkipAttrToExercise(exId, skipped) {
+    checkCellsForExercise(exId).forEach(function (cell) {
+      applySkipAttr(cell, skipped);
+    });
+  }
 
   function buildButton(el, state, exId) {
-
     const btn = document.createElement('button');
-
     btn.type = 'button';
-
     btn.className = 'btn btn-sm btn-outline-secondary skip-exercise-btn';
-
     const skipped = isSkipped(state, exId);
 
     btn.textContent = skipped ? 'Undo skip' : 'Skip exercise';
@@ -1624,19 +1619,12 @@ if (window.location.href.includes('displayall')) {
     btn.style.margin = '0.5rem 0';
 
 
-
     btn.addEventListener('click', function () {
-
       const nowSkipped = btn.getAttribute('aria-pressed') !== 'true';
-
-      applySkipAttr(el, nowSkipped);
-
+      applySkipAttrToExercise(exId, nowSkipped);
       setSkipped(state, exId, nowSkipped);
-
       btn.textContent = nowSkipped ? 'Undo skip' : 'Skip exercise';
-
       btn.setAttribute('aria-pressed', nowSkipped ? 'true' : 'false');
-
     });
 
     return btn;
@@ -1646,35 +1634,24 @@ if (window.location.href.includes('displayall')) {
 
 
   document.addEventListener('DOMContentLoaded', function () {
-
     const state = loadState();
-
     document.querySelectorAll('.cell.wait[data-check="true"]').forEach(function (cell) {
+      const nestedInCheckCell = cell.parentElement && cell.parentElement.closest('.cell.wait[data-check="true"]');
+      if (nestedInCheckCell || cell.dataset.skipButtonInitialized === 'true') return;
 
       const exId = cell.getAttribute('data-exercise');
-
       if (!exId) return;
 
-
-
       // Reapply stored skip state
-
-      applySkipAttr(cell, isSkipped(state, exId));
-
-
+      applySkipAttrToExercise(exId, isSkipped(state, exId));
 
       // Insert the button just before the exercise cell
-
       const btn = buildButton(cell, state, exId);
-
+      cell.dataset.skipButtonInitialized = 'true';
       const parent = cell.parentElement || cell;
-
       parent.insertBefore(btn, cell);
-
     });
-
   });
-
 })();
 
 </script>

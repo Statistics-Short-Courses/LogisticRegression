@@ -121,31 +121,25 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch_1_logit.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Motivation: modeling binary outcomes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Motivation &amp; Background: Binary Outcomes and the Logistic Function</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch_2_lr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Linear Models to Fitting Logistic Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Generalised Linear Models and Logistic Regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_4_assessing-model-fit.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessing Logistic Regression Models</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ch_5_predictions-from-logistic-regression-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Predictions from Logistic Regression Models</span></span></a>
+  <a href="./ch_3_assessing-model-fit-and-predictions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessing Model Fit and Predictions</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch_6_extensions-case-study.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -1706,13 +1700,9 @@ if (window.location.href.includes('displayall')) {
 
 
   function applySkipAttr(el, skipped) {
-
     if (skipped) {
-
       el.setAttribute('data-skip', 'true');
-
       el.setAttribute('data-complete', 'true');
-
     } else {
 
       el.removeAttribute('data-skip');
@@ -1726,19 +1716,25 @@ if (window.location.href.includes('displayall')) {
       if (!graded) el.removeAttribute('data-complete');
 
     }
-
   }
 
+  function checkCellsForExercise(exId) {
+    return Array.from(document.querySelectorAll('.cell.wait[data-check="true"]'))
+      .filter(function (cell) {
+        return cell.getAttribute('data-exercise') === exId;
+      });
+  }
 
+  function applySkipAttrToExercise(exId, skipped) {
+    checkCellsForExercise(exId).forEach(function (cell) {
+      applySkipAttr(cell, skipped);
+    });
+  }
 
   function buildButton(el, state, exId) {
-
     const btn = document.createElement('button');
-
     btn.type = 'button';
-
     btn.className = 'btn btn-sm btn-outline-secondary skip-exercise-btn';
-
     const skipped = isSkipped(state, exId);
 
     btn.textContent = skipped ? 'Undo skip' : 'Skip exercise';
@@ -1748,19 +1744,12 @@ if (window.location.href.includes('displayall')) {
     btn.style.margin = '0.5rem 0';
 
 
-
     btn.addEventListener('click', function () {
-
       const nowSkipped = btn.getAttribute('aria-pressed') !== 'true';
-
-      applySkipAttr(el, nowSkipped);
-
+      applySkipAttrToExercise(exId, nowSkipped);
       setSkipped(state, exId, nowSkipped);
-
       btn.textContent = nowSkipped ? 'Undo skip' : 'Skip exercise';
-
       btn.setAttribute('aria-pressed', nowSkipped ? 'true' : 'false');
-
     });
 
     return btn;
@@ -1770,35 +1759,24 @@ if (window.location.href.includes('displayall')) {
 
 
   document.addEventListener('DOMContentLoaded', function () {
-
     const state = loadState();
-
     document.querySelectorAll('.cell.wait[data-check="true"]').forEach(function (cell) {
+      const nestedInCheckCell = cell.parentElement && cell.parentElement.closest('.cell.wait[data-check="true"]');
+      if (nestedInCheckCell || cell.dataset.skipButtonInitialized === 'true') return;
 
       const exId = cell.getAttribute('data-exercise');
-
       if (!exId) return;
 
-
-
       // Reapply stored skip state
-
-      applySkipAttr(cell, isSkipped(state, exId));
-
-
+      applySkipAttrToExercise(exId, isSkipped(state, exId));
 
       // Insert the button just before the exercise cell
-
       const btn = buildButton(cell, state, exId);
-
+      cell.dataset.skipButtonInitialized = 'true';
       const parent = cell.parentElement || cell;
-
       parent.insertBefore(btn, cell);
-
     });
-
   });
-
 })();
 
 </script>
