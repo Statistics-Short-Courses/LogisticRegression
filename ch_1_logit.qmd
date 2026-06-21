@@ -54,30 +54,20 @@ resources:
 {{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
 {{< include ./_extensions/r-wasm/live/_gradethis.qmd >}}
 
-```{webr}
-#| edit: false
-#| autorun: true
-#| message: false
-#| warning: false
-library(readr)
-library(dplyr)
-library(ggplot2)
-```
+# Motivation & Background: Binary Outcomes and the Logistic Function {#sec-motivation}
 
-# Motivation: modeling binary outcomes {#sec-motivation}
-
-## A quick review of linear regression
+## A quick review of linear models
 
 In the Linear Regression Short Course (LRSC), we used a linear model to predict an [outcome variable]{.glossary} $Y$ from one or more [predictor variables]{.glossary}, $X_1, X_2, \ldots, X_p$. Something like this:
 
 $$
-Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + ... + \epsilon
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + ... + \varepsilon
 $$
 
-where $\epsilon$ is an [error term]{.glossary} that captures the variability in $Y$ that is not explained by the predictors.
+where $\varepsilon$ is an [error term]{.glossary} that captures the variability in $Y$ that is not explained by the predictors.
 In the cases we considered, Y was a [continuous variable]{.glossary} (e.g., salary, Naplan score, etc.), and the model described how the *expected value* of the outcome, $E[Y]$, changed as the predictors varied. For example, in the case of salary, the model described how the expected salary ($E[Y]$) of a worker changed as their years of experience ($X$) increased.
 
-- [ ] Continue
+-  [ ] Continue
 
 In many real-world situations, however, *we want to predict an outcome that is not continuous*. Instead, often what we want to predict or explain is a [categorical variable]{.glossary}. The simplest case of this is a [binary outcome]{.glossary} — that is, an outcome with only two possible categories (e.g. success/failure, yes/no, 0/1) [^ch_1_motivation-1].
 
@@ -95,6 +85,8 @@ Johno is a student studying for an important exam. He wants to understand how hi
 #| echo: false
 #| message: false
 #| warning: false
+library(readr)
+library(dplyr)
 student_performance <- read_delim("Data/student/student-mat.csv", delim = ";") |> 
   mutate(pass_fail = if_else(G3 >= 10, "pass", "fail")) |> 
   select(studytime, pass_fail) 
@@ -106,6 +98,9 @@ student_performance
 
 ```{r chapter01-student-performance-code}
 #| eval: false
+#| echo: true
+library(readr)
+library(dplyr)
 student_performance <- read_delim("Data/student/student-mat.csv", delim = ";") |> 
   mutate(pass_fail = if_else(G3 >= 10, "pass", "fail")) |> 
   select(studytime, pass_fail) 
@@ -123,7 +118,7 @@ $$
 ### From categories to probabilities
 
 #### The average of a binary outcome
-Recall that the *error term* $\epsilon$ in a regression model captures the difference between the observed outcome $Y$ and the [*expected*]{.glossary} outcome $E[Y]$ from the model. 
+Recall that the *error term* $\varepsilon$ in a regression model captures the difference between the observed outcome $Y$ and the [*expected*]{.glossary} outcome $E[Y]$ from the model. 
 
 ::: Key-point
 #### Expected value and error term
@@ -174,6 +169,7 @@ student_performance
 
 ```{r chapter01-binary-coding-code}
 #| eval: false
+#| echo: true
 student_performance <- student_performance |>
   mutate(
     pass_fail_num = case_when(
@@ -205,9 +201,11 @@ $$
 :::
 
 In Johno's case, $E[Y]$ represents the probability of passing the exam.
+
 ::: Example
 ### Mean of a binary variable as a probability
 If we ignore study time for a moment and just look at the overall pass/fail rates in Johno's dataset, we can calculate the mean of the binary outcome variable:
+
 :::: {.panel-tabset}
 ### Output
 
@@ -220,6 +218,7 @@ mean(student_performance$pass_fail_num)
 
 ```{r chapter01-mean-binary-code}
 #| eval: false
+#| echo: true
 mean(student_performance$pass_fail_num)
 ```
 ::::
@@ -262,6 +261,8 @@ ggplot(student_performance, aes(x = studytime, y = pass_fail_num)) +
 
 ```{r chapter01-linear-probability-plot-code}
 #| eval: false
+#| echo: true
+library(ggplot2)
 ggplot(student_performance, aes(x = studytime, y = pass_fail_num)) +
   geom_jitter(height = 0.05, width = 0.1, alpha = 0.5) +
   geom_smooth(method = "lm", se = FALSE, color = "blue") +
@@ -272,6 +273,7 @@ ggplot(student_performance, aes(x = studytime, y = pass_fail_num)) +
 (note the use of `geom_jitter()` to add some random noise to the points so they don't overlap exactly).
 
 And obtains the following estimate for the effect of study time on the probability of passing:
+
 :::: {.panel-tabset}
 ### Output
 
@@ -286,6 +288,7 @@ tidy(model)
 
 ```{r chapter01-linear-probability-model-code}
 #| eval: false
+#| echo: true
 library(broom)
 model <- lm(pass_fail_num ~ studytime, data = student_performance)
 tidy(model)
@@ -321,6 +324,7 @@ predicted_values
 
 ```{r chapter01-linear-probability-predictions-code}
 #| eval: false
+#| echo: true
 predicted_values <- predict(
   model,
   newdata = data.frame(
@@ -349,6 +353,7 @@ predict(model, newdata = data.frame(studytime = 10))
 
 ```{r chapter01-linear-probability-extrapolation-code}
 #| eval: false
+#| echo: true
 predict(model, newdata = data.frame(studytime = 10))
 ```
 ::::
@@ -371,6 +376,7 @@ The odds of an event are defined as the ratio of the probability of the event oc
 $$
 \text{odds} = \frac{p}{1 - p}
 $$
+
 :::: {.panel-tabset}
 ### Plot
 
@@ -387,6 +393,7 @@ ggplot() +
 
 ```{r chapter01-odds-plot-code}
 #| eval: false
+#| echo: true
 ggplot() +
   geom_line(aes(x = seq(0, 1, by = 0.01),
                 y = seq(0, 1, by = 0.01) / (1 - seq(0, 1, by = 0.01))),
@@ -399,6 +406,12 @@ ggplot() +
 :::
 
 Odds take values from 0 to $\infty$, and are greater than 1 when the probability of the event is greater than 0.5. Therefore, if we model a linear relationship between the predictors and the *odds* of the outcome, we can avoid the problem of predicted probabilities being greater than 1. 
+
+::: Note
+### Interpreting odds
+
+Odds compare the chance that the event happens with the chance that it does not happen. Odds of 1 mean the event and non-event are equally likely, so the probability is 0.5. Odds greater than 1 mean the event is more likely than the non-event; for example, odds of 3 mean about 3 events for every 1 non-event. Odds less than 1 mean the event is less likely than the non-event; for example, odds of 0.25 mean about 1 event for every 4 non-events.
+:::
 
 ::: Exercise
 ### Probabilities to odds
@@ -439,6 +452,8 @@ grade_this_code()
 :::
 
 When using odds, we avoid the problem of predicting probabilities greater than one, because a probability of 1 is equivalent to an odds of $\infty$. 
+
+- [ ] But what if we want probabilities
 
 Moreover, we can easily transform our result in odds back to probabilities for interpretation. Since 
 $$
@@ -481,7 +496,7 @@ p
 ```
 :::
 
-::::
+:::
 
 ::: {.cell exercise='ex_2.1' envir='Ex3' check='true' class='wait'}
 ```{webr}
@@ -527,6 +542,7 @@ ggplot(data.frame(p = p_vals, logit = log(p_vals / (1 - p_vals))), aes(x = p, y 
 
 ```{r chapter01-logit-plot-code}
 #| eval: false
+#| echo: true
 p_vals <- seq(0.01, 0.99, by = 0.01)
 ggplot(data.frame(p = p_vals, logit = log(p_vals / (1 - p_vals))), aes(x = p, y = logit)) +
   geom_line(color = "steelblue") +
@@ -591,6 +607,8 @@ grade_this_code()
 
 :::
 
+- [ ] But log odds are difficult to interpret. How can we return to probabilities?
+
 ### The logistic function
 
 If we model log-odds with a linear predictor, we need a way to convert predicted log-odds back into a probability. The function that does this is the **logistic function** (also called the *inverse logit*):
@@ -620,6 +638,7 @@ ggplot(data.frame(eta = eta_vals, p = plogis(eta_vals)), aes(x = eta, y = p)) +
 
 ```{r chapter01-logistic-function-code}
 #| eval: false
+#| echo: true
 eta_vals <- seq(-6, 6, by = 0.05)
 ggplot(data.frame(eta = eta_vals, p = plogis(eta_vals)), aes(x = eta, y = p)) +
   geom_line(color = "steelblue") +
