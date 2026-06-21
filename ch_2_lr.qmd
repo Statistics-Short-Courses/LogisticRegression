@@ -1,5 +1,5 @@
 ---
-title: "From Linear Models to Fitting Logistic Regression"
+title: "Generalised Linear Models and Logistic Regression"
 format:
   live-html:
     toc: true
@@ -63,21 +63,21 @@ fit_study <- glm(pass_exam ~ studytime, data = students, family = binomial)
 
 # From linear models to fitting logistic regression {#sec-introduction}
 
-In @sec-motivation we introduced the practical problem: our outcome is binary, so the expected value of the outcome is a probability. We also saw the key mathematical move:
-
+In @sec-motivation we introduced the practical problem: our outcome is binary, so the expected value of the outcome is a probability. However, a standard linear regression can output values outside the range of a probability (e.g. we might predict a probability of passing greater than one or less than zero).
+We also saw that this problem can be resolved by not modelling probability directly, but instead *via* the logit:
 $$
 \text{logit}(p) = \log\left(\frac{p}{1-p}\right),
 $$
 
 which lets us place probabilities on a scale that can be modelled with a straight line.
 
-This chapter connects that idea to the Linear Regression Short Course. We will first replace the normal error model from linear regression with an error model that makes sense for binary data, then fit the resulting model with `glm()`.
+This key step allows us to use a **Linear Model** {.glossary } to model a binary categorical outcome!
 
 - [ ] Continue
 
-## The linear regression template {#sec-linear-regression-template}
+## Generalising Linear Regression {#sec-GLM}
 
-In the Linear Regression Short Course, a simple linear model was written as
+In the Linear Regression Short Course, we presented a 'simple linear model' as
 
 $$
 Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i,
@@ -99,10 +99,32 @@ $$
 The first line describes how the observed outcomes vary around their mean. The second line describes how the mean changes with the predictor.
 
 ::: Key-point
-Linear regression has both a **mean model** and an **error model**. The mean model is the straight line. The error model says observations vary around that line with normally distributed errors and constant variance.
+Linear models have both a **mean** and an **error**. In linear regression, the mean model is the straight line. The error model says observations vary around that line with normally distributed errors and constant variance.
 :::
 
-In Chapter 1, we focused on the mean model for binary outcomes: how $p_i = E[Y_i]$ might change with $X_i$. We now add the missing error model.
+### The mean model on the logit scale {#sec-logit-mean-model}
+
+In Chapter 1, we focused on the mean model for binary outcomes: how $p_i = E[Y_i]$ might change with $X_i$. Because $p_i$ is a probability, we do not model it directly with a straight line. Instead, we model its logit:
+
+$$
+\text{logit}(p_i) = \log\left(\frac{p_i}{1-p_i}\right).
+$$
+
+The logit is the scale on which the linear model lives. We write this linear predictor as the Greek letter eta, $\eta_i$:
+
+$$
+\eta_i = \beta_0 + \beta_1 X_i.
+$$
+
+For logistic regression, the mean model is
+
+$$
+\text{logit}(p_i) = \eta_i,
+\qquad
+\eta_i = \beta_0 + \beta_1 X_i.
+$$
+
+This mean model suits our aims well: it lets predictors combine linearly while still producing probabilities between 0 and 1 after transforming back to the probability scale. The remaining issue is the error model. A normal error distribution works for continuous outcomes with constant variance, but it does not suit an outcome that can only be 0 or 1.
 
 - [ ] Continue
 
@@ -118,13 +140,15 @@ Y_i =
 \end{cases}
 $$
 
-If the probability that student $i$ passes is $p_i$, then the appropriate probability model is
+If the probability that student $i$ passes is $p_i$, then the probability model describes the outcome $Y_i$ itself:
 
 $$
 Y_i \sim \text{Bernoulli}(p_i).
 $$
 
-This is the one-trial version of the binomial distribution. It has two useful properties:
+This is the part of the model that replaces the normal error distribution from linear regression. Instead of saying that a continuous outcome varies around a mean with normally distributed errors, we say that the observed 0/1 outcome is generated from a Bernoulli distribution with event probability $p_i$.
+
+This is the one-trial version of the binomial distribution.^[For an introductory review of binomial random variables, see the *Inferential Statistics with R* short course.] It has a single parameter, $p_i$, and two important properties:
 
 $$
 E[Y_i] = p_i
@@ -136,7 +160,11 @@ $$
 \text{Var}(Y_i) = p_i(1-p_i).
 $$
 
-This variance is not constant. A probability near 0.5 gives more binary variation than a probability near 0 or 1. That is one reason the linear regression error model is not suitable here.
+This variance is not constant. A probability near 0.5 gives more binary variation than a probability near 0 or 1. Intuitively, if $p_i = 0.5$, the outcome is highly uncertain: a pass and a fail are both quite plausible. If $p_i$ is close to 0 or 1, the outcome is much more predictable, so there is less variation left in the observed 0/1 result.
+
+This is a major difference from the normal error model used in linear regression. There, the variance is controlled by a separate parameter, $\sigma^2$, and is assumed to be the same no matter what the mean is. For a Bernoulli outcome, there is no extra variance parameter: once $p_i$ is known, the variance follows automatically as $p_i(1-p_i)$.
+
+Choosing a Bernoulli/binomial error model therefore builds in the fact that the error depends on the predicted probability.
 
 ::: Key-point
 For binary outcomes, the randomness is not represented by adding a normally distributed $\varepsilon_i$ to a straight line. Instead, the observed 0/1 outcome is treated as a Bernoulli draw with event probability $p_i$.
@@ -208,8 +236,237 @@ The linear predictor is still linear. What changes is the outcome distribution a
 | R function | `lm()` | `glm(..., family = binomial)` |
 
 ::: Key-point
-Logistic regression is not "nonlinear regression" in the usual sense. It is a linear model for the log-odds, paired with a Bernoulli/binomial error model and a logistic back-transformation to probabilities.
+Linear regression and logistic regression have the same basic GLM form: an outcome distribution, a linear predictor, and a link function. The difference is the choice of link and outcome distribution: linear regression uses a normal distribution with an identity link, while logistic regression uses a Bernoulli/binomial distribution with a logit link.
 :::
+
+The sliders below build that model in three linked steps. First, the coefficients define a straight line on the log-odds scale. Second, the inverse-logit transformation converts that line to probabilities. Third, each binary outcome is treated as a Bernoulli draw with probability $p_i$.
+
+```{ojs chapter02-logistic-glm-builder-view}
+//| panel: sidebar
+//| echo: false
+viewof lr_demo_b0 = Inputs.range([-4, 4], {
+  value: -1.5,
+  step: 0.1,
+  label: html`${tex`\beta_0`}: log-odds intercept`
+})
+
+viewof lr_demo_b1 = Inputs.range([-2, 2], {
+  value: 0.8,
+  step: 0.1,
+  label: html`${tex`\beta_1`}: log-odds slope`
+})
+
+viewof lr_demo_focus_x = Inputs.range([-4, 4], {
+  value: 1,
+  step: 0.1,
+  label: "Focus x value"
+})
+
+viewof lr_demo_n = Inputs.range([20, 200], {
+  value: 80,
+  step: 10,
+  label: "Bernoulli draws"
+})
+```
+
+```{ojs chapter02-logistic-glm-builder-plot}
+//| panel: fill
+//| echo: false
+
+lr_demo_logistic = z => 1 / (1 + Math.exp(-z))
+
+lr_demo_frac = i => {
+  const raw = Math.sin(i * 12.9898) * 43758.5453;
+  return raw - Math.floor(raw);
+}
+
+lr_demo_x_domain = [-4, 4]
+lr_demo_eta_domain = [-12, 12]
+lr_demo_curve = d3.range(lr_demo_x_domain[0], lr_demo_x_domain[1] + 0.02, 0.04).map(x => {
+  const eta = lr_demo_b0 + lr_demo_b1 * x;
+  return {x, eta, p: lr_demo_logistic(eta)};
+})
+
+lr_demo_focus_eta = lr_demo_b0 + lr_demo_b1 * lr_demo_focus_x
+lr_demo_focus_p = lr_demo_logistic(lr_demo_focus_eta)
+lr_demo_focus = [{x: lr_demo_focus_x, eta: lr_demo_focus_eta, p: lr_demo_focus_p}]
+lr_demo_link_curve = d3.range(lr_demo_eta_domain[0], lr_demo_eta_domain[1] + 0.04, 0.08).map(eta => ({
+  eta,
+  p: lr_demo_logistic(eta)
+}))
+
+lr_demo_sample = d3.range(lr_demo_n).map(i => {
+  const x = lr_demo_x_domain[0] + (lr_demo_x_domain[1] - lr_demo_x_domain[0]) * lr_demo_frac(i + 1);
+  const p = lr_demo_logistic(lr_demo_b0 + lr_demo_b1 * x);
+  const y = lr_demo_frac(i + 2001) < p ? 1 : 0;
+  return {
+    x,
+    p,
+    y,
+    y_jitter: y + (lr_demo_frac(i + 4001) - 0.5) * 0.08
+  };
+})
+
+lr_demo_mass_x = d3.range(lr_demo_x_domain[0], lr_demo_x_domain[1] + 0.01, 1)
+lr_demo_mass = lr_demo_mass_x.flatMap(x => {
+  const p = lr_demo_logistic(lr_demo_b0 + lr_demo_b1 * x);
+  return [
+    {x, y: 1, probability: p, label: "Pass"},
+    {x, y: 0, probability: 1 - p, label: "Fail"}
+  ];
+})
+lr_demo_focus_mass = [
+  {
+    x: lr_demo_focus_x,
+    y: 1,
+    probability: lr_demo_focus_p,
+    label: "Pass",
+    parameter: `p = ${lr_demo_focus_p.toFixed(2)}`
+  },
+  {
+    x: lr_demo_focus_x,
+    y: 0,
+    probability: 1 - lr_demo_focus_p,
+    label: "Fail",
+    parameter: `1 - p = ${(1 - lr_demo_focus_p).toFixed(2)}`
+  }
+]
+lr_demo_mass_label_anchor = lr_demo_focus_x > 2.4 ? "end" : "start"
+lr_demo_mass_label_dx = lr_demo_focus_x > 2.4 ? -10 : 10
+
+lr_demo_logodds_plot = Plot.plot({
+  height: 250,
+  marginLeft: 48,
+  marginBottom: 42,
+  x: {domain: lr_demo_x_domain, label: "x", grid: true},
+  y: {domain: lr_demo_eta_domain, label: "Linear predictor, η", grid: true},
+  marks: [
+    Plot.ruleY([0], {stroke: "#b8b8b8", strokeDasharray: "4 4"}),
+    Plot.line(lr_demo_curve, {x: "x", y: "eta", stroke: "#2a5599", strokeWidth: 2.5}),
+    Plot.dot(lr_demo_focus, {x: "x", y: "eta", r: 5, fill: "#d95f02"})
+  ]
+})
+
+lr_demo_probability_plot = Plot.plot({
+  height: 250,
+  marginLeft: 48,
+  marginBottom: 42,
+  x: {domain: lr_demo_eta_domain, label: "Linear predictor, η", grid: true},
+  y: {domain: [0, 1], label: "Probability, p", grid: true, percent: true},
+  marks: [
+    Plot.ruleX([0], {stroke: "#b8b8b8", strokeDasharray: "4 4"}),
+    Plot.ruleY([0, 0.5, 1], {stroke: "#d9d9d9"}),
+    Plot.line(lr_demo_link_curve, {x: "eta", y: "p", stroke: "#00876c", strokeWidth: 2.5}),
+    Plot.dot(lr_demo_focus, {x: "eta", y: "p", r: 5, fill: "#d95f02"})
+  ]
+})
+
+lr_demo_bernoulli_plot = Plot.plot({
+  height: 250,
+  marginLeft: 48,
+  marginBottom: 42,
+  x: {domain: lr_demo_x_domain, label: "x", grid: true},
+  y: {domain: [-0.15, 1.15], ticks: [0, 1], label: "Observed outcome, Y"},
+  color: {
+    domain: ["Fail", "Pass"],
+    range: ["#b94e48", "#2a5599"],
+    legend: true
+  },
+  marks: [
+    Plot.ruleX([lr_demo_focus_x], {stroke: "#d95f02", strokeDasharray: "3 3"}),
+    Plot.dot(lr_demo_mass, {
+      x: "x",
+      y: "y",
+      r: d => 3 + 13 * d.probability,
+      fill: "label",
+      fillOpacity: 0.2,
+      stroke: "label"
+    }),
+    Plot.dot(lr_demo_focus_mass, {
+      x: "x",
+      y: "y",
+      r: d => 4 + 15 * d.probability,
+      fill: "label",
+      fillOpacity: 0.35,
+      stroke: "label",
+      strokeWidth: 1.5
+    }),
+    Plot.text(lr_demo_focus_mass, {
+      x: "x",
+      y: "y",
+      text: "parameter",
+      dx: lr_demo_mass_label_dx,
+      dy: d => d.y === 1 ? -12 : 14,
+      textAnchor: lr_demo_mass_label_anchor,
+      fill: "label",
+      fontWeight: 700
+    }),
+    Plot.dot(lr_demo_sample, {
+      x: "x",
+      y: "y_jitter",
+      r: 3,
+      fill: d => d.y === 1 ? "Pass" : "Fail",
+      fillOpacity: 0.65
+    })
+  ]
+})
+
+html`
+<style>
+.lr-demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.9rem;
+  align-items: start;
+}
+.lr-demo-panel {
+  min-width: 0;
+}
+.lr-demo-panel h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.95rem;
+}
+.lr-demo-panel p {
+  margin: 0 0 0.45rem 0;
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+.lr-demo-equations {
+  margin: 0 0 0.9rem 0;
+  padding: 0.6rem 0.75rem;
+  border-left: 4px solid #2a5599;
+  background: #f7f9fc;
+}
+.lr-demo-equations p {
+  margin: 0.1rem 0;
+}
+</style>
+<div class="lr-demo-equations">
+  <p>${tex`\eta = ${lr_demo_b0.toFixed(1)} + ${lr_demo_b1.toFixed(1)}x`}</p>
+  <p>${tex`p = \frac{1}{1 + e^{-\eta}}`}</p>
+  <p>${tex`Y \sim \text{Bernoulli}(p)`}</p>
+  <p>At x = ${lr_demo_focus_x.toFixed(1)}: ${tex`\eta`} = ${lr_demo_focus_eta.toFixed(2)}, p = ${lr_demo_focus_p.toFixed(3)}, and ${tex`p(1-p)`} = ${(lr_demo_focus_p * (1 - lr_demo_focus_p)).toFixed(3)}.</p>
+</div>
+<div class="lr-demo-grid">
+  <div class="lr-demo-panel">
+    <h4>1. Linear predictor</h4>
+    <p>The coefficients move and tilt a straight line on the log-odds scale.</p>
+    ${lr_demo_logodds_plot}
+  </div>
+  <div class="lr-demo-panel">
+    <h4>2. Logistic link</h4>
+    <p>The inverse-logit is shown on a fixed, centred log-odds scale.</p>
+    ${lr_demo_probability_plot}
+  </div>
+  <div class="lr-demo-panel">
+    <h4>3. Bernoulli error model</h4>
+    <p>The labelled slice shows the Bernoulli probabilities p and 1 - p at the selected x.</p>
+    ${lr_demo_bernoulli_plot}
+  </div>
+</div>`
+```
+
+For a Bernoulli outcome, the amount of variation is not controlled by a separate $\sigma$ parameter. Once $p_i$ is set, the variance is fixed at $p_i(1-p_i)$.
 
 - [ ] Continue
 
@@ -263,7 +520,7 @@ The curve is S-shaped on the probability scale, but the model is still straight 
 
 - [ ] Continue
 
-## The formula in R {#sec-glm-formula-r}
+## Fitting GLMs in R {#sec-glm-formula-r}
 
 The R formula looks almost the same as the formula for `lm()`:
 
@@ -305,17 +562,17 @@ The default link for `family = binomial` is the logit link. Writing `family = bi
 
 The coefficients $\beta_0$ and $\beta_1$ are the unknown parameters of the data-generating model. Fitting a logistic regression means estimating those parameters from the observed data.
 
-### From least squares to likelihood {#sec-logistic-likelihood}
+::: Note
+**From least squares to likelihood.**
 
 For linear regression, `lm()` chooses the line that minimises the sum of squared residuals. This works because the model assumes normally distributed errors around a mean line.
 
 For logistic regression, the outcome is 0 or 1, so squared residuals are no longer the natural fitting criterion. Instead, `glm()` uses **maximum likelihood estimation**. It chooses the coefficient estimates that make the observed sequence of passes and fails most likely under the Bernoulli model.
 
-::: Key-point
 Maximum likelihood asks: among all possible coefficient values, which values make the observed data most plausible under the model?
-:::
 
 If student $i$ has predicted probability $p_i$, then a pass contributes probability $p_i$ to the likelihood and a fail contributes probability $1-p_i$. A good model gives high probabilities to the events that actually occurred.
+:::
 
 - [ ] Continue
 
@@ -393,6 +650,12 @@ exp(coef(fit_study))
 ::::
 
 For `studytime`, the odds ratio compares two students who differ by one study-time category. If the odds ratio is greater than 1, the model estimates higher odds of passing for the student in the higher study-time category.
+
+::: Note
+### Interpreting odds ratios
+
+An odds ratio compares two sets of odds. An odds ratio of 1 means the odds are unchanged. An odds ratio above 1 means the odds are higher; for example, 1.5 means the odds are 1.5 times as high, or 50% higher. An odds ratio below 1 means the odds are lower; for example, 0.70 means the odds are 0.70 times as high, or 30% lower. This is a multiplicative change in odds, not a percentage-point change in probability.
+:::
 
 ::: Exercise
 ### Compute an odds ratio
