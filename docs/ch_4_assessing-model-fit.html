@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; Assessing Logistic Regression Models – Logistic Regression with R</title>
+<title>3&nbsp; Assessing Logistic Regression Models – Logistic Regression with R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -27998,29 +27998,29 @@ initializeRuntime();
 
 </script>
 <style>
-.Key-point {
---color1: #FFF9C4;
---color2: #FFEB3B;
-}
-.Note {
---color1: #FFF9C4;
---color2: #FFEB3B;
+.Key-term {
+--color1: #D1C4E9;
+--color2: #673AB7;
 }
 .Example {
 --color1: #BBDEFB;
 --color2: #2196F3;
 }
+.Note {
+--color1: #FFF9C4;
+--color2: #FFEB3B;
+}
 .Exercise {
 --color1: #C8E6C9;
 --color2: #4CAF50;
 }
+.Key-point {
+--color1: #FFF9C4;
+--color2: #FFEB3B;
+}
 .Assumption {
 --color1: #FFCDD2;
 --color2: #F44336;
-}
-.Key-term {
---color1: #D1C4E9;
---color2: #673AB7;
 }
 </style>
 
@@ -28185,7 +28185,7 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_4_assessing-model-fit.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Assessing Logistic Regression Models</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_4_assessing-model-fit.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessing Logistic Regression Models</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -28218,38 +28218,32 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_1_motivation.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch_1_logit.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Motivation: modeling binary outcomes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_2_introduction-to-logistic-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Linear Models to Logistic Regression</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ch_3_fitting-logistic-regression-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Fitting Logistic Regression Models</span></span></a>
+  <a href="./ch_2_lr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Linear Models to Fitting Logistic Regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch_4_assessing-model-fit.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Assessing Logistic Regression Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessing Logistic Regression Models</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch_5_predictions-from-logistic-regression-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictions from Logistic Regression Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Predictions from Logistic Regression Models</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch_6_extensions-case-study.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -28268,15 +28262,15 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
     <h2 id="toc-title">Contents</h2>
    
   <ul class="collapse">
-  <li><a href="#sec-assessing-fit" id="toc-sec-assessing-fit" class="nav-link active" data-scroll-target="#sec-assessing-fit"><span class="header-section-number">5</span> Assessing logistic regression models</a>
+  <li><a href="#sec-assessing-fit" id="toc-sec-assessing-fit" class="nav-link active" data-scroll-target="#sec-assessing-fit"><span class="header-section-number">4</span> Assessing logistic regression models</a>
   <ul class="collapse">
-  <li><a href="#sec-likelihood-deviance" id="toc-sec-likelihood-deviance" class="nav-link" data-scroll-target="#sec-likelihood-deviance"><span class="header-section-number">5.1</span> Likelihood and deviance</a></li>
-  <li><a href="#sec-logistic-nested-models" id="toc-sec-logistic-nested-models" class="nav-link" data-scroll-target="#sec-logistic-nested-models"><span class="header-section-number">5.2</span> Comparing nested models</a></li>
-  <li><a href="#sec-logistic-aic" id="toc-sec-logistic-aic" class="nav-link" data-scroll-target="#sec-logistic-aic"><span class="header-section-number">5.3</span> AIC and model complexity</a></li>
-  <li><a href="#sec-logistic-pseudo-r2" id="toc-sec-logistic-pseudo-r2" class="nav-link" data-scroll-target="#sec-logistic-pseudo-r2"><span class="header-section-number">5.4</span> Pseudo R-squared</a></li>
-  <li><a href="#sec-logistic-residuals" id="toc-sec-logistic-residuals" class="nav-link" data-scroll-target="#sec-logistic-residuals"><span class="header-section-number">5.5</span> Residuals and influence</a></li>
-  <li><a href="#sec-logistic-common-problems" id="toc-sec-logistic-common-problems" class="nav-link" data-scroll-target="#sec-logistic-common-problems"><span class="header-section-number">5.6</span> Common problems</a></li>
-  <li><a href="#sec-chapter04-summary" id="toc-sec-chapter04-summary" class="nav-link" data-scroll-target="#sec-chapter04-summary"><span class="header-section-number">5.7</span> Chapter summary</a></li>
+  <li><a href="#sec-likelihood-deviance" id="toc-sec-likelihood-deviance" class="nav-link" data-scroll-target="#sec-likelihood-deviance"><span class="header-section-number">4.1</span> Likelihood and deviance</a></li>
+  <li><a href="#sec-logistic-nested-models" id="toc-sec-logistic-nested-models" class="nav-link" data-scroll-target="#sec-logistic-nested-models"><span class="header-section-number">4.2</span> Comparing nested models</a></li>
+  <li><a href="#sec-logistic-aic" id="toc-sec-logistic-aic" class="nav-link" data-scroll-target="#sec-logistic-aic"><span class="header-section-number">4.3</span> AIC and model complexity</a></li>
+  <li><a href="#sec-logistic-pseudo-r2" id="toc-sec-logistic-pseudo-r2" class="nav-link" data-scroll-target="#sec-logistic-pseudo-r2"><span class="header-section-number">4.4</span> Pseudo R-squared</a></li>
+  <li><a href="#sec-logistic-residuals" id="toc-sec-logistic-residuals" class="nav-link" data-scroll-target="#sec-logistic-residuals"><span class="header-section-number">4.5</span> Residuals and influence</a></li>
+  <li><a href="#sec-logistic-common-problems" id="toc-sec-logistic-common-problems" class="nav-link" data-scroll-target="#sec-logistic-common-problems"><span class="header-section-number">4.6</span> Common problems</a></li>
+  <li><a href="#sec-chapter04-summary" id="toc-sec-chapter04-summary" class="nav-link" data-scroll-target="#sec-chapter04-summary"><span class="header-section-number">4.7</span> Chapter summary</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -28286,7 +28280,7 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Assessing Logistic Regression Models</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessing Logistic Regression Models</span></h1>
 </div>
 
 
@@ -28303,8 +28297,8 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
 </header>
 
 
-<section id="sec-assessing-fit" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Assessing logistic regression models</h1>
+<section id="sec-assessing-fit" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Assessing logistic regression models</h1>
 <p>In linear regression, model assessment often starts with residual sums of squares and <span class="math inline">\(R^2\)</span>. Logistic regression uses a different error model, so the assessment tools also change. We still ask the same broad questions:</p>
 <ol type="1">
 <li>Does adding predictors improve the model?</li>
@@ -28313,8 +28307,8 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
 <li>Are the predicted probabilities useful for the purpose at hand?</li>
 </ol>
 <p>This chapter focuses on the first three questions. The next chapter focuses on prediction and classification performance.</p>
-<section id="sec-likelihood-deviance" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="sec-likelihood-deviance"><span class="header-section-number">5.1</span> Likelihood and deviance</h2>
+<section id="sec-likelihood-deviance" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="sec-likelihood-deviance"><span class="header-section-number">4.1</span> Likelihood and deviance</h2>
 <p>Because logistic regression is fitted by maximum likelihood, model fit is naturally measured through the likelihood. R reports a related quantity called <strong>deviance</strong>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Code</a></li></ul>
@@ -28348,8 +28342,8 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
 <li><label><input type="checkbox">Continue</label></li>
 </ul>
 </section>
-<section id="sec-logistic-nested-models" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="sec-logistic-nested-models"><span class="header-section-number">5.2</span> Comparing nested models</h2>
+<section id="sec-logistic-nested-models" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="sec-logistic-nested-models"><span class="header-section-number">4.2</span> Comparing nested models</h2>
 <p>Two models are nested when one can be obtained from the other by removing predictors. The study-time model is nested inside the multivariable model because the multivariable model adds <code>failures</code> and <code>absences</code>.</p>
 <p>We can compare nested logistic regression models with a likelihood ratio test:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
@@ -28384,8 +28378,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div></details>
 </div>
 </section>
-<section id="sec-logistic-aic" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="sec-logistic-aic"><span class="header-section-number">5.3</span> AIC and model complexity</h2>
+<section id="sec-logistic-aic" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="sec-logistic-aic"><span class="header-section-number">4.3</span> AIC and model complexity</h2>
 <p>The Akaike Information Criterion (AIC) balances model fit and complexity. Lower AIC is preferred among the models being compared.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Code</a></li></ul>
@@ -28412,8 +28406,8 @@ fit_multi  4 463.1066</code></pre>
 <li><label><input type="checkbox">Continue</label></li>
 </ul>
 </section>
-<section id="sec-logistic-pseudo-r2" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="sec-logistic-pseudo-r2"><span class="header-section-number">5.4</span> Pseudo R-squared</h2>
+<section id="sec-logistic-pseudo-r2" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="sec-logistic-pseudo-r2"><span class="header-section-number">4.4</span> Pseudo R-squared</h2>
 <p>Linear regression’s <span class="math inline">\(R^2\)</span> is based on sums of squares. Logistic regression does not have an exact equivalent. Several <strong>pseudo R-squared</strong> measures exist, but they should be treated as rough summaries rather than as direct analogues.</p>
 <p>One common option is McFadden’s pseudo <span class="math inline">\(R^2\)</span>:</p>
 <p><span class="math display">\[
@@ -28443,8 +28437,8 @@ R^2_{\text{McFadden}} = 1 - \frac{\log L_{\text{model}}}{\log L_{\text{null}}}.
 </div></details>
 </div>
 </section>
-<section id="sec-logistic-residuals" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="sec-logistic-residuals"><span class="header-section-number">5.5</span> Residuals and influence</h2>
+<section id="sec-logistic-residuals" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="sec-logistic-residuals"><span class="header-section-number">4.5</span> Residuals and influence</h2>
 <p>Logistic regression residuals are less visually intuitive than linear regression residuals because the observed outcomes are only 0 or 1. Still, residual and influence diagnostics can help identify observations the model struggles to fit.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Code</a></li></ul>
@@ -28501,15 +28495,15 @@ R^2_{\text{McFadden}} = 1 - \frac{\log L_{\text{model}}}{\log L_{\text{null}}}.
 </div>
 <p>Large residuals mark cases where the observed outcome was surprising under the fitted model. Large Cook’s distances mark cases with unusual influence on the fitted coefficients.</p>
 </section>
-<section id="sec-logistic-common-problems" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="sec-logistic-common-problems"><span class="header-section-number">5.6</span> Common problems</h2>
+<section id="sec-logistic-common-problems" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="sec-logistic-common-problems"><span class="header-section-number">4.6</span> Common problems</h2>
 <div id="independent-observations" class="Assumption">
-<details class="Assumption fobx-simplebox fobx-default" open=""><summary><strong>Assumption 4.1: </strong>Independent observations</summary><div>
+<details class="Assumption fobx-simplebox fobx-default" open=""><summary><strong>Assumption 3.1: </strong>Independent observations</summary><div>
 <p>The usual logistic regression model assumes observations are independent. If the same person, class, school, or site contributes multiple related observations, the model may need to account for clustering.</p>
 </div></details>
 </div>
 <div id="linearity-on-the-log-odds-scale" class="Assumption">
-<details class="Assumption fobx-simplebox fobx-default" open=""><summary><strong>Assumption 4.2: </strong>Linearity on the log-odds scale</summary><div>
+<details class="Assumption fobx-simplebox fobx-default" open=""><summary><strong>Assumption 3.2: </strong>Linearity on the log-odds scale</summary><div>
 <p>Continuous predictors are assumed to have approximately linear effects on the log-odds. This does not mean a straight line on the probability scale.</p>
 </div></details>
 </div>
@@ -28520,8 +28514,8 @@ R^2_{\text{McFadden}} = 1 - \frac{\log L_{\text{model}}}{\log L_{\text{null}}}.
 <li><strong>Overfitting:</strong> too many predictors for the amount of data, especially when the event count is small.</li>
 </ul>
 </section>
-<section id="sec-chapter04-summary" class="level2" data-number="5.7">
-<h2 data-number="5.7" class="anchored" data-anchor-id="sec-chapter04-summary"><span class="header-section-number">5.7</span> Chapter summary</h2>
+<section id="sec-chapter04-summary" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="sec-chapter04-summary"><span class="header-section-number">4.7</span> Chapter summary</h2>
 <p>Assessing logistic regression requires likelihood-based thinking. Deviance, likelihood ratio tests, and AIC replace the least-squares tools used in linear regression. Residuals, influence checks, and assumptions still matter, but they must be interpreted through the binary-outcome model.</p>
 
 

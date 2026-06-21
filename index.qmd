@@ -28,8 +28,7 @@ If you have completed the Linear Regression Short Course, you already have the m
 ## Course map
 
 - @sec-motivation motivates binary outcomes and introduces probability, odds, log-odds, and the logistic function.
-- @sec-introduction maps logistic regression onto the linear-model framework using GLMs, the logit link, and a Bernoulli/binomial error model.
-- @sec-fitting fits logistic regression models with `glm()` and interprets coefficients, odds ratios, and confidence intervals.
+- @sec-introduction maps logistic regression onto the linear-model framework using GLMs, the logit link, and a Bernoulli/binomial error model, then @sec-fitting fits logistic regression models with `glm()` and interprets coefficients, odds ratios, and confidence intervals.
 - @sec-assessing-fit assesses model fit with deviance, likelihood ratio tests, AIC, pseudo R-squared, and diagnostics.
 - @sec-predictions generates predicted probabilities, classifications, confusion matrices, ROC curves, and AUC.
 - @sec-extensions-case-study brings the workflow together in a mini case study with multivariable models, interactions, and reporting.

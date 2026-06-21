@@ -369,6 +369,48 @@ threshold_summary
 ```
 ::::
 
+::: Exercise
+### Accuracy at a different threshold
+
+Using a threshold of 0.6, compute the classification accuracy and store it as `accuracy_06`.
+
+```{webr chapter05-accuracy-exercise}
+#| exercise: ex_pred_2
+#| envir: ex_pred
+threshold <- 0.6
+class_hat <- ifelse(prob >= threshold, 1, 0)
+accuracy_06 <- ______
+```
+
+:::: {.solution exercise="ex_pred_2"}
+```{webr chapter05-accuracy-exercise-solution}
+#| exercise: ex_pred_2
+#| solution: true
+threshold <- 0.6
+class_hat <- ifelse(prob >= threshold, 1, 0)
+accuracy_06 <- mean(class_hat == actual_num)
+accuracy_06
+```
+::::
+
+```{webr chapter05-accuracy-exercise-check}
+#| exercise: ex_pred_2
+#| envir: ex_pred
+#| check: true
+#| class: wait
+grade_this({
+  if (!exists("accuracy_06")) {
+    fail("Define `accuracy_06` and try again.")
+  }
+  target <- mean(ifelse(prob >= 0.6, 1, 0) == actual_num)
+  if (is.numeric(accuracy_06) && abs(accuracy_06 - target) < 0.001) {
+    pass("That matches the accuracy for a 0.6 threshold.")
+  }
+  fail("Use `mean(class_hat == actual_num)` to compute the accuracy.")
+})
+```
+:::
+
 ## ROC curves and AUC {#sec-roc-auc}
 
 An ROC curve shows the trade-off between sensitivity and false positive rate across many thresholds. AUC summarises that curve.

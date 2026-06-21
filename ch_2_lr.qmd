@@ -1,0 +1,614 @@
+---
+title: "From Linear Models to Fitting Logistic Regression"
+format:
+  live-html:
+    toc: true
+execute:
+  echo: true
+  warning: false
+  message: false
+embed-resources: true
+filters:
+  - custom-numbered-blocks
+custom-numbered-blocks:
+  classes:
+    Assumption:
+      colors: ["#FFCDD2", "#F44336"]
+      boxstyle: foldbox.simple
+      collapse: false
+    Example:
+      colors: ["#BBDEFB", "#2196F3"]
+      boxstyle: foldbox.simple
+      collapse: false
+    Exercise:
+      colors: ["#C8E6C9", "#4CAF50"]
+      boxstyle: foldbox.simple
+      collapse: false
+    Note:
+      colors: ["#FFF9C4", "#FFEB3B"]
+      boxstyle: foldbox.simple
+      collapse: false
+      numbered: false
+    Key-point:
+      colors: ["#FFF9C4", "#FFEB3B"]
+      boxstyle: foldbox.simple
+      collapse: false
+      numbered: false
+    Key-term:
+      colors: ["#D1C4E9", "#673AB7"]
+      boxstyle: foldbox.simple
+      collapse: false
+      numbered: false
+webr:
+  render-df: gt-interactive
+resources:
+  - Data
+---
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+{{< include ./_extensions/r-wasm/live/_gradethis.qmd >}}
+
+```{r chapter02-setup}
+#| include: false
+students <- read.csv("Data/student/student-mat.csv", sep = ";")
+students$pass_exam <- ifelse(students$G3 >= 10, 1, 0)
+```
+
+```{webr chapter02-exercises-setup}
+#| include: false
+#| envir: ex_fit
+students <- read.csv("Data/student/student-mat.csv", sep = ";")
+students$pass_exam <- ifelse(students$G3 >= 10, 1, 0)
+fit_study <- glm(pass_exam ~ studytime, data = students, family = binomial)
+```
+
+# From linear models to fitting logistic regression {#sec-introduction}
+
+In @sec-motivation we introduced the practical problem: our outcome is binary, so the expected value of the outcome is a probability. We also saw the key mathematical move:
+
+$$
+\text{logit}(p) = \log\left(\frac{p}{1-p}\right),
+$$
+
+which lets us place probabilities on a scale that can be modelled with a straight line.
+
+This chapter connects that idea to the Linear Regression Short Course. We will first replace the normal error model from linear regression with an error model that makes sense for binary data, then fit the resulting model with `glm()`.
+
+- [ ] Continue
+
+## The linear regression template {#sec-linear-regression-template}
+
+In the Linear Regression Short Course, a simple linear model was written as
+
+$$
+Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i,
+\qquad \varepsilon_i \sim N(0, \sigma^2).
+$$
+
+Equivalently, we can separate the model into two parts:
+
+$$
+Y_i \sim N(\mu_i, \sigma^2)
+$$
+
+and
+
+$$
+\mu_i = E[Y_i] = \beta_0 + \beta_1 X_i.
+$$
+
+The first line describes how the observed outcomes vary around their mean. The second line describes how the mean changes with the predictor.
+
+::: Key-point
+Linear regression has both a **mean model** and an **error model**. The mean model is the straight line. The error model says observations vary around that line with normally distributed errors and constant variance.
+:::
+
+In Chapter 1, we focused on the mean model for binary outcomes: how $p_i = E[Y_i]$ might change with $X_i$. We now add the missing error model.
+
+- [ ] Continue
+
+## The error model for a binary outcome {#sec-binary-error-model}
+
+For Johno's student example, each outcome is either 1 (pass) or 0 (fail):
+
+$$
+Y_i =
+\begin{cases}
+1 & \text{if student } i \text{ passes},\\
+0 & \text{if student } i \text{ fails}.
+\end{cases}
+$$
+
+If the probability that student $i$ passes is $p_i$, then the appropriate probability model is
+
+$$
+Y_i \sim \text{Bernoulli}(p_i).
+$$
+
+This is the one-trial version of the binomial distribution. It has two useful properties:
+
+$$
+E[Y_i] = p_i
+$$
+
+and
+
+$$
+\text{Var}(Y_i) = p_i(1-p_i).
+$$
+
+This variance is not constant. A probability near 0.5 gives more binary variation than a probability near 0 or 1. That is one reason the linear regression error model is not suitable here.
+
+::: Key-point
+For binary outcomes, the randomness is not represented by adding a normally distributed $\varepsilon_i$ to a straight line. Instead, the observed 0/1 outcome is treated as a Bernoulli draw with event probability $p_i$.
+:::
+
+:::: {.panel-tabset}
+### Plot
+
+```{r chapter02-bernoulli-variance}
+#| echo: false
+p <- seq(0.01, 0.99, by = 0.01)
+plot(p, p * (1 - p), type = "l", lwd = 2,
+     xlab = "Probability of passing (p)",
+     ylab = "Bernoulli variance: p(1 - p)")
+```
+
+### Code
+
+```{r chapter02-bernoulli-variance-code}
+#| eval: false
+p <- seq(0.01, 0.99, by = 0.01)
+plot(p, p * (1 - p), type = "l", lwd = 2,
+     xlab = "Probability of passing (p)",
+     ylab = "Bernoulli variance: p(1 - p)")
+```
+::::
+
+- [ ] Continue
+
+## Generalised linear models {#sec-glm-framework}
+
+A **generalised linear model** (GLM) has three pieces:
+
+1. A distribution for the outcome.
+2. A linear predictor.
+3. A link function connecting the expected outcome to the linear predictor.
+
+For linear regression, these pieces are:
+
+$$
+Y_i \sim N(\mu_i, \sigma^2),
+\qquad
+\mu_i = \eta_i,
+\qquad
+\eta_i = \beta_0 + \beta_1 X_i.
+$$
+
+The link is the identity link because the mean itself is modelled directly by the linear predictor.
+
+For logistic regression, the pieces are:
+
+$$
+Y_i \sim \text{Bernoulli}(p_i),
+\qquad
+\text{logit}(p_i) = \eta_i,
+\qquad
+\eta_i = \beta_0 + \beta_1 X_i.
+$$
+
+The linear predictor is still linear. What changes is the outcome distribution and the link function.
+
+| Component | Linear regression | Logistic regression |
+|---|---|---|
+| Outcome | Continuous $Y_i$ | Binary $Y_i \in \{0,1\}$ |
+| Distribution | Normal | Bernoulli / binomial |
+| Mean | $\mu_i = E[Y_i]$ | $p_i = E[Y_i] = P(Y_i=1)$ |
+| Link | Identity: $\mu_i = \eta_i$ | Logit: $\log(p_i/(1-p_i)) = \eta_i$ |
+| Linear predictor | $\eta_i = \beta_0 + \beta_1 X_i$ | $\eta_i = \beta_0 + \beta_1 X_i$ |
+| R function | `lm()` | `glm(..., family = binomial)` |
+
+::: Key-point
+Logistic regression is not "nonlinear regression" in the usual sense. It is a linear model for the log-odds, paired with a Bernoulli/binomial error model and a logistic back-transformation to probabilities.
+:::
+
+- [ ] Continue
+
+## The logistic regression model {#sec-logistic-regression-model}
+
+For the student example with study time as the predictor, the logistic regression model is
+
+$$
+Y_i \sim \text{Bernoulli}(p_i)
+$$
+
+and
+
+$$
+\text{logit}(p_i) = \beta_0 + \beta_1 \text{studytime}_i.
+$$
+
+To return to the probability scale, we use the logistic function:
+
+$$
+p_i = \frac{1}{1 + e^{-(\beta_0 + \beta_1 \text{studytime}_i)}}.
+$$
+
+In R, the inverse-logit transformation is `plogis()`.
+
+:::: {.panel-tabset}
+### Plot
+
+```{r chapter02-logistic-function}
+#| echo: false
+eta <- seq(-6, 6, length.out = 200)
+plot(eta, plogis(eta), type = "l", lwd = 2,
+     xlab = "Linear predictor (eta)",
+     ylab = "Probability")
+abline(h = c(0, 1), col = "grey80", lty = 3)
+```
+
+### Code
+
+```{r chapter02-logistic-function-code}
+#| eval: false
+eta <- seq(-6, 6, length.out = 200)
+plot(eta, plogis(eta), type = "l", lwd = 2,
+     xlab = "Linear predictor (eta)",
+     ylab = "Probability")
+abline(h = c(0, 1), col = "grey80", lty = 3)
+```
+::::
+
+The curve is S-shaped on the probability scale, but the model is still straight on the log-odds scale.
+
+- [ ] Continue
+
+## The formula in R {#sec-glm-formula-r}
+
+The R formula looks almost the same as the formula for `lm()`:
+
+:::: {.panel-tabset}
+### Output
+
+```{r chapter02-first-glm}
+#| echo: false
+fit_study <- glm(pass_exam ~ studytime,
+                 data = students,
+                 family = binomial)
+summary(fit_study)
+```
+
+### Code
+
+```{r chapter02-first-glm-code}
+#| eval: false
+fit_study <- glm(pass_exam ~ studytime,
+                 data = students,
+                 family = binomial)
+summary(fit_study)
+```
+::::
+
+The formula `pass_exam ~ studytime` gives the linear predictor:
+
+$$
+\eta_i = \beta_0 + \beta_1 \text{studytime}_i.
+$$
+
+The argument `family = binomial` tells R to use the Bernoulli/binomial error model with the logit link. So the single `glm()` call contains the two changes we need for binary outcomes: a different error model and a different link.
+
+::: Note
+The default link for `family = binomial` is the logit link. Writing `family = binomial(link = "logit")` is equivalent, but more explicit.
+:::
+
+## Fitting logistic regression models {#sec-fitting}
+
+The coefficients $\beta_0$ and $\beta_1$ are the unknown parameters of the data-generating model. Fitting a logistic regression means estimating those parameters from the observed data.
+
+### From least squares to likelihood {#sec-logistic-likelihood}
+
+For linear regression, `lm()` chooses the line that minimises the sum of squared residuals. This works because the model assumes normally distributed errors around a mean line.
+
+For logistic regression, the outcome is 0 or 1, so squared residuals are no longer the natural fitting criterion. Instead, `glm()` uses **maximum likelihood estimation**. It chooses the coefficient estimates that make the observed sequence of passes and fails most likely under the Bernoulli model.
+
+::: Key-point
+Maximum likelihood asks: among all possible coefficient values, which values make the observed data most plausible under the model?
+:::
+
+If student $i$ has predicted probability $p_i$, then a pass contributes probability $p_i$ to the likelihood and a fail contributes probability $1-p_i$. A good model gives high probabilities to the events that actually occurred.
+
+- [ ] Continue
+
+### Estimated coefficients {#sec-fitting-study-model}
+
+The estimated model is
+
+$$
+\widehat{\text{logit}(p_i)} = b_0 + b_1 \text{studytime}_i.
+$$
+
+As in the Linear Regression Short Course, we use Greek letters for unknown true parameters and Latin letters for estimates:
+
+| Symbol | Meaning |
+|---|---|
+| $\beta_0$ | True intercept |
+| $\beta_1$ | True slope for study time |
+| $b_0$ | Estimated intercept |
+| $b_1$ | Estimated slope for study time |
+
+:::: {.panel-tabset}
+### Output
+
+```{r chapter02-coef-table}
+#| echo: false
+coef(fit_study)
+```
+
+### Code
+
+```{r chapter02-coef-table-code}
+#| eval: false
+coef(fit_study)
+```
+::::
+
+- [ ] Continue
+
+### Reading coefficients on the log-odds scale {#sec-log-odds-coefficients}
+
+The intercept is the estimated log-odds of passing when `studytime = 0`. In this dataset, no student has study time equal to 0, so the intercept is mainly needed to position the fitted curve.
+
+The slope is the estimated change in log-odds for a one-unit increase in study time:
+
+$$
+b_1 = \widehat{\Delta \text{log-odds}}.
+$$
+
+::: Key-point
+A positive coefficient means the predicted probability increases as the predictor increases. A negative coefficient means the predicted probability decreases. The coefficient itself is on the log-odds scale, not the probability scale.
+:::
+
+### Odds ratios {#sec-fitting-odds-ratios}
+
+Exponentiating a coefficient converts it from a change in log-odds to an odds ratio:
+
+$$
+\text{odds ratio} = e^{b_1}.
+$$
+
+:::: {.panel-tabset}
+### Output
+
+```{r chapter02-odds-ratio}
+#| echo: false
+exp(coef(fit_study))
+```
+
+### Code
+
+```{r chapter02-odds-ratio-code}
+#| eval: false
+exp(coef(fit_study))
+```
+::::
+
+For `studytime`, the odds ratio compares two students who differ by one study-time category. If the odds ratio is greater than 1, the model estimates higher odds of passing for the student in the higher study-time category.
+
+::: Exercise
+### Compute an odds ratio
+
+Compute the odds ratio for `studytime` and store it as `or_studytime`.
+
+```{webr chapter02-odds-exercise}
+#| exercise: ex_fit_1
+#| envir: ex_fit
+or_studytime <- ______
+```
+
+:::: {.solution exercise="ex_fit_1"}
+```{webr chapter02-odds-exercise-solution}
+#| exercise: ex_fit_1
+#| solution: true
+or_studytime <- exp(coef(fit_study)["studytime"])
+or_studytime
+```
+::::
+
+```{webr chapter02-odds-exercise-check}
+#| exercise: ex_fit_1
+#| envir: ex_fit
+#| check: true
+#| class: wait
+grade_this({
+  if (!exists("or_studytime")) {
+    fail("Define `or_studytime` and try again.")
+  }
+  target <- exp(coef(fit_study)["studytime"])
+  if (is.numeric(or_studytime) && abs(or_studytime - target) < 0.001) {
+    pass("That is the odds ratio for study time.")
+  }
+  fail("Use `exp(coef(fit_study)[\"studytime\"])`.")
+})
+```
+:::
+
+- [ ] Continue
+
+### Odds ratios are not probability differences {#sec-odds-ratios-not-probability-differences}
+
+A fixed odds ratio does not correspond to a fixed difference in probability. The same multiplicative change in odds produces different probability changes depending on the starting probability.
+
+:::: {.panel-tabset}
+### Output
+
+```{r chapter02-probability-effect-table}
+#| echo: false
+or_studytime <- as.numeric(exp(coef(fit_study)["studytime"]))
+starting_probability <- c(0.20, 0.50, 0.80)
+starting_odds <- starting_probability / (1 - starting_probability)
+new_odds <- starting_odds * or_studytime
+new_probability <- new_odds / (1 + new_odds)
+
+data.frame(
+  starting_probability = starting_probability,
+  probability_after_one_category = new_probability,
+  probability_difference = new_probability - starting_probability
+)
+```
+
+### Code
+
+```{r chapter02-probability-effect-table-code}
+#| eval: false
+or_studytime <- as.numeric(exp(coef(fit_study)["studytime"]))
+starting_probability <- c(0.20, 0.50, 0.80)
+starting_odds <- starting_probability / (1 - starting_probability)
+new_odds <- starting_odds * or_studytime
+new_probability <- new_odds / (1 + new_odds)
+
+data.frame(
+  starting_probability = starting_probability,
+  probability_after_one_category = new_probability,
+  probability_difference = new_probability - starting_probability
+)
+```
+::::
+
+::: Note
+Odds ratios can look large even when the absolute probability change is modest. For communication, pair odds ratios with predicted probabilities for realistic scenarios.
+:::
+
+## Inference for coefficients {#sec-logistic-inference}
+
+The `summary()` output includes a standard error, a test statistic, and a p-value for each coefficient. These are Wald tests. They test whether a coefficient differs from zero on the log-odds scale.
+
+:::: {.panel-tabset}
+### Output
+
+```{r chapter02-wald-table}
+#| echo: false
+coef(summary(fit_study))
+```
+
+### Code
+
+```{r chapter02-wald-table-code}
+#| eval: false
+coef(summary(fit_study))
+```
+::::
+
+Wald confidence intervals can be computed with `confint.default()`:
+
+:::: {.panel-tabset}
+### Output
+
+```{r chapter02-wald-ci}
+#| echo: false
+confint.default(fit_study)
+```
+
+### Code
+
+```{r chapter02-wald-ci-code}
+#| eval: false
+confint.default(fit_study)
+```
+::::
+
+It is often easier to report intervals on the odds-ratio scale:
+
+:::: {.panel-tabset}
+### Output
+
+```{r chapter02-or-ci}
+#| echo: false
+exp(confint.default(fit_study))
+```
+
+### Code
+
+```{r chapter02-or-ci-code}
+#| eval: false
+exp(confint.default(fit_study))
+```
+::::
+
+::: Note
+Confidence intervals for logistic regression coefficients are intervals for log-odds changes. Applying `exp()` converts them to odds-ratio intervals.
+:::
+
+## Adding predictors {#sec-adding-predictors}
+
+The formula interface extends in the same way as multiple linear regression. A model with previous failures and absences is
+
+$$
+\text{logit}(p_i) =
+\beta_0 +
+\beta_1 \text{studytime}_i +
+\beta_2 \text{failures}_i +
+\beta_3 \text{absences}_i.
+$$
+
+:::: {.panel-tabset}
+### Output
+
+```{r chapter02-fit-multiple}
+#| echo: false
+fit_multi <- glm(pass_exam ~ studytime + failures + absences,
+                 data = students,
+                 family = binomial)
+summary(fit_multi)
+```
+
+### Code
+
+```{r chapter02-fit-multiple-code}
+#| eval: false
+fit_multi <- glm(pass_exam ~ studytime + failures + absences,
+                 data = students,
+                 family = binomial)
+summary(fit_multi)
+```
+::::
+
+Each coefficient is a partial effect on the log-odds scale, holding the other predictors in the model constant.
+
+## Categorical predictors {#sec-logistic-categorical-predictors}
+
+Categorical predictors work as they did in linear regression. R chooses a reference level and estimates comparisons against that level.
+
+:::: {.panel-tabset}
+### Output
+
+```{r chapter02-fit-categorical}
+#| echo: false
+fit_support <- glm(pass_exam ~ studytime + failures + schoolsup,
+                   data = students,
+                   family = binomial)
+summary(fit_support)
+```
+
+### Code
+
+```{r chapter02-fit-categorical-code}
+#| eval: false
+fit_support <- glm(pass_exam ~ studytime + failures + schoolsup,
+                   data = students,
+                   family = binomial)
+summary(fit_support)
+```
+::::
+
+Here, `schoolsupyes` compares students with extra educational support to the reference group `schoolsup = "no"`, after adjusting for study time and previous failures.
+
+## Chapter summary {#sec-chapter02-summary}
+
+Logistic regression follows the same modelling logic as linear regression:
+
+1. Choose an outcome model.
+2. Choose a linear predictor.
+3. Estimate the unknown coefficients from data.
+4. Use the fitted model for interpretation, prediction, and model checking.
+
+The difference is that binary outcomes need a Bernoulli/binomial error model and a logit link. `glm(..., family = binomial)` fits this model by maximum likelihood. Coefficients are read on the log-odds scale, exponentiated coefficients are odds ratios, and predicted probabilities require the inverse-logit transformation. The next chapter asks whether the fitted model is adequate.

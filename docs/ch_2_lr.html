@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1&nbsp; Motivation: modeling binary outcomes – Logistic Regression with R</title>
+<title>2&nbsp; From Linear Models to Fitting Logistic Regression – Logistic Regression with R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -27998,14 +27998,6 @@ initializeRuntime();
 
 </script>
 <style>
-.Key-term {
---color1: #D1C4E9;
---color2: #673AB7;
-}
-.Exercise {
---color1: #C8E6C9;
---color2: #4CAF50;
-}
 .Example {
 --color1: #BBDEFB;
 --color2: #2196F3;
@@ -28014,6 +28006,10 @@ initializeRuntime();
 --color1: #FFCDD2;
 --color2: #F44336;
 }
+.Key-term {
+--color1: #D1C4E9;
+--color2: #673AB7;
+}
 .Key-point {
 --color1: #FFF9C4;
 --color2: #FFEB3B;
@@ -28021,6 +28017,10 @@ initializeRuntime();
 .Note {
 --color1: #FFF9C4;
 --color2: #FFEB3B;
+}
+.Exercise {
+--color1: #C8E6C9;
+--color2: #4CAF50;
 }
 </style>
 
@@ -28185,7 +28185,7 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_1_motivation.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Motivation: modeling binary outcomes</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_2_lr.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Linear Models to Fitting Logistic Regression</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -28218,38 +28218,32 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_1_motivation.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ch_1_logit.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Motivation: modeling binary outcomes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_2_introduction-to-logistic-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Linear Models to Logistic Regression</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ch_3_fitting-logistic-regression-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Fitting Logistic Regression Models</span></span></a>
+  <a href="./ch_2_lr.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Linear Models to Fitting Logistic Regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch_4_assessing-model-fit.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Assessing Logistic Regression Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessing Logistic Regression Models</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch_5_predictions-from-logistic-regression-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Predictions from Logistic Regression Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Predictions from Logistic Regression Models</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch_6_extensions-case-study.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -28268,8 +28262,19 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
     <h2 id="toc-title">Contents</h2>
    
   <ul class="collapse">
-  <li><a href="#a-quick-review-of-linear-regression" id="toc-a-quick-review-of-linear-regression" class="nav-link active" data-scroll-target="#a-quick-review-of-linear-regression"><span class="header-section-number">1.1</span> A quick review of linear regression</a></li>
-  <li><a href="#log-odds-logit" id="toc-log-odds-logit" class="nav-link" data-scroll-target="#log-odds-logit"><span class="header-section-number">1.2</span> Log-odds (logit)</a></li>
+  <li><a href="#sec-introduction" id="toc-sec-introduction" class="nav-link active" data-scroll-target="#sec-introduction"><span class="header-section-number">3</span> From linear models to fitting logistic regression</a>
+  <ul class="collapse">
+  <li><a href="#sec-linear-regression-template" id="toc-sec-linear-regression-template" class="nav-link" data-scroll-target="#sec-linear-regression-template"><span class="header-section-number">3.1</span> The linear regression template</a></li>
+  <li><a href="#sec-binary-error-model" id="toc-sec-binary-error-model" class="nav-link" data-scroll-target="#sec-binary-error-model"><span class="header-section-number">3.2</span> The error model for a binary outcome</a></li>
+  <li><a href="#sec-glm-framework" id="toc-sec-glm-framework" class="nav-link" data-scroll-target="#sec-glm-framework"><span class="header-section-number">3.3</span> Generalised linear models</a></li>
+  <li><a href="#sec-logistic-regression-model" id="toc-sec-logistic-regression-model" class="nav-link" data-scroll-target="#sec-logistic-regression-model"><span class="header-section-number">3.4</span> The logistic regression model</a></li>
+  <li><a href="#sec-glm-formula-r" id="toc-sec-glm-formula-r" class="nav-link" data-scroll-target="#sec-glm-formula-r"><span class="header-section-number">3.5</span> The formula in R</a></li>
+  <li><a href="#sec-fitting" id="toc-sec-fitting" class="nav-link" data-scroll-target="#sec-fitting"><span class="header-section-number">3.6</span> Fitting logistic regression models</a></li>
+  <li><a href="#sec-logistic-inference" id="toc-sec-logistic-inference" class="nav-link" data-scroll-target="#sec-logistic-inference"><span class="header-section-number">3.7</span> Inference for coefficients</a></li>
+  <li><a href="#sec-adding-predictors" id="toc-sec-adding-predictors" class="nav-link" data-scroll-target="#sec-adding-predictors"><span class="header-section-number">3.8</span> Adding predictors</a></li>
+  <li><a href="#sec-logistic-categorical-predictors" id="toc-sec-logistic-categorical-predictors" class="nav-link" data-scroll-target="#sec-logistic-categorical-predictors"><span class="header-section-number">3.9</span> Categorical predictors</a></li>
+  <li><a href="#sec-chapter02-summary" id="toc-sec-chapter02-summary" class="nav-link" data-scroll-target="#sec-chapter02-summary"><span class="header-section-number">3.10</span> Chapter summary</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -28278,7 +28283,7 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-motivation" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Motivation: modeling binary outcomes</span></span></h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">From Linear Models to Fitting Logistic Regression</span></h1>
 </div>
 
 
@@ -28305,497 +28310,650 @@ eyJhdHRyIjp7ImVkaXQiOmZhbHNlLCJldmFsIjp0cnVlLCJvdXRwdXQiOmZhbHNlfSwiY29kZSI6Indl
 </script>
 </div>
 </div>
-<div class="cell" data-edit="false" data-autorun="true">
+<div class="cell" data-envir="ex_fit">
 <div>
 <div id="webr-2" class="exercise-cell">
 
 </div>
 <script type="webr-2-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOmZhbHNlLCJldmFsIjp0cnVlLCJtZXNzYWdlIjpmYWxzZSwid2FybmluZyI6ZmFsc2V9LCJjb2RlIjoibGlicmFyeShyZWFkcilcbmxpYnJhcnkoZHBseXIpXG5saWJyYXJ5KGdncGxvdDIpIn0=
+eyJhdHRyIjp7ImVjaG8iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZW52aXIiOiJleF9maXQiLCJldmFsIjp0cnVlLCJpbmNsdWRlIjpmYWxzZSwib3V0cHV0IjpmYWxzZX0sImNvZGUiOiJzdHVkZW50cyA8LSByZWFkLmNzdihcIkRhdGEvc3R1ZGVudC9zdHVkZW50LW1hdC5jc3ZcIiwgc2VwID0gXCI7XCIpXG5zdHVkZW50cyRwYXNzX2V4YW0gPC0gaWZlbHNlKHN0dWRlbnRzJEczID49IDEwLCAxLCAwKVxuZml0X3N0dWR5IDwtIGdsbShwYXNzX2V4YW0gfiBzdHVkeXRpbWUsIGRhdGEgPSBzdHVkZW50cywgZmFtaWx5ID0gYmlub21pYWwpIn0=
 </script>
 </div>
 </div>
-<section id="a-quick-review-of-linear-regression" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="a-quick-review-of-linear-regression"><span class="header-section-number">1.1</span> A quick review of linear regression</h2>
-<p>In the Linear Regression Short Course (LRSC), we used a linear model to predict an <span class="glossary">outcome variable</span> <span class="math inline">\(Y\)</span> from one or more <span class="glossary">predictor variables</span>, <span class="math inline">\(X_1, X_2, \ldots, X_p\)</span>. Something like this:</p>
+<section id="sec-introduction" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> From linear models to fitting logistic regression</h1>
+<p>In <a href="ch_1_logit.html" class="quarto-xref"><span>Chapter 1</span></a> we introduced the practical problem: our outcome is binary, so the expected value of the outcome is a probability. We also saw the key mathematical move:</p>
 <p><span class="math display">\[
-Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + ... + \epsilon
+\text{logit}(p) = \log\left(\frac{p}{1-p}\right),
 \]</span></p>
-<p>where <span class="math inline">\(\epsilon\)</span> is an <span class="glossary">error term</span> that captures the variability in <span class="math inline">\(Y\)</span> that is not explained by the predictors. In the cases we considered, Y was a <span class="glossary">continuous variable</span> (e.g., salary, Naplan score, etc.), and the model described how the <em>expected value</em> of the outcome, <span class="math inline">\(E[Y]\)</span>, changed as the predictors varied. For example, in the case of salary, the model described how the expected salary (<span class="math inline">\(E[Y]\)</span>) of a worker changed as their years of experience (<span class="math inline">\(X\)</span>) increased.</p>
+<p>which lets us place probabilities on a scale that can be modelled with a straight line.</p>
+<p>This chapter connects that idea to the Linear Regression Short Course. We will first replace the normal error model from linear regression with an error model that makes sense for binary data, then fit the resulting model with <code>glm()</code>.</p>
 <ul class="task-list">
 <li><label><input type="checkbox">Continue</label></li>
 </ul>
-<p>In many real-world situations, however, <em>we want to predict an outcome that is not continuous</em>. Instead, often what we want to predict or explain is a <span class="glossary">categorical variable</span>. The simplest case of this is a <a href="glossary.html#glossary-binary-outcome" class="glossary" title="A response variable with two possible values, often coded as 0 and 1.">binary outcome</a> — that is, an outcome with only two possible categories (e.g.&nbsp;success/failure, yes/no, 0/1) <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
-<div id="a-binary-outcome-pass-or-fail" class="Example">
-<details class="Example fobx-simplebox fobx-default" open=""><summary><strong>Example 1.1: </strong>A binary outcome: pass or fail</summary><div>
-<p>Johno is a student studying for an important exam. He wants to understand how his study time affects his chances of passing the exam. To this end, he collects data on previous students’ study times and whether they passed or failed the exam. Here is a sample of the data Johno collected:</p>
+<section id="sec-linear-regression-template" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="sec-linear-regression-template"><span class="header-section-number">3.1</span> The linear regression template</h2>
+<p>In the Linear Regression Short Course, a simple linear model was written as</p>
+<p><span class="math display">\[
+Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i,
+\qquad \varepsilon_i \sim N(0, \sigma^2).
+\]</span></p>
+<p>Equivalently, we can separate the model into two parts:</p>
+<p><span class="math display">\[
+Y_i \sim N(\mu_i, \sigma^2)
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\mu_i = E[Y_i] = \beta_0 + \beta_1 X_i.
+\]</span></p>
+<p>The first line describes how the observed outcomes vary around their mean. The second line describes how the mean changes with the predictor.</p>
+<div id="cnb-1-Key-point" class="Key-point">
+<details class="Key-point fobx-simplebox fobx-default" open=""><summary><strong>Key-point</strong></summary><div>
+<p>Linear regression has both a <strong>mean model</strong> and an <strong>error model</strong>. The mean model is the straight line. The error model says observations vary around that line with normally distributed errors and constant variance.</p>
+</div></details>
+</div>
+<p>In Chapter 1, we focused on the mean model for binary outcomes: how <span class="math inline">\(p_i = E[Y_i]\)</span> might change with <span class="math inline">\(X_i\)</span>. We now add the missing error model.</p>
+<ul class="task-list">
+<li><label><input type="checkbox">Continue</label></li>
+</ul>
+</section>
+<section id="sec-binary-error-model" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="sec-binary-error-model"><span class="header-section-number">3.2</span> The error model for a binary outcome</h2>
+<p>For Johno’s student example, each outcome is either 1 (pass) or 0 (fail):</p>
+<p><span class="math display">\[
+Y_i =
+\begin{cases}
+1 &amp; \text{if student } i \text{ passes},\\
+0 &amp; \text{if student } i \text{ fails}.
+\end{cases}
+\]</span></p>
+<p>If the probability that student <span class="math inline">\(i\)</span> passes is <span class="math inline">\(p_i\)</span>, then the appropriate probability model is</p>
+<p><span class="math display">\[
+Y_i \sim \text{Bernoulli}(p_i).
+\]</span></p>
+<p>This is the one-trial version of the binomial distribution. It has two useful properties:</p>
+<p><span class="math display">\[
+E[Y_i] = p_i
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\text{Var}(Y_i) = p_i(1-p_i).
+\]</span></p>
+<p>This variance is not constant. A probability near 0.5 gives more binary variation than a probability near 0 or 1. That is one reason the linear regression error model is not suitable here.</p>
+<div id="cnb-2-Key-point" class="Key-point">
+<details class="Key-point fobx-simplebox fobx-default" open=""><summary><strong>Key-point</strong></summary><div>
+<p>For binary outcomes, the randomness is not represented by adding a normally distributed <span class="math inline">\(\varepsilon_i\)</span> to a straight line. Instead, the observed 0/1 outcome is treated as a Bernoulli draw with event probability <span class="math inline">\(p_i\)</span>.</p>
+</div></details>
+</div>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Data</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Code</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
+<div class="cell-output-display">
 <div>
-<div id="webr-3" class="exercise-cell">
-
+<figure class="figure">
+<p><img role="img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABUAAAAPACAMAAADDuCPrAAAA5FBMVEUAAAAAADoAAGYAOjoAOmYAOpAAZmYAZpAAZrY6AAA6OgA6Ojo6OmY6ZmY6ZpA6ZrY6kJA6kNtmAABmOgBmOjpmOmZmZjpmZmZmZpBmkJBmkLZmkNtmtrZmtttmtv+QOgCQZgCQZjqQZmaQkDqQkJCQkLaQtraQttuQtv+Q29uQ2/+2ZgC2Zjq2kDq2kGa2kJC2kLa2tpC2tra2ttu225C227a229u22/+2///bkDrbkGbbtmbbtpDbtrbbttvb25Db27bb29vb2//b/7bb////tmb/25D/27b/29v//7b//9v///+CAV/BAAAACXBIWXMAAB2HAAAdhwGP5fFlAAAgAElEQVR4nO3dfWPTSLbncRnCLiZ0uEBm3JO5wKT3Dsx2uJnB7A3tJuxN2HYS7Pf/flblR9mWZNdRqVSn6vv5oxsntvVQp37RYymbAgBEsq5nAAC0IkABQIgABQAhAhQAhAhQABAiQAFAiAAFACECFACECFAAECJAAUCIAAUAIQIUAIQIUAAQIkABQIgABQAhAhQAhAhQABAiQAFAiAAFACECFACECFAAECJAAUCIAAUAIQIUAIQIUAAQIkABQIgABQAhAhQAhAhQABAiQAFAiAAFACECFACECFAAECJAAUCIAAUAIQIUAIQIUAAQIkABQIgABQAhAhQAhAhQABAiQAFAiAAFACECFACECFAAECJAAUCIAAUAIQIUAIQIUAAQIkABQIgABQAhAhQAhAhQABAiQAFAiAAFACECFACECFAAECJAAUCIAAUAIQIUAIQIUAAQIkABQIgABQAhAhQAhAhQABAiQAFAiAAFACECFACECFAAECJAAUCIAAUAIQIUAIQIUAAQIkABQIgABQAhAhQAhAhQABAiQAFAiAAFACECFACECFAAECJAAUCIAAUAIQIUAIQIUAAQIkABQIgABQAhAhQAhAhQABAiQAFAiAAFACECFACECFAAECJAAUCIAAUAIQIUAIQIUAAQIkABQIgABQAhAhQAhAhQABAiQAFAiAAFACECFACECFAAECJAAUCIAAUAIQIUAIQIUAAQIkABQIgABQAhAhQAhAhQABAiQAFAiAAFACECFACECFAAECJAAUCIAAUAIQIUAIQIUAAQIkABQIgABQAh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" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
-<script type="webr-3-contents">
-eyJhdHRyIjp7ImVjaG8iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZXZhbCI6dHJ1ZSwibWVzc2FnZSI6ZmFsc2UsIndhcm5pbmciOmZhbHNlfSwiY29kZSI6InN0dWRlbnRfcGVyZm9ybWFuY2UgPC0gcmVhZF9kZWxpbShcIkRhdGEvc3R1ZGVudC9zdHVkZW50LW1hdC5jc3ZcIiwgZGVsaW0gPSBcIjtcIikgfD4gXG4gIG11dGF0ZShwYXNzX2ZhaWwgPSBpZl9lbHNlKEczID49IDEwLCBcInBhc3NcIiwgXCJmYWlsXCIpKSB8PiBcbiAgc2VsZWN0KHN0dWR5dGltZSwgcGFzc19mYWlsKSBcblxuc3R1ZGVudF9wZXJmb3JtYW5jZSJ9
-</script>
 </div>
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.01</span>, <span class="fl">0.99</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(p, p <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Probability of passing (p)"</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Bernoulli variance: p(1 - p)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
-<p>Johno wants to use this data to model the relationship between study time and the probability of passing the exam. He identifies his outcome variable, <span class="math inline">\(Y_i\)</span>, as the binary variable indicating whether student <span class="math inline">\(i\)</span> passed or failed the exam, and his predictor variable, <span class="math inline">\(X_i\)</span>, as the amount of time that student spent studying. Therefore, Johno’s goal is to produce a statistical model that predicts <span class="math inline">\(Y_i\)</span> (pass/fail) based on <span class="math inline">\(X_i\)</span> (study time): <span class="math display">\[
-Y_i = f(X_i) + \varepsilon
-\]</span></p>
-</div></details>
 </div>
-<section id="from-categories-to-probabilities" class="level3" data-number="1.1.1">
-<h3 data-number="1.1.1" class="anchored" data-anchor-id="from-categories-to-probabilities"><span class="header-section-number">1.1.1</span> From categories to probabilities</h3>
-<section id="the-average-of-a-binary-outcome" class="level4" data-number="1.1.1.1">
-<h4 data-number="1.1.1.1" class="anchored" data-anchor-id="the-average-of-a-binary-outcome"><span class="header-section-number">1.1.1.1</span> The average of a binary outcome</h4>
-<p>Recall that the <em>error term</em> <span class="math inline">\(\epsilon\)</span> in a regression model captures the difference between the observed outcome <span class="math inline">\(Y\)</span> and the <span class="glossary"><em>expected</em></span> outcome <span class="math inline">\(E[Y]\)</span> from the model.</p>
-<div id="expected-value-and-error-term" class="Key-point">
-<details class="Key-point fobx-simplebox fobx-default" open=""><summary><strong>Key-point: </strong>Expected value and error term</summary><div>
-<p>The <em>expected value</em> of a random variable <span class="math inline">\(Y\)</span>, denoted <span class="math inline">\(E[Y]\)</span>, can be thought of as the long-run average value of <span class="math inline">\(Y\)</span> if we were to repeat the process that generates <span class="math inline">\(Y\)</span> many times. That is, if we were to collect many samples of <span class="math inline">\(Y\)</span> under the same conditions, the average of those samples would converge to <span class="math inline">\(E[Y]\)</span>. The error term <span class="math inline">\(\varepsilon\)</span> represents the deviation of an observed value of <span class="math inline">\(Y\)</span> from its expected value <span class="math inline">\(E[Y]\)</span>.</p>
-<p>The error term <span class="math inline">\(\varepsilon\)</span> is the difference between the observed value of <span class="math inline">\(Y\)</span> and its expected value <span class="math inline">\(E[Y]\)</span> i.e.&nbsp;<span class="math inline">\(\varepsilon = Y - E[Y]\)</span>. It captures the variability in <span class="math inline">\(Y\)</span> that is not explained by the predictors in the model.</p>
-<p>In regression models, we typically assume that the error term <span class="math inline">\(\varepsilon\)</span> has a mean of zero (i.e., <span class="math inline">\(E[\varepsilon] = 0\)</span>), which implies that the expected value of <span class="math inline">\(Y\)</span> given the predictors is equal to the predicted value from the model (i.e., <span class="math inline">\(E[Y] = f(X)\)</span>).</p>
-</div></details>
-</div>
-<p>When <span class="math inline">\(Y\)</span> was a continuous variable, <span class="math inline">\(E[Y]\)</span> straightforwardly represented the average value of <span class="math inline">\(Y\)</span> for given values of the predictors (e.g.&nbsp;the average (AKA expected, or predicted) salary of a worker of 9 years experience). But <em>what is the ‘average’ of a binary (categorical) variable?</em></p>
 <ul class="task-list">
 <li><label><input type="checkbox">Continue</label></li>
 </ul>
-<p>To model a binary outcome statistically, we have to represent it as a <a href="glossary.html#glossary-random-variable" class="glossary" title="A numerical variable whose value depends on the outcome of a random process.">Random Variable</a> rather than just a label. We can do this by coding the two categories as numbers, e.g.&nbsp;<span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. For example, in Johno’s case</p>
-<div id="coding-the-binary-outcome" class="Example">
-<details class="Example fobx-simplebox fobx-default" open=""><summary><strong>Example 1.2: </strong>Coding the binary outcome</summary><div>
-<p>We can code the outcome variable <span class="math inline">\(Y\)</span> as follows: <span class="math display">\[
-Y =
-\begin{cases}
-\text{1} &amp; \text{if student passes the exam} \\
-\text{0} &amp; \text{if student fails the exam}
-\end{cases}
+</section>
+<section id="sec-glm-framework" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="sec-glm-framework"><span class="header-section-number">3.3</span> Generalised linear models</h2>
+<p>A <strong>generalised linear model</strong> (GLM) has three pieces:</p>
+<ol type="1">
+<li>A distribution for the outcome.</li>
+<li>A linear predictor.</li>
+<li>A link function connecting the expected outcome to the linear predictor.</li>
+</ol>
+<p>For linear regression, these pieces are:</p>
+<p><span class="math display">\[
+Y_i \sim N(\mu_i, \sigma^2),
+\qquad
+\mu_i = \eta_i,
+\qquad
+\eta_i = \beta_0 + \beta_1 X_i.
 \]</span></p>
-<p>in R,</p>
+<p>The link is the identity link because the mean itself is modelled directly by the linear predictor.</p>
+<p>For logistic regression, the pieces are:</p>
+<p><span class="math display">\[
+Y_i \sim \text{Bernoulli}(p_i),
+\qquad
+\text{logit}(p_i) = \eta_i,
+\qquad
+\eta_i = \beta_0 + \beta_1 X_i.
+\]</span></p>
+<p>The linear predictor is still linear. What changes is the outcome distribution and the link function.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Component</th>
+<th>Linear regression</th>
+<th>Logistic regression</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Outcome</td>
+<td>Continuous <span class="math inline">\(Y_i\)</span></td>
+<td>Binary <span class="math inline">\(Y_i \in \{0,1\}\)</span></td>
+</tr>
+<tr class="even">
+<td>Distribution</td>
+<td>Normal</td>
+<td>Bernoulli / binomial</td>
+</tr>
+<tr class="odd">
+<td>Mean</td>
+<td><span class="math inline">\(\mu_i = E[Y_i]\)</span></td>
+<td><span class="math inline">\(p_i = E[Y_i] = P(Y_i=1)\)</span></td>
+</tr>
+<tr class="even">
+<td>Link</td>
+<td>Identity: <span class="math inline">\(\mu_i = \eta_i\)</span></td>
+<td>Logit: <span class="math inline">\(\log(p_i/(1-p_i)) = \eta_i\)</span></td>
+</tr>
+<tr class="odd">
+<td>Linear predictor</td>
+<td><span class="math inline">\(\eta_i = \beta_0 + \beta_1 X_i\)</span></td>
+<td><span class="math inline">\(\eta_i = \beta_0 + \beta_1 X_i\)</span></td>
+</tr>
+<tr class="even">
+<td>R function</td>
+<td><code>lm()</code></td>
+<td><code>glm(..., family = binomial)</code></td>
+</tr>
+</tbody>
+</table>
+<div id="cnb-3-Key-point" class="Key-point">
+<details class="Key-point fobx-simplebox fobx-default" open=""><summary><strong>Key-point</strong></summary><div>
+<p>Logistic regression is not “nonlinear regression” in the usual sense. It is a linear model for the log-odds, paired with a Bernoulli/binomial error model and a logistic back-transformation to probabilities.</p>
+</div></details>
+</div>
+<ul class="task-list">
+<li><label><input type="checkbox">Continue</label></li>
+</ul>
+</section>
+<section id="sec-logistic-regression-model" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="sec-logistic-regression-model"><span class="header-section-number">3.4</span> The logistic regression model</h2>
+<p>For the student example with study time as the predictor, the logistic regression model is</p>
+<p><span class="math display">\[
+Y_i \sim \text{Bernoulli}(p_i)
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\text{logit}(p_i) = \beta_0 + \beta_1 \text{studytime}_i.
+\]</span></p>
+<p>To return to the probability scale, we use the logistic function:</p>
+<p><span class="math display">\[
+p_i = \frac{1}{1 + e^{-(\beta_0 + \beta_1 \text{studytime}_i)}}.
+\]</span></p>
+<p>In R, the inverse-logit transformation is <code>plogis()</code>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Data</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Code</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="cell">
+<div class="cell-output-display">
 <div>
-<div id="webr-4" class="exercise-cell">
-
+<figure class="figure">
+<p><img role="img" src="data:image/png;base64,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" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
-<script type="webr-4-contents">
-eyJhdHRyIjp7ImVjaG8iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZXZhbCI6dHJ1ZSwiaW5jbHVkZSI6dHJ1ZX0sImNvZGUiOiJzdHVkZW50X3BlcmZvcm1hbmNlIDwtIHN0dWRlbnRfcGVyZm9ybWFuY2UgfD5cbiAgbXV0YXRlKFxuICAgIHBhc3NfZmFpbF9udW0gPSBjYXNlX3doZW4oXG4gICAgICBwYXNzX2ZhaWwgPT0gXCJwYXNzXCIgfiAxLFxuICAgICAgcGFzc19mYWlsID09IFwiZmFpbFwiIH4gMFxuICAgIClcbiAgKVxuc3R1ZGVudF9wZXJmb3JtYW5jZSJ9
-</script>
 </div>
 </div>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-
-</div>
-</div>
-</div>
-</div></details>
-</div>
-<ul class="task-list">
-<li><label><input type="checkbox">Continue</label></li>
-</ul>
-<p>The choice of using 0 and 1 here is not arbitrary. While we could have coded the categories as -1 and 1, or 0 and 2, the 0/1 coding has a special property that makes it particularly useful for modeling. In particular, when we code a binary outcome this way, the mean of the outcome variable, <span class="math inline">\(E[Y]\)</span> has a direct interpretation: <span class="math display">\[
-E[Y] = P(Y=1)
-\]</span></p>
-<p>That is,</p>
-<div id="cnb-4-Key-point" class="Key-point">
-<details class="Key-point fobx-simplebox fobx-default" open=""><summary><strong>Key-point</strong></summary><div>
-<p>The expected value (mean) of a binary variable coded as 0/1 is the <em>probability</em> of the outcome being 1. We label this probability as <span class="math inline">\(p\)</span>: <span class="math display">\[
-p = \Pr(Y=1) = E[Y]
-\]</span></p>
-</div></details>
-</div>
-<p>In Johno’s case, <span class="math inline">\(E[Y]\)</span> represents the probability of passing the exam. ::: Example ### Mean of a binary variable as a probability If we ignore study time for a moment and just look at the overall pass/fail rates in Johno’s dataset, we can calculate the mean of the binary outcome variable: :::: {.panel-tabset} ### Output</p>
 <div class="cell">
-<div>
-<div id="webr-5" class="exercise-cell">
-
-</div>
-<script type="webr-5-contents">
-eyJhdHRyIjp7ImVjaG8iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZXZhbCI6dHJ1ZX0sImNvZGUiOiJtZWFuKHN0dWRlbnRfcGVyZm9ybWFuY2UkcGFzc19mYWlsX251bSkifQ==
-</script>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>eta <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="dv">6</span>, <span class="at">length.out =</span> <span class="dv">200</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(eta, <span class="fu">plogis</span>(eta), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Linear predictor (eta)"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Probability"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">col =</span> <span class="st">"grey80"</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-</section>
-</section>
-<section id="code-2" class="level3" data-number="1.1.2">
-<h3 data-number="1.1.2" class="anchored" data-anchor-id="code-2"><span class="header-section-number">1.1.2</span> Code</h3>
-<p>::::</p>
-<p>This means that the probability of a randomly selected student in Johno’s dataset passing the exam is approximately <code>webr round(mean(student_performance$pass_fail_num), 2)</code>.</p>
-<p>:::</p>
+</div>
+</div>
+<p>The curve is S-shaped on the probability scale, but the model is still straight on the log-odds scale.</p>
 <ul class="task-list">
 <li><label><input type="checkbox">Continue</label></li>
 </ul>
 </section>
-<section id="why-not-use-linear-regression" class="level3" data-number="1.1.3">
-<h3 data-number="1.1.3" class="anchored" data-anchor-id="why-not-use-linear-regression"><span class="header-section-number">1.1.3</span> Why not use linear regression?</h3>
-<p>We now have a way to represent our binary outcome variable as a random variable, and we understand that the expected value of this variable has a meaningful interpretation as a probability.</p>
-<p>A natural question at this point is: why not just use linear regression to model the relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(E[Y]\)</span>? After all, probabilities are continuous values between 0 and 1. We could fit a linear model like this: <span class="math display">\[
-p= E[Y] = \beta_0 + \beta_1 X
-\]</span></p>
-<div id="when-linear-regression-is-not-appropriate" class="Example">
-<details class="Example fobx-simplebox fobx-default" open=""><summary><strong>Example 1.3: </strong>When linear regression is not appropriate</summary><div>
-<p>Having completed the Linear Regression Short Course, Johno considers using linear regression to model the relationship between study time and the probability of passing the exam.</p>
-<p>He first plots the data in a scatter plot with a fitted linear regression line:</p>
+<section id="sec-glm-formula-r" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="sec-glm-formula-r"><span class="header-section-number">3.5</span> The formula in R</h2>
+<p>The R formula looks almost the same as the formula for <code>lm()</code>:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Code</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="cell">
-<div>
-<div id="webr-6" class="exercise-cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = pass_exam ~ studytime, family = binomial, data = students)
 
-</div>
-<script type="webr-6-contents">
-eyJhdHRyIjp7ImVjaG8iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZXZhbCI6dHJ1ZX0sImNvZGUiOiJsaWJyYXJ5KGdncGxvdDIpXG5nZ3Bsb3Qoc3R1ZGVudF9wZXJmb3JtYW5jZSwgYWVzKHggPSBzdHVkeXRpbWUsIHkgPSBwYXNzX2ZhaWxfbnVtKSkgK1xuICBnZW9tX2ppdHRlcihoZWlnaHQgPSAwLjA1LCB3aWR0aCA9IDAuMSwgYWxwaGEgPSAwLjUpICtcbiAgZ2VvbV9zbW9vdGgobWV0aG9kID0gXCJsbVwiLCBzZSA9IEZBTFNFLCBjb2xvciA9IFwiYmx1ZVwiKStcbiAgbGFicyh4ID0gXCJTdHVkeSBUaW1lXCIsIHkgPSBcIlBhc3MvRmFpbCAoMS8wKVwiKSJ9
-</script>
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)
+(Intercept)   0.3222     0.2818   1.143    0.253
+studytime     0.1939     0.1311   1.479    0.139
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 500.50  on 394  degrees of freedom
+Residual deviance: 498.27  on 393  degrees of freedom
+AIC: 502.27
+
+Number of Fisher Scoring iterations: 4</code></pre>
 </div>
 </div>
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
-
-</div>
-</div>
-</div>
-<p>(note the use of <code>geom_jitter()</code> to add some random noise to the points so they don’t overlap exactly).</p>
-<p>And obtains the following estimate for the effect of study time on the probability of passing: :::: {.panel-tabset} ### Output</p>
 <div class="cell">
-<div>
-<div id="webr-7" class="exercise-cell">
-
-</div>
-<script type="webr-7-contents">
-eyJhdHRyIjp7ImVjaG8iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZXZhbCI6dHJ1ZX0sImNvZGUiOiJsaWJyYXJ5KGJyb29tKVxubW9kZWwgPC0gbG0ocGFzc19mYWlsX251bSB+IHN0dWR5dGltZSwgZGF0YSA9IHN0dWRlbnRfcGVyZm9ybWFuY2UpXG50aWR5KG1vZGVsKSJ9
-</script>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fit_study <span class="ot">&lt;-</span> <span class="fu">glm</span>(pass_exam <span class="sc">~</span> studytime,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> students,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">family =</span> binomial)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_study)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-<section id="code-4" class="level3" data-number="1.1.4">
-<h3 data-number="1.1.4" class="anchored" data-anchor-id="code-4"><span class="header-section-number">1.1.4</span> Code</h3>
-</section></div></details>
-</div></section>
-</section></main></div>
-<p>The estimated equation for the relationship between study time and the probability of passing is: <span class="math display">\[
-p = 0.586 + 0.0418 \times \text{studytime}
+</div>
+</div>
+<p>The formula <code>pass_exam ~ studytime</code> gives the linear predictor:</p>
+<p><span class="math display">\[
+\eta_i = \beta_0 + \beta_1 \text{studytime}_i.
 \]</span></p>
-<p>i.e.&nbsp;The model predicts that a student who does not study at all (study time = 0)<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> has a probability of passing of about 0.586, and that for each additional hour of study time, the probability of passing increases by about 4%.</p>
-<p>Over the range of study times in the dataset, the model produces predicted probabilities that are between 0 and 1:</p>
+<p>The argument <code>family = binomial</code> tells R to use the Bernoulli/binomial error model with the logit link. So the single <code>glm()</code> call contains the two changes we need for binary outcomes: a different error model and a different link.</p>
+<div id="cnb-4-Note" class="Note">
+<details class="Note fobx-simplebox fobx-default" open=""><summary><strong>Note</strong></summary><div>
+<p>The default link for <code>family = binomial</code> is the logit link. Writing <code>family = binomial(link = "logit")</code> is equivalent, but more explicit.</p>
+</div></details>
+</div>
+</section>
+<section id="sec-fitting" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="sec-fitting"><span class="header-section-number">3.6</span> Fitting logistic regression models</h2>
+<p>The coefficients <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are the unknown parameters of the data-generating model. Fitting a logistic regression means estimating those parameters from the observed data.</p>
+<section id="sec-logistic-likelihood" class="level3" data-number="3.6.1">
+<h3 data-number="3.6.1" class="anchored" data-anchor-id="sec-logistic-likelihood"><span class="header-section-number">3.6.1</span> From least squares to likelihood</h3>
+<p>For linear regression, <code>lm()</code> chooses the line that minimises the sum of squared residuals. This works because the model assumes normally distributed errors around a mean line.</p>
+<p>For logistic regression, the outcome is 0 or 1, so squared residuals are no longer the natural fitting criterion. Instead, <code>glm()</code> uses <strong>maximum likelihood estimation</strong>. It chooses the coefficient estimates that make the observed sequence of passes and fails most likely under the Bernoulli model.</p>
+<div id="cnb-5-Key-point" class="Key-point">
+<details class="Key-point fobx-simplebox fobx-default" open=""><summary><strong>Key-point</strong></summary><div>
+<p>Maximum likelihood asks: among all possible coefficient values, which values make the observed data most plausible under the model?</p>
+</div></details>
+</div>
+<p>If student <span class="math inline">\(i\)</span> has predicted probability <span class="math inline">\(p_i\)</span>, then a pass contributes probability <span class="math inline">\(p_i\)</span> to the likelihood and a fail contributes probability <span class="math inline">\(1-p_i\)</span>. A good model gives high probabilities to the events that actually occurred.</p>
+<ul class="task-list">
+<li><label><input type="checkbox">Continue</label></li>
+</ul>
+</section>
+<section id="sec-fitting-study-model" class="level3" data-number="3.6.2">
+<h3 data-number="3.6.2" class="anchored" data-anchor-id="sec-fitting-study-model"><span class="header-section-number">3.6.2</span> Estimated coefficients</h3>
+<p>The estimated model is</p>
+<p><span class="math display">\[
+\widehat{\text{logit}(p_i)} = b_0 + b_1 \text{studytime}_i.
+\]</span></p>
+<p>As in the Linear Regression Short Course, we use Greek letters for unknown true parameters and Latin letters for estimates:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\beta_0\)</span></td>
+<td>True intercept</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\beta_1\)</span></td>
+<td>True slope for study time</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(b_0\)</span></td>
+<td>Estimated intercept</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(b_1\)</span></td>
+<td>Estimated slope for study time</td>
+</tr>
+</tbody>
+</table>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <div class="cell">
-<div>
-<div id="webr-8" class="exercise-cell">
-
-</div>
-<script type="webr-8-contents">
-eyJhdHRyIjp7ImVjaG8iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZXZhbCI6dHJ1ZX0sImNvZGUiOiJwcmVkaWN0ZWRfdmFsdWVzIDwtIHByZWRpY3QoXG4gIG1vZGVsLFxuICBuZXdkYXRhID0gZGF0YS5mcmFtZShcbiAgICBzdHVkeXRpbWUgPSB1bmlxdWUoc3R1ZGVudF9wZXJmb3JtYW5jZSRzdHVkeXRpbWUpKSxcbiAgKVxuXG5wcmVkaWN0ZWRfdmFsdWVzICAifQ==
-</script>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)   studytime 
+  0.3221862   0.1938849 </code></pre>
 </div>
 </div>
 </div>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
-
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(fit_study)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
-<p>This makes sense since the highest score of any student in our dataset is 1 (i.e.&nbsp;a pass), and the lowest score is 0 (a fail), so their average should fall somewhere in between. No student has a predicted score of exactly 0 or 1, but the predicted values are between these two extremes.</p>
-<p>However, Johno is a dedicated student and wants to know what happens <em>if he studies for more hours than any student in the dataset</em>. If we use the linear model to predict probabilities for study times outside the range of the data, we get some nonsensical predictions.</p>
-<p>For example, a student who studies for 10 hours has a predicted probability of passing of</p>
+</div>
+<ul class="task-list">
+<li><label><input type="checkbox">Continue</label></li>
+</ul>
+</section>
+<section id="sec-log-odds-coefficients" class="level3" data-number="3.6.3">
+<h3 data-number="3.6.3" class="anchored" data-anchor-id="sec-log-odds-coefficients"><span class="header-section-number">3.6.3</span> Reading coefficients on the log-odds scale</h3>
+<p>The intercept is the estimated log-odds of passing when <code>studytime = 0</code>. In this dataset, no student has study time equal to 0, so the intercept is mainly needed to position the fitted curve.</p>
+<p>The slope is the estimated change in log-odds for a one-unit increase in study time:</p>
+<p><span class="math display">\[
+b_1 = \widehat{\Delta \text{log-odds}}.
+\]</span></p>
+<div id="cnb-6-Key-point" class="Key-point">
+<details class="Key-point fobx-simplebox fobx-default" open=""><summary><strong>Key-point</strong></summary><div>
+<p>A positive coefficient means the predicted probability increases as the predictor increases. A negative coefficient means the predicted probability decreases. The coefficient itself is on the log-odds scale, not the probability scale.</p>
+</div></details>
+</div>
+</section>
+<section id="sec-fitting-odds-ratios" class="level3" data-number="3.6.4">
+<h3 data-number="3.6.4" class="anchored" data-anchor-id="sec-fitting-odds-ratios"><span class="header-section-number">3.6.4</span> Odds ratios</h3>
+<p>Exponentiating a coefficient converts it from a change in log-odds to an odds ratio:</p>
+<p><span class="math display">\[
+\text{odds ratio} = e^{b_1}.
+\]</span></p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
 <div class="cell">
-<div>
-<div id="webr-9" class="exercise-cell">
-
-</div>
-<script type="webr-9-contents">
-eyJhdHRyIjp7ImVjaG8iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZXZhbCI6dHJ1ZX0sImNvZGUiOiJwcmVkaWN0KG1vZGVsLCBuZXdkYXRhID0gZGF0YS5mcmFtZShzdHVkeXRpbWUgPSAxMCkpIn0=
-</script>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)   studytime 
+   1.380142    1.213957 </code></pre>
 </div>
 </div>
 </div>
 <div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(fit_study))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<p>For <code>studytime</code>, the odds ratio compares two students who differ by one study-time category. If the odds ratio is greater than 1, the model estimates higher odds of passing for the student in the higher study-time category.</p>
+<div id="compute-an-odds-ratio" class="Exercise">
+<details class="Exercise fobx-simplebox fobx-default" open=""><summary><strong>Exercise 2.1: </strong>Compute an odds ratio</summary><div>
+<p>Compute the odds ratio for <code>studytime</code> and store it as <code>or_studytime</code>.</p>
+<div class="cell" data-exercise="ex_fit_1" data-envir="ex_fit">
+<div>
+<div id="webr-3" class="exercise-cell">
 
 </div>
+<script type="webr-3-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImVudmlyIjoiZXhfZml0IiwiZXZhbCI6dHJ1ZSwiZXhlcmNpc2UiOiJleF9maXRfMSJ9LCJjb2RlIjoib3Jfc3R1ZHl0aW1lIDwtIF9fX19fXyJ9
+</script>
 </div>
 </div>
-<p>which is greater than 1 (impossible for a probability).</p>
-<p>:::</p>
-<p>The problem here is that probabilities do not act like the continuous variables we covered in the LRSC. For one, probabilities cannot be greater than one or less than zero - a hard limitation that is not well modelled by simple linear functions (e.g., you cannot increase a 0.95 probability by +0.2). With a binary outcome, then, the relationship between predictors and probability is typically nonlinear: <em>the same change in a predictor does not produce the same change in probability</em>.</p>
+<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_fit_1">
+<div class="cell" data-exercise="ex_fit_1" data-solution="true">
+<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_fit_1">
+<code id="interpolate-5" class="solution-code d-none">or_studytime &lt;- exp(coef(fit_study)["studytime"])
+or_studytime</code>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="interpolate-6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="interpolate-6-1"><a href="#interpolate-6-1" aria-hidden="true" tabindex="-1"></a>or_studytime <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">coef</span>(fit_study)[<span class="st">"studytime"</span>])</span>
+<span id="interpolate-6-2"><a href="#interpolate-6-2" aria-hidden="true" tabindex="-1"></a>or_studytime</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="cell wait" data-exercise="ex_fit_1" data-envir="ex_fit" data-check="true">
+<script type="exercise-check-ex_fit_1-contents">
+eyJhdHRyIjp7ImNoZWNrIjp0cnVlLCJjbGFzcyI6IndhaXQiLCJlZGl0Ijp0cnVlLCJlbnZpciI6ImV4X2ZpdCIsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfZml0XzEifSwiY29kZSI6ImdyYWRlX3RoaXMoe1xuICBpZiAoIWV4aXN0cyhcIm9yX3N0dWR5dGltZVwiKSkge1xuICAgIGZhaWwoXCJEZWZpbmUgYG9yX3N0dWR5dGltZWAgYW5kIHRyeSBhZ2Fpbi5cIilcbiAgfVxuICB0YXJnZXQgPC0gZXhwKGNvZWYoZml0X3N0dWR5KVtcInN0dWR5dGltZVwiXSlcbiAgaWYgKGlzLm51bWVyaWMob3Jfc3R1ZHl0aW1lKSAmJiBhYnMob3Jfc3R1ZHl0aW1lIC0gdGFyZ2V0KSA8IDAuMDAxKSB7XG4gICAgcGFzcyhcIlRoYXQgaXMgdGhlIG9kZHMgcmF0aW8gZm9yIHN0dWR5IHRpbWUuXCIpXG4gIH1cbiAgZmFpbChcIlVzZSBgZXhwKGNvZWYoZml0X3N0dWR5KVtcXFwic3R1ZHl0aW1lXFxcIl0pYC5cIilcbn0pIn0=
+</script>
+</div>
+</div></details>
+</div>
 <ul class="task-list">
 <li><label><input type="checkbox">Continue</label></li>
 </ul>
-
-<section id="from-probabilities-to-odds" class="level3" data-number="1.1.5">
-<h3 data-number="1.1.5" data-anchor-id="from-probabilities-to-odds"><span class="header-section-number">1.1.5</span> From probabilities to odds</h3>
-<p>One way to address this issue is to change what we are modelling so that it behaves more nicely with a linear predictor. For example, we might model the relationship between the predictors and the <em>odds</em> of the outcome, rather than the probability itself.</p>
-<div id="odds" class="Key-term">
-<details class="Key-term fobx-simplebox fobx-default" open=""><summary><strong>Key-term: </strong>Odds</summary><div>
-<p>The odds of an event are defined as the ratio of the probability of the event occurring to the probability of it not occurring. If <span class="math inline">\(p\)</span> is the probability of the event, then the odds are given by: <span class="math display">\[
-\text{odds} = \frac{p}{1 - p}
-\]</span> :::: {.panel-tabset} ### Plot</p>
-<div class="cell">
-<div>
-<div id="webr-10" class="exercise-cell">
-
-</div>
-<script type="webr-10-contents">
-eyJhdHRyIjp7ImVjaG8iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZXZhbCI6dHJ1ZX0sImNvZGUiOiJnZ3Bsb3QoKSArXG4gIGdlb21fbGluZShhZXMoeCA9IHNlcSgwLCAxLCBieSA9IDAuMDEpLCB5ID0gc2VxKDAsIDEsIGJ5ID0gMC4wMSkgLyAoMSAtIHNlcSgwLCAxLCBieSA9IDAuMDEpKSksIGNvbG9yID0gXCJyZWRcIikgK1xuICBsYWJzKHggPSBcIlByb2JhYmlsaXR5XCIsIHkgPSBcIk9kZHNcIikgK1xuICB4bGltKDAsIDEpICtcbiAgeWxpbSgwLCAxMCkifQ==
-</script>
-</div>
-</div>
-<section id="code-7" class="level3" data-number="1.1.6">
-<h3 data-number="1.1.6" data-anchor-id="code-7"><span class="header-section-number">1.1.6</span> Code</h3>
-</section></div></details>
-</div></section>
-
-<p>:::</p>
-<p>Odds take values from 0 to <span class="math inline">\(\infty\)</span>, and are greater than 1 when the probability of the event is greater than 0.5. Therefore, if we model a linear relationship between the predictors and the <em>odds</em> of the outcome, we can avoid the problem of predicted probabilities being greater than 1.</p>
-<div id="probabilities-to-odds" class="Exercise">
-<details class="Exercise fobx-simplebox fobx-default" open=""><summary><strong>Exercise 1.1: </strong>Probabilities to odds</summary><div>
-<p>Calculate the odds that a randomly selected student from Johno’s sample passed the exam</p>
-<div class="cell" data-exercise="ex_1.1" data-envir="Ex1">
-<div class="cell" data-exercise="ex_1.1" data-envir="Ex1">
-<div>
-<div id="webr-11" class="exercise-cell">
-
-</div>
-<script type="webr-11-contents">
-eyJhdHRyIjp7ImVkaXQiOnRydWUsImVudmlyIjoiRXgxIiwiZXZhbCI6dHJ1ZSwiZXhlcmNpc2UiOiJleF8xLjEifSwiY29kZSI6IlxucGFzc19vZGRzIDwtIF9fX18ifQ==
-</script>
-</div>
-</div>
-</div>
-<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_1.1">
-<div class="cell" data-exercise="ex_1.1" data-solution="true">
-<div class="cell" data-exercise="ex_1.1" data-solution="true">
-<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_1.1">
-<code id="interpolate-13" class="solution-code d-none">pass_odds &lt;- mean(student_performance$pass_fail_num)/ (1- mean(student_performance$pass_fail_num))</code>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="interpolate-14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="interpolate-14-1"><a href="#interpolate-14-1" aria-hidden="true" tabindex="-1"></a>pass_odds <span class="ot">&lt;-</span> <span class="fu">mean</span>(student_performance<span class="sc">$</span>pass_fail_num)<span class="sc">/</span> (<span class="dv">1</span><span class="sc">-</span> <span class="fu">mean</span>(student_performance<span class="sc">$</span>pass_fail_num))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell wait" data-exercise="ex_1.1" data-envir="Ex1" data-check="true">
-<div class="cell wait" data-exercise="ex_1.1" data-envir="Ex1" data-check="true">
-<script type="exercise-check-ex_1.1-contents">
-eyJhdHRyIjp7ImNoZWNrIjp0cnVlLCJjbGFzcyI6IndhaXQiLCJlZGl0Ijp0cnVlLCJlbnZpciI6IkV4MSIsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMS4xIn0sImNvZGUiOiJncmFkZV90aGlzX2NvZGUoKSJ9
-</script>
-</div>
-</div>
-</div></details>
-</div>
-<p>When using odds, we avoid the problem of predicting probabilities greater than one, because a probability of 1 is equivalent to an odds of <span class="math inline">\(\infty\)</span>.</p>
-<p>Moreover, we can easily transform our result in odds back to probabilities for interpretation. Since <span class="math display">\[
-\text{odds} = \frac{p}{1-p},
-\]</span> we can solve for <span class="math inline">\(p\)</span>: <span class="math display">\[
-p = \frac{\text{odds}}{1 + \text{odds}}.
-\]</span></p>
-<div id="odds-back-to-probability" class="Exercise">
-<details class="Exercise fobx-simplebox fobx-default" open=""><summary><strong>Exercise 1.2: </strong>Odds back to probability</summary><div>
-<p>Suppose a student has odds of passing the exam of <strong>9</strong> (i.e.&nbsp;for every 1 student who fails, 9 pass). Use the formula below to back-transform this to a probability:</p>
-<p><span class="math display">\[
-p = \frac{\text{odds}}{1 + \text{odds}}
-\]</span></p>
-<div class="cell" data-exercise="ex_2.1" data-envir="Ex3">
-<div class="cell" data-exercise="ex_2.1" data-envir="Ex3">
-<div>
-<div id="webr-16" class="exercise-cell">
-
-</div>
-<script type="webr-16-contents">
-eyJhdHRyIjp7ImVkaXQiOnRydWUsImVudmlyIjoiRXgzIiwiZXZhbCI6dHJ1ZSwiZXhlcmNpc2UiOiJleF8yLjEifSwiY29kZSI6Ilxub2Rkc192YWx1ZSA8LSA5XG5wIDwtIF9fX19cbnAifQ==
-</script>
-</div>
-</div>
-</div>
-<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_2.1">
-<div class="cell" data-exercise="ex_2.1" data-solution="true">
-<div class="cell" data-exercise="ex_2.1" data-solution="true">
-<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_2.1">
-<code id="interpolate-18" class="solution-code d-none">odds_value &lt;- 9
-p &lt;- odds_value / (1 + odds_value)
-p</code>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="interpolate-19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="interpolate-19-1"><a href="#interpolate-19-1" aria-hidden="true" tabindex="-1"></a>odds_value <span class="ot">&lt;-</span> <span class="dv">9</span></span>
-<span id="interpolate-19-2"><a href="#interpolate-19-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> odds_value <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> odds_value)</span>
-<span id="interpolate-19-3"><a href="#interpolate-19-3" aria-hidden="true" tabindex="-1"></a>p</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell wait" data-exercise="ex_2.1" data-envir="Ex3" data-check="true">
-<div class="cell wait" data-exercise="ex_2.1" data-envir="Ex3" data-check="true">
-<script type="exercise-check-ex_2.1-contents">
-eyJhdHRyIjp7ImNoZWNrIjp0cnVlLCJjbGFzcyI6IndhaXQiLCJlZGl0Ijp0cnVlLCJlbnZpciI6IkV4MyIsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMi4xIn0sImNvZGUiOiJncmFkZV90aGlzX2NvZGUoKSJ9
-</script>
-</div>
-</div>
-</div></details>
-</div>
-<p>Notice that even with very high odds of 9, the corresponding probability is 0.9 — not 1. No matter how large the odds become, the probability is always bounded below 1. This is a key property that motivates moving from the probability scale to the odds scale when building a linear model for binary outcomes.</p>
-
-
-<section id="log-odds-logit" class="level2" data-number="1.2">
-<h2 data-number="1.2" data-anchor-id="log-odds-logit"><span class="header-section-number">1.2</span> Log-odds (logit)</h2>
-<p>While odds are an improvement over raw probabilities, they are still bounded below by zero — which means a linear model for the odds could still, in principle, produce impossible negative predictions. We can fix this by taking one more step: the <em>logarithm</em> of the odds.</p>
-<div id="log-odds-logit-1" class="Key-term">
-<details class="Key-term fobx-simplebox fobx-default" open=""><summary><strong>Key-term: </strong>Log-odds (logit)</summary><div>
-<p>The <strong>log-odds</strong>, or <strong>logit</strong>, of a probability <span class="math inline">\(p\)</span> is defined as the natural log of the odds:</p>
-<p><span class="math display">\[
-\text{logit}(p) = \log\left(\frac{p}{1-p}\right)
-\]</span></p>
+</section>
+<section id="sec-odds-ratios-not-probability-differences" class="level3" data-number="3.6.5">
+<h3 data-number="3.6.5" class="anchored" data-anchor-id="sec-odds-ratios-not-probability-differences"><span class="header-section-number">3.6.5</span> Odds ratios are not probability differences</h3>
+<p>A fixed odds ratio does not correspond to a fixed difference in probability. The same multiplicative change in odds produces different probability changes depending on the starting probability.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Code</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">
 <div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
-<div class="cell" data-edit="false" data-autorun="true">
-<div>
-<div id="webr-21" class="exercise-cell">
-
-</div>
-<script type="webr-21-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVjaG8iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZXZhbCI6dHJ1ZX0sImNvZGUiOiJwX3ZhbHMgPC0gc2VxKDAuMDEsIDAuOTksIGJ5ID0gMC4wMSlcbmdncGxvdChkYXRhLmZyYW1lKHAgPSBwX3ZhbHMsIGxvZ2l0ID0gbG9nKHBfdmFscyAvICgxIC0gcF92YWxzKSkpLCBhZXMoeCA9IHAsIHkgPSBsb2dpdCkpICtcbiAgZ2VvbV9saW5lKGNvbG9yID0gXCJzdGVlbGJsdWVcIikgK1xuICBsYWJzKHggPSBcIlByb2JhYmlsaXR5IChwKVwiLCB5ID0gXCJMb2ctb2RkcyAgbG9naXQocClcIikifQ==
-</script>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  starting_probability probability_after_one_category probability_difference
+1                  0.2                      0.2328283             0.03282828
+2                  0.5                      0.5483200             0.04831995
+3                  0.8                      0.8292299             0.02922990</code></pre>
 </div>
 </div>
 </div>
 <div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
-
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>or_studytime <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">exp</span>(<span class="fu">coef</span>(fit_study)[<span class="st">"studytime"</span>]))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>starting_probability <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.20</span>, <span class="fl">0.50</span>, <span class="fl">0.80</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>starting_odds <span class="ot">&lt;-</span> starting_probability <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> starting_probability)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>new_odds <span class="ot">&lt;-</span> starting_odds <span class="sc">*</span> or_studytime</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>new_probability <span class="ot">&lt;-</span> new_odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> new_odds)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">starting_probability =</span> starting_probability,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">probability_after_one_category =</span> new_probability,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">probability_difference =</span> new_probability <span class="sc">-</span> starting_probability</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
+</div>
+<div id="cnb-8-Note" class="Note">
+<details class="Note fobx-simplebox fobx-default" open=""><summary><strong>Note</strong></summary><div>
+<p>Odds ratios can look large even when the absolute probability change is modest. For communication, pair odds ratios with predicted probabilities for realistic scenarios.</p>
 </div></details>
 </div>
-<p>Because the logarithm stretches the odds scale — which runs from 0 to <span class="math inline">\(\infty\)</span> — the log-odds scale runs from <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(+\infty\)</span>. This means we can safely model log-odds with a linear predictor without worrying about impossible predictions.</p>
-<div id="the-three-scales" class="Key-point">
-<details class="Key-point fobx-simplebox fobx-default" open=""><summary><strong>Key-point: </strong>The three scales</summary><div>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Scale</th>
-<th>Range</th>
-<th>Formula</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Probability</td>
-<td><span class="math inline">\([0, 1]\)</span></td>
-<td><span class="math inline">\(p\)</span></td>
-</tr>
-<tr class="even">
-<td>Odds</td>
-<td><span class="math inline">\([0, \infty)\)</span></td>
-<td><span class="math inline">\(p / (1-p)\)</span></td>
-</tr>
-<tr class="odd">
-<td>Log-odds</td>
-<td><span class="math inline">\((-\infty, +\infty)\)</span></td>
-<td><span class="math inline">\(\log(p / (1-p))\)</span></td>
-</tr>
-</tbody>
-</table>
-<p>Moving from probability → odds → log-odds trades interpretability for a scale that plays nicely with a linear model.</p>
-</div></details>
-</div>
-<div id="computing-log-odds" class="Exercise">
-<details class="Exercise fobx-simplebox fobx-default" open=""><summary><strong>Exercise 1.3: </strong>Computing log-odds</summary><div>
-<p>A student has a probability of passing of <span class="math inline">\(p = 0.75\)</span>. Using the logit formula, calculate their log-odds of passing.</p>
-<div class="cell" data-exercise="ex_3.1" data-envir="Ex4">
-<div class="cell" data-exercise="ex_3.1" data-envir="Ex4">
-<div>
-<div id="webr-22" class="exercise-cell">
-
-</div>
-<script type="webr-22-contents">
-eyJhdHRyIjp7ImVkaXQiOnRydWUsImVudmlyIjoiRXg0IiwiZXZhbCI6dHJ1ZSwiZXhlcmNpc2UiOiJleF8zLjEifSwiY29kZSI6IlxucCA8LSAwLjc1XG5sb2dfb2RkcyA8LSBfX19fXG5sb2dfb2RkcyJ9
-</script>
-</div>
-</div>
-</div>
-<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_3.1">
-<div class="cell" data-exercise="ex_3.1" data-solution="true">
-<div class="cell" data-exercise="ex_3.1" data-solution="true">
-<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="ex_3.1">
-<code id="interpolate-24" class="solution-code d-none">p &lt;- 0.75
-log_odds &lt;- log(p / (1 - p))
-log_odds</code>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="interpolate-25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="interpolate-25-1"><a href="#interpolate-25-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.75</span></span>
-<span id="interpolate-25-2"><a href="#interpolate-25-2" aria-hidden="true" tabindex="-1"></a>log_odds <span class="ot">&lt;-</span> <span class="fu">log</span>(p <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> p))</span>
-<span id="interpolate-25-3"><a href="#interpolate-25-3" aria-hidden="true" tabindex="-1"></a>log_odds</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell wait" data-exercise="ex_3.1" data-envir="Ex4" data-check="true">
-<div class="cell wait" data-exercise="ex_3.1" data-envir="Ex4" data-check="true">
-<script type="exercise-check-ex_3.1-contents">
-eyJhdHRyIjp7ImNoZWNrIjp0cnVlLCJjbGFzcyI6IndhaXQiLCJlZGl0Ijp0cnVlLCJlbnZpciI6IkV4NCIsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMy4xIn0sImNvZGUiOiJncmFkZV90aGlzX2NvZGUoKSJ9
-</script>
-</div>
-</div>
-</div></details>
-</div>
-<section id="the-logistic-function" class="level3" data-number="1.2.1">
-<h3 data-number="1.2.1" data-anchor-id="the-logistic-function"><span class="header-section-number">1.2.1</span> The logistic function</h3>
-<p>If we model log-odds with a linear predictor, we need a way to convert predicted log-odds back into a probability. The function that does this is the <strong>logistic function</strong> (also called the <em>inverse logit</em>):</p>
-<p><span class="math display">\[
-p = \frac{e^{\eta}}{1 + e^{\eta}} = \frac{1}{1 + e^{-\eta}}
-\]</span></p>
-<p>where <span class="math inline">\(\eta\)</span> (eta) is the log-odds value. In R, this is <code>plogis()</code>.</p>
+</section>
+</section>
+<section id="sec-logistic-inference" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="sec-logistic-inference"><span class="header-section-number">3.7</span> Inference for coefficients</h2>
+<p>The <code>summary()</code> output includes a standard error, a test statistic, and a p-value for each coefficient. These are Wald tests. They test whether a coefficient differs from zero on the log-odds scale.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Code</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">
 <div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
-<div class="cell" data-edit="false" data-autorun="true">
-<div>
-<div id="webr-27" class="exercise-cell">
-
-</div>
-<script type="webr-27-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVjaG8iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZXZhbCI6dHJ1ZX0sImNvZGUiOiJldGFfdmFscyA8LSBzZXEoLTYsIDYsIGJ5ID0gMC4wNSlcbmdncGxvdChkYXRhLmZyYW1lKGV0YSA9IGV0YV92YWxzLCBwID0gcGxvZ2lzKGV0YV92YWxzKSksIGFlcyh4ID0gZXRhLCB5ID0gcCkpICtcbiAgZ2VvbV9saW5lKGNvbG9yID0gXCJzdGVlbGJsdWVcIikgK1xuICBnZW9tX2hsaW5lKHlpbnRlcmNlcHQgPSBjKDAsIDEpLCBsaW5ldHlwZSA9IFwiZGFzaGVkXCIsIGNvbG9yID0gXCJncmV5NTBcIikgK1xuICBsYWJzKHggPSBcIkxvZy1vZGRzICjOtylcIiwgeSA9IFwiUHJvYmFiaWxpdHkgKHApXCIsXG4gICAgICAgdGl0bGUgPSBcIlRoZSBsb2dpc3RpYyBmdW5jdGlvblwiKSJ9
-</script>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>             Estimate Std. Error  z value  Pr(&gt;|z|)
+(Intercept) 0.3221862  0.2818334 1.143179 0.2529641
+studytime   0.1938849  0.1311284 1.478588 0.1392504</code></pre>
 </div>
 </div>
 </div>
 <div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
-
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(fit_study))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
-<p>The S-shaped curve of the logistic function captures exactly the kind of nonlinear relationship we expect between a predictor and a probability: as the log-odds increase, the probability rises steeply near 0.5 but flattens as it approaches 0 or 1.</p>
-<div id="a-useful-symmetry" class="Note">
-<details class="Note fobx-simplebox fobx-default" open=""><summary><strong>Note: </strong>A useful symmetry</summary><div>
-<p>The logit and the logistic function are inverses of each other:</p>
-<p><span class="math display">\[
-\text{logit}(p) = \eta \quad \Longleftrightarrow \quad p = \text{plogis}(\eta)
-\]</span></p>
-<p>You can think of the logit as the <em>link</em> from probability to the linear predictor, and the logistic function as the <em>back-transform</em> from the linear predictor to a probability.</p>
+</div>
+<p>Wald confidence intervals can be computed with <code>confint.default()</code>:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false" href="">Code</a></li></ul>
+<div class="tab-content">
+<div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                  2.5 %    97.5 %
+(Intercept) -0.23019720 0.8745696
+studytime   -0.06312204 0.4508918</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint.default</span>(fit_study)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<p>It is often easier to report intervals on the odds-ratio scale:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false" href="">Code</a></li></ul>
+<div class="tab-content">
+<div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                2.5 %   97.5 %
+(Intercept) 0.7943769 2.397843
+studytime   0.9388289 1.569711</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint.default</span>(fit_study))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<div id="cnb-9-Note" class="Note">
+<details class="Note fobx-simplebox fobx-default" open=""><summary><strong>Note</strong></summary><div>
+<p>Confidence intervals for logistic regression coefficients are intervals for log-odds changes. Applying <code>exp()</code> converts them to odds-ratio intervals.</p>
 </div></details>
 </div>
-<p>This pair — a linear predictor on the log-odds scale, combined with the logistic function to convert back to probabilities — is the foundation of <strong>logistic regression</strong>, which we cover in the next chapter.</p>
+</section>
+<section id="sec-adding-predictors" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="sec-adding-predictors"><span class="header-section-number">3.8</span> Adding predictors</h2>
+<p>The formula interface extends in the same way as multiple linear regression. A model with previous failures and absences is</p>
+<p><span class="math display">\[
+\text{logit}(p_i) =
+\beta_0 +
+\beta_1 \text{studytime}_i +
+\beta_2 \text{failures}_i +
+\beta_3 \text{absences}_i.
+\]</span></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false" href="">Code</a></li></ul>
+<div class="tab-content">
+<div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = pass_exam ~ studytime + failures + absences, family = binomial, 
+    data = students)
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  1.08795    0.32965   3.300 0.000966 ***
+studytime    0.03980    0.13931   0.286 0.775104    
+failures    -0.96217    0.16995  -5.662  1.5e-08 ***
+absences    -0.01843    0.01332  -1.384 0.166398    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 500.50  on 394  degrees of freedom
+Residual deviance: 455.11  on 391  degrees of freedom
+AIC: 463.11
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>fit_multi <span class="ot">&lt;-</span> <span class="fu">glm</span>(pass_exam <span class="sc">~</span> studytime <span class="sc">+</span> failures <span class="sc">+</span> absences,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> students,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">family =</span> binomial)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_multi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<p>Each coefficient is a partial effect on the log-odds scale, holding the other predictors in the model constant.</p>
+</section>
+<section id="sec-logistic-categorical-predictors" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="sec-logistic-categorical-predictors"><span class="header-section-number">3.9</span> Categorical predictors</h2>
+<p>Categorical predictors work as they did in linear regression. R chooses a reference level and estimates comparisons against that level.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false" href="">Code</a></li></ul>
+<div class="tab-content">
+<div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = pass_exam ~ studytime + failures + schoolsup, family = binomial, 
+    data = students)
+
+Coefficients:
+             Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)   1.03285    0.31852   3.243  0.00118 ** 
+studytime     0.06294    0.13961   0.451  0.65209    
+failures     -0.98636    0.17230  -5.725 1.04e-08 ***
+schoolsupyes -0.67531    0.32074  -2.105  0.03525 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 500.50  on 394  degrees of freedom
+Residual deviance: 452.68  on 391  degrees of freedom
+AIC: 460.68
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fit_support <span class="ot">&lt;-</span> <span class="fu">glm</span>(pass_exam <span class="sc">~</span> studytime <span class="sc">+</span> failures <span class="sc">+</span> schoolsup,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> students,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">family =</span> binomial)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_support)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<p>Here, <code>schoolsupyes</code> compares students with extra educational support to the reference group <code>schoolsup = "no"</code>, after adjusting for study time and previous failures.</p>
+</section>
+<section id="sec-chapter02-summary" class="level2" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="sec-chapter02-summary"><span class="header-section-number">3.10</span> Chapter summary</h2>
+<p>Logistic regression follows the same modelling logic as linear regression:</p>
+<ol type="1">
+<li>Choose an outcome model.</li>
+<li>Choose a linear predictor.</li>
+<li>Estimate the unknown coefficients from data.</li>
+<li>Use the fitted model for interpretation, prediction, and model checking.</li>
+</ol>
+<p>The difference is that binary outcomes need a Bernoulli/binomial error model and a logit link. <code>glm(..., family = binomial)</code> fits this model by maximum likelihood. Coefficients are read on the log-odds scale, exponentiated coefficients are odds ratios, and predicted probabilities require the inverse-logit transformation. The next chapter asks whether the fitted model is adequate.</p>
 
 
 <script type="webr-data">
 eyJvcHRpb25zIjp7ImJhc2VVcmwiOiJodHRwczovL3dlYnIuci13YXNtLm9yZy92MC42LjAvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsiZXZhbHVhdGUiLCJrbml0ciIsImh0bWx0b29scyIsImd0Il0sInJlcG9zIjpbXX0sInJlbmRlcl9kZiI6Imd0LWludGVyYWN0aXZlIn0=
 </script>
 <script type="ojs-module-contents">
-eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yNyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjc7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yNyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJfd2Vicl92YWx1ZV8yNyA9IHtcbiAgY29uc3QgeyBoaWdobGlnaHRSLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0yNy1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIC8vIERlZmF1bHQgZXZhbHVhdGlvbiBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHtcbiAgICBpZDogXCJ3ZWJyLTI3LWNvbnRlbnRzXCIsXG4gICAgZWNobzogdHJ1ZSxcbiAgICBvdXRwdXQ6IHRydWVcbiAgfSwgYmxvY2suYXR0cik7XG5cbiAgLy8gRXZhbHVhdGUgdGhlIHByb3ZpZGVkIFIgY29kZVxuICBjb25zdCByZXN1bHQgPSB3ZWJST2pzLnByb2Nlc3Moe2NvZGU6IGJsb2NrLmNvZGUsIG9wdGlvbnN9LCB7fSk7XG5cbiAgLy8gRWFybHkgeWllbGQgd2hpbGUgd2Ugd2FpdCBmb3IgdGhlIGZpcnN0IGV2YWx1YXRpb24gYW5kIHJlbmRlclxuICBpZiAob3B0aW9ucy5vdXRwdXQgJiYgIShcIjI3XCIgaW4gd2ViUk9qcy5yZW5kZXJlZE9qcykpIHtcbiAgICBjb25zdCBjb250YWluZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpO1xuICAgIGNvbnN0IHNwaW5uZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpO1xuXG4gICAgaWYgKG9wdGlvbnMuZWNobykge1xuICAgICAgLy8gU2hvdyBvdXRwdXQgYXMgaGlnaGxpZ2h0ZWQgc291cmNlXG4gICAgICBjb25zdCBwcmVFbGVtID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcInByZVwiKTtcbiAgICAgIGNvbnRhaW5lci5jbGFzc05hbWUgPSBcInNvdXJjZUNvZGVcIjtcbiAgICAgIHByZUVsZW0uY2xhc3NOYW1lID0gXCJzb3VyY2VDb2RlIHJcIjtcbiAgICAgIHByZUVsZW0uYXBwZW5kQ2hpbGQoaGlnaGxpZ2h0UihibG9jay5jb2RlKSk7XG4gICAgICBzcGlubmVyLmNsYXNzTmFtZSA9IFwic3Bpbm5lci1ncm93IHNwaW5uZXItZ3Jvdy1zbSBtLTIgcG9zaXRpb24tYWJzb2x1dGUgdG9wLTAgZW5kLTBcIjtcbiAgICAgIHByZUVsZW0uYXBwZW5kQ2hpbGQoc3Bpbm5lcik7XG4gICAgICBjb250YWluZXIuYXBwZW5kQ2hpbGQocHJlRWxlbSk7XG4gICAgfSBlbHNlIHtcbiAgICAgIHNwaW5uZXIuY2xhc3NOYW1lID0gXCJzcGlubmVyLWJvcmRlciBzcGlubmVyLWJvcmRlci1zbVwiO1xuICAgICAgY29udGFpbmVyLmFwcGVuZENoaWxkKHNwaW5uZXIpO1xuICAgIH1cblxuICAgIHlpZWxkIGNvbnRhaW5lcjtcbiAgfVxuXG4gIHdlYlJPanMucmVuZGVyZWRPanNbXCIyN1wiXSA9IHRydWU7XG4gIHlpZWxkIGF3YWl0IHJlc3VsdDtcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjI7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzIyID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMjItY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici0yMi1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzIyID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8yMiwge30pO1xuX3dlYnJfZmVlZGJhY2tfMjIgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzIyLmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjE7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJfd2Vicl92YWx1ZV8yMSA9IHtcbiAgY29uc3QgeyBoaWdobGlnaHRSLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0yMS1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIC8vIERlZmF1bHQgZXZhbHVhdGlvbiBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHtcbiAgICBpZDogXCJ3ZWJyLTIxLWNvbnRlbnRzXCIsXG4gICAgZWNobzogdHJ1ZSxcbiAgICBvdXRwdXQ6IHRydWVcbiAgfSwgYmxvY2suYXR0cik7XG5cbiAgLy8gRXZhbHVhdGUgdGhlIHByb3ZpZGVkIFIgY29kZVxuICBjb25zdCByZXN1bHQgPSB3ZWJST2pzLnByb2Nlc3Moe2NvZGU6IGJsb2NrLmNvZGUsIG9wdGlvbnN9LCB7fSk7XG5cbiAgLy8gRWFybHkgeWllbGQgd2hpbGUgd2Ugd2FpdCBmb3IgdGhlIGZpcnN0IGV2YWx1YXRpb24gYW5kIHJlbmRlclxuICBpZiAob3B0aW9ucy5vdXRwdXQgJiYgIShcIjIxXCIgaW4gd2ViUk9qcy5yZW5kZXJlZE9qcykpIHtcbiAgICBjb25zdCBjb250YWluZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpO1xuICAgIGNvbnN0IHNwaW5uZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpO1xuXG4gICAgaWYgKG9wdGlvbnMuZWNobykge1xuICAgICAgLy8gU2hvdyBvdXRwdXQgYXMgaGlnaGxpZ2h0ZWQgc291cmNlXG4gICAgICBjb25zdCBwcmVFbGVtID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcInByZVwiKTtcbiAgICAgIGNvbnRhaW5lci5jbGFzc05hbWUgPSBcInNvdXJjZUNvZGVcIjtcbiAgICAgIHByZUVsZW0uY2xhc3NOYW1lID0gXCJzb3VyY2VDb2RlIHJcIjtcbiAgICAgIHByZUVsZW0uYXBwZW5kQ2hpbGQoaGlnaGxpZ2h0UihibG9jay5jb2RlKSk7XG4gICAgICBzcGlubmVyLmNsYXNzTmFtZSA9IFwic3Bpbm5lci1ncm93IHNwaW5uZXItZ3Jvdy1zbSBtLTIgcG9zaXRpb24tYWJzb2x1dGUgdG9wLTAgZW5kLTBcIjtcbiAgICAgIHByZUVsZW0uYXBwZW5kQ2hpbGQoc3Bpbm5lcik7XG4gICAgICBjb250YWluZXIuYXBwZW5kQ2hpbGQocHJlRWxlbSk7XG4gICAgfSBlbHNlIHtcbiAgICAgIHNwaW5uZXIuY2xhc3NOYW1lID0gXCJzcGlubmVyLWJvcmRlciBzcGlubmVyLWJvcmRlci1zbVwiO1xuICAgICAgY29udGFpbmVyLmFwcGVuZENoaWxkKHNwaW5uZXIpO1xuICAgIH1cblxuICAgIHlpZWxkIGNvbnRhaW5lcjtcbiAgfVxuXG4gIHdlYlJPanMucmVuZGVyZWRPanNbXCIyMVwiXSA9IHRydWU7XG4gIHlpZWxkIGF3YWl0IHJlc3VsdDtcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTY7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzE2ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTYtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici0xNi1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzE2ID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8xNiwge30pO1xuX3dlYnJfZmVlZGJhY2tfMTYgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzE2LmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTE7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzExID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTEtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici0xMS1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzExID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8xMSwge30pO1xuX3dlYnJfZmVlZGJhY2tfMTEgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzExLmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTA7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJfd2Vicl92YWx1ZV8xMCA9IHtcbiAgY29uc3QgeyBoaWdobGlnaHRSLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0xMC1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIC8vIERlZmF1bHQgZXZhbHVhdGlvbiBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHtcbiAgICBpZDogXCJ3ZWJyLTEwLWNvbnRlbnRzXCIsXG4gICAgZWNobzogdHJ1ZSxcbiAgICBvdXRwdXQ6IHRydWVcbiAgfSwgYmxvY2suYXR0cik7XG5cbiAgLy8gRXZhbHVhdGUgdGhlIHByb3ZpZGVkIFIgY29kZVxuICBjb25zdCByZXN1bHQgPSB3ZWJST2pzLnByb2Nlc3Moe2NvZGU6IGJsb2NrLmNvZGUsIG9wdGlvbnN9LCB7fSk7XG5cbiAgLy8gRWFybHkgeWllbGQgd2hpbGUgd2Ugd2FpdCBmb3IgdGhlIGZpcnN0IGV2YWx1YXRpb24gYW5kIHJlbmRlclxuICBpZiAob3B0aW9ucy5vdXRwdXQgJiYgIShcIjEwXCIgaW4gd2ViUk9qcy5yZW5kZXJlZE9qcykpIHtcbiAgICBjb25zdCBjb250YWluZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpO1xuICAgIGNvbnN0IHNwaW5uZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpO1xuXG4gICAgaWYgKG9wdGlvbnMuZWNobykge1xuICAgICAgLy8gU2hvdyBvdXRwdXQgYXMgaGlnaGxpZ2h0ZWQgc291cmNlXG4gICAgICBjb25zdCBwcmVFbGVtID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcInByZVwiKTtcbiAgICAgIGNvbnRhaW5lci5jbGFzc05hbWUgPSBcInNvdXJjZUNvZGVcIjtcbiAgICAgIHByZUVsZW0uY2xhc3NOYW1lID0gXCJzb3VyY2VDb2RlIHJcIjtcbiAgICAgIHByZUVsZW0uYXBwZW5kQ2hpbGQoaGlnaGxpZ2h0UihibG9jay5jb2RlKSk7XG4gICAgICBzcGlubmVyLmNsYXNzTmFtZSA9IFwic3Bpbm5lci1ncm93IHNwaW5uZXItZ3Jvdy1zbSBtLTIgcG9zaXRpb24tYWJzb2x1dGUgdG9wLTAgZW5kLTBcIjtcbiAgICAgIHByZUVsZW0uYXBwZW5kQ2hpbGQoc3Bpbm5lcik7XG4gICAgICBjb250YWluZXIuYXBwZW5kQ2hpbGQocHJlRWxlbSk7XG4gICAgfSBlbHNlIHtcbiAgICAgIHNwaW5uZXIuY2xhc3NOYW1lID0gXCJzcGlubmVyLWJvcmRlciBzcGlubmVyLWJvcmRlci1zbVwiO1xuICAgICAgY29udGFpbmVyLmFwcGVuZENoaWxkKHNwaW5uZXIpO1xuICAgIH1cblxuICAgIHlpZWxkIGNvbnRhaW5lcjtcbiAgfVxuXG4gIHdlYlJPanMucmVuZGVyZWRPanNbXCIxMFwiXSA9IHRydWU7XG4gIHlpZWxkIGF3YWl0IHJlc3VsdDtcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC05IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV85O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItOSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJfd2Vicl92YWx1ZV85ID0ge1xuICBjb25zdCB7IGhpZ2hsaWdodFIsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTktY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV2YWx1YXRpb24gY29uZmlndXJhdGlvblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7XG4gICAgaWQ6IFwid2Vici05LWNvbnRlbnRzXCIsXG4gICAgZWNobzogdHJ1ZSxcbiAgICBvdXRwdXQ6IHRydWVcbiAgfSwgYmxvY2suYXR0cik7XG5cbiAgLy8gRXZhbHVhdGUgdGhlIHByb3ZpZGVkIFIgY29kZVxuICBjb25zdCByZXN1bHQgPSB3ZWJST2pzLnByb2Nlc3Moe2NvZGU6IGJsb2NrLmNvZGUsIG9wdGlvbnN9LCB7fSk7XG5cbiAgLy8gRWFybHkgeWllbGQgd2hpbGUgd2Ugd2FpdCBmb3IgdGhlIGZpcnN0IGV2YWx1YXRpb24gYW5kIHJlbmRlclxuICBpZiAob3B0aW9ucy5vdXRwdXQgJiYgIShcIjlcIiBpbiB3ZWJST2pzLnJlbmRlcmVkT2pzKSkge1xuICAgIGNvbnN0IGNvbnRhaW5lciA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIik7XG4gICAgY29uc3Qgc3Bpbm5lciA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIik7XG5cbiAgICBpZiAob3B0aW9ucy5lY2hvKSB7XG4gICAgICAvLyBTaG93IG91dHB1dCBhcyBoaWdobGlnaHRlZCBzb3VyY2VcbiAgICAgIGNvbnN0IHByZUVsZW0gPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwicHJlXCIpO1xuICAgICAgY29udGFpbmVyLmNsYXNzTmFtZSA9IFwic291cmNlQ29kZVwiO1xuICAgICAgcHJlRWxlbS5jbGFzc05hbWUgPSBcInNvdXJjZUNvZGUgclwiO1xuICAgICAgcHJlRWxlbS5hcHBlbmRDaGlsZChoaWdobGlnaHRSKGJsb2NrLmNvZGUpKTtcbiAgICAgIHNwaW5uZXIuY2xhc3NOYW1lID0gXCJzcGlubmVyLWdyb3cgc3Bpbm5lci1ncm93LXNtIG0tMiBwb3NpdGlvbi1hYnNvbHV0ZSB0b3AtMCBlbmQtMFwiO1xuICAgICAgcHJlRWxlbS5hcHBlbmRDaGlsZChzcGlubmVyKTtcbiAgICAgIGNvbnRhaW5lci5hcHBlbmRDaGlsZChwcmVFbGVtKTtcbiAgICB9IGVsc2Uge1xuICAgICAgc3Bpbm5lci5jbGFzc05hbWUgPSBcInNwaW5uZXItYm9yZGVyIHNwaW5uZXItYm9yZGVyLXNtXCI7XG4gICAgICBjb250YWluZXIuYXBwZW5kQ2hpbGQoc3Bpbm5lcik7XG4gICAgfVxuXG4gICAgeWllbGQgY29udGFpbmVyO1xuICB9XG5cbiAgd2ViUk9qcy5yZW5kZXJlZE9qc1tcIjlcIl0gPSB0cnVlO1xuICB5aWVsZCBhd2FpdCByZXN1bHQ7XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtOCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfODtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTgiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoiX3dlYnJfdmFsdWVfOCA9IHtcbiAgY29uc3QgeyBoaWdobGlnaHRSLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici04LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBldmFsdWF0aW9uIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oe1xuICAgIGlkOiBcIndlYnItOC1jb250ZW50c1wiLFxuICAgIGVjaG86IHRydWUsXG4gICAgb3V0cHV0OiB0cnVlXG4gIH0sIGJsb2NrLmF0dHIpO1xuXG4gIC8vIEV2YWx1YXRlIHRoZSBwcm92aWRlZCBSIGNvZGVcbiAgY29uc3QgcmVzdWx0ID0gd2ViUk9qcy5wcm9jZXNzKHtjb2RlOiBibG9jay5jb2RlLCBvcHRpb25zfSwge30pO1xuXG4gIC8vIEVhcmx5IHlpZWxkIHdoaWxlIHdlIHdhaXQgZm9yIHRoZSBmaXJzdCBldmFsdWF0aW9uIGFuZCByZW5kZXJcbiAgaWYgKG9wdGlvbnMub3V0cHV0ICYmICEoXCI4XCIgaW4gd2ViUk9qcy5yZW5kZXJlZE9qcykpIHtcbiAgICBjb25zdCBjb250YWluZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpO1xuICAgIGNvbnN0IHNwaW5uZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpO1xuXG4gICAgaWYgKG9wdGlvbnMuZWNobykge1xuICAgICAgLy8gU2hvdyBvdXRwdXQgYXMgaGlnaGxpZ2h0ZWQgc291cmNlXG4gICAgICBjb25zdCBwcmVFbGVtID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcInByZVwiKTtcbiAgICAgIGNvbnRhaW5lci5jbGFzc05hbWUgPSBcInNvdXJjZUNvZGVcIjtcbiAgICAgIHByZUVsZW0uY2xhc3NOYW1lID0gXCJzb3VyY2VDb2RlIHJcIjtcbiAgICAgIHByZUVsZW0uYXBwZW5kQ2hpbGQoaGlnaGxpZ2h0UihibG9jay5jb2RlKSk7XG4gICAgICBzcGlubmVyLmNsYXNzTmFtZSA9IFwic3Bpbm5lci1ncm93IHNwaW5uZXItZ3Jvdy1zbSBtLTIgcG9zaXRpb24tYWJzb2x1dGUgdG9wLTAgZW5kLTBcIjtcbiAgICAgIHByZUVsZW0uYXBwZW5kQ2hpbGQoc3Bpbm5lcik7XG4gICAgICBjb250YWluZXIuYXBwZW5kQ2hpbGQocHJlRWxlbSk7XG4gICAgfSBlbHNlIHtcbiAgICAgIHNwaW5uZXIuY2xhc3NOYW1lID0gXCJzcGlubmVyLWJvcmRlciBzcGlubmVyLWJvcmRlci1zbVwiO1xuICAgICAgY29udGFpbmVyLmFwcGVuZENoaWxkKHNwaW5uZXIpO1xuICAgIH1cblxuICAgIHlpZWxkIGNvbnRhaW5lcjtcbiAgfVxuXG4gIHdlYlJPanMucmVuZGVyZWRPanNbXCI4XCJdID0gdHJ1ZTtcbiAgeWllbGQgYXdhaXQgcmVzdWx0O1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTciLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzc7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici03IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6Il93ZWJyX3ZhbHVlXzcgPSB7XG4gIGNvbnN0IHsgaGlnaGxpZ2h0UiwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItNy1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIC8vIERlZmF1bHQgZXZhbHVhdGlvbiBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHtcbiAgICBpZDogXCJ3ZWJyLTctY29udGVudHNcIixcbiAgICBlY2hvOiB0cnVlLFxuICAgIG91dHB1dDogdHJ1ZVxuICB9LCBibG9jay5hdHRyKTtcblxuICAvLyBFdmFsdWF0ZSB0aGUgcHJvdmlkZWQgUiBjb2RlXG4gIGNvbnN0IHJlc3VsdCA9IHdlYlJPanMucHJvY2Vzcyh7Y29kZTogYmxvY2suY29kZSwgb3B0aW9uc30sIHt9KTtcblxuICAvLyBFYXJseSB5aWVsZCB3aGlsZSB3ZSB3YWl0IGZvciB0aGUgZmlyc3QgZXZhbHVhdGlvbiBhbmQgcmVuZGVyXG4gIGlmIChvcHRpb25zLm91dHB1dCAmJiAhKFwiN1wiIGluIHdlYlJPanMucmVuZGVyZWRPanMpKSB7XG4gICAgY29uc3QgY29udGFpbmVyID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcImRpdlwiKTtcbiAgICBjb25zdCBzcGlubmVyID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcImRpdlwiKTtcblxuICAgIGlmIChvcHRpb25zLmVjaG8pIHtcbiAgICAgIC8vIFNob3cgb3V0cHV0IGFzIGhpZ2hsaWdodGVkIHNvdXJjZVxuICAgICAgY29uc3QgcHJlRWxlbSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJwcmVcIik7XG4gICAgICBjb250YWluZXIuY2xhc3NOYW1lID0gXCJzb3VyY2VDb2RlXCI7XG4gICAgICBwcmVFbGVtLmNsYXNzTmFtZSA9IFwic291cmNlQ29kZSByXCI7XG4gICAgICBwcmVFbGVtLmFwcGVuZENoaWxkKGhpZ2hsaWdodFIoYmxvY2suY29kZSkpO1xuICAgICAgc3Bpbm5lci5jbGFzc05hbWUgPSBcInNwaW5uZXItZ3JvdyBzcGlubmVyLWdyb3ctc20gbS0yIHBvc2l0aW9uLWFic29sdXRlIHRvcC0wIGVuZC0wXCI7XG4gICAgICBwcmVFbGVtLmFwcGVuZENoaWxkKHNwaW5uZXIpO1xuICAgICAgY29udGFpbmVyLmFwcGVuZENoaWxkKHByZUVsZW0pO1xuICAgIH0gZWxzZSB7XG4gICAgICBzcGlubmVyLmNsYXNzTmFtZSA9IFwic3Bpbm5lci1ib3JkZXIgc3Bpbm5lci1ib3JkZXItc21cIjtcbiAgICAgIGNvbnRhaW5lci5hcHBlbmRDaGlsZChzcGlubmVyKTtcbiAgICB9XG5cbiAgICB5aWVsZCBjb250YWluZXI7XG4gIH1cblxuICB3ZWJST2pzLnJlbmRlcmVkT2pzW1wiN1wiXSA9IHRydWU7XG4gIHlpZWxkIGF3YWl0IHJlc3VsdDtcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC02IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV82O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJfd2Vicl92YWx1ZV82ID0ge1xuICBjb25zdCB7IGhpZ2hsaWdodFIsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTYtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV2YWx1YXRpb24gY29uZmlndXJhdGlvblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7XG4gICAgaWQ6IFwid2Vici02LWNvbnRlbnRzXCIsXG4gICAgZWNobzogdHJ1ZSxcbiAgICBvdXRwdXQ6IHRydWVcbiAgfSwgYmxvY2suYXR0cik7XG5cbiAgLy8gRXZhbHVhdGUgdGhlIHByb3ZpZGVkIFIgY29kZVxuICBjb25zdCByZXN1bHQgPSB3ZWJST2pzLnByb2Nlc3Moe2NvZGU6IGJsb2NrLmNvZGUsIG9wdGlvbnN9LCB7fSk7XG5cbiAgLy8gRWFybHkgeWllbGQgd2hpbGUgd2Ugd2FpdCBmb3IgdGhlIGZpcnN0IGV2YWx1YXRpb24gYW5kIHJlbmRlclxuICBpZiAob3B0aW9ucy5vdXRwdXQgJiYgIShcIjZcIiBpbiB3ZWJST2pzLnJlbmRlcmVkT2pzKSkge1xuICAgIGNvbnN0IGNvbnRhaW5lciA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIik7XG4gICAgY29uc3Qgc3Bpbm5lciA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIik7XG5cbiAgICBpZiAob3B0aW9ucy5lY2hvKSB7XG4gICAgICAvLyBTaG93IG91dHB1dCBhcyBoaWdobGlnaHRlZCBzb3VyY2VcbiAgICAgIGNvbnN0IHByZUVsZW0gPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwicHJlXCIpO1xuICAgICAgY29udGFpbmVyLmNsYXNzTmFtZSA9IFwic291cmNlQ29kZVwiO1xuICAgICAgcHJlRWxlbS5jbGFzc05hbWUgPSBcInNvdXJjZUNvZGUgclwiO1xuICAgICAgcHJlRWxlbS5hcHBlbmRDaGlsZChoaWdobGlnaHRSKGJsb2NrLmNvZGUpKTtcbiAgICAgIHNwaW5uZXIuY2xhc3NOYW1lID0gXCJzcGlubmVyLWdyb3cgc3Bpbm5lci1ncm93LXNtIG0tMiBwb3NpdGlvbi1hYnNvbHV0ZSB0b3AtMCBlbmQtMFwiO1xuICAgICAgcHJlRWxlbS5hcHBlbmRDaGlsZChzcGlubmVyKTtcbiAgICAgIGNvbnRhaW5lci5hcHBlbmRDaGlsZChwcmVFbGVtKTtcbiAgICB9IGVsc2Uge1xuICAgICAgc3Bpbm5lci5jbGFzc05hbWUgPSBcInNwaW5uZXItYm9yZGVyIHNwaW5uZXItYm9yZGVyLXNtXCI7XG4gICAgICBjb250YWluZXIuYXBwZW5kQ2hpbGQoc3Bpbm5lcik7XG4gICAgfVxuXG4gICAgeWllbGQgY29udGFpbmVyO1xuICB9XG5cbiAgd2ViUk9qcy5yZW5kZXJlZE9qc1tcIjZcIl0gPSB0cnVlO1xuICB5aWVsZCBhd2FpdCByZXN1bHQ7XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtNSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfNTtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoiX3dlYnJfdmFsdWVfNSA9IHtcbiAgY29uc3QgeyBoaWdobGlnaHRSLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici01LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBldmFsdWF0aW9uIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oe1xuICAgIGlkOiBcIndlYnItNS1jb250ZW50c1wiLFxuICAgIGVjaG86IHRydWUsXG4gICAgb3V0cHV0OiB0cnVlXG4gIH0sIGJsb2NrLmF0dHIpO1xuXG4gIC8vIEV2YWx1YXRlIHRoZSBwcm92aWRlZCBSIGNvZGVcbiAgY29uc3QgcmVzdWx0ID0gd2ViUk9qcy5wcm9jZXNzKHtjb2RlOiBibG9jay5jb2RlLCBvcHRpb25zfSwge30pO1xuXG4gIC8vIEVhcmx5IHlpZWxkIHdoaWxlIHdlIHdhaXQgZm9yIHRoZSBmaXJzdCBldmFsdWF0aW9uIGFuZCByZW5kZXJcbiAgaWYgKG9wdGlvbnMub3V0cHV0ICYmICEoXCI1XCIgaW4gd2ViUk9qcy5yZW5kZXJlZE9qcykpIHtcbiAgICBjb25zdCBjb250YWluZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpO1xuICAgIGNvbnN0IHNwaW5uZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpO1xuXG4gICAgaWYgKG9wdGlvbnMuZWNobykge1xuICAgICAgLy8gU2hvdyBvdXRwdXQgYXMgaGlnaGxpZ2h0ZWQgc291cmNlXG4gICAgICBjb25zdCBwcmVFbGVtID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcInByZVwiKTtcbiAgICAgIGNvbnRhaW5lci5jbGFzc05hbWUgPSBcInNvdXJjZUNvZGVcIjtcbiAgICAgIHByZUVsZW0uY2xhc3NOYW1lID0gXCJzb3VyY2VDb2RlIHJcIjtcbiAgICAgIHByZUVsZW0uYXBwZW5kQ2hpbGQoaGlnaGxpZ2h0UihibG9jay5jb2RlKSk7XG4gICAgICBzcGlubmVyLmNsYXNzTmFtZSA9IFwic3Bpbm5lci1ncm93IHNwaW5uZXItZ3Jvdy1zbSBtLTIgcG9zaXRpb24tYWJzb2x1dGUgdG9wLTAgZW5kLTBcIjtcbiAgICAgIHByZUVsZW0uYXBwZW5kQ2hpbGQoc3Bpbm5lcik7XG4gICAgICBjb250YWluZXIuYXBwZW5kQ2hpbGQocHJlRWxlbSk7XG4gICAgfSBlbHNlIHtcbiAgICAgIHNwaW5uZXIuY2xhc3NOYW1lID0gXCJzcGlubmVyLWJvcmRlciBzcGlubmVyLWJvcmRlci1zbVwiO1xuICAgICAgY29udGFpbmVyLmFwcGVuZENoaWxkKHNwaW5uZXIpO1xuICAgIH1cblxuICAgIHlpZWxkIGNvbnRhaW5lcjtcbiAgfVxuXG4gIHdlYlJPanMucmVuZGVyZWRPanNbXCI1XCJdID0gdHJ1ZTtcbiAgeWllbGQgYXdhaXQgcmVzdWx0O1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTQiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzQ7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici00IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6Il93ZWJyX3ZhbHVlXzQgPSB7XG4gIGNvbnN0IHsgaGlnaGxpZ2h0UiwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItNC1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIC8vIERlZmF1bHQgZXZhbHVhdGlvbiBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHtcbiAgICBpZDogXCJ3ZWJyLTQtY29udGVudHNcIixcbiAgICBlY2hvOiB0cnVlLFxuICAgIG91dHB1dDogdHJ1ZVxuICB9LCBibG9jay5hdHRyKTtcblxuICAvLyBFdmFsdWF0ZSB0aGUgcHJvdmlkZWQgUiBjb2RlXG4gIGNvbnN0IHJlc3VsdCA9IHdlYlJPanMucHJvY2Vzcyh7Y29kZTogYmxvY2suY29kZSwgb3B0aW9uc30sIHt9KTtcblxuICAvLyBFYXJseSB5aWVsZCB3aGlsZSB3ZSB3YWl0IGZvciB0aGUgZmlyc3QgZXZhbHVhdGlvbiBhbmQgcmVuZGVyXG4gIGlmIChvcHRpb25zLm91dHB1dCAmJiAhKFwiNFwiIGluIHdlYlJPanMucmVuZGVyZWRPanMpKSB7XG4gICAgY29uc3QgY29udGFpbmVyID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcImRpdlwiKTtcbiAgICBjb25zdCBzcGlubmVyID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcImRpdlwiKTtcblxuICAgIGlmIChvcHRpb25zLmVjaG8pIHtcbiAgICAgIC8vIFNob3cgb3V0cHV0IGFzIGhpZ2hsaWdodGVkIHNvdXJjZVxuICAgICAgY29uc3QgcHJlRWxlbSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJwcmVcIik7XG4gICAgICBjb250YWluZXIuY2xhc3NOYW1lID0gXCJzb3VyY2VDb2RlXCI7XG4gICAgICBwcmVFbGVtLmNsYXNzTmFtZSA9IFwic291cmNlQ29kZSByXCI7XG4gICAgICBwcmVFbGVtLmFwcGVuZENoaWxkKGhpZ2hsaWdodFIoYmxvY2suY29kZSkpO1xuICAgICAgc3Bpbm5lci5jbGFzc05hbWUgPSBcInNwaW5uZXItZ3JvdyBzcGlubmVyLWdyb3ctc20gbS0yIHBvc2l0aW9uLWFic29sdXRlIHRvcC0wIGVuZC0wXCI7XG4gICAgICBwcmVFbGVtLmFwcGVuZENoaWxkKHNwaW5uZXIpO1xuICAgICAgY29udGFpbmVyLmFwcGVuZENoaWxkKHByZUVsZW0pO1xuICAgIH0gZWxzZSB7XG4gICAgICBzcGlubmVyLmNsYXNzTmFtZSA9IFwic3Bpbm5lci1ib3JkZXIgc3Bpbm5lci1ib3JkZXItc21cIjtcbiAgICAgIGNvbnRhaW5lci5hcHBlbmRDaGlsZChzcGlubmVyKTtcbiAgICB9XG5cbiAgICB5aWVsZCBjb250YWluZXI7XG4gIH1cblxuICB3ZWJST2pzLnJlbmRlcmVkT2pzW1wiNFwiXSA9IHRydWU7XG4gIHlpZWxkIGF3YWl0IHJlc3VsdDtcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8zO1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJfd2Vicl92YWx1ZV8zID0ge1xuICBjb25zdCB7IGhpZ2hsaWdodFIsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTMtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV2YWx1YXRpb24gY29uZmlndXJhdGlvblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7XG4gICAgaWQ6IFwid2Vici0zLWNvbnRlbnRzXCIsXG4gICAgZWNobzogdHJ1ZSxcbiAgICBvdXRwdXQ6IHRydWVcbiAgfSwgYmxvY2suYXR0cik7XG5cbiAgLy8gRXZhbHVhdGUgdGhlIHByb3ZpZGVkIFIgY29kZVxuICBjb25zdCByZXN1bHQgPSB3ZWJST2pzLnByb2Nlc3Moe2NvZGU6IGJsb2NrLmNvZGUsIG9wdGlvbnN9LCB7fSk7XG5cbiAgLy8gRWFybHkgeWllbGQgd2hpbGUgd2Ugd2FpdCBmb3IgdGhlIGZpcnN0IGV2YWx1YXRpb24gYW5kIHJlbmRlclxuICBpZiAob3B0aW9ucy5vdXRwdXQgJiYgIShcIjNcIiBpbiB3ZWJST2pzLnJlbmRlcmVkT2pzKSkge1xuICAgIGNvbnN0IGNvbnRhaW5lciA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIik7XG4gICAgY29uc3Qgc3Bpbm5lciA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIik7XG5cbiAgICBpZiAob3B0aW9ucy5lY2hvKSB7XG4gICAgICAvLyBTaG93IG91dHB1dCBhcyBoaWdobGlnaHRlZCBzb3VyY2VcbiAgICAgIGNvbnN0IHByZUVsZW0gPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwicHJlXCIpO1xuICAgICAgY29udGFpbmVyLmNsYXNzTmFtZSA9IFwic291cmNlQ29kZVwiO1xuICAgICAgcHJlRWxlbS5jbGFzc05hbWUgPSBcInNvdXJjZUNvZGUgclwiO1xuICAgICAgcHJlRWxlbS5hcHBlbmRDaGlsZChoaWdobGlnaHRSKGJsb2NrLmNvZGUpKTtcbiAgICAgIHNwaW5uZXIuY2xhc3NOYW1lID0gXCJzcGlubmVyLWdyb3cgc3Bpbm5lci1ncm93LXNtIG0tMiBwb3NpdGlvbi1hYnNvbHV0ZSB0b3AtMCBlbmQtMFwiO1xuICAgICAgcHJlRWxlbS5hcHBlbmRDaGlsZChzcGlubmVyKTtcbiAgICAgIGNvbnRhaW5lci5hcHBlbmRDaGlsZChwcmVFbGVtKTtcbiAgICB9IGVsc2Uge1xuICAgICAgc3Bpbm5lci5jbGFzc05hbWUgPSBcInNwaW5uZXItYm9yZGVyIHNwaW5uZXItYm9yZGVyLXNtXCI7XG4gICAgICBjb250YWluZXIuYXBwZW5kQ2hpbGQoc3Bpbm5lcik7XG4gICAgfVxuXG4gICAgeWllbGQgY29udGFpbmVyO1xuICB9XG5cbiAgd2ViUk9qcy5yZW5kZXJlZE9qc1tcIjNcIl0gPSB0cnVlO1xuICB5aWVsZCBhd2FpdCByZXN1bHQ7XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTIiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoiX3dlYnJfdmFsdWVfMiA9IHtcbiAgY29uc3QgeyBoaWdobGlnaHRSLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0yLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBldmFsdWF0aW9uIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oe1xuICAgIGlkOiBcIndlYnItMi1jb250ZW50c1wiLFxuICAgIGVjaG86IHRydWUsXG4gICAgb3V0cHV0OiB0cnVlXG4gIH0sIGJsb2NrLmF0dHIpO1xuXG4gIC8vIEV2YWx1YXRlIHRoZSBwcm92aWRlZCBSIGNvZGVcbiAgY29uc3QgcmVzdWx0ID0gd2ViUk9qcy5wcm9jZXNzKHtjb2RlOiBibG9jay5jb2RlLCBvcHRpb25zfSwge30pO1xuXG4gIC8vIEVhcmx5IHlpZWxkIHdoaWxlIHdlIHdhaXQgZm9yIHRoZSBmaXJzdCBldmFsdWF0aW9uIGFuZCByZW5kZXJcbiAgaWYgKG9wdGlvbnMub3V0cHV0ICYmICEoXCIyXCIgaW4gd2ViUk9qcy5yZW5kZXJlZE9qcykpIHtcbiAgICBjb25zdCBjb250YWluZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpO1xuICAgIGNvbnN0IHNwaW5uZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpO1xuXG4gICAgaWYgKG9wdGlvbnMuZWNobykge1xuICAgICAgLy8gU2hvdyBvdXRwdXQgYXMgaGlnaGxpZ2h0ZWQgc291cmNlXG4gICAgICBjb25zdCBwcmVFbGVtID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcInByZVwiKTtcbiAgICAgIGNvbnRhaW5lci5jbGFzc05hbWUgPSBcInNvdXJjZUNvZGVcIjtcbiAgICAgIHByZUVsZW0uY2xhc3NOYW1lID0gXCJzb3VyY2VDb2RlIHJcIjtcbiAgICAgIHByZUVsZW0uYXBwZW5kQ2hpbGQoaGlnaGxpZ2h0UihibG9jay5jb2RlKSk7XG4gICAgICBzcGlubmVyLmNsYXNzTmFtZSA9IFwic3Bpbm5lci1ncm93IHNwaW5uZXItZ3Jvdy1zbSBtLTIgcG9zaXRpb24tYWJzb2x1dGUgdG9wLTAgZW5kLTBcIjtcbiAgICAgIHByZUVsZW0uYXBwZW5kQ2hpbGQoc3Bpbm5lcik7XG4gICAgICBjb250YWluZXIuYXBwZW5kQ2hpbGQocHJlRWxlbSk7XG4gICAgfSBlbHNlIHtcbiAgICAgIHNwaW5uZXIuY2xhc3NOYW1lID0gXCJzcGlubmVyLWJvcmRlciBzcGlubmVyLWJvcmRlci1zbVwiO1xuICAgICAgY29udGFpbmVyLmFwcGVuZENoaWxkKHNwaW5uZXIpO1xuICAgIH1cblxuICAgIHlpZWxkIGNvbnRhaW5lcjtcbiAgfVxuXG4gIHdlYlJPanMucmVuZGVyZWRPanNbXCIyXCJdID0gdHJ1ZTtcbiAgeWllbGQgYXdhaXQgcmVzdWx0O1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTEiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzE7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6Il93ZWJyX3ZhbHVlXzEgPSB7XG4gIGNvbnN0IHsgaGlnaGxpZ2h0UiwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMS1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIC8vIERlZmF1bHQgZXZhbHVhdGlvbiBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHtcbiAgICBpZDogXCJ3ZWJyLTEtY29udGVudHNcIixcbiAgICBlY2hvOiB0cnVlLFxuICAgIG91dHB1dDogdHJ1ZVxuICB9LCBibG9jay5hdHRyKTtcblxuICAvLyBFdmFsdWF0ZSB0aGUgcHJvdmlkZWQgUiBjb2RlXG4gIGNvbnN0IHJlc3VsdCA9IHdlYlJPanMucHJvY2Vzcyh7Y29kZTogYmxvY2suY29kZSwgb3B0aW9uc30sIHt9KTtcblxuICAvLyBFYXJseSB5aWVsZCB3aGlsZSB3ZSB3YWl0IGZvciB0aGUgZmlyc3QgZXZhbHVhdGlvbiBhbmQgcmVuZGVyXG4gIGlmIChvcHRpb25zLm91dHB1dCAmJiAhKFwiMVwiIGluIHdlYlJPanMucmVuZGVyZWRPanMpKSB7XG4gICAgY29uc3QgY29udGFpbmVyID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcImRpdlwiKTtcbiAgICBjb25zdCBzcGlubmVyID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcImRpdlwiKTtcblxuICAgIGlmIChvcHRpb25zLmVjaG8pIHtcbiAgICAgIC8vIFNob3cgb3V0cHV0IGFzIGhpZ2hsaWdodGVkIHNvdXJjZVxuICAgICAgY29uc3QgcHJlRWxlbSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJwcmVcIik7XG4gICAgICBjb250YWluZXIuY2xhc3NOYW1lID0gXCJzb3VyY2VDb2RlXCI7XG4gICAgICBwcmVFbGVtLmNsYXNzTmFtZSA9IFwic291cmNlQ29kZSByXCI7XG4gICAgICBwcmVFbGVtLmFwcGVuZENoaWxkKGhpZ2hsaWdodFIoYmxvY2suY29kZSkpO1xuICAgICAgc3Bpbm5lci5jbGFzc05hbWUgPSBcInNwaW5uZXItZ3JvdyBzcGlubmVyLWdyb3ctc20gbS0yIHBvc2l0aW9uLWFic29sdXRlIHRvcC0wIGVuZC0wXCI7XG4gICAgICBwcmVFbGVtLmFwcGVuZENoaWxkKHNwaW5uZXIpO1xuICAgICAgY29udGFpbmVyLmFwcGVuZENoaWxkKHByZUVsZW0pO1xuICAgIH0gZWxzZSB7XG4gICAgICBzcGlubmVyLmNsYXNzTmFtZSA9IFwic3Bpbm5lci1ib3JkZXIgc3Bpbm5lci1ib3JkZXItc21cIjtcbiAgICAgIGNvbnRhaW5lci5hcHBlbmRDaGlsZChzcGlubmVyKTtcbiAgICB9XG5cbiAgICB5aWVsZCBjb250YWluZXI7XG4gIH1cblxuICB3ZWJST2pzLnJlbmRlcmVkT2pzW1wiMVwiXSA9IHRydWU7XG4gIHlpZWxkIGF3YWl0IHJlc3VsdDtcbn1cbiJ9LHsiY2VsbE5hbWUiOiJpbnRlcnBvbGF0ZS0xMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgY29uc3QgeyBpbnRlcnBvbGF0ZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgYmxvY2tfaWQgPSBcIjEzXCI7XG4gIGNvbnN0IGxhbmd1YWdlID0gXCJub25lXCI7XG4gIGNvbnN0IGRlZl9tYXAgPSB7XG59O1xuICBjb25zdCBlbGVtID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoYGludGVycG9sYXRlLSR7YmxvY2tfaWR9YCk7XG5cbiAgLy8gU3RvcmUgb3JpZ2luYWwgdGVtcGxhdGVkIEhUTUwgZm9yIHJlZmVyZW5jZSBpbiBmdXR1cmUgcmVhY3RpdmUgdXBkYXRlc1xuICBpZiAoIWVsZW0ub3JpZ0hUTUwpIGVsZW0ub3JpZ0hUTUwgPSBlbGVtLmlubmVySFRNTDtcblxuICAvLyBJbnRlcnBvbGF0ZSByZWFjdGl2ZSBPSlMgdmFyaWFibGVzIGludG8gZXN0YWJsaXNoZWQgSFRNTCBlbGVtZW50XG4gIGVsZW0uaW5uZXJIVE1MID0gZWxlbS5vcmlnSFRNTDtcbiAgT2JqZWN0LmtleXMoZGVmX21hcCkuZm9yRWFjaCgoZGVmKSA9PlxuICAgIGludGVycG9sYXRlKGVsZW0sIFwiJHtcIiArIGRlZiArIFwifVwiLCBkZWZfbWFwW2RlZl0sIGxhbmd1YWdlKVxuICApO1xufVxuIn0seyJjZWxsTmFtZSI6ImludGVycG9sYXRlLTE0IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICBjb25zdCB7IGludGVycG9sYXRlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBibG9ja19pZCA9IFwiMTRcIjtcbiAgY29uc3QgbGFuZ3VhZ2UgPSBcInJcIjtcbiAgY29uc3QgZGVmX21hcCA9IHtcbn07XG4gIGNvbnN0IGVsZW0gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChgaW50ZXJwb2xhdGUtJHtibG9ja19pZH1gKTtcblxuICAvLyBTdG9yZSBvcmlnaW5hbCB0ZW1wbGF0ZWQgSFRNTCBmb3IgcmVmZXJlbmNlIGluIGZ1dHVyZSByZWFjdGl2ZSB1cGRhdGVzXG4gIGlmICghZWxlbS5vcmlnSFRNTCkgZWxlbS5vcmlnSFRNTCA9IGVsZW0uaW5uZXJIVE1MO1xuXG4gIC8vIEludGVycG9sYXRlIHJlYWN0aXZlIE9KUyB2YXJpYWJsZXMgaW50byBlc3RhYmxpc2hlZCBIVE1MIGVsZW1lbnRcbiAgZWxlbS5pbm5lckhUTUwgPSBlbGVtLm9yaWdIVE1MO1xuICBPYmplY3Qua2V5cyhkZWZfbWFwKS5mb3JFYWNoKChkZWYpID0+XG4gICAgaW50ZXJwb2xhdGUoZWxlbSwgXCIke1wiICsgZGVmICsgXCJ9XCIsIGRlZl9tYXBbZGVmXSwgbGFuZ3VhZ2UpXG4gICk7XG59XG4ifSx7ImNlbGxOYW1lIjoiaW50ZXJwb2xhdGUtMTgiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIGNvbnN0IHsgaW50ZXJwb2xhdGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IGJsb2NrX2lkID0gXCIxOFwiO1xuICBjb25zdCBsYW5ndWFnZSA9IFwibm9uZVwiO1xuICBjb25zdCBkZWZfbWFwID0ge1xufTtcbiAgY29uc3QgZWxlbSA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKGBpbnRlcnBvbGF0ZS0ke2Jsb2NrX2lkfWApO1xuXG4gIC8vIFN0b3JlIG9yaWdpbmFsIHRlbXBsYXRlZCBIVE1MIGZvciByZWZlcmVuY2UgaW4gZnV0dXJlIHJlYWN0aXZlIHVwZGF0ZXNcbiAgaWYgKCFlbGVtLm9yaWdIVE1MKSBlbGVtLm9yaWdIVE1MID0gZWxlbS5pbm5lckhUTUw7XG5cbiAgLy8gSW50ZXJwb2xhdGUgcmVhY3RpdmUgT0pTIHZhcmlhYmxlcyBpbnRvIGVzdGFibGlzaGVkIEhUTUwgZWxlbWVudFxuICBlbGVtLmlubmVySFRNTCA9IGVsZW0ub3JpZ0hUTUw7XG4gIE9iamVjdC5rZXlzKGRlZl9tYXApLmZvckVhY2goKGRlZikgPT5cbiAgICBpbnRlcnBvbGF0ZShlbGVtLCBcIiR7XCIgKyBkZWYgKyBcIn1cIiwgZGVmX21hcFtkZWZdLCBsYW5ndWFnZSlcbiAgKTtcbn1cbiJ9LHsiY2VsbE5hbWUiOiJpbnRlcnBvbGF0ZS0xOSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgY29uc3QgeyBpbnRlcnBvbGF0ZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgYmxvY2tfaWQgPSBcIjE5XCI7XG4gIGNvbnN0IGxhbmd1YWdlID0gXCJyXCI7XG4gIGNvbnN0IGRlZl9tYXAgPSB7XG59O1xuICBjb25zdCBlbGVtID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoYGludGVycG9sYXRlLSR7YmxvY2tfaWR9YCk7XG5cbiAgLy8gU3RvcmUgb3JpZ2luYWwgdGVtcGxhdGVkIEhUTUwgZm9yIHJlZmVyZW5jZSBpbiBmdXR1cmUgcmVhY3RpdmUgdXBkYXRlc1xuICBpZiAoIWVsZW0ub3JpZ0hUTUwpIGVsZW0ub3JpZ0hUTUwgPSBlbGVtLmlubmVySFRNTDtcblxuICAvLyBJbnRlcnBvbGF0ZSByZWFjdGl2ZSBPSlMgdmFyaWFibGVzIGludG8gZXN0YWJsaXNoZWQgSFRNTCBlbGVtZW50XG4gIGVsZW0uaW5uZXJIVE1MID0gZWxlbS5vcmlnSFRNTDtcbiAgT2JqZWN0LmtleXMoZGVmX21hcCkuZm9yRWFjaCgoZGVmKSA9PlxuICAgIGludGVycG9sYXRlKGVsZW0sIFwiJHtcIiArIGRlZiArIFwifVwiLCBkZWZfbWFwW2RlZl0sIGxhbmd1YWdlKVxuICApO1xufVxuIn0seyJjZWxsTmFtZSI6ImludGVycG9sYXRlLTI0IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICBjb25zdCB7IGludGVycG9sYXRlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBibG9ja19pZCA9IFwiMjRcIjtcbiAgY29uc3QgbGFuZ3VhZ2UgPSBcIm5vbmVcIjtcbiAgY29uc3QgZGVmX21hcCA9IHtcbn07XG4gIGNvbnN0IGVsZW0gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChgaW50ZXJwb2xhdGUtJHtibG9ja19pZH1gKTtcblxuICAvLyBTdG9yZSBvcmlnaW5hbCB0ZW1wbGF0ZWQgSFRNTCBmb3IgcmVmZXJlbmNlIGluIGZ1dHVyZSByZWFjdGl2ZSB1cGRhdGVzXG4gIGlmICghZWxlbS5vcmlnSFRNTCkgZWxlbS5vcmlnSFRNTCA9IGVsZW0uaW5uZXJIVE1MO1xuXG4gIC8vIEludGVycG9sYXRlIHJlYWN0aXZlIE9KUyB2YXJpYWJsZXMgaW50byBlc3RhYmxpc2hlZCBIVE1MIGVsZW1lbnRcbiAgZWxlbS5pbm5lckhUTUwgPSBlbGVtLm9yaWdIVE1MO1xuICBPYmplY3Qua2V5cyhkZWZfbWFwKS5mb3JFYWNoKChkZWYpID0+XG4gICAgaW50ZXJwb2xhdGUoZWxlbSwgXCIke1wiICsgZGVmICsgXCJ9XCIsIGRlZl9tYXBbZGVmXSwgbGFuZ3VhZ2UpXG4gICk7XG59XG4ifSx7ImNlbGxOYW1lIjoiaW50ZXJwb2xhdGUtMjUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIGNvbnN0IHsgaW50ZXJwb2xhdGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IGJsb2NrX2lkID0gXCIyNVwiO1xuICBjb25zdCBsYW5ndWFnZSA9IFwiclwiO1xuICBjb25zdCBkZWZfbWFwID0ge1xufTtcbiAgY29uc3QgZWxlbSA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKGBpbnRlcnBvbGF0ZS0ke2Jsb2NrX2lkfWApO1xuXG4gIC8vIFN0b3JlIG9yaWdpbmFsIHRlbXBsYXRlZCBIVE1MIGZvciByZWZlcmVuY2UgaW4gZnV0dXJlIHJlYWN0aXZlIHVwZGF0ZXNcbiAgaWYgKCFlbGVtLm9yaWdIVE1MKSBlbGVtLm9yaWdIVE1MID0gZWxlbS5pbm5lckhUTUw7XG5cbiAgLy8gSW50ZXJwb2xhdGUgcmVhY3RpdmUgT0pTIHZhcmlhYmxlcyBpbnRvIGVzdGFibGlzaGVkIEhUTUwgZWxlbWVudFxuICBlbGVtLmlubmVySFRNTCA9IGVsZW0ub3JpZ0hUTUw7XG4gIE9iamVjdC5rZXlzKGRlZl9tYXApLmZvckVhY2goKGRlZikgPT5cbiAgICBpbnRlcnBvbGF0ZShlbGVtLCBcIiR7XCIgKyBkZWYgKyBcIn1cIiwgZGVmX21hcFtkZWZdLCBsYW5ndWFnZSlcbiAgKTtcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXByZWx1ZGUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ3ZWJST2pzID0ge1xuICBjb25zdCB7IFdlYlIsIENoYW5uZWxUeXBlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lLldlYlI7XG4gIGNvbnN0IHtcbiAgICBXZWJSRXZhbHVhdG9yLFxuICAgIFdlYlJFbnZpcm9ubWVudE1hbmFnZXIsXG4gICAgc2V0dXBSLFxuICAgIGI2NERlY29kZSxcbiAgICBjb2xsYXBzZVBhdGhcbiAgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc3RhdHVzQ29udGFpbmVyID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJleGVyY2lzZS1sb2FkaW5nLXN0YXR1c1wiKTtcbiAgY29uc3QgaW5kaWNhdG9yQ29udGFpbmVyID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJleGVyY2lzZS1sb2FkaW5nLWluZGljYXRvclwiKTtcbiAgaW5kaWNhdG9yQ29udGFpbmVyLmNsYXNzTGlzdC5yZW1vdmUoXCJkLW5vbmVcIik7XG5cbiAgbGV0IHN0YXR1c1RleHQgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpXG4gIHN0YXR1c1RleHQuY2xhc3NMaXN0ID0gXCJleGVyY2lzZS1sb2FkaW5nLWRldGFpbHNcIjtcbiAgc3RhdHVzVGV4dCA9IHN0YXR1c0NvbnRhaW5lci5hcHBlbmRDaGlsZChzdGF0dXNUZXh0KTtcbiAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBJbml0aWFsaXNlYDtcblxuICAvLyBIb2lzdCBpbmRpY2F0b3Igb3V0IGZyb20gZmluYWwgc2xpZGUgd2hlbiBydW5uaW5nIHVuZGVyIHJldmVhbFxuICBjb25zdCByZXZlYWxTdGF0dXMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiLnJldmVhbCAuZXhlcmNpc2UtbG9hZGluZy1pbmRpY2F0b3JcIik7XG4gIGlmIChyZXZlYWxTdGF0dXMpIHtcbiAgICByZXZlYWxTdGF0dXMucmVtb3ZlKCk7XG4gICAgZG9jdW1lbnQucXVlcnlTZWxlY3RvcihcIi5yZXZlYWwgPiAuc2xpZGVzXCIpLmFwcGVuZENoaWxkKHJldmVhbFN0YXR1cyk7XG4gIH1cblxuICAvLyBNYWtlIGFueSByZXZlYWwgc2xpZGVzIHdpdGggbGl2ZSBjZWxscyBzY3JvbGxhYmxlXG4gIGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3JBbGwoXCIucmV2ZWFsIC5leGVyY2lzZS1jZWxsXCIpLmZvckVhY2goKGVsKSA9PiB7XG4gICAgZWwuY2xvc2VzdCgnc2VjdGlvbi5zbGlkZScpLmNsYXNzTGlzdC5hZGQoXCJzY3JvbGxhYmxlXCIpO1xuICB9KVxuXG4gIC8vIHdlYlIgc3VwcGxlbWVudGFsIGRhdGEgYW5kIG9wdGlvbnNcbiAgY29uc3QgZGF0YUNvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici1kYXRhXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgZGF0YSA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKGRhdGFDb250ZW50KSk7XG5cbiAgLy8gR3JhYiBsaXN0IG9mIHJlc291cmNlcyB0byBiZSBkb3dubG9hZGVkXG4gIGNvbnN0IGZpbGVzQ29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ2ZnMtZmlsZVxcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGZpbGVzID0gSlNPTi5wYXJzZShiNjREZWNvZGUoZmlsZXNDb250ZW50KSk7XG5cbiAgLy8gSW5pdGlhbGlzZSB3ZWJSIGFuZCBzZXR1cCBmb3IgUiBjb2RlIGV2YWx1YXRpb25cbiAgbGV0IHdlYlJQcm9taXNlID0gKGFzeW5jICh3ZWJSKSA9PiB7XG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyB3ZWJSYDtcbiAgICBhd2FpdCB3ZWJSLmluaXQoKTtcblxuICAgIC8vIEluc3RhbGwgcHJvdmlkZWQgbGlzdCBvZiBwYWNrYWdlc1xuICAgIC8vIEVuc3VyZSB3ZWJSIGRlZmF1bHQgcmVwbyBpcyBpbmNsdWRlZFxuICAgIGRhdGEucGFja2FnZXMucmVwb3MucHVzaChcImh0dHBzOi8vcmVwby5yLXdhc20ub3JnXCIpXG4gICAgYXdhaXQgZGF0YS5wYWNrYWdlcy5wa2dzLm1hcCgocGtnKSA9PiAoKSA9PiB7XG4gICAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHBhY2thZ2U6ICR7cGtnfWA7XG4gICAgICByZXR1cm4gd2ViUi5ldmFsUlZvaWQoYFxuICAgICAgICB3ZWJyOjppbnN0YWxsKHBrZywgcmVwb3MgPSByZXBvcylcbiAgICAgICAgbGlicmFyeShwa2csIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSlcbiAgICAgIGAsIHsgZW52OiB7XG4gICAgICAgIHBrZzogcGtnLFxuICAgICAgICByZXBvczogZGF0YS5wYWNrYWdlcy5yZXBvcyxcbiAgICAgIH19KTtcbiAgICB9KS5yZWR1Y2UoKGN1ciwgbmV4dCkgPT4gY3VyLnRoZW4obmV4dCksIFByb21pc2UucmVzb2x2ZSgpKTtcblxuICAgIC8vIERvd25sb2FkIGFuZCBpbnN0YWxsIHJlc291cmNlc1xuICAgIGF3YWl0IGZpbGVzLm1hcCgoZmlsZSkgPT4gYXN5bmMgKCkgPT4ge1xuICAgICAgY29uc3QgbmFtZSA9IGZpbGUuc3Vic3RyaW5nKGZpbGUubGFzdEluZGV4T2YoJy8nKSArIDEpO1xuICAgICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyByZXNvdXJjZTogJHtuYW1lfWA7XG4gICAgICBjb25zdCByZXNwb25zZSA9IGF3YWl0IGZldGNoKGZpbGUpO1xuICAgICAgaWYgKCFyZXNwb25zZS5vaykge1xuICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYENhbid0IGRvd25sb2FkIFxcYCR7ZmlsZX1cXGAuIEVycm9yICR7cmVzcG9uc2Uuc3RhdHVzfTogXCIke3Jlc3BvbnNlLnN0YXR1c1RleHR9XCIuYCk7XG4gICAgICB9XG4gICAgICBjb25zdCBkYXRhID0gYXdhaXQgcmVzcG9uc2UuYXJyYXlCdWZmZXIoKTtcblxuICAgICAgLy8gU3RvcmUgVVJMcyBpbiB0aGUgY3dkIHdpdGhvdXQgYW55IHN1YmRpcmVjdG9yeSBzdHJ1Y3R1cmVcbiAgICAgIGlmIChmaWxlLmluY2x1ZGVzKFwiOi8vXCIpKSB7XG4gICAgICAgIGZpbGUgPSBuYW1lO1xuICAgICAgfVxuXG4gICAgICAvLyBDb2xsYXBzZSBoaWdoZXIgZGlyZWN0b3J5IHN0cnVjdHVyZVxuICAgICAgZmlsZSA9IGNvbGxhcHNlUGF0aChmaWxlKTtcblxuICAgICAgLy8gQ3JlYXRlIGRpcmVjdG9yeSB0cmVlLCBpZ25vcmluZyBcImRpcmVjdG9yeSBleGlzdHNcIiBWRlMgZXJyb3JzXG4gICAgICBjb25zdCBwYXJ0cyA9IGZpbGUuc3BsaXQoJy8nKS5zbGljZSgwLCAtMSk7XG4gICAgICBsZXQgcGF0aCA9ICcnO1xuICAgICAgd2hpbGUgKHBhcnRzLmxlbmd0aCA+IDApIHtcbiAgICAgICAgcGF0aCArPSBwYXJ0cy5zaGlmdCgpICsgJy8nO1xuICAgICAgICBjb25zdCBhbmFseXNpcyA9IGF3YWl0IHdlYlIuRlMuYW5hbHl6ZVBhdGgocGF0aCk7XG4gICAgICAgIGlmICghYW5hbHlzaXMuZXhpc3RzKSB7XG4gICAgICAgICAgdHJ5IHtcbiAgICAgICAgICAgIGF3YWl0IHdlYlIuRlMubWtkaXIocGF0aCk7XG4gICAgICAgICAgfSBjYXRjaCAoZSkge1xuICAgICAgICAgICAgdGhyb3cgbmV3IEVycm9yKGBGaWxlc3lzdGVtIEVycm9yOiBcIiR7ZS5tZXNzYWdlfVwiLmApO1xuICAgICAgICAgIH1cbiAgICAgICAgfVxuICAgICAgfVxuXG4gICAgICAvLyBXcml0ZSB0aGlzIGZpbGUgdG8gdGhlIFZGU1xuICAgICAgcmV0dXJuIGF3YWl0IHdlYlIuRlMud3JpdGVGaWxlKGZpbGUsIG5ldyBVaW50OEFycmF5KGRhdGEpKTtcbiAgICB9KS5yZWR1Y2UoKGN1ciwgbmV4dCkgPT4gY3VyLnRoZW4obmV4dCksIFByb21pc2UucmVzb2x2ZSgpKTtcblxuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgSW5zdGFsbGluZyB3ZWJSIHNoaW1zYDtcbiAgICBhd2FpdCB3ZWJSLmV2YWxSVm9pZChgd2Vicjo6c2hpbV9pbnN0YWxsKClgKTtcblxuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgV2ViUiBlbnZpcm9ubWVudCBzZXR1cGA7XG4gICAgYXdhaXQgc2V0dXBSKHdlYlIsIGRhdGEpO1xuXG4gICAgc3RhdHVzVGV4dC5yZW1vdmUoKTtcbiAgICBpZiAoc3RhdHVzQ29udGFpbmVyLmNoaWxkcmVuLmxlbmd0aCA9PSAwKSB7XG4gICAgICBzdGF0dXNDb250YWluZXIucGFyZW50Tm9kZS5yZW1vdmUoKTtcbiAgICB9XG4gICAgcmV0dXJuIHdlYlI7XG4gIH0pKG5ldyBXZWJSKGRhdGEub3B0aW9ucykpO1xuXG4gIC8vIEtlZXAgdHJhY2sgb2YgaW5pdGlhbCBPSlMgYmxvY2sgcmVuZGVyXG4gIGNvbnN0IHJlbmRlcmVkT2pzID0ge307XG5cbiAgY29uc3QgcHJvY2VzcyA9IGFzeW5jIChjb250ZXh0LCBpbnB1dHMpID0+IHtcbiAgICBjb25zdCB3ZWJSID0gYXdhaXQgd2ViUlByb21pc2U7XG4gICAgY29uc3QgZXZhbHVhdG9yID0gbmV3IFdlYlJFdmFsdWF0b3Iod2ViUiwgY29udGV4dClcbiAgICBhd2FpdCBldmFsdWF0b3IucHJvY2VzcyhpbnB1dHMpO1xuICAgIHJldHVybiBldmFsdWF0b3IuY29udGFpbmVyO1xuICB9XG5cbiAgcmV0dXJuIHtcbiAgICBwcm9jZXNzLFxuICAgIHdlYlJQcm9taXNlLFxuICAgIHJlbmRlcmVkT2pzLFxuICB9O1xufVxuIn1dfQ==
+eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8zO1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzMgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0zLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBleGVyY2lzZSBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKFxuICAgIHtcbiAgICAgIGlkOiBcIndlYnItMy1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzMgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzMsIHt9KTtcbl93ZWJyX2ZlZWRiYWNrXzMgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzMuZXZhbHVhdG9yKTtcbiAgY29uc3QgZmVlZGJhY2sgPSBhd2FpdCBncmFkZXIuZ3JhZGVFeGVyY2lzZSgpO1xuICBpZiAoIWZlZWRiYWNrKSByZXR1cm4gZW1wdHlGZWVkYmFjaztcbiAgcmV0dXJuIGZlZWRiYWNrO1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTIiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzI7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6Il93ZWJyX3ZhbHVlXzIgPSB7XG4gIGNvbnN0IHsgaGlnaGxpZ2h0UiwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMi1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIC8vIERlZmF1bHQgZXZhbHVhdGlvbiBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHtcbiAgICBpZDogXCJ3ZWJyLTItY29udGVudHNcIixcbiAgICBlY2hvOiB0cnVlLFxuICAgIG91dHB1dDogdHJ1ZVxuICB9LCBibG9jay5hdHRyKTtcblxuICAvLyBFdmFsdWF0ZSB0aGUgcHJvdmlkZWQgUiBjb2RlXG4gIGNvbnN0IHJlc3VsdCA9IHdlYlJPanMucHJvY2Vzcyh7Y29kZTogYmxvY2suY29kZSwgb3B0aW9uc30sIHt9KTtcblxuICAvLyBFYXJseSB5aWVsZCB3aGlsZSB3ZSB3YWl0IGZvciB0aGUgZmlyc3QgZXZhbHVhdGlvbiBhbmQgcmVuZGVyXG4gIGlmIChvcHRpb25zLm91dHB1dCAmJiAhKFwiMlwiIGluIHdlYlJPanMucmVuZGVyZWRPanMpKSB7XG4gICAgY29uc3QgY29udGFpbmVyID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcImRpdlwiKTtcbiAgICBjb25zdCBzcGlubmVyID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcImRpdlwiKTtcblxuICAgIGlmIChvcHRpb25zLmVjaG8pIHtcbiAgICAgIC8vIFNob3cgb3V0cHV0IGFzIGhpZ2hsaWdodGVkIHNvdXJjZVxuICAgICAgY29uc3QgcHJlRWxlbSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJwcmVcIik7XG4gICAgICBjb250YWluZXIuY2xhc3NOYW1lID0gXCJzb3VyY2VDb2RlXCI7XG4gICAgICBwcmVFbGVtLmNsYXNzTmFtZSA9IFwic291cmNlQ29kZSByXCI7XG4gICAgICBwcmVFbGVtLmFwcGVuZENoaWxkKGhpZ2hsaWdodFIoYmxvY2suY29kZSkpO1xuICAgICAgc3Bpbm5lci5jbGFzc05hbWUgPSBcInNwaW5uZXItZ3JvdyBzcGlubmVyLWdyb3ctc20gbS0yIHBvc2l0aW9uLWFic29sdXRlIHRvcC0wIGVuZC0wXCI7XG4gICAgICBwcmVFbGVtLmFwcGVuZENoaWxkKHNwaW5uZXIpO1xuICAgICAgY29udGFpbmVyLmFwcGVuZENoaWxkKHByZUVsZW0pO1xuICAgIH0gZWxzZSB7XG4gICAgICBzcGlubmVyLmNsYXNzTmFtZSA9IFwic3Bpbm5lci1ib3JkZXIgc3Bpbm5lci1ib3JkZXItc21cIjtcbiAgICAgIGNvbnRhaW5lci5hcHBlbmRDaGlsZChzcGlubmVyKTtcbiAgICB9XG5cbiAgICB5aWVsZCBjb250YWluZXI7XG4gIH1cblxuICB3ZWJST2pzLnJlbmRlcmVkT2pzW1wiMlwiXSA9IHRydWU7XG4gIHlpZWxkIGF3YWl0IHJlc3VsdDtcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8xO1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJfd2Vicl92YWx1ZV8xID0ge1xuICBjb25zdCB7IGhpZ2hsaWdodFIsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTEtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV2YWx1YXRpb24gY29uZmlndXJhdGlvblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7XG4gICAgaWQ6IFwid2Vici0xLWNvbnRlbnRzXCIsXG4gICAgZWNobzogdHJ1ZSxcbiAgICBvdXRwdXQ6IHRydWVcbiAgfSwgYmxvY2suYXR0cik7XG5cbiAgLy8gRXZhbHVhdGUgdGhlIHByb3ZpZGVkIFIgY29kZVxuICBjb25zdCByZXN1bHQgPSB3ZWJST2pzLnByb2Nlc3Moe2NvZGU6IGJsb2NrLmNvZGUsIG9wdGlvbnN9LCB7fSk7XG5cbiAgLy8gRWFybHkgeWllbGQgd2hpbGUgd2Ugd2FpdCBmb3IgdGhlIGZpcnN0IGV2YWx1YXRpb24gYW5kIHJlbmRlclxuICBpZiAob3B0aW9ucy5vdXRwdXQgJiYgIShcIjFcIiBpbiB3ZWJST2pzLnJlbmRlcmVkT2pzKSkge1xuICAgIGNvbnN0IGNvbnRhaW5lciA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIik7XG4gICAgY29uc3Qgc3Bpbm5lciA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIik7XG5cbiAgICBpZiAob3B0aW9ucy5lY2hvKSB7XG4gICAgICAvLyBTaG93IG91dHB1dCBhcyBoaWdobGlnaHRlZCBzb3VyY2VcbiAgICAgIGNvbnN0IHByZUVsZW0gPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwicHJlXCIpO1xuICAgICAgY29udGFpbmVyLmNsYXNzTmFtZSA9IFwic291cmNlQ29kZVwiO1xuICAgICAgcHJlRWxlbS5jbGFzc05hbWUgPSBcInNvdXJjZUNvZGUgclwiO1xuICAgICAgcHJlRWxlbS5hcHBlbmRDaGlsZChoaWdobGlnaHRSKGJsb2NrLmNvZGUpKTtcbiAgICAgIHNwaW5uZXIuY2xhc3NOYW1lID0gXCJzcGlubmVyLWdyb3cgc3Bpbm5lci1ncm93LXNtIG0tMiBwb3NpdGlvbi1hYnNvbHV0ZSB0b3AtMCBlbmQtMFwiO1xuICAgICAgcHJlRWxlbS5hcHBlbmRDaGlsZChzcGlubmVyKTtcbiAgICAgIGNvbnRhaW5lci5hcHBlbmRDaGlsZChwcmVFbGVtKTtcbiAgICB9IGVsc2Uge1xuICAgICAgc3Bpbm5lci5jbGFzc05hbWUgPSBcInNwaW5uZXItYm9yZGVyIHNwaW5uZXItYm9yZGVyLXNtXCI7XG4gICAgICBjb250YWluZXIuYXBwZW5kQ2hpbGQoc3Bpbm5lcik7XG4gICAgfVxuXG4gICAgeWllbGQgY29udGFpbmVyO1xuICB9XG5cbiAgd2ViUk9qcy5yZW5kZXJlZE9qc1tcIjFcIl0gPSB0cnVlO1xuICB5aWVsZCBhd2FpdCByZXN1bHQ7XG59XG4ifSx7ImNlbGxOYW1lIjoiaW50ZXJwb2xhdGUtNSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgY29uc3QgeyBpbnRlcnBvbGF0ZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgYmxvY2tfaWQgPSBcIjVcIjtcbiAgY29uc3QgbGFuZ3VhZ2UgPSBcIm5vbmVcIjtcbiAgY29uc3QgZGVmX21hcCA9IHtcbn07XG4gIGNvbnN0IGVsZW0gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChgaW50ZXJwb2xhdGUtJHtibG9ja19pZH1gKTtcblxuICAvLyBTdG9yZSBvcmlnaW5hbCB0ZW1wbGF0ZWQgSFRNTCBmb3IgcmVmZXJlbmNlIGluIGZ1dHVyZSByZWFjdGl2ZSB1cGRhdGVzXG4gIGlmICghZWxlbS5vcmlnSFRNTCkgZWxlbS5vcmlnSFRNTCA9IGVsZW0uaW5uZXJIVE1MO1xuXG4gIC8vIEludGVycG9sYXRlIHJlYWN0aXZlIE9KUyB2YXJpYWJsZXMgaW50byBlc3RhYmxpc2hlZCBIVE1MIGVsZW1lbnRcbiAgZWxlbS5pbm5lckhUTUwgPSBlbGVtLm9yaWdIVE1MO1xuICBPYmplY3Qua2V5cyhkZWZfbWFwKS5mb3JFYWNoKChkZWYpID0+XG4gICAgaW50ZXJwb2xhdGUoZWxlbSwgXCIke1wiICsgZGVmICsgXCJ9XCIsIGRlZl9tYXBbZGVmXSwgbGFuZ3VhZ2UpXG4gICk7XG59XG4ifSx7ImNlbGxOYW1lIjoiaW50ZXJwb2xhdGUtNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgY29uc3QgeyBpbnRlcnBvbGF0ZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgYmxvY2tfaWQgPSBcIjZcIjtcbiAgY29uc3QgbGFuZ3VhZ2UgPSBcInJcIjtcbiAgY29uc3QgZGVmX21hcCA9IHtcbn07XG4gIGNvbnN0IGVsZW0gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChgaW50ZXJwb2xhdGUtJHtibG9ja19pZH1gKTtcblxuICAvLyBTdG9yZSBvcmlnaW5hbCB0ZW1wbGF0ZWQgSFRNTCBmb3IgcmVmZXJlbmNlIGluIGZ1dHVyZSByZWFjdGl2ZSB1cGRhdGVzXG4gIGlmICghZWxlbS5vcmlnSFRNTCkgZWxlbS5vcmlnSFRNTCA9IGVsZW0uaW5uZXJIVE1MO1xuXG4gIC8vIEludGVycG9sYXRlIHJlYWN0aXZlIE9KUyB2YXJpYWJsZXMgaW50byBlc3RhYmxpc2hlZCBIVE1MIGVsZW1lbnRcbiAgZWxlbS5pbm5lckhUTUwgPSBlbGVtLm9yaWdIVE1MO1xuICBPYmplY3Qua2V5cyhkZWZfbWFwKS5mb3JFYWNoKChkZWYpID0+XG4gICAgaW50ZXJwb2xhdGUoZWxlbSwgXCIke1wiICsgZGVmICsgXCJ9XCIsIGRlZl9tYXBbZGVmXSwgbGFuZ3VhZ2UpXG4gICk7XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici1wcmVsdWRlIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoid2ViUk9qcyA9IHtcbiAgY29uc3QgeyBXZWJSLCBDaGFubmVsVHlwZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZS5XZWJSO1xuICBjb25zdCB7XG4gICAgV2ViUkV2YWx1YXRvcixcbiAgICBXZWJSRW52aXJvbm1lbnRNYW5hZ2VyLFxuICAgIHNldHVwUixcbiAgICBiNjREZWNvZGUsXG4gICAgY29sbGFwc2VQYXRoXG4gIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHN0YXR1c0NvbnRhaW5lciA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKFwiZXhlcmNpc2UtbG9hZGluZy1zdGF0dXNcIik7XG4gIGNvbnN0IGluZGljYXRvckNvbnRhaW5lciA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKFwiZXhlcmNpc2UtbG9hZGluZy1pbmRpY2F0b3JcIik7XG4gIGluZGljYXRvckNvbnRhaW5lci5jbGFzc0xpc3QucmVtb3ZlKFwiZC1ub25lXCIpO1xuXG4gIGxldCBzdGF0dXNUZXh0ID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcImRpdlwiKVxuICBzdGF0dXNUZXh0LmNsYXNzTGlzdCA9IFwiZXhlcmNpc2UtbG9hZGluZy1kZXRhaWxzXCI7XG4gIHN0YXR1c1RleHQgPSBzdGF0dXNDb250YWluZXIuYXBwZW5kQ2hpbGQoc3RhdHVzVGV4dCk7XG4gIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgSW5pdGlhbGlzZWA7XG5cbiAgLy8gSG9pc3QgaW5kaWNhdG9yIG91dCBmcm9tIGZpbmFsIHNsaWRlIHdoZW4gcnVubmluZyB1bmRlciByZXZlYWxcbiAgY29uc3QgcmV2ZWFsU3RhdHVzID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvcihcIi5yZXZlYWwgLmV4ZXJjaXNlLWxvYWRpbmctaW5kaWNhdG9yXCIpO1xuICBpZiAocmV2ZWFsU3RhdHVzKSB7XG4gICAgcmV2ZWFsU3RhdHVzLnJlbW92ZSgpO1xuICAgIGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoXCIucmV2ZWFsID4gLnNsaWRlc1wiKS5hcHBlbmRDaGlsZChyZXZlYWxTdGF0dXMpO1xuICB9XG5cbiAgLy8gTWFrZSBhbnkgcmV2ZWFsIHNsaWRlcyB3aXRoIGxpdmUgY2VsbHMgc2Nyb2xsYWJsZVxuICBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKFwiLnJldmVhbCAuZXhlcmNpc2UtY2VsbFwiKS5mb3JFYWNoKChlbCkgPT4ge1xuICAgIGVsLmNsb3Nlc3QoJ3NlY3Rpb24uc2xpZGUnKS5jbGFzc0xpc3QuYWRkKFwic2Nyb2xsYWJsZVwiKTtcbiAgfSlcblxuICAvLyB3ZWJSIHN1cHBsZW1lbnRhbCBkYXRhIGFuZCBvcHRpb25zXG4gIGNvbnN0IGRhdGFDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItZGF0YVxcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGRhdGEgPSBKU09OLnBhcnNlKGI2NERlY29kZShkYXRhQ29udGVudCkpO1xuXG4gIC8vIEdyYWIgbGlzdCBvZiByZXNvdXJjZXMgdG8gYmUgZG93bmxvYWRlZFxuICBjb25zdCBmaWxlc0NvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwidmZzLWZpbGVcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBmaWxlcyA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKGZpbGVzQ29udGVudCkpO1xuXG4gIC8vIEluaXRpYWxpc2Ugd2ViUiBhbmQgc2V0dXAgZm9yIFIgY29kZSBldmFsdWF0aW9uXG4gIGxldCB3ZWJSUHJvbWlzZSA9IChhc3luYyAod2ViUikgPT4ge1xuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgd2ViUmA7XG4gICAgYXdhaXQgd2ViUi5pbml0KCk7XG5cbiAgICAvLyBJbnN0YWxsIHByb3ZpZGVkIGxpc3Qgb2YgcGFja2FnZXNcbiAgICAvLyBFbnN1cmUgd2ViUiBkZWZhdWx0IHJlcG8gaXMgaW5jbHVkZWRcbiAgICBkYXRhLnBhY2thZ2VzLnJlcG9zLnB1c2goXCJodHRwczovL3JlcG8uci13YXNtLm9yZ1wiKVxuICAgIGF3YWl0IGRhdGEucGFja2FnZXMucGtncy5tYXAoKHBrZykgPT4gKCkgPT4ge1xuICAgICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyBwYWNrYWdlOiAke3BrZ31gO1xuICAgICAgcmV0dXJuIHdlYlIuZXZhbFJWb2lkKGBcbiAgICAgICAgd2Vicjo6aW5zdGFsbChwa2csIHJlcG9zID0gcmVwb3MpXG4gICAgICAgIGxpYnJhcnkocGtnLCBjaGFyYWN0ZXIub25seSA9IFRSVUUpXG4gICAgICBgLCB7IGVudjoge1xuICAgICAgICBwa2c6IHBrZyxcbiAgICAgICAgcmVwb3M6IGRhdGEucGFja2FnZXMucmVwb3MsXG4gICAgICB9fSk7XG4gICAgfSkucmVkdWNlKChjdXIsIG5leHQpID0+IGN1ci50aGVuKG5leHQpLCBQcm9taXNlLnJlc29sdmUoKSk7XG5cbiAgICAvLyBEb3dubG9hZCBhbmQgaW5zdGFsbCByZXNvdXJjZXNcbiAgICBhd2FpdCBmaWxlcy5tYXAoKGZpbGUpID0+IGFzeW5jICgpID0+IHtcbiAgICAgIGNvbnN0IG5hbWUgPSBmaWxlLnN1YnN0cmluZyhmaWxlLmxhc3RJbmRleE9mKCcvJykgKyAxKTtcbiAgICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgcmVzb3VyY2U6ICR7bmFtZX1gO1xuICAgICAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCBmZXRjaChmaWxlKTtcbiAgICAgIGlmICghcmVzcG9uc2Uub2spIHtcbiAgICAgICAgdGhyb3cgbmV3IEVycm9yKGBDYW4ndCBkb3dubG9hZCBcXGAke2ZpbGV9XFxgLiBFcnJvciAke3Jlc3BvbnNlLnN0YXR1c306IFwiJHtyZXNwb25zZS5zdGF0dXNUZXh0fVwiLmApO1xuICAgICAgfVxuICAgICAgY29uc3QgZGF0YSA9IGF3YWl0IHJlc3BvbnNlLmFycmF5QnVmZmVyKCk7XG5cbiAgICAgIC8vIFN0b3JlIFVSTHMgaW4gdGhlIGN3ZCB3aXRob3V0IGFueSBzdWJkaXJlY3Rvcnkgc3RydWN0dXJlXG4gICAgICBpZiAoZmlsZS5pbmNsdWRlcyhcIjovL1wiKSkge1xuICAgICAgICBmaWxlID0gbmFtZTtcbiAgICAgIH1cblxuICAgICAgLy8gQ29sbGFwc2UgaGlnaGVyIGRpcmVjdG9yeSBzdHJ1Y3R1cmVcbiAgICAgIGZpbGUgPSBjb2xsYXBzZVBhdGgoZmlsZSk7XG5cbiAgICAgIC8vIENyZWF0ZSBkaXJlY3RvcnkgdHJlZSwgaWdub3JpbmcgXCJkaXJlY3RvcnkgZXhpc3RzXCIgVkZTIGVycm9yc1xuICAgICAgY29uc3QgcGFydHMgPSBmaWxlLnNwbGl0KCcvJykuc2xpY2UoMCwgLTEpO1xuICAgICAgbGV0IHBhdGggPSAnJztcbiAgICAgIHdoaWxlIChwYXJ0cy5sZW5ndGggPiAwKSB7XG4gICAgICAgIHBhdGggKz0gcGFydHMuc2hpZnQoKSArICcvJztcbiAgICAgICAgY29uc3QgYW5hbHlzaXMgPSBhd2FpdCB3ZWJSLkZTLmFuYWx5emVQYXRoKHBhdGgpO1xuICAgICAgICBpZiAoIWFuYWx5c2lzLmV4aXN0cykge1xuICAgICAgICAgIHRyeSB7XG4gICAgICAgICAgICBhd2FpdCB3ZWJSLkZTLm1rZGlyKHBhdGgpO1xuICAgICAgICAgIH0gY2F0Y2ggKGUpIHtcbiAgICAgICAgICAgIHRocm93IG5ldyBFcnJvcihgRmlsZXN5c3RlbSBFcnJvcjogXCIke2UubWVzc2FnZX1cIi5gKTtcbiAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgIH1cblxuICAgICAgLy8gV3JpdGUgdGhpcyBmaWxlIHRvIHRoZSBWRlNcbiAgICAgIHJldHVybiBhd2FpdCB3ZWJSLkZTLndyaXRlRmlsZShmaWxlLCBuZXcgVWludDhBcnJheShkYXRhKSk7XG4gICAgfSkucmVkdWNlKChjdXIsIG5leHQpID0+IGN1ci50aGVuKG5leHQpLCBQcm9taXNlLnJlc29sdmUoKSk7XG5cbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYEluc3RhbGxpbmcgd2ViUiBzaGltc2A7XG4gICAgYXdhaXQgd2ViUi5ldmFsUlZvaWQoYHdlYnI6OnNoaW1faW5zdGFsbCgpYCk7XG5cbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYFdlYlIgZW52aXJvbm1lbnQgc2V0dXBgO1xuICAgIGF3YWl0IHNldHVwUih3ZWJSLCBkYXRhKTtcblxuICAgIHN0YXR1c1RleHQucmVtb3ZlKCk7XG4gICAgaWYgKHN0YXR1c0NvbnRhaW5lci5jaGlsZHJlbi5sZW5ndGggPT0gMCkge1xuICAgICAgc3RhdHVzQ29udGFpbmVyLnBhcmVudE5vZGUucmVtb3ZlKCk7XG4gICAgfVxuICAgIHJldHVybiB3ZWJSO1xuICB9KShuZXcgV2ViUihkYXRhLm9wdGlvbnMpKTtcblxuICAvLyBLZWVwIHRyYWNrIG9mIGluaXRpYWwgT0pTIGJsb2NrIHJlbmRlclxuICBjb25zdCByZW5kZXJlZE9qcyA9IHt9O1xuXG4gIGNvbnN0IHByb2Nlc3MgPSBhc3luYyAoY29udGV4dCwgaW5wdXRzKSA9PiB7XG4gICAgY29uc3Qgd2ViUiA9IGF3YWl0IHdlYlJQcm9taXNlO1xuICAgIGNvbnN0IGV2YWx1YXRvciA9IG5ldyBXZWJSRXZhbHVhdG9yKHdlYlIsIGNvbnRleHQpXG4gICAgYXdhaXQgZXZhbHVhdG9yLnByb2Nlc3MoaW5wdXRzKTtcbiAgICByZXR1cm4gZXZhbHVhdG9yLmNvbnRhaW5lcjtcbiAgfVxuXG4gIHJldHVybiB7XG4gICAgcHJvY2VzcyxcbiAgICB3ZWJSUHJvbWlzZSxcbiAgICByZW5kZXJlZE9qcyxcbiAgfTtcbn1cbiJ9XX0=
 </script>
 <div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
 <div id="exercise-loading-status" class="d-flex gap-2">
@@ -28810,16 +28968,8 @@ WyJEYXRhL3N0dWRlbnQvc3R1ZGVudC50eHQiLCJEYXRhL3N0dWRlbnQvc3R1ZGVudC1wb3IuY3N2Iiwi
 </script>
 </section>
 </section>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn1"><p>types of random variables are covered in more detail in the Inferential Statistics Short Course.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>The use of 0/1 coding for binary outcomes is similar to the use of <em>dummy variables</em> for categorical predictors in linear regression, where each category is represented by a separate binary variable coded as 0 or 1.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Note that no student in the dataset has 0 study time, so this is an <span class="glossary">extrapolation</span>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
 
- <!-- /main -->
+</main> <!-- /main -->
 <script>
 
 
@@ -30653,7 +30803,7 @@ window._ojs.runtime.interpretFromScriptTags();
     }
   });
   </script>
- <!-- /content -->
+</div> <!-- /content -->
 
 
 

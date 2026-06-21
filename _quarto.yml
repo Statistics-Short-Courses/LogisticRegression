@@ -9,9 +9,8 @@ book:
   title: "Logistic Regression with R"
   chapters:
     - index.qmd
-    - ch_1_motivation.qmd
-    - ch_2_introduction-to-logistic-regression.qmd
-    - ch_3_fitting-logistic-regression-models.qmd
+    - ch_1_logit.qmd
+    - ch_2_lr.qmd
     - ch_4_assessing-model-fit.qmd
     - ch_5_predictions-from-logistic-regression-models.qmd
     - ch_6_extensions-case-study.qmd

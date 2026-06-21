@@ -12,17 +12,16 @@
 ## Why ordinary linear regression is not appropriate
 ## Probability, odds, log-odds, and the logistic function
 
-# From linear models to logistic regression
+# From linear models to fitting logistic regression
 ## Linear regression as a mean model plus an error model
 ## The Bernoulli/binomial error model for binary outcomes
 ## The GLM framework
 ## Logistic regression as a binomial GLM with a logit link
 ## The `glm(..., family = binomial)` formula in R
-
-# Fitting logistic regression models
 ## Maximum likelihood estimation
 ## Estimated coefficients versus true parameters
 ## Coefficients on the log-odds scale
+## Odds ratios are not probability differences
 ## Odds ratios and confidence intervals
 ## Adding multiple predictors and categorical predictors
 

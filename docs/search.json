@@ -44,7 +44,7 @@
     "href": "index.html#course-map",
     "title": "Logistic Regression with R",
     "section": "Course map",
-    "text": "Course map\n\n1  Motivation: modeling binary outcomes motivates binary outcomes and introduces probability, odds, log-odds, and the logistic function.\nFrom linear models to logistic regression maps logistic regression onto the linear-model framework using GLMs, the logit link, and a Bernoulli/binomial error model.\nFitting logistic regression models fits logistic regression models with glm() and interprets coefficients, odds ratios, and confidence intervals.\nAssessing logistic regression models assesses model fit with deviance, likelihood ratio tests, AIC, pseudo R-squared, and diagnostics.\nPredictions from logistic regression models generates predicted probabilities, classifications, confusion matrices, ROC curves, and AUC.\nModel building and a mini case study brings the workflow together in a mini case study with multivariable models, interactions, and reporting.",
+    "text": "Course map\n\n1  Motivation: modeling binary outcomes motivates binary outcomes and introduces probability, odds, log-odds, and the logistic function.\nFrom linear models to fitting logistic regression maps logistic regression onto the linear-model framework using GLMs, the logit link, and a Bernoulli/binomial error model, then Fitting logistic regression models fits logistic regression models with glm() and interprets coefficients, odds ratios, and confidence intervals.\nAssessing logistic regression models assesses model fit with deviance, likelihood ratio tests, AIC, pseudo R-squared, and diagnostics.\nPredictions from logistic regression models generates predicted probabilities, classifications, confusion matrices, ROC curves, and AUC.\nModel building and a mini case study brings the workflow together in a mini case study with multivariable models, interactions, and reporting.",
     "crumbs": [
       "Course Overview"
     ]
@@ -60,8 +60,8 @@
     ]
   },
   {
-    "objectID": "ch_1_motivation.html",
-    "href": "ch_1_motivation.html",
+    "objectID": "ch_1_logit.html",
+    "href": "ch_1_logit.html",
     "title": "1  Motivation: modeling binary outcomes",
     "section": "",
     "text": "1.1 A quick review of linear regression\nIn the Linear Regression Short Course (LRSC), we used a linear model to predict an outcome variable \\(Y\\) from one or more predictor variables, \\(X_1, X_2, \\ldots, X_p\\). Something like this:\n\\[\nY = \\beta_0 + \\beta_1 X_1 + \\beta_2 X_2 + ... + \\epsilon\n\\]\nwhere \\(\\epsilon\\) is an error term that captures the variability in \\(Y\\) that is not explained by the predictors. In the cases we considered, Y was a continuous variable (e.g., salary, Naplan score, etc.), and the model described how the expected value of the outcome, \\(E[Y]\\), changed as the predictors varied. For example, in the case of salary, the model described how the expected salary (\\(E[Y]\\)) of a worker changed as their years of experience (\\(X\\)) increased.\nIn many real-world situations, however, we want to predict an outcome that is not continuous. Instead, often what we want to predict or explain is a categorical variable. The simplest case of this is a binary outcome — that is, an outcome with only two possible categories (e.g. success/failure, yes/no, 0/1) 1.",
@@ -70,8 +70,8 @@
     ]
   },
   {
-    "objectID": "ch_1_motivation.html#a-quick-review-of-linear-regression",
-    "href": "ch_1_motivation.html#a-quick-review-of-linear-regression",
+    "objectID": "ch_1_logit.html#a-quick-review-of-linear-regression",
+    "href": "ch_1_logit.html#a-quick-review-of-linear-regression",
     "title": "1  Motivation: modeling binary outcomes",
     "section": "",
     "text": "Continue\n\n\n\nExample 1.1: A binary outcome: pass or fail\nJohno is a student studying for an important exam. He wants to understand how his study time affects his chances of passing the exam. To this end, he collects data on previous students’ study times and whether they passed or failed the exam. Here is a sample of the data Johno collected:\n\nDataCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nJohno wants to use this data to model the relationship between study time and the probability of passing the exam. He identifies his outcome variable, \\(Y_i\\), as the binary variable indicating whether student \\(i\\) passed or failed the exam, and his predictor variable, \\(X_i\\), as the amount of time that student spent studying. Therefore, Johno’s goal is to produce a statistical model that predicts \\(Y_i\\) (pass/fail) based on \\(X_i\\) (study time): \\[\nY_i = f(X_i) + \\varepsilon\n\\]\n\n\n\n1.1.1 From categories to probabilities\n\n1.1.1.1 The average of a binary outcome\nRecall that the error term \\(\\epsilon\\) in a regression model captures the difference between the observed outcome \\(Y\\) and the expected outcome \\(E[Y]\\) from the model.\n\nKey-point: Expected value and error term\nThe expected value of a random variable \\(Y\\), denoted \\(E[Y]\\), can be thought of as the long-run average value of \\(Y\\) if we were to repeat the process that generates \\(Y\\) many times. That is, if we were to collect many samples of \\(Y\\) under the same conditions, the average of those samples would converge to \\(E[Y]\\). The error term \\(\\varepsilon\\) represents the deviation of an observed value of \\(Y\\) from its expected value \\(E[Y]\\).\nThe error term \\(\\varepsilon\\) is the difference between the observed value of \\(Y\\) and its expected value \\(E[Y]\\) i.e. \\(\\varepsilon = Y - E[Y]\\). It captures the variability in \\(Y\\) that is not explained by the predictors in the model.\nIn regression models, we typically assume that the error term \\(\\varepsilon\\) has a mean of zero (i.e., \\(E[\\varepsilon] = 0\\)), which implies that the expected value of \\(Y\\) given the predictors is equal to the predicted value from the model (i.e., \\(E[Y] = f(X)\\)).\n\n\nWhen \\(Y\\) was a continuous variable, \\(E[Y]\\) straightforwardly represented the average value of \\(Y\\) for given values of the predictors (e.g. the average (AKA expected, or predicted) salary of a worker of 9 years experience). But what is the ‘average’ of a binary (categorical) variable?\n\nContinue\n\nTo model a binary outcome statistically, we have to represent it as a Random Variable rather than just a label. We can do this by coding the two categories as numbers, e.g. \\(0\\) and \\(1\\)2. For example, in Johno’s case\n\nExample 1.2: Coding the binary outcome\nWe can code the outcome variable \\(Y\\) as follows: \\[\nY =\n\\begin{cases}\n\\text{1} & \\text{if student passes the exam} \\\\\n\\text{0} & \\text{if student fails the exam}\n\\end{cases}\n\\]\nin R,\n\nDataCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nContinue\n\nThe choice of using 0 and 1 here is not arbitrary. While we could have coded the categories as -1 and 1, or 0 and 2, the 0/1 coding has a special property that makes it particularly useful for modeling. In particular, when we code a binary outcome this way, the mean of the outcome variable, \\(E[Y]\\) has a direct interpretation: \\[\nE[Y] = P(Y=1)\n\\]\nThat is,\n\nKey-point\nThe expected value (mean) of a binary variable coded as 0/1 is the probability of the outcome being 1. We label this probability as \\(p\\): \\[\np = \\Pr(Y=1) = E[Y]\n\\]\n\n\nIn Johno’s case, \\(E[Y]\\) represents the probability of passing the exam. ::: Example ### Mean of a binary variable as a probability If we ignore study time for a moment and just look at the overall pass/fail rates in Johno’s dataset, we can calculate the mean of the binary outcome variable: :::: {.panel-tabset} ### Output\n\n\n\n\n\n\n\n\n\n\n\n1.1.2 Code\n::::\nThis means that the probability of a randomly selected student in Johno’s dataset passing the exam is approximately webr round(mean(student_performance$pass_fail_num), 2).\n:::\n\nContinue\n\n\n\n1.1.3 Why not use linear regression?\nWe now have a way to represent our binary outcome variable as a random variable, and we understand that the expected value of this variable has a meaningful interpretation as a probability.\nA natural question at this point is: why not just use linear regression to model the relationship between \\(X\\) and \\(E[Y]\\)? After all, probabilities are continuous values between 0 and 1. We could fit a linear model like this: \\[\np= E[Y] = \\beta_0 + \\beta_1 X\n\\]\n\nExample 1.3: When linear regression is not appropriate\nHaving completed the Linear Regression Short Course, Johno considers using linear regression to model the relationship between study time and the probability of passing the exam.\nHe first plots the data in a scatter plot with a fitted linear regression line:\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(note the use of geom_jitter() to add some random noise to the points so they don’t overlap exactly).\nAnd obtains the following estimate for the effect of study time on the probability of passing: :::: {.panel-tabset} ### Output\n\n\n\n\n\n\n\n\n\n1.1.4 Code",
@@ -80,8 +80,8 @@
     ]
   },
   {
-    "objectID": "ch_1_motivation.html#log-odds-logit",
-    "href": "ch_1_motivation.html#log-odds-logit",
+    "objectID": "ch_1_logit.html#log-odds-logit",
+    "href": "ch_1_logit.html#log-odds-logit",
     "title": "1  Motivation: modeling binary outcomes",
     "section": "1.2 Log-odds (logit)",
     "text": "1.2 Log-odds (logit)\nWhile odds are an improvement over raw probabilities, they are still bounded below by zero — which means a linear model for the odds could still, in principle, produce impossible negative predictions. We can fix this by taking one more step: the logarithm of the odds.\n\nKey-term: Log-odds (logit)\nThe log-odds, or logit, of a probability \\(p\\) is defined as the natural log of the odds:\n\\[\n\\text{logit}(p) = \\log\\left(\\frac{p}{1-p}\\right)\n\\]\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBecause the logarithm stretches the odds scale — which runs from 0 to \\(\\infty\\) — the log-odds scale runs from \\(-\\infty\\) to \\(+\\infty\\). This means we can safely model log-odds with a linear predictor without worrying about impossible predictions.\n\nKey-point: The three scales\n\n\n\nScale\nRange\nFormula\n\n\n\n\nProbability\n\\([0, 1]\\)\n\\(p\\)\n\n\nOdds\n\\([0, \\infty)\\)\n\\(p / (1-p)\\)\n\n\nLog-odds\n\\((-\\infty, +\\infty)\\)\n\\(\\log(p / (1-p))\\)\n\n\n\nMoving from probability → odds → log-odds trades interpretability for a scale that plays nicely with a linear model.\n\n\n\nExercise 1.3: Computing log-odds\nA student has a probability of passing of \\(p = 0.75\\). Using the logit formula, calculate their log-odds of passing.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\np &lt;- 0.75\nlog_odds &lt;- log(p / (1 - p))\nlog_odds\np &lt;- 0.75\nlog_odds &lt;- log(p / (1 - p))\nlog_odds\n\n\n\n\n\n\n\n\n\n\n\n\n1.2.1 The logistic function\nIf we model log-odds with a linear predictor, we need a way to convert predicted log-odds back into a probability. The function that does this is the logistic function (also called the inverse logit):\n\\[\np = \\frac{e^{\\eta}}{1 + e^{\\eta}} = \\frac{1}{1 + e^{-\\eta}}\n\\]\nwhere \\(\\eta\\) (eta) is the log-odds value. In R, this is plogis().\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe S-shaped curve of the logistic function captures exactly the kind of nonlinear relationship we expect between a predictor and a probability: as the log-odds increase, the probability rises steeply near 0.5 but flattens as it approaches 0 or 1.\n\nNote: A useful symmetry\nThe logit and the logistic function are inverses of each other:\n\\[\n\\text{logit}(p) = \\eta \\quad \\Longleftrightarrow \\quad p = \\text{plogis}(\\eta)\n\\]\nYou can think of the logit as the link from probability to the linear predictor, and the logistic function as the back-transform from the linear predictor to a probability.\n\n\nThis pair — a linear predictor on the log-odds scale, combined with the logistic function to convert back to probabilities — is the foundation of logistic regression, which we cover in the next chapter.",
@@ -90,8 +90,8 @@
     ]
   },
   {
-    "objectID": "ch_1_motivation.html#footnotes",
-    "href": "ch_1_motivation.html#footnotes",
+    "objectID": "ch_1_logit.html#footnotes",
+    "href": "ch_1_logit.html#footnotes",
     "title": "1  Motivation: modeling binary outcomes",
     "section": "",
     "text": "types of random variables are covered in more detail in the Inferential Statistics Short Course.↩︎\nThe use of 0/1 coding for binary outcomes is similar to the use of dummy variables for categorical predictors in linear regression, where each category is represented by a separate binary variable coded as 0 or 1.↩︎\nNote that no student in the dataset has 0 study time, so this is an extrapolation.↩︎",
@@ -100,403 +100,353 @@
     ]
   },
   {
-    "objectID": "ch_2_introduction-to-logistic-regression.html",
-    "href": "ch_2_introduction-to-logistic-regression.html",
-    "title": "2  From Linear Models to Logistic Regression",
+    "objectID": "ch_2_lr.html",
+    "href": "ch_2_lr.html",
+    "title": "2  From Linear Models to Fitting Logistic Regression",
     "section": "",
-    "text": "3 From linear models to logistic regression\nIn Chapter 1 we introduced the practical problem: our outcome is binary, so the expected value of the outcome is a probability. We also saw the key mathematical move:\n\\[\n\\text{logit}(p) = \\log\\left(\\frac{p}{1-p}\\right),\n\\]\nwhich lets us place probabilities on a scale that can be modelled with a straight line.\nThis chapter completes the connection with the Linear Regression Short Course. The important change is not only the logistic curve. We also need to replace the normal error model from linear regression with an error model that makes sense for binary data.",
+    "text": "3 From linear models to fitting logistic regression\nIn Chapter 1 we introduced the practical problem: our outcome is binary, so the expected value of the outcome is a probability. We also saw the key mathematical move:\n\\[\n\\text{logit}(p) = \\log\\left(\\frac{p}{1-p}\\right),\n\\]\nwhich lets us place probabilities on a scale that can be modelled with a straight line.\nThis chapter connects that idea to the Linear Regression Short Course. We will first replace the normal error model from linear regression with an error model that makes sense for binary data, then fit the resulting model with glm().",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>From Linear Models to Logistic Regression</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>From Linear Models to Fitting Logistic Regression</span>"
     ]
   },
   {
-    "objectID": "ch_2_introduction-to-logistic-regression.html#sec-linear-regression-template",
-    "href": "ch_2_introduction-to-logistic-regression.html#sec-linear-regression-template",
-    "title": "2  From Linear Models to Logistic Regression",
+    "objectID": "ch_2_lr.html#sec-linear-regression-template",
+    "href": "ch_2_lr.html#sec-linear-regression-template",
+    "title": "2  From Linear Models to Fitting Logistic Regression",
     "section": "3.1 The linear regression template",
     "text": "3.1 The linear regression template\nIn the Linear Regression Short Course, a simple linear model was written as\n\\[\nY_i = \\beta_0 + \\beta_1 X_i + \\varepsilon_i,\n\\qquad \\varepsilon_i \\sim N(0, \\sigma^2).\n\\]\nEquivalently, we can separate the model into two parts:\n\\[\nY_i \\sim N(\\mu_i, \\sigma^2)\n\\]\nand\n\\[\n\\mu_i = E[Y_i] = \\beta_0 + \\beta_1 X_i.\n\\]\nThe first line describes how the observed outcomes vary around their mean. The second line describes how the mean changes with the predictor.\n\nKey-point\nLinear regression has both a mean model and an error model. The mean model is the straight line. The error model says observations vary around that line with normally distributed errors and constant variance.\n\n\nIn Chapter 1, we focused on the mean model for binary outcomes: how \\(p_i = E[Y_i]\\) might change with \\(X_i\\). We now add the missing error model.\n\nContinue",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>From Linear Models to Logistic Regression</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>From Linear Models to Fitting Logistic Regression</span>"
     ]
   },
   {
-    "objectID": "ch_2_introduction-to-logistic-regression.html#sec-binary-error-model",
-    "href": "ch_2_introduction-to-logistic-regression.html#sec-binary-error-model",
-    "title": "2  From Linear Models to Logistic Regression",
+    "objectID": "ch_2_lr.html#sec-binary-error-model",
+    "href": "ch_2_lr.html#sec-binary-error-model",
+    "title": "2  From Linear Models to Fitting Logistic Regression",
     "section": "3.2 The error model for a binary outcome",
     "text": "3.2 The error model for a binary outcome\nFor Johno’s student example, each outcome is either 1 (pass) or 0 (fail):\n\\[\nY_i =\n\\begin{cases}\n1 & \\text{if student } i \\text{ passes},\\\\\n0 & \\text{if student } i \\text{ fails}.\n\\end{cases}\n\\]\nIf the probability that student \\(i\\) passes is \\(p_i\\), then the appropriate probability model is\n\\[\nY_i \\sim \\text{Bernoulli}(p_i).\n\\]\nThis is the one-trial version of the binomial distribution. It has two useful properties:\n\\[\nE[Y_i] = p_i\n\\]\nand\n\\[\n\\text{Var}(Y_i) = p_i(1-p_i).\n\\]\nThis variance is not constant. A probability near 0.5 gives more binary variation than a probability near 0 or 1. That is one reason the linear regression error model is not suitable here.\n\nKey-point\nFor binary outcomes, the randomness is not represented by adding a normally distributed \\(\\varepsilon_i\\) to a straight line. Instead, the observed 0/1 outcome is treated as a Bernoulli draw with event probability \\(p_i\\).\n\n\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\np &lt;- seq(0.01, 0.99, by = 0.01)\nplot(p, p * (1 - p), type = \"l\", lwd = 2,\n     xlab = \"Probability of passing (p)\",\n     ylab = \"Bernoulli variance: p(1 - p)\")\n\n\n\n\n\nContinue",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>From Linear Models to Logistic Regression</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>From Linear Models to Fitting Logistic Regression</span>"
     ]
   },
   {
-    "objectID": "ch_2_introduction-to-logistic-regression.html#sec-glm-framework",
-    "href": "ch_2_introduction-to-logistic-regression.html#sec-glm-framework",
-    "title": "2  From Linear Models to Logistic Regression",
+    "objectID": "ch_2_lr.html#sec-glm-framework",
+    "href": "ch_2_lr.html#sec-glm-framework",
+    "title": "2  From Linear Models to Fitting Logistic Regression",
     "section": "3.3 Generalised linear models",
     "text": "3.3 Generalised linear models\nA generalised linear model (GLM) has three pieces:\n\nA distribution for the outcome.\nA linear predictor.\nA link function connecting the expected outcome to the linear predictor.\n\nFor linear regression, these pieces are:\n\\[\nY_i \\sim N(\\mu_i, \\sigma^2),\n\\qquad\n\\mu_i = \\eta_i,\n\\qquad\n\\eta_i = \\beta_0 + \\beta_1 X_i.\n\\]\nThe link is the identity link because the mean itself is modelled directly by the linear predictor.\nFor logistic regression, the pieces are:\n\\[\nY_i \\sim \\text{Bernoulli}(p_i),\n\\qquad\n\\text{logit}(p_i) = \\eta_i,\n\\qquad\n\\eta_i = \\beta_0 + \\beta_1 X_i.\n\\]\nThe linear predictor is still linear. What changes is the outcome distribution and the link function.\n\n\n\n\n\n\n\n\nComponent\nLinear regression\nLogistic regression\n\n\n\n\nOutcome\nContinuous \\(Y_i\\)\nBinary \\(Y_i \\in \\{0,1\\}\\)\n\n\nDistribution\nNormal\nBernoulli / binomial\n\n\nMean\n\\(\\mu_i = E[Y_i]\\)\n\\(p_i = E[Y_i] = P(Y_i=1)\\)\n\n\nLink\nIdentity: \\(\\mu_i = \\eta_i\\)\nLogit: \\(\\log(p_i/(1-p_i)) = \\eta_i\\)\n\n\nLinear predictor\n\\(\\eta_i = \\beta_0 + \\beta_1 X_i\\)\n\\(\\eta_i = \\beta_0 + \\beta_1 X_i\\)\n\n\nR function\nlm()\nglm(..., family = binomial)\n\n\n\n\nKey-point\nLogistic regression is not “nonlinear regression” in the usual sense. It is a linear model for the log-odds, paired with a Bernoulli/binomial error model and a logistic back-transformation to probabilities.\n\n\n\nContinue",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>From Linear Models to Logistic Regression</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>From Linear Models to Fitting Logistic Regression</span>"
     ]
   },
   {
-    "objectID": "ch_2_introduction-to-logistic-regression.html#sec-logistic-regression-model",
-    "href": "ch_2_introduction-to-logistic-regression.html#sec-logistic-regression-model",
-    "title": "2  From Linear Models to Logistic Regression",
+    "objectID": "ch_2_lr.html#sec-logistic-regression-model",
+    "href": "ch_2_lr.html#sec-logistic-regression-model",
+    "title": "2  From Linear Models to Fitting Logistic Regression",
     "section": "3.4 The logistic regression model",
     "text": "3.4 The logistic regression model\nFor the student example with study time as the predictor, the logistic regression model is\n\\[\nY_i \\sim \\text{Bernoulli}(p_i)\n\\]\nand\n\\[\n\\text{logit}(p_i) = \\beta_0 + \\beta_1 \\text{studytime}_i.\n\\]\nTo return to the probability scale, we use the logistic function:\n\\[\np_i = \\frac{1}{1 + e^{-(\\beta_0 + \\beta_1 \\text{studytime}_i)}}.\n\\]\nIn R, the inverse-logit transformation is plogis().\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\neta &lt;- seq(-6, 6, length.out = 200)\nplot(eta, plogis(eta), type = \"l\", lwd = 2,\n     xlab = \"Linear predictor (eta)\",\n     ylab = \"Probability\")\nabline(h = c(0, 1), col = \"grey80\", lty = 3)\n\n\n\n\nThe curve is S-shaped on the probability scale, but the model is still straight on the log-odds scale.\n\nContinue",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>From Linear Models to Logistic Regression</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>From Linear Models to Fitting Logistic Regression</span>"
     ]
   },
   {
-    "objectID": "ch_2_introduction-to-logistic-regression.html#sec-glm-formula-r",
-    "href": "ch_2_introduction-to-logistic-regression.html#sec-glm-formula-r",
-    "title": "2  From Linear Models to Logistic Regression",
+    "objectID": "ch_2_lr.html#sec-glm-formula-r",
+    "href": "ch_2_lr.html#sec-glm-formula-r",
+    "title": "2  From Linear Models to Fitting Logistic Regression",
     "section": "3.5 The formula in R",
     "text": "3.5 The formula in R\nThe R formula looks almost the same as the formula for lm():\n\nOutputCode\n\n\n\n\n\nCall:\nglm(formula = pass_exam ~ studytime, family = binomial, data = students)\n\nCoefficients:\n            Estimate Std. Error z value Pr(&gt;|z|)\n(Intercept)   0.3222     0.2818   1.143    0.253\nstudytime     0.1939     0.1311   1.479    0.139\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 500.50  on 394  degrees of freedom\nResidual deviance: 498.27  on 393  degrees of freedom\nAIC: 502.27\n\nNumber of Fisher Scoring iterations: 4\n\n\n\n\n\nfit_study &lt;- glm(pass_exam ~ studytime,\n                 data = students,\n                 family = binomial)\nsummary(fit_study)\n\n\n\n\nThe formula pass_exam ~ studytime gives the linear predictor:\n\\[\n\\eta_i = \\beta_0 + \\beta_1 \\text{studytime}_i.\n\\]\nThe argument family = binomial tells R to use the Bernoulli/binomial error model with the logit link. So the single glm() call contains the two changes we need for binary outcomes: a different error model and a different link.\n\nNote\nThe default link for family = binomial is the logit link. Writing family = binomial(link = \"logit\") is equivalent, but more explicit.",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>From Linear Models to Logistic Regression</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>From Linear Models to Fitting Logistic Regression</span>"
     ]
   },
   {
-    "objectID": "ch_2_introduction-to-logistic-regression.html#sec-chapter02-summary",
-    "href": "ch_2_introduction-to-logistic-regression.html#sec-chapter02-summary",
-    "title": "2  From Linear Models to Logistic Regression",
-    "section": "3.6 Chapter summary",
-    "text": "3.6 Chapter summary\nLogistic regression follows the same modelling logic as linear regression:\n\nChoose an outcome model.\nChoose a linear predictor.\nEstimate the unknown coefficients from data.\nUse the fitted model for interpretation, prediction, and model checking.\n\nThe difference is that binary outcomes need a Bernoulli/binomial error model and a logit link. The next chapter focuses on step 3: how glm() estimates the coefficients and how to read the fitted model.",
+    "objectID": "ch_2_lr.html#sec-fitting",
+    "href": "ch_2_lr.html#sec-fitting",
+    "title": "2  From Linear Models to Fitting Logistic Regression",
+    "section": "3.6 Fitting logistic regression models",
+    "text": "3.6 Fitting logistic regression models\nThe coefficients \\(\\beta_0\\) and \\(\\beta_1\\) are the unknown parameters of the data-generating model. Fitting a logistic regression means estimating those parameters from the observed data.\n\n3.6.1 From least squares to likelihood\nFor linear regression, lm() chooses the line that minimises the sum of squared residuals. This works because the model assumes normally distributed errors around a mean line.\nFor logistic regression, the outcome is 0 or 1, so squared residuals are no longer the natural fitting criterion. Instead, glm() uses maximum likelihood estimation. It chooses the coefficient estimates that make the observed sequence of passes and fails most likely under the Bernoulli model.\n\nKey-point\nMaximum likelihood asks: among all possible coefficient values, which values make the observed data most plausible under the model?\n\n\nIf student \\(i\\) has predicted probability \\(p_i\\), then a pass contributes probability \\(p_i\\) to the likelihood and a fail contributes probability \\(1-p_i\\). A good model gives high probabilities to the events that actually occurred.\n\nContinue\n\n\n\n3.6.2 Estimated coefficients\nThe estimated model is\n\\[\n\\widehat{\\text{logit}(p_i)} = b_0 + b_1 \\text{studytime}_i.\n\\]\nAs in the Linear Regression Short Course, we use Greek letters for unknown true parameters and Latin letters for estimates:\n\n\n\nSymbol\nMeaning\n\n\n\n\n\\(\\beta_0\\)\nTrue intercept\n\n\n\\(\\beta_1\\)\nTrue slope for study time\n\n\n\\(b_0\\)\nEstimated intercept\n\n\n\\(b_1\\)\nEstimated slope for study time\n\n\n\n\nOutputCode\n\n\n\n\n(Intercept)   studytime \n  0.3221862   0.1938849 \n\n\n\n\n\ncoef(fit_study)\n\n\n\n\n\nContinue\n\n\n\n3.6.3 Reading coefficients on the log-odds scale\nThe intercept is the estimated log-odds of passing when studytime = 0. In this dataset, no student has study time equal to 0, so the intercept is mainly needed to position the fitted curve.\nThe slope is the estimated change in log-odds for a one-unit increase in study time:\n\\[\nb_1 = \\widehat{\\Delta \\text{log-odds}}.\n\\]\n\nKey-point\nA positive coefficient means the predicted probability increases as the predictor increases. A negative coefficient means the predicted probability decreases. The coefficient itself is on the log-odds scale, not the probability scale.\n\n\n\n\n3.6.4 Odds ratios\nExponentiating a coefficient converts it from a change in log-odds to an odds ratio:\n\\[\n\\text{odds ratio} = e^{b_1}.\n\\]\n\nOutputCode\n\n\n\n\n(Intercept)   studytime \n   1.380142    1.213957 \n\n\n\n\n\nexp(coef(fit_study))\n\n\n\n\nFor studytime, the odds ratio compares two students who differ by one study-time category. If the odds ratio is greater than 1, the model estimates higher odds of passing for the student in the higher study-time category.\n\nExercise 2.1: Compute an odds ratio\nCompute the odds ratio for studytime and store it as or_studytime.\n\n\n\n\n\n\n\n\n\n\n\nor_studytime &lt;- exp(coef(fit_study)[\"studytime\"])\nor_studytime\nor_studytime &lt;- exp(coef(fit_study)[\"studytime\"])\nor_studytime\n\n\n\n\n\n\n\n\n\nContinue\n\n\n\n3.6.5 Odds ratios are not probability differences\nA fixed odds ratio does not correspond to a fixed difference in probability. The same multiplicative change in odds produces different probability changes depending on the starting probability.\n\nOutputCode\n\n\n\n\n  starting_probability probability_after_one_category probability_difference\n1                  0.2                      0.2328283             0.03282828\n2                  0.5                      0.5483200             0.04831995\n3                  0.8                      0.8292299             0.02922990\n\n\n\n\n\nor_studytime &lt;- as.numeric(exp(coef(fit_study)[\"studytime\"]))\nstarting_probability &lt;- c(0.20, 0.50, 0.80)\nstarting_odds &lt;- starting_probability / (1 - starting_probability)\nnew_odds &lt;- starting_odds * or_studytime\nnew_probability &lt;- new_odds / (1 + new_odds)\n\ndata.frame(\n  starting_probability = starting_probability,\n  probability_after_one_category = new_probability,\n  probability_difference = new_probability - starting_probability\n)\n\n\n\n\n\nNote\nOdds ratios can look large even when the absolute probability change is modest. For communication, pair odds ratios with predicted probabilities for realistic scenarios.",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>From Linear Models to Logistic Regression</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>From Linear Models to Fitting Logistic Regression</span>"
     ]
   },
   {
-    "objectID": "ch_3_fitting-logistic-regression-models.html",
-    "href": "ch_3_fitting-logistic-regression-models.html",
-    "title": "3  Fitting Logistic Regression Models",
-    "section": "",
-    "text": "4 Fitting logistic regression models\nIn Chapter 3 we wrote the logistic regression model as\n\\[\nY_i \\sim \\text{Bernoulli}(p_i),\n\\qquad\n\\text{logit}(p_i) = \\beta_0 + \\beta_1 X_i.\n\\]\nThe coefficients \\(\\beta_0\\) and \\(\\beta_1\\) are the unknown parameters of the data-generating model. Fitting a logistic regression means estimating those parameters from the observed data.",
+    "objectID": "ch_2_lr.html#sec-logistic-inference",
+    "href": "ch_2_lr.html#sec-logistic-inference",
+    "title": "2  From Linear Models to Fitting Logistic Regression",
+    "section": "3.7 Inference for coefficients",
+    "text": "3.7 Inference for coefficients\nThe summary() output includes a standard error, a test statistic, and a p-value for each coefficient. These are Wald tests. They test whether a coefficient differs from zero on the log-odds scale.\n\nOutputCode\n\n\n\n\n             Estimate Std. Error  z value  Pr(&gt;|z|)\n(Intercept) 0.3221862  0.2818334 1.143179 0.2529641\nstudytime   0.1938849  0.1311284 1.478588 0.1392504\n\n\n\n\n\ncoef(summary(fit_study))\n\n\n\n\nWald confidence intervals can be computed with confint.default():\n\nOutputCode\n\n\n\n\n                  2.5 %    97.5 %\n(Intercept) -0.23019720 0.8745696\nstudytime   -0.06312204 0.4508918\n\n\n\n\n\nconfint.default(fit_study)\n\n\n\n\nIt is often easier to report intervals on the odds-ratio scale:\n\nOutputCode\n\n\n\n\n                2.5 %   97.5 %\n(Intercept) 0.7943769 2.397843\nstudytime   0.9388289 1.569711\n\n\n\n\n\nexp(confint.default(fit_study))\n\n\n\n\n\nNote\nConfidence intervals for logistic regression coefficients are intervals for log-odds changes. Applying exp() converts them to odds-ratio intervals.",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Fitting Logistic Regression Models</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>From Linear Models to Fitting Logistic Regression</span>"
     ]
   },
   {
-    "objectID": "ch_3_fitting-logistic-regression-models.html#sec-logistic-likelihood",
-    "href": "ch_3_fitting-logistic-regression-models.html#sec-logistic-likelihood",
-    "title": "3  Fitting Logistic Regression Models",
-    "section": "4.1 From least squares to likelihood",
-    "text": "4.1 From least squares to likelihood\nFor linear regression, lm() chooses the line that minimises the sum of squared residuals. This works because the model assumes normally distributed errors around a mean line.\nFor logistic regression, the outcome is 0 or 1, so squared residuals are no longer the natural fitting criterion. Instead, glm() uses maximum likelihood estimation. It chooses the coefficient estimates that make the observed sequence of passes and fails most likely under the Bernoulli model.\n\nKey-point\nMaximum likelihood asks: among all possible coefficient values, which values make the observed data most plausible under the model?\n\n\nIf student \\(i\\) has predicted probability \\(p_i\\), then a pass contributes probability \\(p_i\\) to the likelihood and a fail contributes probability \\(1-p_i\\). A good model gives high probabilities to the events that actually occurred.\n\nContinue",
+    "objectID": "ch_2_lr.html#sec-adding-predictors",
+    "href": "ch_2_lr.html#sec-adding-predictors",
+    "title": "2  From Linear Models to Fitting Logistic Regression",
+    "section": "3.8 Adding predictors",
+    "text": "3.8 Adding predictors\nThe formula interface extends in the same way as multiple linear regression. A model with previous failures and absences is\n\\[\n\\text{logit}(p_i) =\n\\beta_0 +\n\\beta_1 \\text{studytime}_i +\n\\beta_2 \\text{failures}_i +\n\\beta_3 \\text{absences}_i.\n\\]\n\nOutputCode\n\n\n\n\n\nCall:\nglm(formula = pass_exam ~ studytime + failures + absences, family = binomial, \n    data = students)\n\nCoefficients:\n            Estimate Std. Error z value Pr(&gt;|z|)    \n(Intercept)  1.08795    0.32965   3.300 0.000966 ***\nstudytime    0.03980    0.13931   0.286 0.775104    \nfailures    -0.96217    0.16995  -5.662  1.5e-08 ***\nabsences    -0.01843    0.01332  -1.384 0.166398    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 500.50  on 394  degrees of freedom\nResidual deviance: 455.11  on 391  degrees of freedom\nAIC: 463.11\n\nNumber of Fisher Scoring iterations: 4\n\n\n\n\n\nfit_multi &lt;- glm(pass_exam ~ studytime + failures + absences,\n                 data = students,\n                 family = binomial)\nsummary(fit_multi)\n\n\n\n\nEach coefficient is a partial effect on the log-odds scale, holding the other predictors in the model constant.",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Fitting Logistic Regression Models</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>From Linear Models to Fitting Logistic Regression</span>"
     ]
   },
   {
-    "objectID": "ch_3_fitting-logistic-regression-models.html#sec-fitting-study-model",
-    "href": "ch_3_fitting-logistic-regression-models.html#sec-fitting-study-model",
-    "title": "3  Fitting Logistic Regression Models",
-    "section": "4.2 Fitting the study-time model",
-    "text": "4.2 Fitting the study-time model\nWe fit Johno’s first model with glm():\n\nOutputCode\n\n\n\n\n\nCall:\nglm(formula = pass_exam ~ studytime, family = binomial, data = students)\n\nCoefficients:\n            Estimate Std. Error z value Pr(&gt;|z|)\n(Intercept)   0.3222     0.2818   1.143    0.253\nstudytime     0.1939     0.1311   1.479    0.139\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 500.50  on 394  degrees of freedom\nResidual deviance: 498.27  on 393  degrees of freedom\nAIC: 502.27\n\nNumber of Fisher Scoring iterations: 4\n\n\n\n\n\nfit_study &lt;- glm(pass_exam ~ studytime,\n                 data = students,\n                 family = binomial)\nsummary(fit_study)\n\n\n\n\nThe estimated model is\n\\[\n\\widehat{\\text{logit}(p_i)} = b_0 + b_1 \\text{studytime}_i.\n\\]\nAs in the Linear Regression Short Course, we use Greek letters for unknown true parameters and Latin letters for estimates:\n\n\n\nSymbol\nMeaning\n\n\n\n\n\\(\\beta_0\\)\nTrue intercept\n\n\n\\(\\beta_1\\)\nTrue slope for study time\n\n\n\\(b_0\\)\nEstimated intercept\n\n\n\\(b_1\\)\nEstimated slope for study time\n\n\n\n\nOutputCode\n\n\n\n\n(Intercept)   studytime \n  0.3221862   0.1938849 \n\n\n\n\n\ncoef(fit_study)\n\n\n\n\n\nContinue",
+    "objectID": "ch_2_lr.html#sec-logistic-categorical-predictors",
+    "href": "ch_2_lr.html#sec-logistic-categorical-predictors",
+    "title": "2  From Linear Models to Fitting Logistic Regression",
+    "section": "3.9 Categorical predictors",
+    "text": "3.9 Categorical predictors\nCategorical predictors work as they did in linear regression. R chooses a reference level and estimates comparisons against that level.\n\nOutputCode\n\n\n\n\n\nCall:\nglm(formula = pass_exam ~ studytime + failures + schoolsup, family = binomial, \n    data = students)\n\nCoefficients:\n             Estimate Std. Error z value Pr(&gt;|z|)    \n(Intercept)   1.03285    0.31852   3.243  0.00118 ** \nstudytime     0.06294    0.13961   0.451  0.65209    \nfailures     -0.98636    0.17230  -5.725 1.04e-08 ***\nschoolsupyes -0.67531    0.32074  -2.105  0.03525 *  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 500.50  on 394  degrees of freedom\nResidual deviance: 452.68  on 391  degrees of freedom\nAIC: 460.68\n\nNumber of Fisher Scoring iterations: 4\n\n\n\n\n\nfit_support &lt;- glm(pass_exam ~ studytime + failures + schoolsup,\n                   data = students,\n                   family = binomial)\nsummary(fit_support)\n\n\n\n\nHere, schoolsupyes compares students with extra educational support to the reference group schoolsup = \"no\", after adjusting for study time and previous failures.",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Fitting Logistic Regression Models</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>From Linear Models to Fitting Logistic Regression</span>"
     ]
   },
   {
-    "objectID": "ch_3_fitting-logistic-regression-models.html#sec-log-odds-coefficients",
-    "href": "ch_3_fitting-logistic-regression-models.html#sec-log-odds-coefficients",
-    "title": "3  Fitting Logistic Regression Models",
-    "section": "4.3 Reading coefficients on the log-odds scale",
-    "text": "4.3 Reading coefficients on the log-odds scale\nThe intercept is the estimated log-odds of passing when studytime = 0. In this dataset, no student has study time equal to 0, so the intercept is mainly needed to position the fitted curve.\nThe slope is the estimated change in log-odds for a one-unit increase in study time:\n\\[\nb_1 = \\widehat{\\Delta \\text{log-odds}}.\n\\]\n\nKey-point\nA positive coefficient means the predicted probability increases as the predictor increases. A negative coefficient means the predicted probability decreases. The coefficient itself is on the log-odds scale, not the probability scale.",
+    "objectID": "ch_2_lr.html#sec-chapter02-summary",
+    "href": "ch_2_lr.html#sec-chapter02-summary",
+    "title": "2  From Linear Models to Fitting Logistic Regression",
+    "section": "3.10 Chapter summary",
+    "text": "3.10 Chapter summary\nLogistic regression follows the same modelling logic as linear regression:\n\nChoose an outcome model.\nChoose a linear predictor.\nEstimate the unknown coefficients from data.\nUse the fitted model for interpretation, prediction, and model checking.\n\nThe difference is that binary outcomes need a Bernoulli/binomial error model and a logit link. glm(..., family = binomial) fits this model by maximum likelihood. Coefficients are read on the log-odds scale, exponentiated coefficients are odds ratios, and predicted probabilities require the inverse-logit transformation. The next chapter asks whether the fitted model is adequate.",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Fitting Logistic Regression Models</span>"
-    ]
-  },
-  {
-    "objectID": "ch_3_fitting-logistic-regression-models.html#sec-fitting-odds-ratios",
-    "href": "ch_3_fitting-logistic-regression-models.html#sec-fitting-odds-ratios",
-    "title": "3  Fitting Logistic Regression Models",
-    "section": "4.4 Odds ratios",
-    "text": "4.4 Odds ratios\nExponentiating a coefficient converts it from a change in log-odds to an odds ratio:\n\\[\n\\text{odds ratio} = e^{b_1}.\n\\]\n\nOutputCode\n\n\n\n\n(Intercept)   studytime \n   1.380142    1.213957 \n\n\n\n\n\nexp(coef(fit_study))\n\n\n\n\nFor studytime, the odds ratio compares two students who differ by one study-time category. If the odds ratio is greater than 1, the model estimates higher odds of passing for the student in the higher study-time category.\n\nExercise 3.1: Compute an odds ratio\nCompute the odds ratio for studytime and store it as or_studytime.\n\n\n\n\n\n\n\n\n\n\n\nor_studytime &lt;- exp(coef(fit_study)[\"studytime\"])\nor_studytime\nor_studytime &lt;- exp(coef(fit_study)[\"studytime\"])\nor_studytime\n\n\n\n\n\n\n\n\n\nContinue",
-    "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Fitting Logistic Regression Models</span>"
-    ]
-  },
-  {
-    "objectID": "ch_3_fitting-logistic-regression-models.html#sec-logistic-inference",
-    "href": "ch_3_fitting-logistic-regression-models.html#sec-logistic-inference",
-    "title": "3  Fitting Logistic Regression Models",
-    "section": "4.5 Inference for coefficients",
-    "text": "4.5 Inference for coefficients\nThe summary() output includes a standard error, a test statistic, and a p-value for each coefficient. These are Wald tests. They test whether a coefficient differs from zero on the log-odds scale.\n\nOutputCode\n\n\n\n\n             Estimate Std. Error  z value  Pr(&gt;|z|)\n(Intercept) 0.3221862  0.2818334 1.143179 0.2529641\nstudytime   0.1938849  0.1311284 1.478588 0.1392504\n\n\n\n\n\ncoef(summary(fit_study))\n\n\n\n\nWald confidence intervals can be computed with confint.default():\n\nOutputCode\n\n\n\n\n                  2.5 %    97.5 %\n(Intercept) -0.23019720 0.8745696\nstudytime   -0.06312204 0.4508918\n\n\n\n\n\nconfint.default(fit_study)\n\n\n\n\nIt is often easier to report intervals on the odds-ratio scale:\n\nOutputCode\n\n\n\n\n                2.5 %   97.5 %\n(Intercept) 0.7943769 2.397843\nstudytime   0.9388289 1.569711\n\n\n\n\n\nexp(confint.default(fit_study))\n\n\n\n\n\nNote\nConfidence intervals for logistic regression coefficients are intervals for log-odds changes. Applying exp() converts them to odds-ratio intervals.",
-    "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Fitting Logistic Regression Models</span>"
-    ]
-  },
-  {
-    "objectID": "ch_3_fitting-logistic-regression-models.html#sec-adding-predictors",
-    "href": "ch_3_fitting-logistic-regression-models.html#sec-adding-predictors",
-    "title": "3  Fitting Logistic Regression Models",
-    "section": "4.6 Adding predictors",
-    "text": "4.6 Adding predictors\nThe formula interface extends in the same way as multiple linear regression. A model with previous failures and absences is\n\\[\n\\text{logit}(p_i) =\n\\beta_0 +\n\\beta_1 \\text{studytime}_i +\n\\beta_2 \\text{failures}_i +\n\\beta_3 \\text{absences}_i.\n\\]\n\nOutputCode\n\n\n\n\n\nCall:\nglm(formula = pass_exam ~ studytime + failures + absences, family = binomial, \n    data = students)\n\nCoefficients:\n            Estimate Std. Error z value Pr(&gt;|z|)    \n(Intercept)  1.08795    0.32965   3.300 0.000966 ***\nstudytime    0.03980    0.13931   0.286 0.775104    \nfailures    -0.96217    0.16995  -5.662  1.5e-08 ***\nabsences    -0.01843    0.01332  -1.384 0.166398    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 500.50  on 394  degrees of freedom\nResidual deviance: 455.11  on 391  degrees of freedom\nAIC: 463.11\n\nNumber of Fisher Scoring iterations: 4\n\n\n\n\n\nfit_multi &lt;- glm(pass_exam ~ studytime + failures + absences,\n                 data = students,\n                 family = binomial)\nsummary(fit_multi)\n\n\n\n\nEach coefficient is a partial effect on the log-odds scale, holding the other predictors in the model constant.",
-    "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Fitting Logistic Regression Models</span>"
-    ]
-  },
-  {
-    "objectID": "ch_3_fitting-logistic-regression-models.html#sec-logistic-categorical-predictors",
-    "href": "ch_3_fitting-logistic-regression-models.html#sec-logistic-categorical-predictors",
-    "title": "3  Fitting Logistic Regression Models",
-    "section": "4.7 Categorical predictors",
-    "text": "4.7 Categorical predictors\nCategorical predictors work as they did in linear regression. R chooses a reference level and estimates comparisons against that level.\n\nOutputCode\n\n\n\n\n\nCall:\nglm(formula = pass_exam ~ studytime + failures + schoolsup, family = binomial, \n    data = students)\n\nCoefficients:\n             Estimate Std. Error z value Pr(&gt;|z|)    \n(Intercept)   1.03285    0.31852   3.243  0.00118 ** \nstudytime     0.06294    0.13961   0.451  0.65209    \nfailures     -0.98636    0.17230  -5.725 1.04e-08 ***\nschoolsupyes -0.67531    0.32074  -2.105  0.03525 *  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 500.50  on 394  degrees of freedom\nResidual deviance: 452.68  on 391  degrees of freedom\nAIC: 460.68\n\nNumber of Fisher Scoring iterations: 4\n\n\n\n\n\nfit_support &lt;- glm(pass_exam ~ studytime + failures + schoolsup,\n                   data = students,\n                   family = binomial)\nsummary(fit_support)\n\n\n\n\nHere, schoolsupyes compares students with extra educational support to the reference group schoolsup = \"no\", after adjusting for study time and previous failures.",
-    "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Fitting Logistic Regression Models</span>"
-    ]
-  },
-  {
-    "objectID": "ch_3_fitting-logistic-regression-models.html#sec-chapter03-summary",
-    "href": "ch_3_fitting-logistic-regression-models.html#sec-chapter03-summary",
-    "title": "3  Fitting Logistic Regression Models",
-    "section": "4.8 Chapter summary",
-    "text": "4.8 Chapter summary\nFitting a logistic regression means estimating a linear predictor for log-odds. glm() handles the estimation using maximum likelihood. Coefficients are read on the log-odds scale, exponentiated coefficients are odds ratios, and predicted probabilities require the inverse-logit transformation. The next chapter asks whether the fitted model is adequate.",
-    "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Fitting Logistic Regression Models</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>From Linear Models to Fitting Logistic Regression</span>"
     ]
   },
   {
     "objectID": "ch_4_assessing-model-fit.html",
     "href": "ch_4_assessing-model-fit.html",
-    "title": "4  Assessing Logistic Regression Models",
+    "title": "3  Assessing Logistic Regression Models",
     "section": "",
-    "text": "5 Assessing logistic regression models\nIn linear regression, model assessment often starts with residual sums of squares and \\(R^2\\). Logistic regression uses a different error model, so the assessment tools also change. We still ask the same broad questions:\nThis chapter focuses on the first three questions. The next chapter focuses on prediction and classification performance.",
+    "text": "4 Assessing logistic regression models\nIn linear regression, model assessment often starts with residual sums of squares and \\(R^2\\). Logistic regression uses a different error model, so the assessment tools also change. We still ask the same broad questions:\nThis chapter focuses on the first three questions. The next chapter focuses on prediction and classification performance.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Assessing Logistic Regression Models</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Assessing Logistic Regression Models</span>"
     ]
   },
   {
     "objectID": "ch_4_assessing-model-fit.html#sec-likelihood-deviance",
     "href": "ch_4_assessing-model-fit.html#sec-likelihood-deviance",
-    "title": "4  Assessing Logistic Regression Models",
-    "section": "5.1 Likelihood and deviance",
-    "text": "5.1 Likelihood and deviance\nBecause logistic regression is fitted by maximum likelihood, model fit is naturally measured through the likelihood. R reports a related quantity called deviance.\n\nOutputCode\n\n\n\n\n         null_deviance     studytime_deviance multivariable_deviance \n              500.5040               498.2730               455.1066 \n\n\n\n\n\nc(\n  null_deviance = fit_null$deviance,\n  studytime_deviance = fit_study$deviance,\n  multivariable_deviance = fit_multi$deviance\n)\n\n\n\n\nSmaller deviance indicates a better fit to the observed data. The null model has only an intercept, so it represents a baseline model that predicts the same probability for every student.\n\nKey-point\nDeviance plays a role similar to residual sum of squares in linear regression: it is a lack-of-fit measure, so smaller values indicate better fit. It is likelihood-based rather than squared-error-based.\n\n\n\nContinue",
+    "title": "3  Assessing Logistic Regression Models",
+    "section": "4.1 Likelihood and deviance",
+    "text": "4.1 Likelihood and deviance\nBecause logistic regression is fitted by maximum likelihood, model fit is naturally measured through the likelihood. R reports a related quantity called deviance.\n\nOutputCode\n\n\n\n\n         null_deviance     studytime_deviance multivariable_deviance \n              500.5040               498.2730               455.1066 \n\n\n\n\n\nc(\n  null_deviance = fit_null$deviance,\n  studytime_deviance = fit_study$deviance,\n  multivariable_deviance = fit_multi$deviance\n)\n\n\n\n\nSmaller deviance indicates a better fit to the observed data. The null model has only an intercept, so it represents a baseline model that predicts the same probability for every student.\n\nKey-point\nDeviance plays a role similar to residual sum of squares in linear regression: it is a lack-of-fit measure, so smaller values indicate better fit. It is likelihood-based rather than squared-error-based.\n\n\n\nContinue",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Assessing Logistic Regression Models</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Assessing Logistic Regression Models</span>"
     ]
   },
   {
     "objectID": "ch_4_assessing-model-fit.html#sec-logistic-nested-models",
     "href": "ch_4_assessing-model-fit.html#sec-logistic-nested-models",
-    "title": "4  Assessing Logistic Regression Models",
-    "section": "5.2 Comparing nested models",
-    "text": "5.2 Comparing nested models\nTwo models are nested when one can be obtained from the other by removing predictors. The study-time model is nested inside the multivariable model because the multivariable model adds failures and absences.\nWe can compare nested logistic regression models with a likelihood ratio test:\n\nOutputCode\n\n\n\n\nAnalysis of Deviance Table\n\nModel 1: pass_exam ~ studytime\nModel 2: pass_exam ~ studytime + failures + absences\n  Resid. Df Resid. Dev Df Deviance  Pr(&gt;Chi)    \n1       393     498.27                          \n2       391     455.11  2   43.166 4.232e-10 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\n\n\nanova(fit_study, fit_multi, test = \"Chisq\")\n\n\n\n\nThe test asks whether the added predictors improve the model enough to justify the extra complexity.\n\nNote\nUse likelihood ratio tests for nested models. For non-nested models, use information criteria such as AIC or compare prediction performance on a validation set.",
+    "title": "3  Assessing Logistic Regression Models",
+    "section": "4.2 Comparing nested models",
+    "text": "4.2 Comparing nested models\nTwo models are nested when one can be obtained from the other by removing predictors. The study-time model is nested inside the multivariable model because the multivariable model adds failures and absences.\nWe can compare nested logistic regression models with a likelihood ratio test:\n\nOutputCode\n\n\n\n\nAnalysis of Deviance Table\n\nModel 1: pass_exam ~ studytime\nModel 2: pass_exam ~ studytime + failures + absences\n  Resid. Df Resid. Dev Df Deviance  Pr(&gt;Chi)    \n1       393     498.27                          \n2       391     455.11  2   43.166 4.232e-10 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\n\n\nanova(fit_study, fit_multi, test = \"Chisq\")\n\n\n\n\nThe test asks whether the added predictors improve the model enough to justify the extra complexity.\n\nNote\nUse likelihood ratio tests for nested models. For non-nested models, use information criteria such as AIC or compare prediction performance on a validation set.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Assessing Logistic Regression Models</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Assessing Logistic Regression Models</span>"
     ]
   },
   {
     "objectID": "ch_4_assessing-model-fit.html#sec-logistic-aic",
     "href": "ch_4_assessing-model-fit.html#sec-logistic-aic",
-    "title": "4  Assessing Logistic Regression Models",
-    "section": "5.3 AIC and model complexity",
-    "text": "5.3 AIC and model complexity\nThe Akaike Information Criterion (AIC) balances model fit and complexity. Lower AIC is preferred among the models being compared.\n\nOutputCode\n\n\n\n\n          df      AIC\nfit_null   1 502.5040\nfit_study  2 502.2730\nfit_multi  4 463.1066\n\n\n\n\n\nAIC(fit_null, fit_study, fit_multi)\n\n\n\n\nAIC is useful when comparing several plausible models, but it is not a substitute for subject-matter judgement. A model with a slightly lower AIC but unclear interpretation may not be the best model for communication.\n\nContinue",
+    "title": "3  Assessing Logistic Regression Models",
+    "section": "4.3 AIC and model complexity",
+    "text": "4.3 AIC and model complexity\nThe Akaike Information Criterion (AIC) balances model fit and complexity. Lower AIC is preferred among the models being compared.\n\nOutputCode\n\n\n\n\n          df      AIC\nfit_null   1 502.5040\nfit_study  2 502.2730\nfit_multi  4 463.1066\n\n\n\n\n\nAIC(fit_null, fit_study, fit_multi)\n\n\n\n\nAIC is useful when comparing several plausible models, but it is not a substitute for subject-matter judgement. A model with a slightly lower AIC but unclear interpretation may not be the best model for communication.\n\nContinue",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Assessing Logistic Regression Models</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Assessing Logistic Regression Models</span>"
     ]
   },
   {
     "objectID": "ch_4_assessing-model-fit.html#sec-logistic-pseudo-r2",
     "href": "ch_4_assessing-model-fit.html#sec-logistic-pseudo-r2",
-    "title": "4  Assessing Logistic Regression Models",
-    "section": "5.4 Pseudo R-squared",
-    "text": "5.4 Pseudo R-squared\nLinear regression’s \\(R^2\\) is based on sums of squares. Logistic regression does not have an exact equivalent. Several pseudo R-squared measures exist, but they should be treated as rough summaries rather than as direct analogues.\nOne common option is McFadden’s pseudo \\(R^2\\):\n\\[\nR^2_{\\text{McFadden}} = 1 - \\frac{\\log L_{\\text{model}}}{\\log L_{\\text{null}}}.\n\\]\n\nOutputCode\n\n\n\n\n[1] 0.09070343\n\n\n\n\n\nmcfadden_r2 &lt;- 1 - as.numeric(logLik(fit_multi) / logLik(fit_null))\nmcfadden_r2\n\n\n\n\n\nKey-point\nDo not interpret pseudo \\(R^2\\) as “the percentage of variance explained”. For logistic regression, likelihood-based comparisons and prediction checks are usually more informative.",
+    "title": "3  Assessing Logistic Regression Models",
+    "section": "4.4 Pseudo R-squared",
+    "text": "4.4 Pseudo R-squared\nLinear regression’s \\(R^2\\) is based on sums of squares. Logistic regression does not have an exact equivalent. Several pseudo R-squared measures exist, but they should be treated as rough summaries rather than as direct analogues.\nOne common option is McFadden’s pseudo \\(R^2\\):\n\\[\nR^2_{\\text{McFadden}} = 1 - \\frac{\\log L_{\\text{model}}}{\\log L_{\\text{null}}}.\n\\]\n\nOutputCode\n\n\n\n\n[1] 0.09070343\n\n\n\n\n\nmcfadden_r2 &lt;- 1 - as.numeric(logLik(fit_multi) / logLik(fit_null))\nmcfadden_r2\n\n\n\n\n\nKey-point\nDo not interpret pseudo \\(R^2\\) as “the percentage of variance explained”. For logistic regression, likelihood-based comparisons and prediction checks are usually more informative.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Assessing Logistic Regression Models</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Assessing Logistic Regression Models</span>"
     ]
   },
   {
     "objectID": "ch_4_assessing-model-fit.html#sec-logistic-residuals",
     "href": "ch_4_assessing-model-fit.html#sec-logistic-residuals",
-    "title": "4  Assessing Logistic Regression Models",
-    "section": "5.5 Residuals and influence",
-    "text": "5.5 Residuals and influence\nLogistic regression residuals are less visually intuitive than linear regression residuals because the observed outcomes are only 0 or 1. Still, residual and influence diagnostics can help identify observations the model struggles to fit.\n\nOutputCode\n\n\n\n\n     fitted pearson_residual deviance_residual cooks_distance\n1 0.7421124       -1.6963662        -1.6463484   0.0022419032\n2 0.7491029       -1.7279171        -1.6629566   0.0023791303\n3 0.1297399        2.5899286         2.0210016   0.0435756588\n4 0.7632336        0.5569693         0.7351069   0.0004886744\n5 0.7491029        0.5787315         0.7601039   0.0002668865\n6 0.7277554        0.6116274         0.7972331   0.0003566034\n\n\n\n\n\ndiagnostics &lt;- data.frame(\n  fitted = fitted(fit_multi),\n  pearson_residual = residuals(fit_multi, type = \"pearson\"),\n  deviance_residual = residuals(fit_multi, type = \"deviance\"),\n  cooks_distance = cooks.distance(fit_multi)\n)\nhead(diagnostics)\n\n\n\n\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nplot(diagnostics$fitted, diagnostics$deviance_residual,\n     xlab = \"Fitted probability\",\n     ylab = \"Deviance residual\")\nabline(h = 0, col = \"grey70\", lty = 2)\n\n\n\n\nLarge residuals mark cases where the observed outcome was surprising under the fitted model. Large Cook’s distances mark cases with unusual influence on the fitted coefficients.",
+    "title": "3  Assessing Logistic Regression Models",
+    "section": "4.5 Residuals and influence",
+    "text": "4.5 Residuals and influence\nLogistic regression residuals are less visually intuitive than linear regression residuals because the observed outcomes are only 0 or 1. Still, residual and influence diagnostics can help identify observations the model struggles to fit.\n\nOutputCode\n\n\n\n\n     fitted pearson_residual deviance_residual cooks_distance\n1 0.7421124       -1.6963662        -1.6463484   0.0022419032\n2 0.7491029       -1.7279171        -1.6629566   0.0023791303\n3 0.1297399        2.5899286         2.0210016   0.0435756588\n4 0.7632336        0.5569693         0.7351069   0.0004886744\n5 0.7491029        0.5787315         0.7601039   0.0002668865\n6 0.7277554        0.6116274         0.7972331   0.0003566034\n\n\n\n\n\ndiagnostics &lt;- data.frame(\n  fitted = fitted(fit_multi),\n  pearson_residual = residuals(fit_multi, type = \"pearson\"),\n  deviance_residual = residuals(fit_multi, type = \"deviance\"),\n  cooks_distance = cooks.distance(fit_multi)\n)\nhead(diagnostics)\n\n\n\n\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nplot(diagnostics$fitted, diagnostics$deviance_residual,\n     xlab = \"Fitted probability\",\n     ylab = \"Deviance residual\")\nabline(h = 0, col = \"grey70\", lty = 2)\n\n\n\n\nLarge residuals mark cases where the observed outcome was surprising under the fitted model. Large Cook’s distances mark cases with unusual influence on the fitted coefficients.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Assessing Logistic Regression Models</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Assessing Logistic Regression Models</span>"
     ]
   },
   {
     "objectID": "ch_4_assessing-model-fit.html#sec-logistic-common-problems",
     "href": "ch_4_assessing-model-fit.html#sec-logistic-common-problems",
-    "title": "4  Assessing Logistic Regression Models",
-    "section": "5.6 Common problems",
-    "text": "5.6 Common problems\n\nAssumption 4.1: Independent observations\nThe usual logistic regression model assumes observations are independent. If the same person, class, school, or site contributes multiple related observations, the model may need to account for clustering.\n\n\n\nAssumption 4.2: Linearity on the log-odds scale\nContinuous predictors are assumed to have approximately linear effects on the log-odds. This does not mean a straight line on the probability scale.\n\n\nOther common problems include:\n\nSeparation: a predictor or combination of predictors perfectly separates passes from fails, leading to unstable or very large estimates.\nClass imbalance: one outcome class is much more common than the other, so simple accuracy can be misleading.\nOverfitting: too many predictors for the amount of data, especially when the event count is small.",
+    "title": "3  Assessing Logistic Regression Models",
+    "section": "4.6 Common problems",
+    "text": "4.6 Common problems\n\nAssumption 3.1: Independent observations\nThe usual logistic regression model assumes observations are independent. If the same person, class, school, or site contributes multiple related observations, the model may need to account for clustering.\n\n\n\nAssumption 3.2: Linearity on the log-odds scale\nContinuous predictors are assumed to have approximately linear effects on the log-odds. This does not mean a straight line on the probability scale.\n\n\nOther common problems include:\n\nSeparation: a predictor or combination of predictors perfectly separates passes from fails, leading to unstable or very large estimates.\nClass imbalance: one outcome class is much more common than the other, so simple accuracy can be misleading.\nOverfitting: too many predictors for the amount of data, especially when the event count is small.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Assessing Logistic Regression Models</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Assessing Logistic Regression Models</span>"
     ]
   },
   {
     "objectID": "ch_4_assessing-model-fit.html#sec-chapter04-summary",
     "href": "ch_4_assessing-model-fit.html#sec-chapter04-summary",
-    "title": "4  Assessing Logistic Regression Models",
-    "section": "5.7 Chapter summary",
-    "text": "5.7 Chapter summary\nAssessing logistic regression requires likelihood-based thinking. Deviance, likelihood ratio tests, and AIC replace the least-squares tools used in linear regression. Residuals, influence checks, and assumptions still matter, but they must be interpreted through the binary-outcome model.",
+    "title": "3  Assessing Logistic Regression Models",
+    "section": "4.7 Chapter summary",
+    "text": "4.7 Chapter summary\nAssessing logistic regression requires likelihood-based thinking. Deviance, likelihood ratio tests, and AIC replace the least-squares tools used in linear regression. Residuals, influence checks, and assumptions still matter, but they must be interpreted through the binary-outcome model.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Assessing Logistic Regression Models</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Assessing Logistic Regression Models</span>"
     ]
   },
   {
     "objectID": "ch_5_predictions-from-logistic-regression-models.html",
     "href": "ch_5_predictions-from-logistic-regression-models.html",
-    "title": "5  Predictions from Logistic Regression Models",
+    "title": "4  Predictions from Logistic Regression Models",
     "section": "",
-    "text": "6 Predictions from logistic regression models\nThe fitted model gives a linear predictor on the log-odds scale:\n\\[\n\\hat{\\eta}_i =\nb_0 +\nb_1 \\text{studytime}_i +\nb_2 \\text{failures}_i +\nb_3 \\text{absences}_i.\n\\]\nFor most audiences, the useful output is not the log-odds. It is the predicted probability:\n\\[\n\\hat{p}_i = \\frac{1}{1 + e^{-\\hat{\\eta}_i}}.\n\\]",
+    "text": "5 Predictions from logistic regression models\nThe fitted model gives a linear predictor on the log-odds scale:\n\\[\n\\hat{\\eta}_i =\nb_0 +\nb_1 \\text{studytime}_i +\nb_2 \\text{failures}_i +\nb_3 \\text{absences}_i.\n\\]\nFor most audiences, the useful output is not the log-odds. It is the predicted probability:\n\\[\n\\hat{p}_i = \\frac{1}{1 + e^{-\\hat{\\eta}_i}}.\n\\]",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Predictions from Logistic Regression Models</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Predictions from Logistic Regression Models</span>"
     ]
   },
   {
     "objectID": "ch_5_predictions-from-logistic-regression-models.html#sec-predicting-scales",
     "href": "ch_5_predictions-from-logistic-regression-models.html#sec-predicting-scales",
-    "title": "5  Predictions from Logistic Regression Models",
-    "section": "6.1 Predicting on different scales",
-    "text": "6.1 Predicting on different scales\nBy default, predict() returns values on the link scale:\n\nOutputCode\n\n\n\n\n       1        2        3        4 \n1.054033 1.093833 1.133634 1.173434 \n\n\n\n\n\nnew_students &lt;- data.frame(\n  studytime = c(1, 2, 3, 4),\n  failures = 0,\n  absences = 4\n)\n\npredict(fit_multi, newdata = new_students)\n\n\n\n\nFor logistic regression, the link scale is the log-odds scale. To get predicted probabilities, use type = \"response\":\n\nOutputCode\n\n\n\n\n        1         2         3         4 \n0.7415486 0.7491029 0.7565089 0.7637652 \n\n\n\n\n\npredict(fit_multi, newdata = new_students, type = \"response\")\n\n\n\n\n\nKey-point\nUse type = \"response\" when you want predicted probabilities from a logistic regression model.\n\n\n\nContinue",
+    "title": "4  Predictions from Logistic Regression Models",
+    "section": "5.1 Predicting on different scales",
+    "text": "5.1 Predicting on different scales\nBy default, predict() returns values on the link scale:\n\nOutputCode\n\n\n\n\n       1        2        3        4 \n1.054033 1.093833 1.133634 1.173434 \n\n\n\n\n\nnew_students &lt;- data.frame(\n  studytime = c(1, 2, 3, 4),\n  failures = 0,\n  absences = 4\n)\n\npredict(fit_multi, newdata = new_students)\n\n\n\n\nFor logistic regression, the link scale is the log-odds scale. To get predicted probabilities, use type = \"response\":\n\nOutputCode\n\n\n\n\n        1         2         3         4 \n0.7415486 0.7491029 0.7565089 0.7637652 \n\n\n\n\n\npredict(fit_multi, newdata = new_students, type = \"response\")\n\n\n\n\n\nKey-point\nUse type = \"response\" when you want predicted probabilities from a logistic regression model.\n\n\n\nContinue",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Predictions from Logistic Regression Models</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Predictions from Logistic Regression Models</span>"
     ]
   },
   {
     "objectID": "ch_5_predictions-from-logistic-regression-models.html#sec-scenario-predictions",
     "href": "ch_5_predictions-from-logistic-regression-models.html#sec-scenario-predictions",
-    "title": "5  Predictions from Logistic Regression Models",
-    "section": "6.2 Scenario-based predictions",
-    "text": "6.2 Scenario-based predictions\nPredicted probabilities are often the clearest way to communicate a logistic regression model. We choose realistic predictor values and compare the model’s predictions.\n\nOutputCode\n\n\n\n\n  studytime failures absences predicted_probability\n1         1        0        4             0.7415486\n2         2        0        4             0.7491029\n3         4        0        4             0.7637652\n\n\n\n\n\nscenarios &lt;- data.frame(\n  studytime = c(1, 2, 4),\n  failures = c(0, 0, 0),\n  absences = c(4, 4, 4)\n)\n\nscenarios$predicted_probability &lt;- predict(\n  fit_multi,\n  newdata = scenarios,\n  type = \"response\"\n)\n\nscenarios\n\n\n\n\nThese are model-based probabilities, not guarantees. A student with a high predicted probability can still fail, and a student with a low predicted probability can still pass.\n\nExercise 5.1: Predict a probability\nCompute the predicted probability for a student with studytime = 3, failures = 0, and absences = 2. Store it as p_case.\n\n\n\n\n\n\n\n\n\n\n\nnew_case &lt;- data.frame(studytime = 3, failures = 0, absences = 2)\np_case &lt;- predict(fit_multi, newdata = new_case, type = \"response\")\np_case\nnew_case &lt;- data.frame(studytime = 3, failures = 0, absences = 2)\np_case &lt;- predict(fit_multi, newdata = new_case, type = \"response\")\np_case\n\n\n\n\n\n\n\n\n\nContinue",
+    "title": "4  Predictions from Logistic Regression Models",
+    "section": "5.2 Scenario-based predictions",
+    "text": "5.2 Scenario-based predictions\nPredicted probabilities are often the clearest way to communicate a logistic regression model. We choose realistic predictor values and compare the model’s predictions.\n\nOutputCode\n\n\n\n\n  studytime failures absences predicted_probability\n1         1        0        4             0.7415486\n2         2        0        4             0.7491029\n3         4        0        4             0.7637652\n\n\n\n\n\nscenarios &lt;- data.frame(\n  studytime = c(1, 2, 4),\n  failures = c(0, 0, 0),\n  absences = c(4, 4, 4)\n)\n\nscenarios$predicted_probability &lt;- predict(\n  fit_multi,\n  newdata = scenarios,\n  type = \"response\"\n)\n\nscenarios\n\n\n\n\nThese are model-based probabilities, not guarantees. A student with a high predicted probability can still fail, and a student with a low predicted probability can still pass.\n\nExercise 4.1: Predict a probability\nCompute the predicted probability for a student with studytime = 3, failures = 0, and absences = 2. Store it as p_case.\n\n\n\n\n\n\n\n\n\n\n\nnew_case &lt;- data.frame(studytime = 3, failures = 0, absences = 2)\np_case &lt;- predict(fit_multi, newdata = new_case, type = \"response\")\np_case\nnew_case &lt;- data.frame(studytime = 3, failures = 0, absences = 2)\np_case &lt;- predict(fit_multi, newdata = new_case, type = \"response\")\np_case\n\n\n\n\n\n\n\n\n\nContinue",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Predictions from Logistic Regression Models</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Predictions from Logistic Regression Models</span>"
     ]
   },
   {
     "objectID": "ch_5_predictions-from-logistic-regression-models.html#sec-classification-thresholds",
     "href": "ch_5_predictions-from-logistic-regression-models.html#sec-classification-thresholds",
-    "title": "5  Predictions from Logistic Regression Models",
-    "section": "6.3 From probabilities to classifications",
-    "text": "6.3 From probabilities to classifications\nSometimes we need to turn probabilities into predicted classes. To do this, we choose a classification threshold. With a threshold of 0.5, we predict a pass when \\(\\hat{p} \\ge 0.5\\).\n\nOutputCode\n\n\n\n\n         Actual\nPredicted   0   1\n        0  36  18\n        1  94 247\n\n\n\n\n\nthreshold &lt;- 0.5\nclass_hat &lt;- ifelse(prob &gt;= threshold, 1, 0)\nconf_mat &lt;- table(\n  Predicted = factor(class_hat, levels = c(0, 1)),\n  Actual = factor(students$pass_exam, levels = c(0, 1))\n)\nconf_mat\n\n\n\n\nFrom the confusion matrix we can calculate performance measures:\n\nOutputCode\n\n\n\n\n   accuracy sensitivity specificity \n  0.7164557   0.9320755   0.2769231 \n\n\n\n\n\ntrue_pos &lt;- conf_mat[\"1\", \"1\"]\ntrue_neg &lt;- conf_mat[\"0\", \"0\"]\nfalse_pos &lt;- conf_mat[\"1\", \"0\"]\nfalse_neg &lt;- conf_mat[\"0\", \"1\"]\n\naccuracy &lt;- (true_pos + true_neg) / sum(conf_mat)\nsensitivity &lt;- true_pos / (true_pos + false_neg)\nspecificity &lt;- true_neg / (true_neg + false_pos)\n\nc(accuracy = accuracy,\n  sensitivity = sensitivity,\n  specificity = specificity)\n\n\n\n\n\nKey-point\nThe threshold is a decision rule, not part of the fitted logistic regression model. Changing the threshold changes the classifications but not the predicted probabilities.",
+    "title": "4  Predictions from Logistic Regression Models",
+    "section": "5.3 From probabilities to classifications",
+    "text": "5.3 From probabilities to classifications\nSometimes we need to turn probabilities into predicted classes. To do this, we choose a classification threshold. With a threshold of 0.5, we predict a pass when \\(\\hat{p} \\ge 0.5\\).\n\nOutputCode\n\n\n\n\n         Actual\nPredicted   0   1\n        0  36  18\n        1  94 247\n\n\n\n\n\nthreshold &lt;- 0.5\nclass_hat &lt;- ifelse(prob &gt;= threshold, 1, 0)\nconf_mat &lt;- table(\n  Predicted = factor(class_hat, levels = c(0, 1)),\n  Actual = factor(students$pass_exam, levels = c(0, 1))\n)\nconf_mat\n\n\n\n\nFrom the confusion matrix we can calculate performance measures:\n\nOutputCode\n\n\n\n\n   accuracy sensitivity specificity \n  0.7164557   0.9320755   0.2769231 \n\n\n\n\n\ntrue_pos &lt;- conf_mat[\"1\", \"1\"]\ntrue_neg &lt;- conf_mat[\"0\", \"0\"]\nfalse_pos &lt;- conf_mat[\"1\", \"0\"]\nfalse_neg &lt;- conf_mat[\"0\", \"1\"]\n\naccuracy &lt;- (true_pos + true_neg) / sum(conf_mat)\nsensitivity &lt;- true_pos / (true_pos + false_neg)\nspecificity &lt;- true_neg / (true_neg + false_pos)\n\nc(accuracy = accuracy,\n  sensitivity = sensitivity,\n  specificity = specificity)\n\n\n\n\n\nKey-point\nThe threshold is a decision rule, not part of the fitted logistic regression model. Changing the threshold changes the classifications but not the predicted probabilities.",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Predictions from Logistic Regression Models</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Predictions from Logistic Regression Models</span>"
     ]
   },
   {
     "objectID": "ch_5_predictions-from-logistic-regression-models.html#sec-threshold-tradeoffs",
     "href": "ch_5_predictions-from-logistic-regression-models.html#sec-threshold-tradeoffs",
-    "title": "5  Predictions from Logistic Regression Models",
-    "section": "6.4 Threshold trade-offs",
-    "text": "6.4 Threshold trade-offs\nLower thresholds predict more passes. Higher thresholds predict fewer passes. The right threshold depends on the cost of different mistakes.\n\nOutputCode\n\n\n\n\n  threshold  accuracy sensitivity specificity\n1       0.3 0.7037975   0.9773585   0.1461538\n2       0.5 0.7164557   0.9320755   0.2769231\n3       0.7 0.7265823   0.8566038   0.4615385\n\n\n\n\n\nthresholds &lt;- c(0.3, 0.5, 0.7)\n\nthreshold_summary &lt;- do.call(rbind, lapply(thresholds, function(t) {\n  pred &lt;- ifelse(prob &gt;= t, 1, 0)\n  cm &lt;- table(\n    Predicted = factor(pred, levels = c(0, 1)),\n    Actual = factor(students$pass_exam, levels = c(0, 1))\n  )\n  tp &lt;- cm[\"1\", \"1\"]\n  tn &lt;- cm[\"0\", \"0\"]\n  fp &lt;- cm[\"1\", \"0\"]\n  fn &lt;- cm[\"0\", \"1\"]\n  data.frame(\n    threshold = t,\n    accuracy = (tp + tn) / sum(cm),\n    sensitivity = tp / (tp + fn),\n    specificity = tn / (tn + fp)\n  )\n}))\n\nthreshold_summary",
+    "title": "4  Predictions from Logistic Regression Models",
+    "section": "5.4 Threshold trade-offs",
+    "text": "5.4 Threshold trade-offs\nLower thresholds predict more passes. Higher thresholds predict fewer passes. The right threshold depends on the cost of different mistakes.\n\nOutputCode\n\n\n\n\n  threshold  accuracy sensitivity specificity\n1       0.3 0.7037975   0.9773585   0.1461538\n2       0.5 0.7164557   0.9320755   0.2769231\n3       0.7 0.7265823   0.8566038   0.4615385\n\n\n\n\n\nthresholds &lt;- c(0.3, 0.5, 0.7)\n\nthreshold_summary &lt;- do.call(rbind, lapply(thresholds, function(t) {\n  pred &lt;- ifelse(prob &gt;= t, 1, 0)\n  cm &lt;- table(\n    Predicted = factor(pred, levels = c(0, 1)),\n    Actual = factor(students$pass_exam, levels = c(0, 1))\n  )\n  tp &lt;- cm[\"1\", \"1\"]\n  tn &lt;- cm[\"0\", \"0\"]\n  fp &lt;- cm[\"1\", \"0\"]\n  fn &lt;- cm[\"0\", \"1\"]\n  data.frame(\n    threshold = t,\n    accuracy = (tp + tn) / sum(cm),\n    sensitivity = tp / (tp + fn),\n    specificity = tn / (tn + fp)\n  )\n}))\n\nthreshold_summary\n\n\n\n\n\nExercise 4.2: Accuracy at a different threshold\nUsing a threshold of 0.6, compute the classification accuracy and store it as accuracy_06.\n\n\n\n\n\n\n\n\n\n\n\nthreshold &lt;- 0.6\nclass_hat &lt;- ifelse(prob &gt;= threshold, 1, 0)\naccuracy_06 &lt;- mean(class_hat == actual_num)\naccuracy_06\nthreshold &lt;- 0.6\nclass_hat &lt;- ifelse(prob &gt;= threshold, 1, 0)\naccuracy_06 &lt;- mean(class_hat == actual_num)\naccuracy_06",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Predictions from Logistic Regression Models</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Predictions from Logistic Regression Models</span>"
     ]
   },
   {
     "objectID": "ch_5_predictions-from-logistic-regression-models.html#sec-roc-auc",
     "href": "ch_5_predictions-from-logistic-regression-models.html#sec-roc-auc",
-    "title": "5  Predictions from Logistic Regression Models",
-    "section": "6.5 ROC curves and AUC",
-    "text": "6.5 ROC curves and AUC\nAn ROC curve shows the trade-off between sensitivity and false positive rate across many thresholds. AUC summarises that curve.\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\n[1] 0.6483745\n\n\n\n\n\nroc_thresholds &lt;- seq(1, 0, by = -0.02)\nactual &lt;- students$pass_exam\n\ntpr &lt;- sapply(roc_thresholds, function(t) {\n  pred &lt;- ifelse(prob &gt;= t, 1, 0)\n  tp &lt;- sum(pred == 1 & actual == 1)\n  fn &lt;- sum(pred == 0 & actual == 1)\n  tp / (tp + fn)\n})\n\nfpr &lt;- sapply(roc_thresholds, function(t) {\n  pred &lt;- ifelse(prob &gt;= t, 1, 0)\n  fp &lt;- sum(pred == 1 & actual == 0)\n  tn &lt;- sum(pred == 0 & actual == 0)\n  fp / (fp + tn)\n})\n\nroc_df &lt;- data.frame(fpr = fpr, tpr = tpr)\nroc_df &lt;- roc_df[order(roc_df$fpr), ]\n\nplot(roc_df$fpr, roc_df$tpr, type = \"l\", lwd = 2,\n     xlab = \"False positive rate\",\n     ylab = \"True positive rate\")\nabline(0, 1, lty = 3, col = \"grey60\")\n\nauc &lt;- sum(diff(roc_df$fpr) *\n             (head(roc_df$tpr, -1) + tail(roc_df$tpr, -1)) / 2)\nauc\n\n\n\n\n\nKey-point\nAUC near 0.5 indicates little discrimination. Values closer to 1 indicate stronger discrimination between students who passed and students who failed.",
+    "title": "4  Predictions from Logistic Regression Models",
+    "section": "5.5 ROC curves and AUC",
+    "text": "5.5 ROC curves and AUC\nAn ROC curve shows the trade-off between sensitivity and false positive rate across many thresholds. AUC summarises that curve.\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\n[1] 0.6483745\n\n\n\n\n\nroc_thresholds &lt;- seq(1, 0, by = -0.02)\nactual &lt;- students$pass_exam\n\ntpr &lt;- sapply(roc_thresholds, function(t) {\n  pred &lt;- ifelse(prob &gt;= t, 1, 0)\n  tp &lt;- sum(pred == 1 & actual == 1)\n  fn &lt;- sum(pred == 0 & actual == 1)\n  tp / (tp + fn)\n})\n\nfpr &lt;- sapply(roc_thresholds, function(t) {\n  pred &lt;- ifelse(prob &gt;= t, 1, 0)\n  fp &lt;- sum(pred == 1 & actual == 0)\n  tn &lt;- sum(pred == 0 & actual == 0)\n  fp / (fp + tn)\n})\n\nroc_df &lt;- data.frame(fpr = fpr, tpr = tpr)\nroc_df &lt;- roc_df[order(roc_df$fpr), ]\n\nplot(roc_df$fpr, roc_df$tpr, type = \"l\", lwd = 2,\n     xlab = \"False positive rate\",\n     ylab = \"True positive rate\")\nabline(0, 1, lty = 3, col = \"grey60\")\n\nauc &lt;- sum(diff(roc_df$fpr) *\n             (head(roc_df$tpr, -1) + tail(roc_df$tpr, -1)) / 2)\nauc\n\n\n\n\n\nKey-point\nAUC near 0.5 indicates little discrimination. Values closer to 1 indicate stronger discrimination between students who passed and students who failed.",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Predictions from Logistic Regression Models</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Predictions from Logistic Regression Models</span>"
     ]
   },
   {
     "objectID": "ch_5_predictions-from-logistic-regression-models.html#sec-chapter05-summary",
     "href": "ch_5_predictions-from-logistic-regression-models.html#sec-chapter05-summary",
-    "title": "5  Predictions from Logistic Regression Models",
-    "section": "6.6 Chapter summary",
-    "text": "6.6 Chapter summary\nPrediction from logistic regression has two stages. First, use the fitted model to produce predicted probabilities. Second, if a classification is needed, choose a threshold that reflects the decision context. Probability predictions and classification decisions should be reported separately.",
+    "title": "4  Predictions from Logistic Regression Models",
+    "section": "5.6 Chapter summary",
+    "text": "5.6 Chapter summary\nPrediction from logistic regression has two stages. First, use the fitted model to produce predicted probabilities. Second, if a classification is needed, choose a threshold that reflects the decision context. Probability predictions and classification decisions should be reported separately.",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Predictions from Logistic Regression Models</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Predictions from Logistic Regression Models</span>"
     ]
   },
   {
     "objectID": "ch_6_extensions-case-study.html",
     "href": "ch_6_extensions-case-study.html",
-    "title": "6  Model Building and a Mini Case Study",
+    "title": "5  Model Building and a Mini Case Study",
     "section": "",
-    "text": "7 Model building and a mini case study\nThe earlier chapters developed the pieces of logistic regression one at a time. This chapter brings them together into a short analysis workflow:\nThe goal is not to find the “best possible” student-performance model. The goal is to practise a defensible modelling workflow.",
+    "text": "6 Model building and a mini case study\nThe earlier chapters developed the pieces of logistic regression one at a time. This chapter brings them together into a short analysis workflow:\nThe goal is not to find the “best possible” student-performance model. The goal is to practise a defensible modelling workflow.",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Model Building and a Mini Case Study</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Building and a Mini Case Study</span>"
     ]
   },
   {
     "objectID": "ch_6_extensions-case-study.html#sec-case-define-outcome",
     "href": "ch_6_extensions-case-study.html#sec-case-define-outcome",
-    "title": "6  Model Building and a Mini Case Study",
-    "section": "7.1 Define the outcome",
-    "text": "7.1 Define the outcome\nWe define the event as passing the final mathematics grade:\n\\[\nY_i =\n\\begin{cases}\n1 & \\text{if } G3_i \\ge 10,\\\\\n0 & \\text{if } G3_i &lt; 10.\n\\end{cases}\n\\]\n\nOutputCode\n\n\n\n\n\n  0   1 \n130 265 \n\n\n\n        0         1 \n0.3291139 0.6708861 \n\n\n\n\n\ntable(students$pass_exam)\nprop.table(table(students$pass_exam))\n\n\n\n\nAlways report the event definition. Different cutoffs can answer different questions.",
+    "title": "5  Model Building and a Mini Case Study",
+    "section": "6.1 Define the outcome",
+    "text": "6.1 Define the outcome\nWe define the event as passing the final mathematics grade:\n\\[\nY_i =\n\\begin{cases}\n1 & \\text{if } G3_i \\ge 10,\\\\\n0 & \\text{if } G3_i &lt; 10.\n\\end{cases}\n\\]\n\nOutputCode\n\n\n\n\n\n  0   1 \n130 265 \n\n\n\n        0         1 \n0.3291139 0.6708861 \n\n\n\n\n\ntable(students$pass_exam)\nprop.table(table(students$pass_exam))\n\n\n\n\nAlways report the event definition. Different cutoffs can answer different questions.",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Model Building and a Mini Case Study</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Building and a Mini Case Study</span>"
     ]
   },
   {
     "objectID": "ch_6_extensions-case-study.html#sec-case-choose-predictors",
     "href": "ch_6_extensions-case-study.html#sec-case-choose-predictors",
-    "title": "6  Model Building and a Mini Case Study",
-    "section": "7.2 Choose predictors",
-    "text": "7.2 Choose predictors\nA compact first model uses:\n\nstudytime: weekly study-time category.\nfailures: number of previous class failures.\nabsences: number of school absences.\n\nThese predictors are easy to explain and available before the final grade is known.\n\nOutputCode\n\n\n\n\n\nCall:\nglm(formula = pass_exam ~ studytime + failures + absences, family = binomial, \n    data = students)\n\nCoefficients:\n            Estimate Std. Error z value Pr(&gt;|z|)    \n(Intercept)  1.08795    0.32965   3.300 0.000966 ***\nstudytime    0.03980    0.13931   0.286 0.775104    \nfailures    -0.96217    0.16995  -5.662  1.5e-08 ***\nabsences    -0.01843    0.01332  -1.384 0.166398    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 500.50  on 394  degrees of freedom\nResidual deviance: 455.11  on 391  degrees of freedom\nAIC: 463.11\n\nNumber of Fisher Scoring iterations: 4\n\n\n\n\n\nfit_case &lt;- glm(pass_exam ~ studytime + failures + absences,\n                data = students,\n                family = binomial)\nsummary(fit_case)\n\n\n\n\nOdds ratios give a first interpretation:\n\nOutputCode\n\n\n\n\n             estimate     2.5 %    97.5 %\n(Intercept) 2.9681706 1.5555872 5.6634800\nstudytime   1.0406030 0.7919686 1.3672947\nfailures    0.3820611 0.2738250 0.5330802\nabsences    0.9817405 0.9564488 1.0077010\n\n\n\n\n\nexp(cbind(\n  estimate = coef(fit_case),\n  confint.default(fit_case)\n))\n\n\n\n\n\nKey-point\nUse odds ratios to summarise model coefficients, but use predicted probabilities to communicate the practical size of effects.\n\n\n\nContinue",
+    "title": "5  Model Building and a Mini Case Study",
+    "section": "6.2 Choose predictors",
+    "text": "6.2 Choose predictors\nA compact first model uses:\n\nstudytime: weekly study-time category.\nfailures: number of previous class failures.\nabsences: number of school absences.\n\nThese predictors are easy to explain and available before the final grade is known.\n\nOutputCode\n\n\n\n\n\nCall:\nglm(formula = pass_exam ~ studytime + failures + absences, family = binomial, \n    data = students)\n\nCoefficients:\n            Estimate Std. Error z value Pr(&gt;|z|)    \n(Intercept)  1.08795    0.32965   3.300 0.000966 ***\nstudytime    0.03980    0.13931   0.286 0.775104    \nfailures    -0.96217    0.16995  -5.662  1.5e-08 ***\nabsences    -0.01843    0.01332  -1.384 0.166398    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 500.50  on 394  degrees of freedom\nResidual deviance: 455.11  on 391  degrees of freedom\nAIC: 463.11\n\nNumber of Fisher Scoring iterations: 4\n\n\n\n\n\nfit_case &lt;- glm(pass_exam ~ studytime + failures + absences,\n                data = students,\n                family = binomial)\nsummary(fit_case)\n\n\n\n\nOdds ratios give a first interpretation:\n\nOutputCode\n\n\n\n\n             estimate     2.5 %    97.5 %\n(Intercept) 2.9681706 1.5555872 5.6634800\nstudytime   1.0406030 0.7919686 1.3672947\nfailures    0.3820611 0.2738250 0.5330802\nabsences    0.9817405 0.9564488 1.0077010\n\n\n\n\n\nexp(cbind(\n  estimate = coef(fit_case),\n  confint.default(fit_case)\n))\n\n\n\n\n\nKey-point\nUse odds ratios to summarise model coefficients, but use predicted probabilities to communicate the practical size of effects.\n\n\n\nContinue",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Model Building and a Mini Case Study</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Building and a Mini Case Study</span>"
     ]
   },
   {
     "objectID": "ch_6_extensions-case-study.html#sec-case-compare-models",
     "href": "ch_6_extensions-case-study.html#sec-case-compare-models",
-    "title": "6  Model Building and a Mini Case Study",
-    "section": "7.3 Compare a small set of models",
-    "text": "7.3 Compare a small set of models\nWe compare three models:\n\nOutputCode\n\n\n\n\n          df      AIC\nfit_null   1 502.5040\nfit_study  2 502.2730\nfit_case   4 463.1066\n\n\nAnalysis of Deviance Table\n\nModel 1: pass_exam ~ studytime\nModel 2: pass_exam ~ studytime + failures + absences\n  Resid. Df Resid. Dev Df Deviance  Pr(&gt;Chi)    \n1       393     498.27                          \n2       391     455.11  2   43.166 4.232e-10 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\n\n\nfit_null &lt;- glm(pass_exam ~ 1, data = students, family = binomial)\nfit_study &lt;- glm(pass_exam ~ studytime, data = students, family = binomial)\nfit_case &lt;- glm(pass_exam ~ studytime + failures + absences,\n                data = students,\n                family = binomial)\n\nAIC(fit_null, fit_study, fit_case)\nanova(fit_study, fit_case, test = \"Chisq\")\n\n\n\n\nThis mirrors the model-building logic from the Linear Regression Short Course: start simple, add predictors for clear reasons, and check whether the added complexity is useful.",
+    "title": "5  Model Building and a Mini Case Study",
+    "section": "6.3 Compare a small set of models",
+    "text": "6.3 Compare a small set of models\nWe compare three models:\n\nOutputCode\n\n\n\n\n          df      AIC\nfit_null   1 502.5040\nfit_study  2 502.2730\nfit_case   4 463.1066\n\n\nAnalysis of Deviance Table\n\nModel 1: pass_exam ~ studytime\nModel 2: pass_exam ~ studytime + failures + absences\n  Resid. Df Resid. Dev Df Deviance  Pr(&gt;Chi)    \n1       393     498.27                          \n2       391     455.11  2   43.166 4.232e-10 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\n\n\nfit_null &lt;- glm(pass_exam ~ 1, data = students, family = binomial)\nfit_study &lt;- glm(pass_exam ~ studytime, data = students, family = binomial)\nfit_case &lt;- glm(pass_exam ~ studytime + failures + absences,\n                data = students,\n                family = binomial)\n\nAIC(fit_null, fit_study, fit_case)\nanova(fit_study, fit_case, test = \"Chisq\")\n\n\n\n\nThis mirrors the model-building logic from the Linear Regression Short Course: start simple, add predictors for clear reasons, and check whether the added complexity is useful.",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Model Building and a Mini Case Study</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Building and a Mini Case Study</span>"
     ]
   },
   {
     "objectID": "ch_6_extensions-case-study.html#sec-case-interactions",
     "href": "ch_6_extensions-case-study.html#sec-case-interactions",
-    "title": "6  Model Building and a Mini Case Study",
-    "section": "7.4 Consider interactions carefully",
-    "text": "7.4 Consider interactions carefully\nAn interaction allows the effect of one predictor to depend on another. For example, the association between absences and passing might differ depending on whether a student has previous failures.\n\nOutputCode\n\n\n\n\n                df      AIC\nfit_case         4 463.1066\nfit_interaction  5 463.9819\n\n\n\nCall:\nglm(formula = pass_exam ~ studytime + failures * high_absence, \n    family = binomial, data = students)\n\nCoefficients:\n                         Estimate Std. Error z value Pr(&gt;|z|)   \n(Intercept)               0.79818    0.34899   2.287   0.0222 * \nstudytime                 0.04476    0.13851   0.323   0.7466   \nfailures                 -0.67971    0.23208  -2.929   0.0034 **\nhigh_absencelow           0.27664    0.25978   1.065   0.2869   \nfailures:high_absencelow -0.59156    0.35360  -1.673   0.0943 . \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 500.50  on 394  degrees of freedom\nResidual deviance: 453.98  on 390  degrees of freedom\nAIC: 463.98\n\nNumber of Fisher Scoring iterations: 4\n\n\n\n\n\nfit_interaction &lt;- glm(pass_exam ~ studytime + failures * high_absence,\n                       data = students,\n                       family = binomial)\n\nAIC(fit_case, fit_interaction)\nsummary(fit_interaction)\n\n\n\n\nInteractions can be useful, but they make interpretation harder and require enough data in each subgroup.\n\nNote\nAdd interaction terms when they answer a real question or are strongly motivated by the context. Do not add them only to search for significance.",
+    "title": "5  Model Building and a Mini Case Study",
+    "section": "6.4 Consider interactions carefully",
+    "text": "6.4 Consider interactions carefully\nAn interaction allows the effect of one predictor to depend on another. For example, the association between absences and passing might differ depending on whether a student has previous failures.\n\nOutputCode\n\n\n\n\n                df      AIC\nfit_case         4 463.1066\nfit_interaction  5 463.9819\n\n\n\nCall:\nglm(formula = pass_exam ~ studytime + failures * high_absence, \n    family = binomial, data = students)\n\nCoefficients:\n                         Estimate Std. Error z value Pr(&gt;|z|)   \n(Intercept)               0.79818    0.34899   2.287   0.0222 * \nstudytime                 0.04476    0.13851   0.323   0.7466   \nfailures                 -0.67971    0.23208  -2.929   0.0034 **\nhigh_absencelow           0.27664    0.25978   1.065   0.2869   \nfailures:high_absencelow -0.59156    0.35360  -1.673   0.0943 . \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 500.50  on 394  degrees of freedom\nResidual deviance: 453.98  on 390  degrees of freedom\nAIC: 463.98\n\nNumber of Fisher Scoring iterations: 4\n\n\n\n\n\nfit_interaction &lt;- glm(pass_exam ~ studytime + failures * high_absence,\n                       data = students,\n                       family = binomial)\n\nAIC(fit_case, fit_interaction)\nsummary(fit_interaction)\n\n\n\n\nInteractions can be useful, but they make interpretation harder and require enough data in each subgroup.\n\nNote\nAdd interaction terms when they answer a real question or are strongly motivated by the context. Do not add them only to search for significance.",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Model Building and a Mini Case Study</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Building and a Mini Case Study</span>"
     ]
   },
   {
     "objectID": "ch_6_extensions-case-study.html#sec-case-scenarios",
     "href": "ch_6_extensions-case-study.html#sec-case-scenarios",
-    "title": "6  Model Building and a Mini Case Study",
-    "section": "7.5 Communicate with scenarios",
-    "text": "7.5 Communicate with scenarios\nScenario predictions translate the model back to the probability scale.\n\nOutputCode\n\n\n\n\n  studytime failures absences predicted_probability\n1         1        0        2             0.7485492\n2         2        0        2             0.7559662\n3         4        0        2             0.7703504\n\n\n\n\n\nscenarios &lt;- data.frame(\n  studytime = c(1, 2, 4),\n  failures = c(0, 0, 0),\n  absences = c(2, 2, 2)\n)\n\nscenarios$predicted_probability &lt;- predict(\n  fit_case,\n  newdata = scenarios,\n  type = \"response\"\n)\n\nscenarios\n\n\n\n\nFor a non-technical audience, this table is usually more useful than a coefficient table.",
+    "title": "5  Model Building and a Mini Case Study",
+    "section": "6.5 Communicate with scenarios",
+    "text": "6.5 Communicate with scenarios\nScenario predictions translate the model back to the probability scale.\n\nOutputCode\n\n\n\n\n  studytime failures absences predicted_probability\n1         1        0        2             0.7485492\n2         2        0        2             0.7559662\n3         4        0        2             0.7703504\n\n\n\n\n\nscenarios &lt;- data.frame(\n  studytime = c(1, 2, 4),\n  failures = c(0, 0, 0),\n  absences = c(2, 2, 2)\n)\n\nscenarios$predicted_probability &lt;- predict(\n  fit_case,\n  newdata = scenarios,\n  type = \"response\"\n)\n\nscenarios\n\n\n\n\nFor a non-technical audience, this table is usually more useful than a coefficient table.",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Model Building and a Mini Case Study</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Building and a Mini Case Study</span>"
     ]
   },
   {
     "objectID": "ch_6_extensions-case-study.html#sec-case-performance",
     "href": "ch_6_extensions-case-study.html#sec-case-performance",
-    "title": "6  Model Building and a Mini Case Study",
-    "section": "7.6 Summarise predictive performance",
-    "text": "7.6 Summarise predictive performance\n\nOutputCode\n\n\n\n\n         Actual\nPredicted   0   1\n        0  36  18\n        1  94 247\n\n\n   accuracy sensitivity specificity \n  0.7164557   0.9320755   0.2769231 \n\n\n\n\n\nprob &lt;- predict(fit_case, type = \"response\")\nthreshold &lt;- 0.5\npred &lt;- ifelse(prob &gt;= threshold, 1, 0)\ncm &lt;- table(\n  Predicted = factor(pred, levels = c(0, 1)),\n  Actual = factor(students$pass_exam, levels = c(0, 1))\n)\ncm\n\naccuracy &lt;- sum(diag(cm)) / sum(cm)\nsensitivity &lt;- cm[\"1\", \"1\"] / sum(cm[, \"1\"])\nspecificity &lt;- cm[\"0\", \"0\"] / sum(cm[, \"0\"])\n\nc(accuracy = accuracy,\n  sensitivity = sensitivity,\n  specificity = specificity)\n\n\n\n\nThis is an in-sample summary, so it is optimistic. In a real predictive project, we would use a validation set or cross-validation.",
+    "title": "5  Model Building and a Mini Case Study",
+    "section": "6.6 Summarise predictive performance",
+    "text": "6.6 Summarise predictive performance\n\nOutputCode\n\n\n\n\n         Actual\nPredicted   0   1\n        0  36  18\n        1  94 247\n\n\n   accuracy sensitivity specificity \n  0.7164557   0.9320755   0.2769231 \n\n\n\n\n\nprob &lt;- predict(fit_case, type = \"response\")\nthreshold &lt;- 0.5\npred &lt;- ifelse(prob &gt;= threshold, 1, 0)\ncm &lt;- table(\n  Predicted = factor(pred, levels = c(0, 1)),\n  Actual = factor(students$pass_exam, levels = c(0, 1))\n)\ncm\n\naccuracy &lt;- sum(diag(cm)) / sum(cm)\nsensitivity &lt;- cm[\"1\", \"1\"] / sum(cm[, \"1\"])\nspecificity &lt;- cm[\"0\", \"0\"] / sum(cm[, \"0\"])\n\nc(accuracy = accuracy,\n  sensitivity = sensitivity,\n  specificity = specificity)\n\n\n\n\nThis is an in-sample summary, so it is optimistic. In a real predictive project, we would use a validation set or cross-validation.",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Model Building and a Mini Case Study</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Building and a Mini Case Study</span>"
     ]
   },
   {
     "objectID": "ch_6_extensions-case-study.html#sec-case-reporting-template",
     "href": "ch_6_extensions-case-study.html#sec-case-reporting-template",
-    "title": "6  Model Building and a Mini Case Study",
-    "section": "7.7 Reporting template",
-    "text": "7.7 Reporting template\nUse this structure for a short logistic regression report:\n\nOutcome: Define the event and report the event rate.\nModel: State the predictors and the link function.\nEffects: Report key odds ratios with confidence intervals.\nPredictions: Give predicted probabilities for realistic scenarios.\nPerformance: Report threshold, confusion matrix metrics, and any AUC or validation results.\nLimitations: Note missing predictors, observational design, sample size, class imbalance, and any modelling assumptions.\n\nTemplate paragraph:\n\nWe modelled the probability of passing the final mathematics assessment using logistic regression. The event was defined as G3 &gt;= 10. The model included study time, previous failures, and absences. Coefficients were estimated on the log-odds scale and reported as odds ratios. To make the results easier to interpret, we also calculated predicted probabilities for representative student profiles. Using a threshold of 0.5, we summarised classification performance with accuracy, sensitivity, and specificity. These performance results are in-sample and should be validated before using the model for decision making.",
+    "title": "5  Model Building and a Mini Case Study",
+    "section": "6.7 Reporting template",
+    "text": "6.7 Reporting template\nUse this structure for a short logistic regression report:\n\nOutcome: Define the event and report the event rate.\nModel: State the predictors and the link function.\nEffects: Report key odds ratios with confidence intervals.\nPredictions: Give predicted probabilities for realistic scenarios.\nPerformance: Report threshold, confusion matrix metrics, and any AUC or validation results.\nLimitations: Note missing predictors, observational design, sample size, class imbalance, and any modelling assumptions.\n\nTemplate paragraph:\n\nWe modelled the probability of passing the final mathematics assessment using logistic regression. The event was defined as G3 &gt;= 10. The model included study time, previous failures, and absences. Coefficients were estimated on the log-odds scale and reported as odds ratios. To make the results easier to interpret, we also calculated predicted probabilities for representative student profiles. Using a threshold of 0.5, we summarised classification performance with accuracy, sensitivity, and specificity. These performance results are in-sample and should be validated before using the model for decision making.",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Model Building and a Mini Case Study</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Building and a Mini Case Study</span>"
     ]
   },
   {
     "objectID": "ch_6_extensions-case-study.html#sec-chapter06-summary",
     "href": "ch_6_extensions-case-study.html#sec-chapter06-summary",
-    "title": "6  Model Building and a Mini Case Study",
-    "section": "7.8 Chapter summary",
-    "text": "7.8 Chapter summary\nLogistic regression analysis follows the same disciplined pattern as linear regression: define the response, build interpretable models, compare alternatives, check assumptions and performance, and communicate effects on a scale the audience can understand. The main difference is the scale: coefficients live on the log-odds scale, while conclusions are usually clearest as predicted probabilities.",
+    "title": "5  Model Building and a Mini Case Study",
+    "section": "6.8 Chapter summary",
+    "text": "6.8 Chapter summary\nLogistic regression analysis follows the same disciplined pattern as linear regression: define the response, build interpretable models, compare alternatives, check assumptions and performance, and communicate effects on a scale the audience can understand. The main difference is the scale: coefficients live on the log-odds scale, while conclusions are usually clearest as predicted probabilities.",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Model Building and a Mini Case Study</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Building and a Mini Case Study</span>"
     ]
   },
   {
