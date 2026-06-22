@@ -71,6 +71,13 @@ prob <- predict(fit_multi, type = "response")
 actual_num <- students$pass_exam
 ```
 
+```{webr chapter03-fit-exercise-setup}
+#| include: false
+#| envir: ex_fit_ch3
+students <- read.csv("Data/student/student-mat.csv", sep = ";")
+students$pass_exam <- ifelse(students$G3 >= 10, 1, 0)
+```
+
 # Assessing model fit and predictions {#sec-assessing-fit}
 
 In linear regression, model assessment often starts with [residual sums of squares]{.glossary term="Residual sum of squares"} and $R^2$. Logistic regression uses a different error model, so the assessment tools also change. We still ask the same broad questions:
@@ -81,6 +88,69 @@ In linear regression, model assessment often starts with [residual sums of squar
 4. Are the predicted probabilities useful for the purpose at hand?
 
 This chapter first focuses on likelihood-based model assessment, then turns to [predicted probabilities]{.glossary term="Predicted probability"}, [classification thresholds]{.glossary term="Classification threshold"}, and predictive performance.
+
+We will compare three models throughout the chapter: a null model with no predictors, a study-time model, and a multivariable model that adds previous failures and absences. Before assessing these models, make sure you can fit them explicitly.
+
+::: Exercise
+### Review: fit the chapter models
+
+Fit the three logistic regression models used in this chapter. Store them as `fit_null`, `fit_study`, and `fit_multi`.
+
+```{webr chapter03-fit-review-exercise}
+#| exercise: ex_ch3_fit
+#| envir: ex_fit_ch3
+fit_null <- glm(______, data = students, family = binomial)
+fit_study <- glm(______, data = students, family = binomial)
+fit_multi <- glm(______,
+                 data = students,
+                 family = binomial)
+```
+
+:::: {.solution exercise="ex_ch3_fit"}
+```{webr chapter03-fit-review-exercise-solution}
+#| exercise: ex_ch3_fit
+#| solution: true
+fit_null <- glm(pass_exam ~ 1, data = students, family = binomial)
+fit_study <- glm(pass_exam ~ studytime, data = students, family = binomial)
+fit_multi <- glm(pass_exam ~ studytime + failures + absences,
+                 data = students,
+                 family = binomial)
+```
+::::
+
+```{webr chapter03-fit-review-exercise-check}
+#| exercise: ex_ch3_fit
+#| envir: ex_fit_ch3
+#| check: true
+#| class: wait
+grade_this({
+  needed <- c("fit_null", "fit_study", "fit_multi")
+  missing <- needed[!vapply(needed, exists, logical(1), inherits = FALSE)]
+  if (length(missing) > 0) {
+    fail(paste("Create", paste(missing, collapse = ", "), "and try again."))
+  }
+  targets <- list(
+    fit_null = glm(pass_exam ~ 1, data = students, family = binomial),
+    fit_study = glm(pass_exam ~ studytime, data = students, family = binomial),
+    fit_multi = glm(pass_exam ~ studytime + failures + absences,
+                    data = students,
+                    family = binomial)
+  )
+  for (nm in needed) {
+    fitted_model <- get(nm, inherits = FALSE)
+    if (!inherits(fitted_model, "glm")) {
+      fail(paste("`", nm, "` should be a model fitted with `glm()`.", sep = ""))
+    }
+    if (!isTRUE(all.equal(unname(coef(fitted_model)),
+                          unname(coef(targets[[nm]])),
+                          tolerance = 0.001))) {
+      fail("Check the formulas for the three models.")
+    }
+  }
+  pass("Those are the three models used in this chapter.")
+})
+```
+:::
 
 ## Likelihood and deviance {#sec-likelihood-deviance}
 
@@ -170,38 +240,6 @@ AIC is useful when comparing several plausible models, but it is not a substitut
 
 - [ ] Continue
 
-## Pseudo R-squared {#sec-logistic-pseudo-r2}
-
-Linear regression's $R^2$ is based on sums of squares. Logistic regression does not have an exact equivalent. Several [**pseudo R-squared**]{.glossary} measures exist, but they should be treated as rough summaries rather than as direct analogues.
-
-One common option is McFadden's pseudo $R^2$:
-
-$$
-R^2_{\text{McFadden}} = 1 - \frac{\log L_{\text{model}}}{\log L_{\text{null}}}.
-$$
-
-:::: {.panel-tabset}
-### Output
-
-```{r chapter03-mcfadden}
-#| echo: false
-mcfadden_r2 <- 1 - as.numeric(logLik(fit_multi) / logLik(fit_null))
-mcfadden_r2
-```
-
-### Code
-
-```{r chapter03-mcfadden-code}
-#| eval: false
-mcfadden_r2 <- 1 - as.numeric(logLik(fit_multi) / logLik(fit_null))
-mcfadden_r2
-```
-::::
-
-::: Key-point
-Do not interpret pseudo $R^2$ as "the percentage of variance explained". For logistic regression, likelihood-based comparisons and prediction checks are usually more informative.
-:::
-
 ## Residuals and influence {#sec-logistic-residuals}
 
 Logistic regression [residuals]{.glossary term="Residual"} are less visually intuitive than linear regression residuals because the observed outcomes are only 0 or 1. Still, residual and [influence]{.glossary term="Influential point"} diagnostics can help identify observations the model struggles to fit.
@@ -258,7 +296,21 @@ abline(h = 0, col = "grey70", lty = 2)
 
 Large residuals mark cases where the observed outcome was surprising under the fitted model. A large [Cook's distance]{.glossary} marks a case with unusual influence on the fitted coefficients.
 
-## Common problems {#sec-logistic-common-problems}
+## Assumptions and common problems {#sec-logistic-common-problems}
+
+Logistic regression is still a linear model, but the linear part is the [linear predictor]{.glossary} on the log-odds scale. The assumptions from linear regression therefore carry over in modified form: independence still matters, the model still needs the right functional form, and unusual observations can still dominate the fit. What changes is the outcome distribution and the link between the linear predictor and the response.
+
+::: Assumption
+### Binary outcome and Bernoulli variation
+
+The usual logistic regression model assumes each outcome is binary and follows a Bernoulli/binomial distribution with probability $p_i$. The normal-error and constant-variance assumptions from linear regression are replaced by the Bernoulli mean-variance relationship:
+
+$$
+\operatorname{Var}(Y_i) = p_i(1 - p_i).
+$$
+
+This is why logistic regression residuals are not expected to look normally distributed around a straight line.
+:::
 
 ::: Assumption
 ### Independent observations
@@ -269,14 +321,40 @@ The usual logistic regression model assumes [observations are independent]{.glos
 ::: Assumption
 ### Linearity on the log-odds scale
 
-[Continuous predictors]{.glossary term="Continuous variable"} are assumed to have approximately [linear effects on the log-odds]{.glossary term="Linearity on the log-odds scale"}. This does not mean a straight line on the probability scale.
+[Continuous predictors]{.glossary term="Continuous variable"} are assumed to have approximately [linear effects on the log-odds]{.glossary term="Linearity on the log-odds scale"}. This does not mean a straight line on the probability scale. If the effect of a continuous predictor bends on the log-odds scale, consider transformations, grouped predictors, splines, or another model that represents that pattern.
 :::
 
-Other common problems include:
+::: Assumption
+### Enough information for each parameter
 
-- [**Separation**]{.glossary}: a predictor or combination of predictors perfectly separates passes from fails, leading to unstable or very large estimates.
-- [**Class imbalance**]{.glossary}: one outcome class is much more common than the other, so simple accuracy can be misleading.
-- [**Overfitting**]{.glossary}: too many predictors for the amount of data, especially when the event count is small.
+The model needs enough passes and fails to estimate each coefficient. Adding many predictors, categories, or interactions can make estimates unstable, especially when one outcome is rare.
+:::
+
+Three practical problems commonly show up when these assumptions are stressed:
+
+::: Example
+### Separation
+
+Suppose a small dataset has no failures among students with `failures = 0`, but every student with `failures = 1` fails the exam. The predictor almost perfectly separates the outcomes. A logistic regression fit may then produce very large coefficient estimates, because the model is trying to push fitted probabilities close to 0 or 1.
+
+This is [separation]{.glossary}.
+:::
+
+::: Example
+### Class imbalance
+
+Suppose 95 out of 100 students pass. A rule that predicts "pass" for everyone has 95% accuracy, but it does not identify any students who fail. When one class dominates, inspect the confusion matrix and class-specific measures such as sensitivity and specificity rather than relying only on accuracy.
+
+This is [class imbalance]{.glossary}.
+:::
+
+::: Example
+### Overfitting
+
+Suppose we fit a model with many demographic variables, interactions, and school-level indicators to only a small number of students. The model may describe this dataset closely but perform poorly for new students. In logistic regression, overfitting is especially likely when the number of events or non-events is small relative to the number of coefficients.
+
+This is [overfitting]{.glossary}.
+:::
 
 ## Predictions from logistic regression models {#sec-predictions}
 
@@ -396,17 +474,15 @@ scenarios
 ```
 ::::
 
-These are model-based probabilities, not guarantees. A student with a high predicted probability can still fail, and a student with a low predicted probability can still pass.
-
 ::: Exercise
 ### Predict a probability
 
-Compute the predicted probability for a student with `studytime = 3`, `failures = 0`, and `absences = 2`. Store it as `p_case`.
+As a callback to the Chapter 1 example, compute the predicted probability for a student with `studytime = 10`, `failures = 0`, and `absences = 2`. Store it as `p_case`.
 
 ```{webr chapter03-predict-exercise}
 #| exercise: ex_pred_1
 #| envir: ex_pred
-new_case <- data.frame(studytime = 3, failures = 0, absences = 2)
+new_case <- data.frame(studytime = 10, failures = 0, absences = 2)
 p_case <- ______
 ```
 
@@ -414,7 +490,7 @@ p_case <- ______
 ```{webr chapter03-predict-exercise-solution}
 #| exercise: ex_pred_1
 #| solution: true
-new_case <- data.frame(studytime = 3, failures = 0, absences = 2)
+new_case <- data.frame(studytime = 10, failures = 0, absences = 2)
 p_case <- predict(fit_multi, newdata = new_case, type = "response")
 p_case
 ```
@@ -430,7 +506,7 @@ grade_this({
     fail("Define `p_case` and try again.")
   }
   target <- as.numeric(predict(fit_multi,
-                               newdata = data.frame(studytime = 3, failures = 0, absences = 2),
+                               newdata = data.frame(studytime = 10, failures = 0, absences = 2),
                                type = "response"))
   if (is.numeric(p_case) && abs(as.numeric(p_case) - target) < 0.001) {
     pass("That is the predicted probability for the scenario.")
@@ -473,6 +549,23 @@ conf_mat <- table(
 conf_mat
 ```
 ::::
+
+::: Exercise
+### Change the decision threshold
+
+Change `threshold` to another value, such as `0.3`, `0.5`, or `0.7`, then run the code to see how the confusion matrix changes.
+
+```{webr chapter03-threshold-explore}
+#| envir: ex_pred
+threshold <- 0.5
+class_hat <- ifelse(prob >= threshold, 1, 0)
+conf_mat <- table(
+  Predicted = factor(class_hat, levels = c(0, 1)),
+  Actual = factor(actual_num, levels = c(0, 1))
+)
+conf_mat
+```
+:::
 
 From the [confusion matrix]{.glossary} we can calculate performance measures such as [accuracy]{.glossary}, [sensitivity]{.glossary}, and [specificity]{.glossary}:
 
