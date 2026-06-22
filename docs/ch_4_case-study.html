@@ -27998,29 +27998,29 @@ initializeRuntime();
 
 </script>
 <style>
-.Exercise {
---color1: #C8E6C9;
---color2: #4CAF50;
-}
-.Key-term {
---color1: #D1C4E9;
---color2: #673AB7;
-}
 .Assumption {
 --color1: #FFCDD2;
 --color2: #F44336;
 }
-.Example {
---color1: #BBDEFB;
---color2: #2196F3;
+.Exercise {
+--color1: #C8E6C9;
+--color2: #4CAF50;
+}
+.Key-point {
+--color1: #FFF9C4;
+--color2: #FFEB3B;
 }
 .Note {
 --color1: #FFF9C4;
 --color2: #FFEB3B;
 }
-.Key-point {
---color1: #FFF9C4;
---color2: #FFEB3B;
+.Key-term {
+--color1: #D1C4E9;
+--color2: #673AB7;
+}
+.Example {
+--color1: #BBDEFB;
+--color2: #2196F3;
 }
 </style>
 
@@ -28185,7 +28185,7 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_6_extensions-case-study.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_4_case-study.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -28230,13 +28230,13 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_3_assessing-model-fit-and-predictions.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch_3_diagnostics-and-predictions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessing Model Fit and Predictions</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_6_extensions-case-study.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ch_4_case-study.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></span></a>
   </div>
 </li>
@@ -28294,12 +28294,12 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
 
 <section id="sec-extensions-case-study" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Model building and a mini case study</h1>
-<p>The earlier chapters developed the pieces of logistic regression one at a time. This chapter brings them together into a short analysis workflow:</p>
+<p>The earlier chapters developed the pieces of <a href="glossary.html#glossary-logistic-regression" class="glossary" title="A regression model for binary outcomes that models the log-odds of an event as a linear function of predictors.">logistic regression</a> one at a time. This chapter brings them together into a short analysis workflow:</p>
 <ol type="1">
-<li>Define the event.</li>
+<li>Define the <a href="glossary.html#glossary-event" class="glossary" title="The outcome category coded as 1 in a binary response; logistic regression usually models the probability of this category.">event</a>.</li>
 <li>Choose a small set of interpretable predictors.</li>
 <li>Fit and compare models.</li>
-<li>Report effects as odds ratios and predicted probabilities.</li>
+<li>Report effects as <a href="glossary.html#glossary-odds-ratio" class="glossary" data-term="Odds ratio" title="A ratio of two odds values. In logistic regression, exponentiating a coefficient gives the multiplicative change in odds for a one-unit predictor increase.">odds ratios</a> and <a href="glossary.html#glossary-predicted-probability" class="glossary" data-term="Predicted probability" title="The model’s estimate of the probability that the event occurs for a given set of predictor values.">predicted probabilities</a>.</li>
 <li>Check predictive performance.</li>
 <li>Communicate limitations.</li>
 </ol>
@@ -28339,7 +28339,7 @@ Y_i =
 </div>
 </div>
 </div>
-<p>Always report the event definition. Different cutoffs can answer different questions.</p>
+<p>Always report the event definition and the <a href="glossary.html#glossary-event-rate" class="glossary" title="The proportion of observations in the data for which the event occurs.">event rate</a>. Different cutoffs can answer different questions.</p>
 </section>
 <section id="sec-case-choose-predictors" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="sec-case-choose-predictors"><span class="header-section-number">5.2</span> Choose predictors</h2>
@@ -28390,7 +28390,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </div>
 </div>
 </div>
-<p>Odds ratios give a first interpretation:</p>
+<p><a href="glossary.html#glossary-odds-ratio" class="glossary" data-term="Odds ratio" title="A ratio of two odds values. In logistic regression, exponentiating a coefficient gives the multiplicative change in odds for a one-unit predictor increase.">Odds ratios</a> give a first interpretation:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">
@@ -28465,11 +28465,11 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 </div>
-<p>This mirrors the model-building logic from the Linear Regression Short Course: start simple, add predictors for clear reasons, and check whether the added complexity is useful.</p>
+<p>This mirrors the <a href="glossary.html#glossary-model-comparison" class="glossary" data-term="Model comparison" title="The process of comparing plausible models using evidence such as likelihood ratio tests, information criteria, prediction performance, and interpretability.">model-building</a> logic from the Linear Regression Short Course: start simple, add predictors for clear reasons, and check whether the added complexity is useful.</p>
 </section>
 <section id="sec-case-interactions" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="sec-case-interactions"><span class="header-section-number">5.4</span> Consider interactions carefully</h2>
-<p>An interaction allows the effect of one predictor to depend on another. For example, the association between absences and passing might differ depending on whether a student has previous failures.</p>
+<p>An <a href="glossary.html#glossary-interaction" class="glossary" title="A model term that allows the effect of one predictor to depend on the value of another predictor.">interaction</a> allows the effect of one predictor to depend on another. For example, the association between absences and passing might differ depending on whether a student has previous failures.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">
@@ -28527,7 +28527,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </section>
 <section id="sec-case-scenarios" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="sec-case-scenarios"><span class="header-section-number">5.5</span> Communicate with scenarios</h2>
-<p>Scenario predictions translate the model back to the probability scale.</p>
+<p><a href="glossary.html#glossary-scenario-based-prediction" class="glossary" data-term="Scenario-based prediction" title="Prediction for realistic combinations of predictor values, used to communicate model results on a practical scale such as probability.">Scenario predictions</a> translate the model back to the probability scale.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">
@@ -28603,18 +28603,18 @@ Predicted   0   1
 </div>
 </div>
 </div>
-<p>This is an in-sample summary, so it is optimistic. In a real predictive project, we would use a validation set or cross-validation.</p>
+<p>This is an in-sample summary, so it is optimistic. In a real predictive project, we would use a <a href="glossary.html#glossary-validation-set" class="glossary" title="Data not used to fit the model, used to assess how well predictions generalise to new observations.">validation set</a> or <a href="glossary.html#glossary-cross-validation" class="glossary" title="A resampling approach that repeatedly fits a model on part of the data and assesses predictions on held-out parts.">cross-validation</a>.</p>
 </section>
 <section id="sec-case-reporting-template" class="level2" data-number="5.7">
 <h2 data-number="5.7" class="anchored" data-anchor-id="sec-case-reporting-template"><span class="header-section-number">5.7</span> Reporting template</h2>
 <p>Use this structure for a short logistic regression report:</p>
 <ol type="1">
 <li><strong>Outcome:</strong> Define the event and report the event rate.</li>
-<li><strong>Model:</strong> State the predictors and the link function.</li>
-<li><strong>Effects:</strong> Report key odds ratios with confidence intervals.</li>
+<li><strong>Model:</strong> State the predictors and the <a href="glossary.html#glossary-link-function" class="glossary" title="A function that connects the expected response to the linear predictor; for logistic regression the link is the logit.">link function</a>.</li>
+<li><strong>Effects:</strong> Report key odds ratios with <a href="glossary.html#glossary-confidence-interval" class="glossary" data-term="Confidence interval" title="A range of plausible parameter values at a chosen confidence level; logistic-regression intervals are often reported for coefficients or odds ratios.">confidence intervals</a>.</li>
 <li><strong>Predictions:</strong> Give predicted probabilities for realistic scenarios.</li>
-<li><strong>Performance:</strong> Report threshold, confusion matrix metrics, and any AUC or validation results.</li>
-<li><strong>Limitations:</strong> Note missing predictors, observational design, sample size, class imbalance, and any modelling assumptions.</li>
+<li><strong>Performance:</strong> Report <a href="glossary.html#glossary-classification-threshold" class="glossary" data-term="Classification threshold" title="The cutoff used to convert predicted probabilities into predicted classes, such as predicting the event when p_hat >= 0.5.">threshold</a>, <a href="glossary.html#glossary-confusion-matrix" class="glossary" title="A table of predicted versus actual classes used to summarise classification performance.">confusion matrix</a> metrics, and any <a href="glossary.html#glossary-auc" class="glossary" title="Area under the ROC curve; a threshold-free summary of how well predicted probabilities rank events above non-events.">AUC</a> or validation results.</li>
+<li><strong>Limitations:</strong> Note missing predictors, observational design, sample size, <a href="glossary.html#glossary-class-imbalance" class="glossary" title="A situation where one outcome class is much more common than the other, making simple accuracy potentially misleading.">class imbalance</a>, and any modelling assumptions.</li>
 </ol>
 <p>Template paragraph:</p>
 <blockquote class="blockquote">

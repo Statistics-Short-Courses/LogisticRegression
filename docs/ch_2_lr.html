@@ -27998,9 +27998,13 @@ initializeRuntime();
 
 </script>
 <style>
-.Note {
+.Key-point {
 --color1: #FFF9C4;
 --color2: #FFEB3B;
+}
+.Key-term {
+--color1: #D1C4E9;
+--color2: #673AB7;
 }
 .Exercise {
 --color1: #C8E6C9;
@@ -28010,13 +28014,9 @@ initializeRuntime();
 --color1: #BBDEFB;
 --color2: #2196F3;
 }
-.Key-point {
+.Note {
 --color1: #FFF9C4;
 --color2: #FFEB3B;
-}
-.Key-term {
---color1: #D1C4E9;
---color2: #673AB7;
 }
 .Assumption {
 --color1: #FFCDD2;
@@ -28230,13 +28230,13 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_3_assessing-model-fit-and-predictions.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch_3_diagnostics-and-predictions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessing Model Fit and Predictions</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_6_extensions-case-study.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch_4_case-study.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></span></a>
   </div>
 </li>
@@ -28316,11 +28316,11 @@ eyJhdHRyIjp7ImVjaG8iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZW52aXIiOiJleF9maXQiLCJldmFsIjp0
 </div>
 <section id="sec-introduction" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> From linear models to fitting logistic regression</h1>
-<p>In <a href="ch_1_logit.html" class="quarto-xref"><span>Chapter 1</span></a> we introduced the practical problem: our outcome is binary, so the expected value of the outcome is a probability. However, a standard linear regression can output values outside the range of a probability (e.g.&nbsp;we might predict a probability of passing greater than one or less than zero). We also saw that this problem can be resolved by not modelling probability directly, but instead <em>via</em> the logit: <span class="math display">\[
+<p>In <a href="ch_1_logit.html" class="quarto-xref"><span>Chapter 1</span></a> we introduced the practical problem: our outcome is binary, so the expected value of the outcome is a probability. However, a standard linear regression can output values outside the range of a probability (e.g.&nbsp;we might predict a probability of passing greater than one or less than zero). We also saw that this problem can be resolved by not modelling probability directly, but instead <em>via</em> the <a href="glossary.html#glossary-log-odds-logit" class="glossary" title="The natural logarithm of the odds: log(p / (1 - p)). It maps probabilities from (0, 1) onto the whole real line.">logit</a>: <span class="math display">\[
 \text{logit}(p) = \log\left(\frac{p}{1-p}\right),
 \]</span></p>
 <p>which lets us place probabilities on a scale that can be modelled with a straight line.</p>
-<p>This key step allows us to use a <strong>Linear Model</strong> {.glossary } to model a binary categorical outcome!</p>
+<p>This key step allows us to use a <a href="glossary.html#glossary-linear-model" class="glossary" title="A model whose systematic component is a linear combination of predictors and coefficients.">linear model</a> to model a binary categorical outcome!</p>
 <ul class="task-list">
 <li><label><input type="checkbox">Continue</label></li>
 </ul>
@@ -28342,7 +28342,7 @@ Y_i \sim N(\mu_i, \sigma^2)
 <p>The first line describes how the observed outcomes vary around their mean. The second line describes how the mean changes with the predictor.</p>
 <div id="cnb-1-Key-point" class="Key-point">
 <details class="Key-point fobx-simplebox fobx-default" open=""><summary><strong>Key-point</strong></summary><div>
-<p>Linear models have both a <strong>mean</strong> and an <strong>error</strong>. In linear regression, the mean model is the straight line. The error model says observations vary around that line with normally distributed errors and constant variance.</p>
+<p>Linear models have both a <strong>mean</strong> and an <strong>error</strong>. In linear regression, the mean model is the straight line. The <a href="glossary.html#glossary-error-model" class="glossary" title="The probabilistic part of a model describing how observed responses vary. Logistic regression uses a Bernoulli/binomial error model rather than additive normal errors.">error model</a> says observations vary around that line with normally distributed errors and constant variance.</p>
 </div></details>
 </div>
 <section id="sec-logit-mean-model" class="level3" data-number="3.1.1">
@@ -28381,8 +28381,8 @@ Y_i =
 <p><span class="math display">\[
 Y_i \sim \text{Bernoulli}(p_i).
 \]</span></p>
-<p>This is the part of the model that replaces the normal error distribution from linear regression. Instead of saying that a continuous outcome varies around a mean with normally distributed errors, we say that the observed 0/1 outcome is generated from a Bernoulli distribution with event probability <span class="math inline">\(p_i\)</span>.</p>
-<p>This is the one-trial version of the binomial distribution.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> It has a single parameter, <span class="math inline">\(p_i\)</span>, and two important properties:</p>
+<p>This is the part of the model that replaces the normal error distribution from linear regression. Instead of saying that a continuous outcome varies around a mean with normally distributed errors, we say that the observed 0/1 outcome is generated from a <a href="glossary.html#glossary-bernoulli-distribution" class="glossary" title="A distribution for a single binary trial, where Y = 1 with probability p and Y = 0 with probability 1 - p.">Bernoulli distribution</a> with event probability <span class="math inline">\(p_i\)</span>.</p>
+<p>This is the one-trial version of the <a href="glossary.html#glossary-binomial-distribution" class="glossary" title="A probability distribution for the number of events in a fixed number of independent binary trials with the same event probability.">binomial distribution</a>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> It has a single parameter, <span class="math inline">\(p_i\)</span>, and two important properties:</p>
 <p><span class="math display">\[
 E[Y_i] = p_i
 \]</span></p>
@@ -28428,11 +28428,11 @@ E[Y_i] = p_i
 </section>
 <section id="sec-glm-framework" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="sec-glm-framework"><span class="header-section-number">3.3</span> Generalised linear models</h2>
-<p>A <strong>generalised linear model</strong> (GLM) has three pieces:</p>
+<p>A <a href="glossary.html#glossary-generalised-linear-model" class="glossary" title="A model class that combines an outcome distribution, a linear predictor, and a link function."><strong>generalised linear model</strong></a> (GLM) has three pieces:</p>
 <ol type="1">
 <li>A distribution for the outcome.</li>
 <li>A linear predictor.</li>
-<li>A link function connecting the expected outcome to the linear predictor.</li>
+<li>A <a href="glossary.html#glossary-link-function" class="glossary" title="A function that connects the expected response to the linear predictor; for logistic regression the link is the logit.">link function</a> connecting the expected outcome to the linear predictor.</li>
 </ol>
 <p>For linear regression, these pieces are:</p>
 <p><span class="math display">\[
@@ -28442,7 +28442,7 @@ Y_i \sim N(\mu_i, \sigma^2),
 \qquad
 \eta_i = \beta_0 + \beta_1 X_i.
 \]</span></p>
-<p>The link is the identity link because the mean itself is modelled directly by the linear predictor.</p>
+<p>The link is the <a href="glossary.html#glossary-identity-link" class="glossary" title="The link function used in ordinary linear regression, where the mean response is modelled directly by the linear predictor.">identity link</a> because the mean itself is modelled directly by the linear predictor.</p>
 <p>For logistic regression, the pieces are:</p>
 <p><span class="math display">\[
 Y_i \sim \text{Bernoulli}(p_i),
@@ -28503,7 +28503,7 @@ Y_i \sim \text{Bernoulli}(p_i),
 <p>Linear regression and logistic regression have the same basic GLM form: an outcome distribution, a linear predictor, and a link function. The difference is the choice of link and outcome distribution: linear regression uses a normal distribution with an identity link, while logistic regression uses a Bernoulli/binomial distribution with a logit link.</p>
 </div></details>
 </div>
-<p>The sliders below build that model in three linked steps. First, the coefficients define a straight line on the log-odds scale. Second, the inverse-logit transformation converts that line to probabilities. Third, each binary outcome is treated as a Bernoulli draw with probability <span class="math inline">\(p_i\)</span>.</p>
+<p>The sliders below build that model in three linked steps. First, the <a href="glossary.html#glossary-coefficient" class="glossary" data-term="Coefficient" title="A model parameter multiplying a predictor. In logistic regression, coefficients describe changes in log-odds.">coefficients</a> define a straight line on the log-odds scale. Second, the <a href="glossary.html#glossary-logistic-function" class="glossary" data-term="Logistic function" title="The inverse-logit transformation, p = 1 / (1 + exp(-eta)), which maps any real-valued linear predictor to a probability between 0 and 1.">inverse-logit</a> transformation converts that line to probabilities. Third, each binary outcome is treated as a Bernoulli draw with probability <span class="math inline">\(p_i\)</span>.</p>
 <div class="panel-grid layout-sidebar ms-md-0 layout-sidebar-left">
 <div class="cell panel-sidebar card bg-light p-2 g-col-24 g-col-lg-7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="247" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 246;"><span id="cb2-247"><a href="#cb2-247" aria-hidden="true" tabindex="-1"></a>viewof lr_demo_b0 <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="dv">4</span><span class="op">,</span> <span class="dv">4</span>]<span class="op">,</span> {</span>
@@ -28784,7 +28784,7 @@ Y_i \sim \text{Bernoulli}(p_i),
 </section>
 <section id="sec-logistic-regression-model" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="sec-logistic-regression-model"><span class="header-section-number">3.4</span> The logistic regression model</h2>
-<p>For the student example with study time as the predictor, the logistic regression model is</p>
+<p>For the student example with study time as the predictor, the <a href="glossary.html#glossary-logistic-regression" class="glossary" title="A regression model for binary outcomes that models the log-odds of an event as a linear function of predictors.">logistic regression</a> model is</p>
 <p><span class="math display">\[
 Y_i \sim \text{Bernoulli}(p_i)
 \]</span></p>
@@ -28829,7 +28829,7 @@ p_i = \frac{1}{1 + e^{-(\beta_0 + \beta_1 \text{studytime}_i)}}.
 </section>
 <section id="sec-glm-formula-r" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="sec-glm-formula-r"><span class="header-section-number">3.5</span> Fitting GLMs in R</h2>
-<p>The R formula looks almost the same as the formula for <code>lm()</code>:</p>
+<p>The R function for fitting a glm to data looks almost the same as the formula for linear regression with the <code>lm()</code> function:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">
@@ -28865,10 +28865,10 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </div>
 </div>
 </div>
-<p>The formula <code>pass_exam ~ studytime</code> gives the linear predictor:</p>
+<p>Inside the call to <code>glm()</code> (telling R we want to fit a generalised linear model), the formula <code>pass_exam ~ studytime</code> gives the <a href="glossary.html#glossary-linear-predictor" class="glossary" title="The systematic part of a regression model, usually written as eta_i = beta_0 + beta_1 X_i1 + … + beta_k X_ik.">linear predictor</a>:</p>
 <p><span class="math display">\[
 \eta_i = \beta_0 + \beta_1 \text{studytime}_i.
-\]</span></p>
+\]</span> in the same way as `</p>
 <p>The argument <code>family = binomial</code> tells R to use the Bernoulli/binomial error model with the logit link. So the single <code>glm()</code> call contains the two changes we need for binary outcomes: a different error model and a different link.</p>
 <div id="cnb-4-Note" class="Note">
 <details class="Note fobx-simplebox fobx-default" open=""><summary><strong>Note</strong></summary><div>
@@ -28883,7 +28883,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <details class="Note fobx-simplebox fobx-default" open=""><summary><strong>Note</strong></summary><div>
 <p><strong>From least squares to likelihood.</strong></p>
 <p>For linear regression, <code>lm()</code> chooses the line that minimises the sum of squared residuals. This works because the model assumes normally distributed errors around a mean line.</p>
-<p>For logistic regression, the outcome is 0 or 1, so squared residuals are no longer the natural fitting criterion. Instead, <code>glm()</code> uses <strong>maximum likelihood estimation</strong>. It chooses the coefficient estimates that make the observed sequence of passes and fails most likely under the Bernoulli model.</p>
+<p>For logistic regression, the outcome is 0 or 1, so squared residuals are no longer the natural fitting criterion. Instead, <code>glm()</code> uses <a href="glossary.html#glossary-maximum-likelihood-estimation" class="glossary" title="A method that estimates parameters by choosing the values that make the observed data most likely under the model."><strong>maximum likelihood estimation</strong></a>. It chooses the coefficient estimates that make the observed sequence of passes and fails most likely under the Bernoulli model.</p>
 <p>Maximum likelihood asks: among all possible coefficient values, which values make the observed data most plausible under the model?</p>
 <p>If student <span class="math inline">\(i\)</span> has predicted probability <span class="math inline">\(p_i\)</span>, then a pass contributes probability <span class="math inline">\(p_i\)</span> to the likelihood and a fail contributes probability <span class="math inline">\(1-p_i\)</span>. A good model gives high probabilities to the events that actually occurred.</p>
 </div></details>
@@ -28948,8 +28948,8 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </section>
 <section id="sec-log-odds-coefficients" class="level3" data-number="3.6.2">
 <h3 data-number="3.6.2" class="anchored" data-anchor-id="sec-log-odds-coefficients"><span class="header-section-number">3.6.2</span> Reading coefficients on the log-odds scale</h3>
-<p>The intercept is the estimated log-odds of passing when <code>studytime = 0</code>. In this dataset, no student has study time equal to 0, so the intercept is mainly needed to position the fitted curve.</p>
-<p>The slope is the estimated change in log-odds for a one-unit increase in study time:</p>
+<p>The <a href="glossary.html#glossary-intercept" class="glossary" title="The baseline value of the linear predictor when numeric predictors are zero and categorical predictors are at their reference levels.">intercept</a> is the estimated log-odds of passing when <code>studytime = 0</code>. In this dataset, no student has study time equal to 0, so the intercept is mainly needed to position the fitted curve.</p>
+<p>The <a href="glossary.html#glossary-slope" class="glossary" title="The change in the linear predictor for a one-unit increase in a predictor, holding other predictors constant.">slope</a> is the estimated change in log-odds for a one-unit increase in study time:</p>
 <p><span class="math display">\[
 b_1 = \widehat{\Delta \text{log-odds}}.
 \]</span></p>
@@ -28961,7 +28961,7 @@ b_1 = \widehat{\Delta \text{log-odds}}.
 </section>
 <section id="sec-fitting-odds-ratios" class="level3" data-number="3.6.3">
 <h3 data-number="3.6.3" class="anchored" data-anchor-id="sec-fitting-odds-ratios"><span class="header-section-number">3.6.3</span> Odds ratios</h3>
-<p>Exponentiating a coefficient converts it from a change in log-odds to an odds ratio:</p>
+<p>Exponentiating a coefficient converts it from a change in log-odds to an <a href="glossary.html#glossary-odds-ratio" class="glossary" title="A ratio of two odds values. In logistic regression, exponentiating a coefficient gives the multiplicative change in odds for a one-unit predictor increase.">odds ratio</a>:</p>
 <p><span class="math display">\[
 \text{odds ratio} = e^{b_1}.
 \]</span></p>
@@ -29065,7 +29065,7 @@ eyJhdHRyIjp7ImNoZWNrIjp0cnVlLCJjbGFzcyI6IndhaXQiLCJlZGl0Ijp0cnVlLCJlbnZpciI6ImV4
 </section>
 <section id="sec-logistic-inference" class="level2" data-number="3.7">
 <h2 data-number="3.7" class="anchored" data-anchor-id="sec-logistic-inference"><span class="header-section-number">3.7</span> Inference for coefficients</h2>
-<p>The <code>summary()</code> output includes a standard error, a test statistic, and a p-value for each coefficient. These are Wald tests. They test whether a coefficient differs from zero on the log-odds scale.</p>
+<p>The <code>summary()</code> output includes a <a href="glossary.html#glossary-standard-error" class="glossary" title="An estimate of how much a statistic, such as a coefficient estimate, would vary across repeated samples.">standard error</a>, a test statistic, and a <a href="glossary.html#glossary-p-value" class="glossary" title="The probability, under the null hypothesis, of observing a result at least as extreme as the one obtained.">p-value</a> for each coefficient. These are <a href="glossary.html#glossary-wald-test" class="glossary" data-term="Wald test" title="A hypothesis test that compares an estimated coefficient with its standard error, usually testing whether the coefficient is zero.">Wald tests</a>. They test whether a coefficient differs from zero on the log-odds scale.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">
@@ -29085,7 +29085,7 @@ studytime   0.1938849  0.1311284 1.478588 0.1392504</code></pre>
 </div>
 </div>
 </div>
-<p>Wald confidence intervals can be computed with <code>confint.default()</code>:</p>
+<p>Wald <a href="glossary.html#glossary-confidence-interval" class="glossary" data-term="Confidence interval" title="A range of plausible parameter values at a chosen confidence level; logistic-regression intervals are often reported for coefficients or odds ratios.">confidence intervals</a> can be computed with <code>confint.default()</code>:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">
@@ -29133,7 +29133,7 @@ studytime   0.9388289 1.569711</code></pre>
 </section>
 <section id="sec-adding-predictors" class="level2" data-number="3.8">
 <h2 data-number="3.8" class="anchored" data-anchor-id="sec-adding-predictors"><span class="header-section-number">3.8</span> Adding predictors</h2>
-<p>The formula interface extends in the same way as multiple linear regression. A model with previous failures and absences is</p>
+<p>The formula interface extends in the same way as <a href="glossary.html#glossary-multiple-linear-regression" class="glossary" title="Linear regression with two or more predictors, allowing adjustment for multiple variables at once.">multiple linear regression</a>. A model with previous failures and absences is</p>
 <p><span class="math display">\[
 \text{logit}(p_i) =
 \beta_0 +
@@ -29181,11 +29181,11 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </div>
 </div>
 </div>
-<p>Each coefficient is a partial effect on the log-odds scale, holding the other predictors in the model constant.</p>
+<p>Each coefficient is a <a href="glossary.html#glossary-partial-regression-coefficient" class="glossary" data-term="Partial regression coefficient" title="The coefficient for a predictor interpreted while holding the other predictors in the model constant.">partial effect</a> on the log-odds scale, holding the other predictors in the model constant.</p>
 </section>
 <section id="sec-logistic-categorical-predictors" class="level2" data-number="3.9">
 <h2 data-number="3.9" class="anchored" data-anchor-id="sec-logistic-categorical-predictors"><span class="header-section-number">3.9</span> Categorical predictors</h2>
-<p>Categorical predictors work as they did in linear regression. R chooses a reference level and estimates comparisons against that level.</p>
+<p><a href="glossary.html#glossary-categorical-variable" class="glossary" data-term="Categorical variable" title="A variable whose values are categories or groups rather than measurements on a numeric scale.">Categorical predictors</a> work as they did in linear regression. R chooses a <a href="glossary.html#glossary-reference-level" class="glossary" title="The baseline category for a factor against which other levels are compared.">reference level</a> and estimates comparisons against that level.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">

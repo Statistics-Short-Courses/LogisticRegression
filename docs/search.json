@@ -104,7 +104,7 @@
     "href": "ch_2_lr.html",
     "title": "2  Generalised Linear Models and Logistic Regression",
     "section": "",
-    "text": "3 From linear models to fitting logistic regression\nIn Chapter 1 we introduced the practical problem: our outcome is binary, so the expected value of the outcome is a probability. However, a standard linear regression can output values outside the range of a probability (e.g. we might predict a probability of passing greater than one or less than zero). We also saw that this problem can be resolved by not modelling probability directly, but instead via the logit: \\[\n\\text{logit}(p) = \\log\\left(\\frac{p}{1-p}\\right),\n\\]\nwhich lets us place probabilities on a scale that can be modelled with a straight line.\nThis key step allows us to use a Linear Model {.glossary } to model a binary categorical outcome!",
+    "text": "3 From linear models to fitting logistic regression\nIn Chapter 1 we introduced the practical problem: our outcome is binary, so the expected value of the outcome is a probability. However, a standard linear regression can output values outside the range of a probability (e.g. we might predict a probability of passing greater than one or less than zero). We also saw that this problem can be resolved by not modelling probability directly, but instead via the logit: \\[\n\\text{logit}(p) = \\log\\left(\\frac{p}{1-p}\\right),\n\\]\nwhich lets us place probabilities on a scale that can be modelled with a straight line.\nThis key step allows us to use a linear model to model a binary categorical outcome!",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Generalised Linear Models and Logistic Regression</span>"
     ]
@@ -154,7 +154,7 @@
     "href": "ch_2_lr.html#sec-glm-formula-r",
     "title": "2  Generalised Linear Models and Logistic Regression",
     "section": "3.5 Fitting GLMs in R",
-    "text": "3.5 Fitting GLMs in R\nThe R formula looks almost the same as the formula for lm():\n\nOutputCode\n\n\n\n\n\nCall:\nglm(formula = pass_exam ~ studytime, family = binomial, data = students)\n\nCoefficients:\n            Estimate Std. Error z value Pr(&gt;|z|)\n(Intercept)   0.3222     0.2818   1.143    0.253\nstudytime     0.1939     0.1311   1.479    0.139\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 500.50  on 394  degrees of freedom\nResidual deviance: 498.27  on 393  degrees of freedom\nAIC: 502.27\n\nNumber of Fisher Scoring iterations: 4\n\n\n\n\n\nfit_study &lt;- glm(pass_exam ~ studytime,\n                 data = students,\n                 family = binomial)\nsummary(fit_study)\n\n\n\n\nThe formula pass_exam ~ studytime gives the linear predictor:\n\\[\n\\eta_i = \\beta_0 + \\beta_1 \\text{studytime}_i.\n\\]\nThe argument family = binomial tells R to use the Bernoulli/binomial error model with the logit link. So the single glm() call contains the two changes we need for binary outcomes: a different error model and a different link.\n\nNote\nThe default link for family = binomial is the logit link. Writing family = binomial(link = \"logit\") is equivalent, but more explicit.",
+    "text": "3.5 Fitting GLMs in R\nThe R function for fitting a glm to data looks almost the same as the formula for linear regression with the lm() function:\n\nOutputCode\n\n\n\n\n\nCall:\nglm(formula = pass_exam ~ studytime, family = binomial, data = students)\n\nCoefficients:\n            Estimate Std. Error z value Pr(&gt;|z|)\n(Intercept)   0.3222     0.2818   1.143    0.253\nstudytime     0.1939     0.1311   1.479    0.139\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 500.50  on 394  degrees of freedom\nResidual deviance: 498.27  on 393  degrees of freedom\nAIC: 502.27\n\nNumber of Fisher Scoring iterations: 4\n\n\n\n\n\nfit_study &lt;- glm(pass_exam ~ studytime,\n                 data = students,\n                 family = binomial)\nsummary(fit_study)\n\n\n\n\nInside the call to glm() (telling R we want to fit a generalised linear model), the formula pass_exam ~ studytime gives the linear predictor:\n\\[\n\\eta_i = \\beta_0 + \\beta_1 \\text{studytime}_i.\n\\] in the same way as `\nThe argument family = binomial tells R to use the Bernoulli/binomial error model with the logit link. So the single glm() call contains the two changes we need for binary outcomes: a different error model and a different link.\n\nNote\nThe default link for family = binomial is the logit link. Writing family = binomial(link = \"logit\") is equivalent, but more explicit.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Generalised Linear Models and Logistic Regression</span>"
     ]
@@ -220,8 +220,8 @@
     ]
   },
   {
-    "objectID": "ch_3_assessing-model-fit-and-predictions.html",
-    "href": "ch_3_assessing-model-fit-and-predictions.html",
+    "objectID": "ch_3_diagnostics-and-predictions.html",
+    "href": "ch_3_diagnostics-and-predictions.html",
     "title": "3  Assessing Model Fit and Predictions",
     "section": "",
     "text": "4 Assessing model fit and predictions\nIn linear regression, model assessment often starts with residual sums of squares and \\(R^2\\). Logistic regression uses a different error model, so the assessment tools also change. We still ask the same broad questions:\nThis chapter first focuses on likelihood-based model assessment, then turns to predicted probabilities, classification thresholds, and predictive performance.",
@@ -230,8 +230,8 @@
     ]
   },
   {
-    "objectID": "ch_3_assessing-model-fit-and-predictions.html#sec-likelihood-deviance",
-    "href": "ch_3_assessing-model-fit-and-predictions.html#sec-likelihood-deviance",
+    "objectID": "ch_3_diagnostics-and-predictions.html#sec-likelihood-deviance",
+    "href": "ch_3_diagnostics-and-predictions.html#sec-likelihood-deviance",
     "title": "3  Assessing Model Fit and Predictions",
     "section": "4.1 Likelihood and deviance",
     "text": "4.1 Likelihood and deviance\nBecause logistic regression is fitted by maximum likelihood, model fit is naturally measured through the likelihood. R reports a related quantity called deviance.\n\nOutputCode\n\n\n\n\n         null_deviance     studytime_deviance multivariable_deviance \n              500.5040               498.2730               455.1066 \n\n\n\n\n\nc(\n  null_deviance = fit_null$deviance,\n  studytime_deviance = fit_study$deviance,\n  multivariable_deviance = fit_multi$deviance\n)\n\n\n\n\nSmaller deviance indicates a better fit to the observed data. The null model has only an intercept, so it represents a baseline model that predicts the same probability for every student.\n\nKey-point\nDeviance plays a role similar to residual sum of squares in linear regression: it is a lack-of-fit measure, so smaller values indicate better fit. It is likelihood-based rather than squared-error-based.\n\n\n\nContinue",
@@ -240,8 +240,8 @@
     ]
   },
   {
-    "objectID": "ch_3_assessing-model-fit-and-predictions.html#sec-logistic-nested-models",
-    "href": "ch_3_assessing-model-fit-and-predictions.html#sec-logistic-nested-models",
+    "objectID": "ch_3_diagnostics-and-predictions.html#sec-logistic-nested-models",
+    "href": "ch_3_diagnostics-and-predictions.html#sec-logistic-nested-models",
     "title": "3  Assessing Model Fit and Predictions",
     "section": "4.2 Comparing nested models",
     "text": "4.2 Comparing nested models\nTwo models are nested when one can be obtained from the other by removing predictors. The study-time model is nested inside the multivariable model because the multivariable model adds failures and absences.\nWe can compare nested logistic regression models with a likelihood ratio test:\n\nOutputCode\n\n\n\n\nAnalysis of Deviance Table\n\nModel 1: pass_exam ~ studytime\nModel 2: pass_exam ~ studytime + failures + absences\n  Resid. Df Resid. Dev Df Deviance  Pr(&gt;Chi)    \n1       393     498.27                          \n2       391     455.11  2   43.166 4.232e-10 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\n\n\nanova(fit_study, fit_multi, test = \"Chisq\")\n\n\n\n\nThe test asks whether the added predictors improve the model enough to justify the extra complexity.\n\nNote\nUse likelihood ratio tests for nested models. For non-nested models, use information criteria such as AIC or compare prediction performance on a validation set.",
@@ -250,8 +250,8 @@
     ]
   },
   {
-    "objectID": "ch_3_assessing-model-fit-and-predictions.html#sec-logistic-aic",
-    "href": "ch_3_assessing-model-fit-and-predictions.html#sec-logistic-aic",
+    "objectID": "ch_3_diagnostics-and-predictions.html#sec-logistic-aic",
+    "href": "ch_3_diagnostics-and-predictions.html#sec-logistic-aic",
     "title": "3  Assessing Model Fit and Predictions",
     "section": "4.3 AIC and model complexity",
     "text": "4.3 AIC and model complexity\nThe Akaike Information Criterion (AIC) balances model fit and complexity. Lower AIC is preferred among the models being compared.\n\nOutputCode\n\n\n\n\n          df      AIC\nfit_null   1 502.5040\nfit_study  2 502.2730\nfit_multi  4 463.1066\n\n\n\n\n\nAIC(fit_null, fit_study, fit_multi)\n\n\n\n\nAIC is useful when comparing several plausible models, but it is not a substitute for subject-matter judgement. A model with a slightly lower AIC but unclear interpretation may not be the best model for communication.\n\nContinue",
@@ -260,8 +260,8 @@
     ]
   },
   {
-    "objectID": "ch_3_assessing-model-fit-and-predictions.html#sec-logistic-pseudo-r2",
-    "href": "ch_3_assessing-model-fit-and-predictions.html#sec-logistic-pseudo-r2",
+    "objectID": "ch_3_diagnostics-and-predictions.html#sec-logistic-pseudo-r2",
+    "href": "ch_3_diagnostics-and-predictions.html#sec-logistic-pseudo-r2",
     "title": "3  Assessing Model Fit and Predictions",
     "section": "4.4 Pseudo R-squared",
     "text": "4.4 Pseudo R-squared\nLinear regression’s \\(R^2\\) is based on sums of squares. Logistic regression does not have an exact equivalent. Several pseudo R-squared measures exist, but they should be treated as rough summaries rather than as direct analogues.\nOne common option is McFadden’s pseudo \\(R^2\\):\n\\[\nR^2_{\\text{McFadden}} = 1 - \\frac{\\log L_{\\text{model}}}{\\log L_{\\text{null}}}.\n\\]\n\nOutputCode\n\n\n\n\n[1] 0.09070343\n\n\n\n\n\nmcfadden_r2 &lt;- 1 - as.numeric(logLik(fit_multi) / logLik(fit_null))\nmcfadden_r2\n\n\n\n\n\nKey-point\nDo not interpret pseudo \\(R^2\\) as “the percentage of variance explained”. For logistic regression, likelihood-based comparisons and prediction checks are usually more informative.",
@@ -270,18 +270,18 @@
     ]
   },
   {
-    "objectID": "ch_3_assessing-model-fit-and-predictions.html#sec-logistic-residuals",
-    "href": "ch_3_assessing-model-fit-and-predictions.html#sec-logistic-residuals",
+    "objectID": "ch_3_diagnostics-and-predictions.html#sec-logistic-residuals",
+    "href": "ch_3_diagnostics-and-predictions.html#sec-logistic-residuals",
     "title": "3  Assessing Model Fit and Predictions",
     "section": "4.5 Residuals and influence",
-    "text": "4.5 Residuals and influence\nLogistic regression residuals are less visually intuitive than linear regression residuals because the observed outcomes are only 0 or 1. Still, residual and influence diagnostics can help identify observations the model struggles to fit.\n\nOutputCode\n\n\n\n\n     fitted pearson_residual deviance_residual cooks_distance\n1 0.7421124       -1.6963662        -1.6463484   0.0022419032\n2 0.7491029       -1.7279171        -1.6629566   0.0023791303\n3 0.1297399        2.5899286         2.0210016   0.0435756588\n4 0.7632336        0.5569693         0.7351069   0.0004886744\n5 0.7491029        0.5787315         0.7601039   0.0002668865\n6 0.7277554        0.6116274         0.7972331   0.0003566034\n\n\n\n\n\ndiagnostics &lt;- data.frame(\n  fitted = fitted(fit_multi),\n  pearson_residual = residuals(fit_multi, type = \"pearson\"),\n  deviance_residual = residuals(fit_multi, type = \"deviance\"),\n  cooks_distance = cooks.distance(fit_multi)\n)\nhead(diagnostics)\n\n\n\n\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nplot(diagnostics$fitted, diagnostics$deviance_residual,\n     xlab = \"Fitted probability\",\n     ylab = \"Deviance residual\")\nabline(h = 0, col = \"grey70\", lty = 2)\n\n\n\n\nLarge residuals mark cases where the observed outcome was surprising under the fitted model. Large Cook’s distances mark cases with unusual influence on the fitted coefficients.",
+    "text": "4.5 Residuals and influence\nLogistic regression residuals are less visually intuitive than linear regression residuals because the observed outcomes are only 0 or 1. Still, residual and influence diagnostics can help identify observations the model struggles to fit.\n\nOutputCode\n\n\n\n\n     fitted pearson_residual deviance_residual cooks_distance\n1 0.7421124       -1.6963662        -1.6463484   0.0022419032\n2 0.7491029       -1.7279171        -1.6629566   0.0023791303\n3 0.1297399        2.5899286         2.0210016   0.0435756588\n4 0.7632336        0.5569693         0.7351069   0.0004886744\n5 0.7491029        0.5787315         0.7601039   0.0002668865\n6 0.7277554        0.6116274         0.7972331   0.0003566034\n\n\n\n\n\ndiagnostics &lt;- data.frame(\n  fitted = fitted(fit_multi),\n  pearson_residual = residuals(fit_multi, type = \"pearson\"),\n  deviance_residual = residuals(fit_multi, type = \"deviance\"),\n  cooks_distance = cooks.distance(fit_multi)\n)\nhead(diagnostics)\n\n\n\n\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nplot(diagnostics$fitted, diagnostics$deviance_residual,\n     xlab = \"Fitted probability\",\n     ylab = \"Deviance residual\")\nabline(h = 0, col = \"grey70\", lty = 2)\n\n\n\n\nLarge residuals mark cases where the observed outcome was surprising under the fitted model. A large Cook’s distance marks a case with unusual influence on the fitted coefficients.",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Assessing Model Fit and Predictions</span>"
     ]
   },
   {
-    "objectID": "ch_3_assessing-model-fit-and-predictions.html#sec-logistic-common-problems",
-    "href": "ch_3_assessing-model-fit-and-predictions.html#sec-logistic-common-problems",
+    "objectID": "ch_3_diagnostics-and-predictions.html#sec-logistic-common-problems",
+    "href": "ch_3_diagnostics-and-predictions.html#sec-logistic-common-problems",
     "title": "3  Assessing Model Fit and Predictions",
     "section": "4.6 Common problems",
     "text": "4.6 Common problems\n\nAssumption 3.1: Independent observations\nThe usual logistic regression model assumes observations are independent. If the same person, class, school, or site contributes multiple related observations, the model may need to account for clustering.\n\n\n\nAssumption 3.2: Linearity on the log-odds scale\nContinuous predictors are assumed to have approximately linear effects on the log-odds. This does not mean a straight line on the probability scale.\n\n\nOther common problems include:\n\nSeparation: a predictor or combination of predictors perfectly separates passes from fails, leading to unstable or very large estimates.\nClass imbalance: one outcome class is much more common than the other, so simple accuracy can be misleading.\nOverfitting: too many predictors for the amount of data, especially when the event count is small.",
@@ -290,8 +290,8 @@
     ]
   },
   {
-    "objectID": "ch_3_assessing-model-fit-and-predictions.html#sec-predictions",
-    "href": "ch_3_assessing-model-fit-and-predictions.html#sec-predictions",
+    "objectID": "ch_3_diagnostics-and-predictions.html#sec-predictions",
+    "href": "ch_3_diagnostics-and-predictions.html#sec-predictions",
     "title": "3  Assessing Model Fit and Predictions",
     "section": "4.7 Predictions from logistic regression models",
     "text": "4.7 Predictions from logistic regression models\nThe fitted model gives a linear predictor on the log-odds scale:\n\\[\n\\hat{\\eta}_i =\nb_0 +\nb_1 \\text{studytime}_i +\nb_2 \\text{failures}_i +\nb_3 \\text{absences}_i.\n\\]\nFor most audiences, the useful output is not the log-odds. It is the predicted probability:\n\\[\n\\hat{p}_i = \\frac{1}{1 + e^{-\\hat{\\eta}_i}}.\n\\]",
@@ -300,8 +300,8 @@
     ]
   },
   {
-    "objectID": "ch_3_assessing-model-fit-and-predictions.html#sec-predicting-scales",
-    "href": "ch_3_assessing-model-fit-and-predictions.html#sec-predicting-scales",
+    "objectID": "ch_3_diagnostics-and-predictions.html#sec-predicting-scales",
+    "href": "ch_3_diagnostics-and-predictions.html#sec-predicting-scales",
     "title": "3  Assessing Model Fit and Predictions",
     "section": "4.8 Predicting on different scales",
     "text": "4.8 Predicting on different scales\nBy default, predict() returns values on the link scale:\n\nOutputCode\n\n\n\n\n       1        2        3        4 \n1.054033 1.093833 1.133634 1.173434 \n\n\n\n\n\nnew_students &lt;- data.frame(\n  studytime = c(1, 2, 3, 4),\n  failures = 0,\n  absences = 4\n)\n\npredict(fit_multi, newdata = new_students)\n\n\n\n\nFor logistic regression, the link scale is the log-odds scale. To get predicted probabilities, use type = \"response\":\n\nOutputCode\n\n\n\n\n        1         2         3         4 \n0.7415486 0.7491029 0.7565089 0.7637652 \n\n\n\n\n\npredict(fit_multi, newdata = new_students, type = \"response\")\n\n\n\n\n\nKey-point\nUse type = \"response\" when you want predicted probabilities from a logistic regression model.\n\n\n\nContinue",
@@ -310,8 +310,8 @@
     ]
   },
   {
-    "objectID": "ch_3_assessing-model-fit-and-predictions.html#sec-scenario-predictions",
-    "href": "ch_3_assessing-model-fit-and-predictions.html#sec-scenario-predictions",
+    "objectID": "ch_3_diagnostics-and-predictions.html#sec-scenario-predictions",
+    "href": "ch_3_diagnostics-and-predictions.html#sec-scenario-predictions",
     "title": "3  Assessing Model Fit and Predictions",
     "section": "4.9 Scenario-based predictions",
     "text": "4.9 Scenario-based predictions\nPredicted probabilities are often the clearest way to communicate a logistic regression model. We choose realistic predictor values and compare the model’s predictions.\n\nOutputCode\n\n\n\n\n  studytime failures absences predicted_probability\n1         1        0        4             0.7415486\n2         2        0        4             0.7491029\n3         4        0        4             0.7637652\n\n\n\n\n\nscenarios &lt;- data.frame(\n  studytime = c(1, 2, 4),\n  failures = c(0, 0, 0),\n  absences = c(4, 4, 4)\n)\n\nscenarios$predicted_probability &lt;- predict(\n  fit_multi,\n  newdata = scenarios,\n  type = \"response\"\n)\n\nscenarios\n\n\n\n\nThese are model-based probabilities, not guarantees. A student with a high predicted probability can still fail, and a student with a low predicted probability can still pass.\n\nExercise 3.1: Predict a probability\nCompute the predicted probability for a student with studytime = 3, failures = 0, and absences = 2. Store it as p_case.\n\n\n\n\n\n\n\n\n\n\n\nnew_case &lt;- data.frame(studytime = 3, failures = 0, absences = 2)\np_case &lt;- predict(fit_multi, newdata = new_case, type = \"response\")\np_case\nnew_case &lt;- data.frame(studytime = 3, failures = 0, absences = 2)\np_case &lt;- predict(fit_multi, newdata = new_case, type = \"response\")\np_case\n\n\n\n\n\n\n\n\n\nContinue",
@@ -320,18 +320,18 @@
     ]
   },
   {
-    "objectID": "ch_3_assessing-model-fit-and-predictions.html#sec-classification-thresholds",
-    "href": "ch_3_assessing-model-fit-and-predictions.html#sec-classification-thresholds",
+    "objectID": "ch_3_diagnostics-and-predictions.html#sec-classification-thresholds",
+    "href": "ch_3_diagnostics-and-predictions.html#sec-classification-thresholds",
     "title": "3  Assessing Model Fit and Predictions",
     "section": "4.10 From probabilities to classifications",
-    "text": "4.10 From probabilities to classifications\nSometimes we need to turn probabilities into predicted classes. To do this, we choose a classification threshold. With a threshold of 0.5, we predict a pass when \\(\\hat{p} \\ge 0.5\\).\n\nOutputCode\n\n\n\n\n         Actual\nPredicted   0   1\n        0  36  18\n        1  94 247\n\n\n\n\n\nthreshold &lt;- 0.5\nclass_hat &lt;- ifelse(prob &gt;= threshold, 1, 0)\nconf_mat &lt;- table(\n  Predicted = factor(class_hat, levels = c(0, 1)),\n  Actual = factor(students$pass_exam, levels = c(0, 1))\n)\nconf_mat\n\n\n\n\nFrom the confusion matrix we can calculate performance measures:\n\nOutputCode\n\n\n\n\n   accuracy sensitivity specificity \n  0.7164557   0.9320755   0.2769231 \n\n\n\n\n\ntrue_pos &lt;- conf_mat[\"1\", \"1\"]\ntrue_neg &lt;- conf_mat[\"0\", \"0\"]\nfalse_pos &lt;- conf_mat[\"1\", \"0\"]\nfalse_neg &lt;- conf_mat[\"0\", \"1\"]\n\naccuracy &lt;- (true_pos + true_neg) / sum(conf_mat)\nsensitivity &lt;- true_pos / (true_pos + false_neg)\nspecificity &lt;- true_neg / (true_neg + false_pos)\n\nc(accuracy = accuracy,\n  sensitivity = sensitivity,\n  specificity = specificity)\n\n\n\n\n\nKey-point\nThe threshold is a decision rule, not part of the fitted logistic regression model. Changing the threshold changes the classifications but not the predicted probabilities.",
+    "text": "4.10 From probabilities to classifications\nSometimes we need to turn probabilities into predicted classes. To do this, we choose a classification threshold. With a threshold of 0.5, we predict a pass when \\(\\hat{p} \\ge 0.5\\).\n\nOutputCode\n\n\n\n\n         Actual\nPredicted   0   1\n        0  36  18\n        1  94 247\n\n\n\n\n\nthreshold &lt;- 0.5\nclass_hat &lt;- ifelse(prob &gt;= threshold, 1, 0)\nconf_mat &lt;- table(\n  Predicted = factor(class_hat, levels = c(0, 1)),\n  Actual = factor(students$pass_exam, levels = c(0, 1))\n)\nconf_mat\n\n\n\n\nFrom the confusion matrix we can calculate performance measures such as accuracy, sensitivity, and specificity:\n\nOutputCode\n\n\n\n\n   accuracy sensitivity specificity \n  0.7164557   0.9320755   0.2769231 \n\n\n\n\n\ntrue_pos &lt;- conf_mat[\"1\", \"1\"]\ntrue_neg &lt;- conf_mat[\"0\", \"0\"]\nfalse_pos &lt;- conf_mat[\"1\", \"0\"]\nfalse_neg &lt;- conf_mat[\"0\", \"1\"]\n\naccuracy &lt;- (true_pos + true_neg) / sum(conf_mat)\nsensitivity &lt;- true_pos / (true_pos + false_neg)\nspecificity &lt;- true_neg / (true_neg + false_pos)\n\nc(accuracy = accuracy,\n  sensitivity = sensitivity,\n  specificity = specificity)\n\n\n\n\n\nKey-point\nThe threshold is a decision rule, not part of the fitted logistic regression model. Changing the threshold changes the classifications but not the predicted probabilities.",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Assessing Model Fit and Predictions</span>"
     ]
   },
   {
-    "objectID": "ch_3_assessing-model-fit-and-predictions.html#sec-threshold-tradeoffs",
-    "href": "ch_3_assessing-model-fit-and-predictions.html#sec-threshold-tradeoffs",
+    "objectID": "ch_3_diagnostics-and-predictions.html#sec-threshold-tradeoffs",
+    "href": "ch_3_diagnostics-and-predictions.html#sec-threshold-tradeoffs",
     "title": "3  Assessing Model Fit and Predictions",
     "section": "4.11 Threshold trade-offs",
     "text": "4.11 Threshold trade-offs\nLower thresholds predict more passes. Higher thresholds predict fewer passes. The right threshold depends on the cost of different mistakes.\n\nOutputCode\n\n\n\n\n  threshold  accuracy sensitivity specificity\n1       0.3 0.7037975   0.9773585   0.1461538\n2       0.5 0.7164557   0.9320755   0.2769231\n3       0.7 0.7265823   0.8566038   0.4615385\n\n\n\n\n\nthresholds &lt;- c(0.3, 0.5, 0.7)\n\nthreshold_summary &lt;- do.call(rbind, lapply(thresholds, function(t) {\n  pred &lt;- ifelse(prob &gt;= t, 1, 0)\n  cm &lt;- table(\n    Predicted = factor(pred, levels = c(0, 1)),\n    Actual = factor(students$pass_exam, levels = c(0, 1))\n  )\n  tp &lt;- cm[\"1\", \"1\"]\n  tn &lt;- cm[\"0\", \"0\"]\n  fp &lt;- cm[\"1\", \"0\"]\n  fn &lt;- cm[\"0\", \"1\"]\n  data.frame(\n    threshold = t,\n    accuracy = (tp + tn) / sum(cm),\n    sensitivity = tp / (tp + fn),\n    specificity = tn / (tn + fp)\n  )\n}))\n\nthreshold_summary\n\n\n\n\n\nExercise 3.2: Accuracy at a different threshold\nUsing a threshold of 0.6, compute the classification accuracy and store it as accuracy_06.\n\n\n\n\n\n\n\n\n\n\n\nthreshold &lt;- 0.6\nclass_hat &lt;- ifelse(prob &gt;= threshold, 1, 0)\naccuracy_06 &lt;- mean(class_hat == actual_num)\naccuracy_06\nthreshold &lt;- 0.6\nclass_hat &lt;- ifelse(prob &gt;= threshold, 1, 0)\naccuracy_06 &lt;- mean(class_hat == actual_num)\naccuracy_06",
@@ -340,8 +340,8 @@
     ]
   },
   {
-    "objectID": "ch_3_assessing-model-fit-and-predictions.html#sec-roc-auc",
-    "href": "ch_3_assessing-model-fit-and-predictions.html#sec-roc-auc",
+    "objectID": "ch_3_diagnostics-and-predictions.html#sec-roc-auc",
+    "href": "ch_3_diagnostics-and-predictions.html#sec-roc-auc",
     "title": "3  Assessing Model Fit and Predictions",
     "section": "4.12 ROC curves and AUC",
     "text": "4.12 ROC curves and AUC\nAn ROC curve shows the trade-off between sensitivity and false positive rate across many thresholds. AUC summarises that curve.\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\n[1] 0.6483745\n\n\n\n\n\nroc_thresholds &lt;- seq(1, 0, by = -0.02)\nactual &lt;- students$pass_exam\n\ntpr &lt;- sapply(roc_thresholds, function(t) {\n  pred &lt;- ifelse(prob &gt;= t, 1, 0)\n  tp &lt;- sum(pred == 1 & actual == 1)\n  fn &lt;- sum(pred == 0 & actual == 1)\n  tp / (tp + fn)\n})\n\nfpr &lt;- sapply(roc_thresholds, function(t) {\n  pred &lt;- ifelse(prob &gt;= t, 1, 0)\n  fp &lt;- sum(pred == 1 & actual == 0)\n  tn &lt;- sum(pred == 0 & actual == 0)\n  fp / (fp + tn)\n})\n\nroc_df &lt;- data.frame(fpr = fpr, tpr = tpr)\nroc_df &lt;- roc_df[order(roc_df$fpr), ]\n\nplot(roc_df$fpr, roc_df$tpr, type = \"l\", lwd = 2,\n     xlab = \"False positive rate\",\n     ylab = \"True positive rate\")\nabline(0, 1, lty = 3, col = \"grey60\")\n\nauc &lt;- sum(diff(roc_df$fpr) *\n             (head(roc_df$tpr, -1) + tail(roc_df$tpr, -1)) / 2)\nauc\n\n\n\n\n\nKey-point\nAUC near 0.5 indicates little discrimination. Values closer to 1 indicate stronger discrimination between students who passed and students who failed.",
@@ -350,8 +350,8 @@
     ]
   },
   {
-    "objectID": "ch_3_assessing-model-fit-and-predictions.html#sec-chapter03-summary",
-    "href": "ch_3_assessing-model-fit-and-predictions.html#sec-chapter03-summary",
+    "objectID": "ch_3_diagnostics-and-predictions.html#sec-chapter03-summary",
+    "href": "ch_3_diagnostics-and-predictions.html#sec-chapter03-summary",
     "title": "3  Assessing Model Fit and Predictions",
     "section": "4.13 Chapter summary",
     "text": "4.13 Chapter summary\nAssessing logistic regression requires likelihood-based thinking. Deviance, likelihood ratio tests, and AIC replace the least-squares tools used in linear regression. Residuals, influence checks, and assumptions still matter, but they must be interpreted through the binary-outcome model.\nPrediction from logistic regression has two stages. First, use the fitted model to produce predicted probabilities. Second, if a classification is needed, choose a threshold that reflects the decision context. Probability predictions and classification decisions should be reported separately.",
@@ -360,8 +360,8 @@
     ]
   },
   {
-    "objectID": "ch_6_extensions-case-study.html",
-    "href": "ch_6_extensions-case-study.html",
+    "objectID": "ch_4_case-study.html",
+    "href": "ch_4_case-study.html",
     "title": "4  Model Building and a Mini Case Study",
     "section": "",
     "text": "5 Model building and a mini case study\nThe earlier chapters developed the pieces of logistic regression one at a time. This chapter brings them together into a short analysis workflow:\nThe goal is not to find the “best possible” student-performance model. The goal is to practise a defensible modelling workflow.",
@@ -370,18 +370,18 @@
     ]
   },
   {
-    "objectID": "ch_6_extensions-case-study.html#sec-case-define-outcome",
-    "href": "ch_6_extensions-case-study.html#sec-case-define-outcome",
+    "objectID": "ch_4_case-study.html#sec-case-define-outcome",
+    "href": "ch_4_case-study.html#sec-case-define-outcome",
     "title": "4  Model Building and a Mini Case Study",
     "section": "5.1 Define the outcome",
-    "text": "5.1 Define the outcome\nWe define the event as passing the final mathematics grade:\n\\[\nY_i =\n\\begin{cases}\n1 & \\text{if } G3_i \\ge 10,\\\\\n0 & \\text{if } G3_i &lt; 10.\n\\end{cases}\n\\]\n\nOutputCode\n\n\n\n\n\n  0   1 \n130 265 \n\n\n\n        0         1 \n0.3291139 0.6708861 \n\n\n\n\n\ntable(students$pass_exam)\nprop.table(table(students$pass_exam))\n\n\n\n\nAlways report the event definition. Different cutoffs can answer different questions.",
+    "text": "5.1 Define the outcome\nWe define the event as passing the final mathematics grade:\n\\[\nY_i =\n\\begin{cases}\n1 & \\text{if } G3_i \\ge 10,\\\\\n0 & \\text{if } G3_i &lt; 10.\n\\end{cases}\n\\]\n\nOutputCode\n\n\n\n\n\n  0   1 \n130 265 \n\n\n\n        0         1 \n0.3291139 0.6708861 \n\n\n\n\n\ntable(students$pass_exam)\nprop.table(table(students$pass_exam))\n\n\n\n\nAlways report the event definition and the event rate. Different cutoffs can answer different questions.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Model Building and a Mini Case Study</span>"
     ]
   },
   {
-    "objectID": "ch_6_extensions-case-study.html#sec-case-choose-predictors",
-    "href": "ch_6_extensions-case-study.html#sec-case-choose-predictors",
+    "objectID": "ch_4_case-study.html#sec-case-choose-predictors",
+    "href": "ch_4_case-study.html#sec-case-choose-predictors",
     "title": "4  Model Building and a Mini Case Study",
     "section": "5.2 Choose predictors",
     "text": "5.2 Choose predictors\nA compact first model uses:\n\nstudytime: weekly study-time category.\nfailures: number of previous class failures.\nabsences: number of school absences.\n\nThese predictors are easy to explain and available before the final grade is known.\n\nOutputCode\n\n\n\n\n\nCall:\nglm(formula = pass_exam ~ studytime + failures + absences, family = binomial, \n    data = students)\n\nCoefficients:\n            Estimate Std. Error z value Pr(&gt;|z|)    \n(Intercept)  1.08795    0.32965   3.300 0.000966 ***\nstudytime    0.03980    0.13931   0.286 0.775104    \nfailures    -0.96217    0.16995  -5.662  1.5e-08 ***\nabsences    -0.01843    0.01332  -1.384 0.166398    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 500.50  on 394  degrees of freedom\nResidual deviance: 455.11  on 391  degrees of freedom\nAIC: 463.11\n\nNumber of Fisher Scoring iterations: 4\n\n\n\n\n\nfit_case &lt;- glm(pass_exam ~ studytime + failures + absences,\n                data = students,\n                family = binomial)\nsummary(fit_case)\n\n\n\n\nOdds ratios give a first interpretation:\n\nOutputCode\n\n\n\n\n             estimate     2.5 %    97.5 %\n(Intercept) 2.9681706 1.5555872 5.6634800\nstudytime   1.0406030 0.7919686 1.3672947\nfailures    0.3820611 0.2738250 0.5330802\nabsences    0.9817405 0.9564488 1.0077010\n\n\n\n\n\nexp(cbind(\n  estimate = coef(fit_case),\n  confint.default(fit_case)\n))\n\n\n\n\n\nKey-point\nUse odds ratios to summarise model coefficients, but use predicted probabilities to communicate the practical size of effects.\n\n\n\nContinue",
@@ -390,8 +390,8 @@
     ]
   },
   {
-    "objectID": "ch_6_extensions-case-study.html#sec-case-compare-models",
-    "href": "ch_6_extensions-case-study.html#sec-case-compare-models",
+    "objectID": "ch_4_case-study.html#sec-case-compare-models",
+    "href": "ch_4_case-study.html#sec-case-compare-models",
     "title": "4  Model Building and a Mini Case Study",
     "section": "5.3 Compare a small set of models",
     "text": "5.3 Compare a small set of models\nWe compare three models:\n\nOutputCode\n\n\n\n\n          df      AIC\nfit_null   1 502.5040\nfit_study  2 502.2730\nfit_case   4 463.1066\n\n\nAnalysis of Deviance Table\n\nModel 1: pass_exam ~ studytime\nModel 2: pass_exam ~ studytime + failures + absences\n  Resid. Df Resid. Dev Df Deviance  Pr(&gt;Chi)    \n1       393     498.27                          \n2       391     455.11  2   43.166 4.232e-10 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\n\n\nfit_null &lt;- glm(pass_exam ~ 1, data = students, family = binomial)\nfit_study &lt;- glm(pass_exam ~ studytime, data = students, family = binomial)\nfit_case &lt;- glm(pass_exam ~ studytime + failures + absences,\n                data = students,\n                family = binomial)\n\nAIC(fit_null, fit_study, fit_case)\nanova(fit_study, fit_case, test = \"Chisq\")\n\n\n\n\nThis mirrors the model-building logic from the Linear Regression Short Course: start simple, add predictors for clear reasons, and check whether the added complexity is useful.",
@@ -400,8 +400,8 @@
     ]
   },
   {
-    "objectID": "ch_6_extensions-case-study.html#sec-case-interactions",
-    "href": "ch_6_extensions-case-study.html#sec-case-interactions",
+    "objectID": "ch_4_case-study.html#sec-case-interactions",
+    "href": "ch_4_case-study.html#sec-case-interactions",
     "title": "4  Model Building and a Mini Case Study",
     "section": "5.4 Consider interactions carefully",
     "text": "5.4 Consider interactions carefully\nAn interaction allows the effect of one predictor to depend on another. For example, the association between absences and passing might differ depending on whether a student has previous failures.\n\nOutputCode\n\n\n\n\n                df      AIC\nfit_case         4 463.1066\nfit_interaction  5 463.9819\n\n\n\nCall:\nglm(formula = pass_exam ~ studytime + failures * high_absence, \n    family = binomial, data = students)\n\nCoefficients:\n                         Estimate Std. Error z value Pr(&gt;|z|)   \n(Intercept)               0.79818    0.34899   2.287   0.0222 * \nstudytime                 0.04476    0.13851   0.323   0.7466   \nfailures                 -0.67971    0.23208  -2.929   0.0034 **\nhigh_absencelow           0.27664    0.25978   1.065   0.2869   \nfailures:high_absencelow -0.59156    0.35360  -1.673   0.0943 . \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 500.50  on 394  degrees of freedom\nResidual deviance: 453.98  on 390  degrees of freedom\nAIC: 463.98\n\nNumber of Fisher Scoring iterations: 4\n\n\n\n\n\nfit_interaction &lt;- glm(pass_exam ~ studytime + failures * high_absence,\n                       data = students,\n                       family = binomial)\n\nAIC(fit_case, fit_interaction)\nsummary(fit_interaction)\n\n\n\n\nInteractions can be useful, but they make interpretation harder and require enough data in each subgroup.\n\nNote\nAdd interaction terms when they answer a real question or are strongly motivated by the context. Do not add them only to search for significance.",
@@ -410,8 +410,8 @@
     ]
   },
   {
-    "objectID": "ch_6_extensions-case-study.html#sec-case-scenarios",
-    "href": "ch_6_extensions-case-study.html#sec-case-scenarios",
+    "objectID": "ch_4_case-study.html#sec-case-scenarios",
+    "href": "ch_4_case-study.html#sec-case-scenarios",
     "title": "4  Model Building and a Mini Case Study",
     "section": "5.5 Communicate with scenarios",
     "text": "5.5 Communicate with scenarios\nScenario predictions translate the model back to the probability scale.\n\nOutputCode\n\n\n\n\n  studytime failures absences predicted_probability\n1         1        0        2             0.7485492\n2         2        0        2             0.7559662\n3         4        0        2             0.7703504\n\n\n\n\n\nscenarios &lt;- data.frame(\n  studytime = c(1, 2, 4),\n  failures = c(0, 0, 0),\n  absences = c(2, 2, 2)\n)\n\nscenarios$predicted_probability &lt;- predict(\n  fit_case,\n  newdata = scenarios,\n  type = \"response\"\n)\n\nscenarios\n\n\n\n\nFor a non-technical audience, this table is usually more useful than a coefficient table.",
@@ -420,8 +420,8 @@
     ]
   },
   {
-    "objectID": "ch_6_extensions-case-study.html#sec-case-performance",
-    "href": "ch_6_extensions-case-study.html#sec-case-performance",
+    "objectID": "ch_4_case-study.html#sec-case-performance",
+    "href": "ch_4_case-study.html#sec-case-performance",
     "title": "4  Model Building and a Mini Case Study",
     "section": "5.6 Summarise predictive performance",
     "text": "5.6 Summarise predictive performance\n\nOutputCode\n\n\n\n\n         Actual\nPredicted   0   1\n        0  36  18\n        1  94 247\n\n\n   accuracy sensitivity specificity \n  0.7164557   0.9320755   0.2769231 \n\n\n\n\n\nprob &lt;- predict(fit_case, type = \"response\")\nthreshold &lt;- 0.5\npred &lt;- ifelse(prob &gt;= threshold, 1, 0)\ncm &lt;- table(\n  Predicted = factor(pred, levels = c(0, 1)),\n  Actual = factor(students$pass_exam, levels = c(0, 1))\n)\ncm\n\naccuracy &lt;- sum(diag(cm)) / sum(cm)\nsensitivity &lt;- cm[\"1\", \"1\"] / sum(cm[, \"1\"])\nspecificity &lt;- cm[\"0\", \"0\"] / sum(cm[, \"0\"])\n\nc(accuracy = accuracy,\n  sensitivity = sensitivity,\n  specificity = specificity)\n\n\n\n\nThis is an in-sample summary, so it is optimistic. In a real predictive project, we would use a validation set or cross-validation.",
@@ -430,8 +430,8 @@
     ]
   },
   {
-    "objectID": "ch_6_extensions-case-study.html#sec-case-reporting-template",
-    "href": "ch_6_extensions-case-study.html#sec-case-reporting-template",
+    "objectID": "ch_4_case-study.html#sec-case-reporting-template",
+    "href": "ch_4_case-study.html#sec-case-reporting-template",
     "title": "4  Model Building and a Mini Case Study",
     "section": "5.7 Reporting template",
     "text": "5.7 Reporting template\nUse this structure for a short logistic regression report:\n\nOutcome: Define the event and report the event rate.\nModel: State the predictors and the link function.\nEffects: Report key odds ratios with confidence intervals.\nPredictions: Give predicted probabilities for realistic scenarios.\nPerformance: Report threshold, confusion matrix metrics, and any AUC or validation results.\nLimitations: Note missing predictors, observational design, sample size, class imbalance, and any modelling assumptions.\n\nTemplate paragraph:\n\nWe modelled the probability of passing the final mathematics assessment using logistic regression. The event was defined as G3 &gt;= 10. The model included study time, previous failures, and absences. Coefficients were estimated on the log-odds scale and reported as odds ratios. To make the results easier to interpret, we also calculated predicted probabilities for representative student profiles. Using a threshold of 0.5, we summarised classification performance with accuracy, sensitivity, and specificity. These performance results are in-sample and should be validated before using the model for decision making.",
@@ -440,8 +440,8 @@
     ]
   },
   {
-    "objectID": "ch_6_extensions-case-study.html#sec-chapter06-summary",
-    "href": "ch_6_extensions-case-study.html#sec-chapter06-summary",
+    "objectID": "ch_4_case-study.html#sec-chapter06-summary",
+    "href": "ch_4_case-study.html#sec-chapter06-summary",
     "title": "4  Model Building and a Mini Case Study",
     "section": "5.8 Chapter summary",
     "text": "5.8 Chapter summary\nLogistic regression analysis follows the same disciplined pattern as linear regression: define the response, build interpretable models, compare alternatives, check assumptions and performance, and communicate effects on a scale the audience can understand. The main difference is the scale: coefficients live on the log-odds scale, while conclusions are usually clearest as predicted probabilities.",
@@ -454,7 +454,7 @@
     "href": "glossary.html",
     "title": "Glossary",
     "section": "",
-    "text": "Accuracy\nThe proportion of all predictions that are correct.\n\n\nAkaike Information Criterion\nA model comparison metric that balances fit and complexity; lower values indicate a preferred model among those compared.\n\n\nAUC\nArea under the ROC curve; a summary of classification performance across thresholds.\n\n\nBinary outcome\nA response variable with two possible values, often coded as 0 and 1.\n\n\nBinomial distribution\nA probability distribution for the number of events in repeated binary trials, with event probability p.\n\n\nCalibration\nHow closely predicted probabilities match observed event rates.\n\n\nClass imbalance\nWhen one outcome class is much more frequent than the other.\n\n\nClassification threshold\nThe cutoff used to convert predicted probabilities into classes (for example, predict 1 if p &gt;= 0.5).\n\n\nCoefficient\nA model parameter that describes how a predictor changes the log-odds, holding other predictors constant.\n\n\nConfidence interval\nA range of plausible values for a model parameter based on the data.\n\n\nConfusion matrix\nA table of predicted versus actual outcomes used to summarize classification performance.\n\n\nDeviance\nA goodness-of-fit measure based on the likelihood; lower is better.\n\n\nFactor\nA categorical predictor in R that is represented by discrete levels.\n\n\nFalse negative\nA case where the true class is 1 but the model predicts 0.\n\n\nFalse positive\nA case where the true class is 0 but the model predicts 1.\n\n\nGeneralized linear model\nA model class that combines a response distribution and a link function to relate predictors to the expected response.\n\n\nIntercept\nThe expected log-odds when all predictors are set to zero (or to their reference values).\n\n\nInteraction\nA term that allows the effect of one predictor to depend on another.\n\n\nLikelihood\nA measure of how well a model explains the observed data; higher is better.\n\n\nLikelihood ratio test\nA test that compares nested models using differences in deviance.\n\n\nLinear predictor\nThe linear combination of predictors, for example beta0 + beta1 x.\n\n\nLink function\nA function that connects the mean of the response to the linear predictor; for logistic regression the link is the logit.\n\n\nLogit\nThe log of the odds: log(p / (1 - p)).\n\n\nLogistic function\nThe S-shaped function that maps any real-valued input to a probability between 0 and 1.\n\n\nLogistic regression\nA regression model for binary outcomes that models the log-odds of an event as a linear function of predictors.\n\n\nMaximum likelihood estimation\nA method for estimating model parameters by choosing values that maximize the likelihood of the observed data.\n\n\nMultivariable logistic regression\nA logistic regression model with multiple predictors included simultaneously.\n\n\nNested models\nTwo models where one is a special case of the other (typically by removing one or more terms).\n\n\nNull model\nA model with no predictors, containing only an intercept.\n\n\nOdds\nThe ratio of the probability of an event to the probability of it not occurring: p / (1 - p).\n\n\nOdds ratio\nThe multiplicative change in odds for a one-unit increase in a predictor; exp(coefficient).\n\n\np-value\nThe probability, under a null hypothesis, of observing a result at least as extreme as the one obtained.\n\n\nPredicted probability\nThe model’s estimate of the probability of an event for a given set of predictors.\n\n\nProbability\nA number between 0 and 1 that represents the chance of an event.\n\n\nPseudo R-squared\nA likelihood-based summary of model fit for logistic regression that is used for rough comparison, not as a direct analogue of linear-model R-squared.\n\n\nRandom variable\nA numerical variable whose value depends on the outcome of a random process.\n\n\nReference level\nThe baseline category for a factor against which other levels are compared.\n\n\nROC curve\nA curve showing the trade-off between sensitivity and 1 - specificity across thresholds.\n\n\nSaturated model\nA model that fits the observed data perfectly by using as many parameters as needed.\n\n\nSensitivity\nThe proportion of true positives correctly identified by the model.\n\n\nSeparation\nA situation where predictors perfectly separate outcomes, leading to unstable estimates.\n\n\nSpecificity\nThe proportion of true negatives correctly identified by the model.\n\n\nTrue negative\nA case where the true class is 0 and the model predicts 0.\n\n\nTrue positive\nA case where the true class is 1 and the model predicts 1.\n\n\nWald test\nA hypothesis test that uses an estimated coefficient and its standard error to assess evidence against a null value.",
+    "text": "Statistical model\nA probabilistic description of how a response relates to predictors, combining a systematic component with random variation.\n\n\nRandom variable\nA quantity whose value varies across observations or repetitions of a process, described by a probability distribution.\n\n\nDistribution\nA description of how the possible values of a random variable are spread across outcomes.\n\n\nProbability\nA number between 0 and 1 that represents how likely an event is to occur.\n\n\nExpected value\nThe long-run average value of a random variable; in logistic regression, E[Y_i] is the event probability p_i for a binary response.\n\n\nVariance\nA measure of spread around the expected value. For a Bernoulli outcome with event probability p, the variance is p(1 - p).\n\n\nAssumption\nA condition adopted to justify a model or inference procedure, such as independent observations or linearity on the log-odds scale.\n\n\nResponse variable\nThe variable you aim to explain or predict; in logistic regression this is usually a binary outcome coded as 0 and 1.\n\n\nPredictor variable\nA variable used to explain, adjust for, or predict changes in the response.\n\n\nContinuous variable\nA numeric variable that can, in principle, take any value on an interval.\n\n\nCategorical variable\nA variable whose values are categories or groups rather than measurements on a numeric scale.\n\n\nBinary outcome\nA response variable with two possible values, often coded as 0 and 1, such as pass/fail or yes/no.\n\n\nEvent\nThe outcome category coded as 1 in a binary response; logistic regression usually models the probability of this category.\n\n\nNon-event\nThe outcome category coded as 0 in a binary response.\n\n\nEvent rate\nThe proportion of observations in the data for which the event occurs.\n\n\nLinear function\nA straight-line relationship of the form f(x) = alpha + beta x.\n\n\nLinear model\nA model whose systematic component is a linear combination of predictors and coefficients.\n\n\nLinear predictor\nThe systematic part of a regression model, usually written as eta_i = beta_0 + beta_1 X_i1 + … + beta_k X_ik.\n\n\nIntercept\nThe baseline value of the linear predictor when numeric predictors are zero and categorical predictors are at their reference levels.\n\n\nSlope\nThe change in the linear predictor for a one-unit increase in a predictor, holding other predictors constant.\n\n\nCoefficient\nA model parameter multiplying a predictor. In logistic regression, coefficients describe changes in log-odds.\n\n\nRandom error term\nThe part of a response not explained by the predictors in an additive linear regression model, often written as epsilon.\n\n\nError model\nThe probabilistic part of a model describing how observed responses vary. Logistic regression uses a Bernoulli/binomial error model rather than additive normal errors.\n\n\nNormal distribution\nA symmetric, bell-shaped distribution often used to model random variation in continuous outcomes.\n\n\nBernoulli distribution\nA distribution for a single binary trial, where Y = 1 with probability p and Y = 0 with probability 1 - p.\n\n\nBinomial distribution\nA probability distribution for the number of events in a fixed number of independent binary trials with the same event probability.\n\n\nLink function\nA function that connects the expected response to the linear predictor; for logistic regression the link is the logit.\n\n\nIdentity link\nThe link function used in ordinary linear regression, where the mean response is modelled directly by the linear predictor.\n\n\nGeneralised linear model\nA model class that combines an outcome distribution, a linear predictor, and a link function.\n\n\nOdds\nThe ratio of the probability that an event occurs to the probability that it does not occur: p / (1 - p).\n\n\nOdds ratio\nA ratio of two odds values. In logistic regression, exponentiating a coefficient gives the multiplicative change in odds for a one-unit predictor increase.\n\n\nLog-odds (logit)\nThe natural logarithm of the odds: log(p / (1 - p)). It maps probabilities from (0, 1) onto the whole real line.\n\n\nLogistic function\nThe inverse-logit transformation, p = 1 / (1 + exp(-eta)), which maps any real-valued linear predictor to a probability between 0 and 1.\n\n\nLogistic regression\nA regression model for binary outcomes that models the log-odds of an event as a linear function of predictors.\n\n\nEstimation\nThe process of using data to infer unknown model parameters, such as regression coefficients.\n\n\nEstimate\nA value computed from data that approximates an unknown model parameter, often written with a hat or as b_j for an estimated coefficient.\n\n\nOrdinary least squares\nThe linear-regression estimation method that chooses coefficients to minimise the sum of squared residuals.\n\n\nMaximum likelihood estimation\nA method that estimates parameters by choosing the values that make the observed data most likely under the model.\n\n\nLikelihood\nA measure of how plausible the observed data are for a given set of model parameters; larger likelihood means the data are more plausible under that model.\n\n\nFitted value\nThe model’s fitted mean response for an observation. In logistic regression, this is usually a fitted probability.\n\n\nPredicted probability\nThe model’s estimate of the probability that the event occurs for a given set of predictor values.\n\n\nResidual\nA diagnostic quantity comparing the observed response with what the fitted model predicts.\n\n\nPearson residual\nA residual scaled by its model-based standard deviation; in logistic regression it compares y_i with p_hat_i relative to Bernoulli variation.\n\n\nDeviance residual\nA likelihood-based residual used in generalized linear models to show how much each observation contributes to the model deviance.\n\n\nResidual sum of squares\nThe total squared discrepancy between observed values and fitted values in ordinary linear regression.\n\n\nDeviance\nA likelihood-based lack-of-fit measure for generalized linear models; smaller deviance indicates better fit among comparable models.\n\n\nNull model\nA model with an intercept only and no predictors, used as a baseline for comparison.\n\n\nSaturated model\nA model that fits the observed data perfectly by using as many parameters as needed.\n\n\nNested models\nTwo models where the smaller model can be obtained from the larger one by removing one or more terms.\n\n\nDegrees of freedom\nThe amount of independent information remaining after estimating parameters; model comparisons often use degrees of freedom to account for added terms.\n\n\nStandard error\nAn estimate of how much a statistic, such as a coefficient estimate, would vary across repeated samples.\n\n\nWald test\nA hypothesis test that compares an estimated coefficient with its standard error, usually testing whether the coefficient is zero.\n\n\nLikelihood ratio test\nA test for nested models based on the improvement in likelihood, often reported through a difference in deviance.\n\n\np-value\nThe probability, under the null hypothesis, of observing a result at least as extreme as the one obtained.\n\n\nConfidence interval\nA range of plausible parameter values at a chosen confidence level; logistic-regression intervals are often reported for coefficients or odds ratios.\n\n\nAkaike Information Criterion\nA model comparison metric that balances fit and complexity; lower AIC is preferred among the models being compared.\n\n\nBayesian Information Criterion\nA model comparison metric that penalises complexity more strongly than AIC; lower BIC is preferred among the models being compared.\n\n\nPseudo R-squared\nA likelihood-based summary of logistic-regression fit used for rough comparison, not a direct analogue of linear-regression R-squared.\n\n\nMultiple linear regression\nLinear regression with two or more predictors, allowing adjustment for multiple variables at once.\n\n\nMultivariable logistic regression\nLogistic regression with two or more predictors included simultaneously.\n\n\nPartial regression coefficient\nThe coefficient for a predictor interpreted while holding the other predictors in the model constant.\n\n\nFactor\nA categorical variable in R with discrete levels; factors are expanded into coded columns when used in regression models.\n\n\nDummy variable\nA 0/1 indicator used to code categories in a regression model relative to a baseline category.\n\n\nReference level\nThe baseline category for a factor against which other levels are compared.\n\n\nContrast\nA coding scheme that maps factor levels to numeric columns for use in a regression model.\n\n\nInteraction\nA model term that allows the effect of one predictor to depend on the value of another predictor.\n\n\nExtrapolation\nMaking predictions outside the observed range or combination of predictor values, where the fitted relationship may not hold.\n\n\nIndependence\nThe assumption that observations, or their errors, are not correlated with one another.\n\n\nLinearity on the log-odds scale\nThe logistic-regression assumption that continuous predictors have approximately linear effects on the log-odds, not necessarily on the probability scale.\n\n\nSeparation\nA situation where a predictor or combination of predictors perfectly separates the outcome classes, leading to unstable or very large coefficient estimates.\n\n\nClass imbalance\nA situation where one outcome class is much more common than the other, making simple accuracy potentially misleading.\n\n\nOverfitting\nWhen a model captures noise in the training data and generalises poorly to new data, often because it is too complex for the amount of information available.\n\n\nInfluential point\nAn observation that substantially changes fitted coefficients or predictions when it is removed or down-weighted.\n\n\nCook’s distance\nAn influence diagnostic that flags observations with unusual impact on fitted coefficients.\n\n\nClassification threshold\nThe cutoff used to convert predicted probabilities into predicted classes, such as predicting the event when p_hat &gt;= 0.5.\n\n\nPredicted class\nThe class label assigned after applying a classification threshold to a predicted probability.\n\n\nConfusion matrix\nA table of predicted versus actual classes used to summarise classification performance.\n\n\nTrue positive\nA case where the actual class is 1 and the model predicts 1.\n\n\nTrue negative\nA case where the actual class is 0 and the model predicts 0.\n\n\nFalse positive\nA case where the actual class is 0 but the model predicts 1.\n\n\nFalse negative\nA case where the actual class is 1 but the model predicts 0.\n\n\nAccuracy\nThe proportion of all classifications that are correct.\n\n\nSensitivity\nThe proportion of actual events correctly classified as events.\n\n\nSpecificity\nThe proportion of actual non-events correctly classified as non-events.\n\n\nROC curve\nA curve showing the trade-off between sensitivity and false positive rate across classification thresholds.\n\n\nAUC\nArea under the ROC curve; a threshold-free summary of how well predicted probabilities rank events above non-events.\n\n\nCalibration\nThe agreement between predicted probabilities and observed event rates.\n\n\nValidation set\nData not used to fit the model, used to assess how well predictions generalise to new observations.\n\n\nCross-validation\nA resampling approach that repeatedly fits a model on part of the data and assesses predictions on held-out parts.\n\n\nScenario-based prediction\nPrediction for realistic combinations of predictor values, used to communicate model results on a practical scale such as probability.\n\n\nModel comparison\nThe process of comparing plausible models using evidence such as likelihood ratio tests, information criteria, prediction performance, and interpretability.",
     "crumbs": [
       "Glossary"
     ]

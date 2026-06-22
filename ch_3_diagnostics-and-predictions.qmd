@@ -73,18 +73,18 @@ actual_num <- students$pass_exam
 
 # Assessing model fit and predictions {#sec-assessing-fit}
 
-In linear regression, model assessment often starts with residual sums of squares and $R^2$. Logistic regression uses a different error model, so the assessment tools also change. We still ask the same broad questions:
+In linear regression, model assessment often starts with [residual sums of squares]{.glossary term="Residual sum of squares"} and $R^2$. Logistic regression uses a different error model, so the assessment tools also change. We still ask the same broad questions:
 
 1. Does adding predictors improve the model?
 2. Is the model too simple or unnecessarily complex?
 3. Are there unusual observations or structural problems?
 4. Are the predicted probabilities useful for the purpose at hand?
 
-This chapter first focuses on likelihood-based model assessment, then turns to predicted probabilities, classification thresholds, and predictive performance.
+This chapter first focuses on likelihood-based model assessment, then turns to [predicted probabilities]{.glossary term="Predicted probability"}, [classification thresholds]{.glossary term="Classification threshold"}, and predictive performance.
 
 ## Likelihood and deviance {#sec-likelihood-deviance}
 
-Because logistic regression is fitted by maximum likelihood, model fit is naturally measured through the likelihood. R reports a related quantity called **deviance**.
+Because logistic regression is fitted by maximum likelihood, model fit is naturally measured through the [likelihood]{.glossary}. R reports a related quantity called [**deviance**]{.glossary}.
 
 :::: {.panel-tabset}
 ### Output
@@ -110,7 +110,7 @@ c(
 ```
 ::::
 
-Smaller deviance indicates a better fit to the observed data. The null model has only an intercept, so it represents a baseline model that predicts the same probability for every student.
+Smaller deviance indicates a better fit to the observed data. The [null model]{.glossary} has only an intercept, so it represents a baseline model that predicts the same probability for every student.
 
 ::: Key-point
 Deviance plays a role similar to residual sum of squares in linear regression: it is a lack-of-fit measure, so smaller values indicate better fit. It is likelihood-based rather than squared-error-based.
@@ -120,9 +120,9 @@ Deviance plays a role similar to residual sum of squares in linear regression: i
 
 ## Comparing nested models {#sec-logistic-nested-models}
 
-Two models are nested when one can be obtained from the other by removing predictors. The study-time model is nested inside the multivariable model because the multivariable model adds `failures` and `absences`.
+Two models are [nested]{.glossary term="Nested models"} when one can be obtained from the other by removing predictors. The study-time model is nested inside the multivariable model because the multivariable model adds `failures` and `absences`.
 
-We can compare nested logistic regression models with a likelihood ratio test:
+We can compare nested logistic regression models with a [likelihood ratio test]{.glossary}:
 
 :::: {.panel-tabset}
 ### Output
@@ -143,12 +143,12 @@ anova(fit_study, fit_multi, test = "Chisq")
 The test asks whether the added predictors improve the model enough to justify the extra complexity.
 
 ::: Note
-Use likelihood ratio tests for nested models. For non-nested models, use information criteria such as AIC or compare prediction performance on a validation set.
+Use likelihood ratio tests for nested models. For non-nested models, use information criteria such as [AIC]{.glossary} or compare prediction performance on a [validation set]{.glossary}.
 :::
 
 ## AIC and model complexity {#sec-logistic-aic}
 
-The Akaike Information Criterion (AIC) balances model fit and complexity. Lower AIC is preferred among the models being compared.
+The [Akaike Information Criterion]{.glossary} (AIC) balances model fit and complexity. Lower AIC is preferred among the models being compared.
 
 :::: {.panel-tabset}
 ### Output
@@ -172,7 +172,7 @@ AIC is useful when comparing several plausible models, but it is not a substitut
 
 ## Pseudo R-squared {#sec-logistic-pseudo-r2}
 
-Linear regression's $R^2$ is based on sums of squares. Logistic regression does not have an exact equivalent. Several **pseudo R-squared** measures exist, but they should be treated as rough summaries rather than as direct analogues.
+Linear regression's $R^2$ is based on sums of squares. Logistic regression does not have an exact equivalent. Several [**pseudo R-squared**]{.glossary} measures exist, but they should be treated as rough summaries rather than as direct analogues.
 
 One common option is McFadden's pseudo $R^2$:
 
@@ -204,7 +204,7 @@ Do not interpret pseudo $R^2$ as "the percentage of variance explained". For log
 
 ## Residuals and influence {#sec-logistic-residuals}
 
-Logistic regression residuals are less visually intuitive than linear regression residuals because the observed outcomes are only 0 or 1. Still, residual and influence diagnostics can help identify observations the model struggles to fit.
+Logistic regression [residuals]{.glossary term="Residual"} are less visually intuitive than linear regression residuals because the observed outcomes are only 0 or 1. Still, residual and [influence]{.glossary term="Influential point"} diagnostics can help identify observations the model struggles to fit.
 
 :::: {.panel-tabset}
 ### Output
@@ -256,31 +256,31 @@ abline(h = 0, col = "grey70", lty = 2)
 ```
 ::::
 
-Large residuals mark cases where the observed outcome was surprising under the fitted model. Large Cook's distances mark cases with unusual influence on the fitted coefficients.
+Large residuals mark cases where the observed outcome was surprising under the fitted model. A large [Cook's distance]{.glossary} marks a case with unusual influence on the fitted coefficients.
 
 ## Common problems {#sec-logistic-common-problems}
 
 ::: Assumption
 ### Independent observations
 
-The usual logistic regression model assumes observations are independent. If the same person, class, school, or site contributes multiple related observations, the model may need to account for clustering.
+The usual logistic regression model assumes [observations are independent]{.glossary term="Independence"}. If the same person, class, school, or site contributes multiple related observations, the model may need to account for clustering.
 :::
 
 ::: Assumption
 ### Linearity on the log-odds scale
 
-Continuous predictors are assumed to have approximately linear effects on the log-odds. This does not mean a straight line on the probability scale.
+[Continuous predictors]{.glossary term="Continuous variable"} are assumed to have approximately [linear effects on the log-odds]{.glossary term="Linearity on the log-odds scale"}. This does not mean a straight line on the probability scale.
 :::
 
 Other common problems include:
 
-- **Separation:** a predictor or combination of predictors perfectly separates passes from fails, leading to unstable or very large estimates.
-- **Class imbalance:** one outcome class is much more common than the other, so simple accuracy can be misleading.
-- **Overfitting:** too many predictors for the amount of data, especially when the event count is small.
+- [**Separation**]{.glossary}: a predictor or combination of predictors perfectly separates passes from fails, leading to unstable or very large estimates.
+- [**Class imbalance**]{.glossary}: one outcome class is much more common than the other, so simple accuracy can be misleading.
+- [**Overfitting**]{.glossary}: too many predictors for the amount of data, especially when the event count is small.
 
 ## Predictions from logistic regression models {#sec-predictions}
 
-The fitted model gives a linear predictor on the log-odds scale:
+The fitted model gives a [linear predictor]{.glossary} on the log-odds scale:
 
 $$
 \hat{\eta}_i =
@@ -298,7 +298,7 @@ $$
 
 ## Predicting on different scales {#sec-predicting-scales}
 
-By default, `predict()` returns values on the link scale:
+By default, `predict()` returns values on the [link scale]{.glossary term="Link function"}:
 
 :::: {.panel-tabset}
 ### Output
@@ -444,7 +444,7 @@ grade_this({
 
 ## From probabilities to classifications {#sec-classification-thresholds}
 
-Sometimes we need to turn probabilities into predicted classes. To do this, we choose a **classification threshold**. With a threshold of 0.5, we predict a pass when $\hat{p} \ge 0.5$.
+Sometimes we need to turn probabilities into [predicted classes]{.glossary term="Predicted class"}. To do this, we choose a [**classification threshold**]{.glossary}. With a threshold of 0.5, we predict a pass when $\hat{p} \ge 0.5$.
 
 :::: {.panel-tabset}
 ### Output
@@ -474,7 +474,7 @@ conf_mat
 ```
 ::::
 
-From the confusion matrix we can calculate performance measures:
+From the [confusion matrix]{.glossary} we can calculate performance measures such as [accuracy]{.glossary}, [sensitivity]{.glossary}, and [specificity]{.glossary}:
 
 :::: {.panel-tabset}
 ### Output
@@ -622,7 +622,7 @@ grade_this({
 
 ## ROC curves and AUC {#sec-roc-auc}
 
-An ROC curve shows the trade-off between sensitivity and false positive rate across many thresholds. AUC summarises that curve.
+An [ROC curve]{.glossary} shows the trade-off between [sensitivity]{.glossary} and false positive rate across many thresholds. [AUC]{.glossary} summarises that curve.
 
 :::: {.panel-tabset}
 ### Plot

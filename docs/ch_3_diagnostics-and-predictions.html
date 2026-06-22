@@ -27998,13 +27998,13 @@ initializeRuntime();
 
 </script>
 <style>
-.Exercise {
---color1: #C8E6C9;
---color2: #4CAF50;
-}
 .Example {
 --color1: #BBDEFB;
 --color2: #2196F3;
+}
+.Key-term {
+--color1: #D1C4E9;
+--color2: #673AB7;
 }
 .Assumption {
 --color1: #FFCDD2;
@@ -28014,13 +28014,13 @@ initializeRuntime();
 --color1: #FFF9C4;
 --color2: #FFEB3B;
 }
+.Exercise {
+--color1: #C8E6C9;
+--color2: #4CAF50;
+}
 .Note {
 --color1: #FFF9C4;
 --color2: #FFEB3B;
-}
-.Key-term {
---color1: #D1C4E9;
---color2: #673AB7;
 }
 </style>
 
@@ -28185,7 +28185,7 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_3_assessing-model-fit-and-predictions.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessing Model Fit and Predictions</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch_3_diagnostics-and-predictions.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessing Model Fit and Predictions</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -28230,13 +28230,13 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_3_assessing-model-fit-and-predictions.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ch_3_diagnostics-and-predictions.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessing Model Fit and Predictions</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_6_extensions-case-study.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch_4_case-study.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></span></a>
   </div>
 </li>
@@ -28319,17 +28319,17 @@ eyJhdHRyIjp7ImVjaG8iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZW52aXIiOiJleF9wcmVkIiwiZXZhbCI6
 </div>
 <section id="sec-assessing-fit" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Assessing model fit and predictions</h1>
-<p>In linear regression, model assessment often starts with residual sums of squares and <span class="math inline">\(R^2\)</span>. Logistic regression uses a different error model, so the assessment tools also change. We still ask the same broad questions:</p>
+<p>In linear regression, model assessment often starts with <a href="glossary.html#glossary-residual-sum-of-squares" class="glossary" data-term="Residual sum of squares" title="The total squared discrepancy between observed values and fitted values in ordinary linear regression.">residual sums of squares</a> and <span class="math inline">\(R^2\)</span>. Logistic regression uses a different error model, so the assessment tools also change. We still ask the same broad questions:</p>
 <ol type="1">
 <li>Does adding predictors improve the model?</li>
 <li>Is the model too simple or unnecessarily complex?</li>
 <li>Are there unusual observations or structural problems?</li>
 <li>Are the predicted probabilities useful for the purpose at hand?</li>
 </ol>
-<p>This chapter first focuses on likelihood-based model assessment, then turns to predicted probabilities, classification thresholds, and predictive performance.</p>
+<p>This chapter first focuses on likelihood-based model assessment, then turns to <a href="glossary.html#glossary-predicted-probability" class="glossary" data-term="Predicted probability" title="The model’s estimate of the probability that the event occurs for a given set of predictor values.">predicted probabilities</a>, <a href="glossary.html#glossary-classification-threshold" class="glossary" data-term="Classification threshold" title="The cutoff used to convert predicted probabilities into predicted classes, such as predicting the event when p_hat >= 0.5.">classification thresholds</a>, and predictive performance.</p>
 <section id="sec-likelihood-deviance" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="sec-likelihood-deviance"><span class="header-section-number">4.1</span> Likelihood and deviance</h2>
-<p>Because logistic regression is fitted by maximum likelihood, model fit is naturally measured through the likelihood. R reports a related quantity called <strong>deviance</strong>.</p>
+<p>Because logistic regression is fitted by maximum likelihood, model fit is naturally measured through the <a href="glossary.html#glossary-likelihood" class="glossary" title="A measure of how plausible the observed data are for a given set of model parameters; larger likelihood means the data are more plausible under that model.">likelihood</a>. R reports a related quantity called <a href="glossary.html#glossary-deviance" class="glossary" title="A likelihood-based lack-of-fit measure for generalized linear models; smaller deviance indicates better fit among comparable models."><strong>deviance</strong></a>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">
@@ -28352,7 +28352,7 @@ eyJhdHRyIjp7ImVjaG8iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZW52aXIiOiJleF9wcmVkIiwiZXZhbCI6
 </div>
 </div>
 </div>
-<p>Smaller deviance indicates a better fit to the observed data. The null model has only an intercept, so it represents a baseline model that predicts the same probability for every student.</p>
+<p>Smaller deviance indicates a better fit to the observed data. The <a href="glossary.html#glossary-null-model" class="glossary" title="A model with an intercept only and no predictors, used as a baseline for comparison.">null model</a> has only an intercept, so it represents a baseline model that predicts the same probability for every student.</p>
 <div id="cnb-1-Key-point" class="Key-point">
 <details class="Key-point fobx-simplebox fobx-default" open=""><summary><strong>Key-point</strong></summary><div>
 <p>Deviance plays a role similar to residual sum of squares in linear regression: it is a lack-of-fit measure, so smaller values indicate better fit. It is likelihood-based rather than squared-error-based.</p>
@@ -28364,8 +28364,8 @@ eyJhdHRyIjp7ImVjaG8iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZW52aXIiOiJleF9wcmVkIiwiZXZhbCI6
 </section>
 <section id="sec-logistic-nested-models" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="sec-logistic-nested-models"><span class="header-section-number">4.2</span> Comparing nested models</h2>
-<p>Two models are nested when one can be obtained from the other by removing predictors. The study-time model is nested inside the multivariable model because the multivariable model adds <code>failures</code> and <code>absences</code>.</p>
-<p>We can compare nested logistic regression models with a likelihood ratio test:</p>
+<p>Two models are <a href="glossary.html#glossary-nested-models" class="glossary" data-term="Nested models" title="Two models where the smaller model can be obtained from the larger one by removing one or more terms.">nested</a> when one can be obtained from the other by removing predictors. The study-time model is nested inside the multivariable model because the multivariable model adds <code>failures</code> and <code>absences</code>.</p>
+<p>We can compare nested logistic regression models with a <a href="glossary.html#glossary-likelihood-ratio-test" class="glossary" title="A test for nested models based on the improvement in likelihood, often reported through a difference in deviance.">likelihood ratio test</a>:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">
@@ -28394,13 +28394,13 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>The test asks whether the added predictors improve the model enough to justify the extra complexity.</p>
 <div id="cnb-2-Note" class="Note">
 <details class="Note fobx-simplebox fobx-default" open=""><summary><strong>Note</strong></summary><div>
-<p>Use likelihood ratio tests for nested models. For non-nested models, use information criteria such as AIC or compare prediction performance on a validation set.</p>
+<p>Use likelihood ratio tests for nested models. For non-nested models, use information criteria such as <a href="glossary.html#glossary-akaike-information-criterion" class="glossary" title="A model comparison metric that balances fit and complexity; lower AIC is preferred among the models being compared.">AIC</a> or compare prediction performance on a <a href="glossary.html#glossary-validation-set" class="glossary" title="Data not used to fit the model, used to assess how well predictions generalise to new observations.">validation set</a>.</p>
 </div></details>
 </div>
 </section>
 <section id="sec-logistic-aic" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="sec-logistic-aic"><span class="header-section-number">4.3</span> AIC and model complexity</h2>
-<p>The Akaike Information Criterion (AIC) balances model fit and complexity. Lower AIC is preferred among the models being compared.</p>
+<p>The <a href="glossary.html#glossary-akaike-information-criterion" class="glossary" title="A model comparison metric that balances fit and complexity; lower AIC is preferred among the models being compared.">Akaike Information Criterion</a> (AIC) balances model fit and complexity. Lower AIC is preferred among the models being compared.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">
@@ -28428,7 +28428,7 @@ fit_multi  4 463.1066</code></pre>
 </section>
 <section id="sec-logistic-pseudo-r2" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="sec-logistic-pseudo-r2"><span class="header-section-number">4.4</span> Pseudo R-squared</h2>
-<p>Linear regression’s <span class="math inline">\(R^2\)</span> is based on sums of squares. Logistic regression does not have an exact equivalent. Several <strong>pseudo R-squared</strong> measures exist, but they should be treated as rough summaries rather than as direct analogues.</p>
+<p>Linear regression’s <span class="math inline">\(R^2\)</span> is based on sums of squares. Logistic regression does not have an exact equivalent. Several <a href="glossary.html#glossary-pseudo-r-squared" class="glossary" title="A likelihood-based summary of logistic-regression fit used for rough comparison, not a direct analogue of linear-regression R-squared."><strong>pseudo R-squared</strong></a> measures exist, but they should be treated as rough summaries rather than as direct analogues.</p>
 <p>One common option is McFadden’s pseudo <span class="math inline">\(R^2\)</span>:</p>
 <p><span class="math display">\[
 R^2_{\text{McFadden}} = 1 - \frac{\log L_{\text{model}}}{\log L_{\text{null}}}.
@@ -28459,7 +28459,7 @@ R^2_{\text{McFadden}} = 1 - \frac{\log L_{\text{model}}}{\log L_{\text{null}}}.
 </section>
 <section id="sec-logistic-residuals" class="level2" data-number="4.5">
 <h2 data-number="4.5" class="anchored" data-anchor-id="sec-logistic-residuals"><span class="header-section-number">4.5</span> Residuals and influence</h2>
-<p>Logistic regression residuals are less visually intuitive than linear regression residuals because the observed outcomes are only 0 or 1. Still, residual and influence diagnostics can help identify observations the model struggles to fit.</p>
+<p>Logistic regression <a href="glossary.html#glossary-residual" class="glossary" data-term="Residual" title="A diagnostic quantity comparing the observed response with what the fitted model predicts.">residuals</a> are less visually intuitive than linear regression residuals because the observed outcomes are only 0 or 1. Still, residual and <a href="glossary.html#glossary-influential-point" class="glossary" data-term="Influential point" title="An observation that substantially changes fitted coefficients or predictions when it is removed or down-weighted.">influence</a> diagnostics can help identify observations the model struggles to fit.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">
@@ -28513,30 +28513,30 @@ R^2_{\text{McFadden}} = 1 - \frac{\log L_{\text{model}}}{\log L_{\text{null}}}.
 </div>
 </div>
 </div>
-<p>Large residuals mark cases where the observed outcome was surprising under the fitted model. Large Cook’s distances mark cases with unusual influence on the fitted coefficients.</p>
+<p>Large residuals mark cases where the observed outcome was surprising under the fitted model. A large <a href="glossary.html#glossary-cook�s-distance" class="glossary" title="An influence diagnostic that flags observations with unusual impact on fitted coefficients.">Cook’s distance</a> marks a case with unusual influence on the fitted coefficients.</p>
 </section>
 <section id="sec-logistic-common-problems" class="level2" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="sec-logistic-common-problems"><span class="header-section-number">4.6</span> Common problems</h2>
 <div id="independent-observations" class="Assumption">
 <details class="Assumption fobx-simplebox fobx-default" open=""><summary><strong>Assumption 3.1: </strong>Independent observations</summary><div>
-<p>The usual logistic regression model assumes observations are independent. If the same person, class, school, or site contributes multiple related observations, the model may need to account for clustering.</p>
+<p>The usual logistic regression model assumes <a href="glossary.html#glossary-independence" class="glossary" data-term="Independence" title="The assumption that observations, or their errors, are not correlated with one another.">observations are independent</a>. If the same person, class, school, or site contributes multiple related observations, the model may need to account for clustering.</p>
 </div></details>
 </div>
 <div id="linearity-on-the-log-odds-scale" class="Assumption">
 <details class="Assumption fobx-simplebox fobx-default" open=""><summary><strong>Assumption 3.2: </strong>Linearity on the log-odds scale</summary><div>
-<p>Continuous predictors are assumed to have approximately linear effects on the log-odds. This does not mean a straight line on the probability scale.</p>
+<p><a href="glossary.html#glossary-continuous-variable" class="glossary" data-term="Continuous variable" title="A numeric variable that can, in principle, take any value on an interval.">Continuous predictors</a> are assumed to have approximately <a href="glossary.html#glossary-linearity-on-the-log-odds-scale" class="glossary" data-term="Linearity on the log-odds scale" title="The logistic-regression assumption that continuous predictors have approximately linear effects on the log-odds, not necessarily on the probability scale.">linear effects on the log-odds</a>. This does not mean a straight line on the probability scale.</p>
 </div></details>
 </div>
 <p>Other common problems include:</p>
 <ul>
-<li><strong>Separation:</strong> a predictor or combination of predictors perfectly separates passes from fails, leading to unstable or very large estimates.</li>
-<li><strong>Class imbalance:</strong> one outcome class is much more common than the other, so simple accuracy can be misleading.</li>
-<li><strong>Overfitting:</strong> too many predictors for the amount of data, especially when the event count is small.</li>
+<li><a href="glossary.html#glossary-separation" class="glossary" title="A situation where a predictor or combination of predictors perfectly separates the outcome classes, leading to unstable or very large coefficient estimates."><strong>Separation</strong></a>: a predictor or combination of predictors perfectly separates passes from fails, leading to unstable or very large estimates.</li>
+<li><a href="glossary.html#glossary-class-imbalance" class="glossary" title="A situation where one outcome class is much more common than the other, making simple accuracy potentially misleading."><strong>Class imbalance</strong></a>: one outcome class is much more common than the other, so simple accuracy can be misleading.</li>
+<li><a href="glossary.html#glossary-overfitting" class="glossary" title="When a model captures noise in the training data and generalises poorly to new data, often because it is too complex for the amount of information available."><strong>Overfitting</strong></a>: too many predictors for the amount of data, especially when the event count is small.</li>
 </ul>
 </section>
 <section id="sec-predictions" class="level2" data-number="4.7">
 <h2 data-number="4.7" class="anchored" data-anchor-id="sec-predictions"><span class="header-section-number">4.7</span> Predictions from logistic regression models</h2>
-<p>The fitted model gives a linear predictor on the log-odds scale:</p>
+<p>The fitted model gives a <a href="glossary.html#glossary-linear-predictor" class="glossary" title="The systematic part of a regression model, usually written as eta_i = beta_0 + beta_1 X_i1 + … + beta_k X_ik.">linear predictor</a> on the log-odds scale:</p>
 <p><span class="math display">\[
 \hat{\eta}_i =
 b_0 +
@@ -28551,7 +28551,7 @@ b_3 \text{absences}_i.
 </section>
 <section id="sec-predicting-scales" class="level2" data-number="4.8">
 <h2 data-number="4.8" class="anchored" data-anchor-id="sec-predicting-scales"><span class="header-section-number">4.8</span> Predicting on different scales</h2>
-<p>By default, <code>predict()</code> returns values on the link scale:</p>
+<p>By default, <code>predict()</code> returns values on the <a href="glossary.html#glossary-link-function" class="glossary" data-term="Link function" title="A function that connects the expected response to the linear predictor; for logistic regression the link is the logit.">link scale</a>:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">
@@ -28678,7 +28678,7 @@ eyJhdHRyIjp7ImNoZWNrIjp0cnVlLCJjbGFzcyI6IndhaXQiLCJlZGl0Ijp0cnVlLCJlbnZpciI6ImV4
 </section>
 <section id="sec-classification-thresholds" class="level2" data-number="4.10">
 <h2 data-number="4.10" class="anchored" data-anchor-id="sec-classification-thresholds"><span class="header-section-number">4.10</span> From probabilities to classifications</h2>
-<p>Sometimes we need to turn probabilities into predicted classes. To do this, we choose a <strong>classification threshold</strong>. With a threshold of 0.5, we predict a pass when <span class="math inline">\(\hat{p} \ge 0.5\)</span>.</p>
+<p>Sometimes we need to turn probabilities into <a href="glossary.html#glossary-predicted-class" class="glossary" data-term="Predicted class" title="The class label assigned after applying a classification threshold to a predicted probability.">predicted classes</a>. To do this, we choose a <a href="glossary.html#glossary-classification-threshold" class="glossary" title="The cutoff used to convert predicted probabilities into predicted classes, such as predicting the event when p_hat >= 0.5."><strong>classification threshold</strong></a>. With a threshold of 0.5, we predict a pass when <span class="math inline">\(\hat{p} \ge 0.5\)</span>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">
@@ -28705,7 +28705,7 @@ Predicted   0   1
 </div>
 </div>
 </div>
-<p>From the confusion matrix we can calculate performance measures:</p>
+<p>From the <a href="glossary.html#glossary-confusion-matrix" class="glossary" title="A table of predicted versus actual classes used to summarise classification performance.">confusion matrix</a> we can calculate performance measures such as <a href="glossary.html#glossary-accuracy" class="glossary" title="The proportion of all classifications that are correct.">accuracy</a>, <a href="glossary.html#glossary-sensitivity" class="glossary" title="The proportion of actual events correctly classified as events.">sensitivity</a>, and <a href="glossary.html#glossary-specificity" class="glossary" title="The proportion of actual non-events correctly classified as non-events.">specificity</a>:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">
@@ -28821,7 +28821,7 @@ eyJhdHRyIjp7ImNoZWNrIjp0cnVlLCJjbGFzcyI6IndhaXQiLCJlZGl0Ijp0cnVlLCJlbnZpciI6ImV4
 </section>
 <section id="sec-roc-auc" class="level2" data-number="4.12">
 <h2 data-number="4.12" class="anchored" data-anchor-id="sec-roc-auc"><span class="header-section-number">4.12</span> ROC curves and AUC</h2>
-<p>An ROC curve shows the trade-off between sensitivity and false positive rate across many thresholds. AUC summarises that curve.</p>
+<p>An <a href="glossary.html#glossary-roc-curve" class="glossary" title="A curve showing the trade-off between sensitivity and false positive rate across classification thresholds.">ROC curve</a> shows the trade-off between <a href="glossary.html#glossary-sensitivity" class="glossary" title="The proportion of actual events correctly classified as events.">sensitivity</a> and false positive rate across many thresholds. <a href="glossary.html#glossary-auc" class="glossary" title="Area under the ROC curve; a threshold-free summary of how well predicted probabilities rank events above non-events.">AUC</a> summarises that curve.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-13-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-1" role="tab" aria-controls="tabset-13-1" aria-selected="true" href="">Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-2" role="tab" aria-controls="tabset-13-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">

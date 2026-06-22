@@ -53,12 +53,12 @@ students$high_absence <- ifelse(students$absences > median(students$absences), "
 
 # Model building and a mini case study {#sec-extensions-case-study}
 
-The earlier chapters developed the pieces of logistic regression one at a time. This chapter brings them together into a short analysis workflow:
+The earlier chapters developed the pieces of [logistic regression]{.glossary} one at a time. This chapter brings them together into a short analysis workflow:
 
-1. Define the event.
+1. Define the [event]{.glossary}.
 2. Choose a small set of interpretable predictors.
 3. Fit and compare models.
-4. Report effects as odds ratios and predicted probabilities.
+4. Report effects as [odds ratios]{.glossary term="Odds ratio"} and [predicted probabilities]{.glossary term="Predicted probability"}.
 5. Check predictive performance.
 6. Communicate limitations.
 
@@ -94,7 +94,7 @@ prop.table(table(students$pass_exam))
 ```
 ::::
 
-Always report the event definition. Different cutoffs can answer different questions.
+Always report the event definition and the [event rate]{.glossary}. Different cutoffs can answer different questions.
 
 ## Choose predictors {#sec-case-choose-predictors}
 
@@ -128,7 +128,7 @@ summary(fit_case)
 ```
 ::::
 
-Odds ratios give a first interpretation:
+[Odds ratios]{.glossary term="Odds ratio"} give a first interpretation:
 
 :::: {.panel-tabset}
 ### Output
@@ -192,11 +192,11 @@ anova(fit_study, fit_case, test = "Chisq")
 ```
 ::::
 
-This mirrors the model-building logic from the Linear Regression Short Course: start simple, add predictors for clear reasons, and check whether the added complexity is useful.
+This mirrors the [model-building]{.glossary term="Model comparison"} logic from the Linear Regression Short Course: start simple, add predictors for clear reasons, and check whether the added complexity is useful.
 
 ## Consider interactions carefully {#sec-case-interactions}
 
-An interaction allows the effect of one predictor to depend on another. For example, the association between absences and passing might differ depending on whether a student has previous failures.
+An [interaction]{.glossary} allows the effect of one predictor to depend on another. For example, the association between absences and passing might differ depending on whether a student has previous failures.
 
 :::: {.panel-tabset}
 ### Output
@@ -232,7 +232,7 @@ Add interaction terms when they answer a real question or are strongly motivated
 
 ## Communicate with scenarios {#sec-case-scenarios}
 
-Scenario predictions translate the model back to the probability scale.
+[Scenario predictions]{.glossary term="Scenario-based prediction"} translate the model back to the probability scale.
 
 :::: {.panel-tabset}
 ### Output
@@ -324,18 +324,18 @@ c(accuracy = accuracy,
 ```
 ::::
 
-This is an in-sample summary, so it is optimistic. In a real predictive project, we would use a validation set or cross-validation.
+This is an in-sample summary, so it is optimistic. In a real predictive project, we would use a [validation set]{.glossary} or [cross-validation]{.glossary}.
 
 ## Reporting template {#sec-case-reporting-template}
 
 Use this structure for a short logistic regression report:
 
 1. **Outcome:** Define the event and report the event rate.
-2. **Model:** State the predictors and the link function.
-3. **Effects:** Report key odds ratios with confidence intervals.
+2. **Model:** State the predictors and the [link function]{.glossary}.
+3. **Effects:** Report key odds ratios with [confidence intervals]{.glossary term="Confidence interval"}.
 4. **Predictions:** Give predicted probabilities for realistic scenarios.
-5. **Performance:** Report threshold, confusion matrix metrics, and any AUC or validation results.
-6. **Limitations:** Note missing predictors, observational design, sample size, class imbalance, and any modelling assumptions.
+5. **Performance:** Report [threshold]{.glossary term="Classification threshold"}, [confusion matrix]{.glossary} metrics, and any [AUC]{.glossary} or validation results.
+6. **Limitations:** Note missing predictors, observational design, sample size, [class imbalance]{.glossary}, and any modelling assumptions.
 
 Template paragraph:
 

@@ -28002,25 +28002,25 @@ initializeRuntime();
 --color1: #BBDEFB;
 --color2: #2196F3;
 }
-.Note {
---color1: #FFF9C4;
---color2: #FFEB3B;
-}
 .Key-term {
 --color1: #D1C4E9;
 --color2: #673AB7;
 }
-.Exercise {
---color1: #C8E6C9;
---color2: #4CAF50;
+.Note {
+--color1: #FFF9C4;
+--color2: #FFEB3B;
+}
+.Key-point {
+--color1: #FFF9C4;
+--color2: #FFEB3B;
 }
 .Assumption {
 --color1: #FFCDD2;
 --color2: #F44336;
 }
-.Key-point {
---color1: #FFF9C4;
---color2: #FFEB3B;
+.Exercise {
+--color1: #C8E6C9;
+--color2: #4CAF50;
 }
 </style>
 
@@ -28230,13 +28230,13 @@ body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="t
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_3_assessing-model-fit-and-predictions.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch_3_diagnostics-and-predictions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessing Model Fit and Predictions</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_6_extensions-case-study.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch_4_case-study.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></span></a>
   </div>
 </li>
@@ -28295,15 +28295,15 @@ eyJhdHRyIjp7ImVkaXQiOmZhbHNlLCJldmFsIjp0cnVlLCJvdXRwdXQiOmZhbHNlfSwiY29kZSI6Indl
 </div>
 <section id="a-quick-review-of-linear-models" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="a-quick-review-of-linear-models"><span class="header-section-number">1.1</span> A quick review of linear models</h2>
-<p>In the Linear Regression Short Course (LRSC), we used a linear model to predict an <span class="glossary">outcome variable</span> <span class="math inline">\(Y\)</span> from one or more <span class="glossary">predictor variables</span>, <span class="math inline">\(X_1, X_2, \ldots, X_p\)</span>. Something like this:</p>
+<p>In the Linear Regression Short Course (LRSC), we used a <a href="glossary.html#glossary-linear-model" class="glossary" title="A model whose systematic component is a linear combination of predictors and coefficients.">linear model</a> to predict an <a href="glossary.html#glossary-response-variable" class="glossary" title="The variable you aim to explain or predict; in logistic regression this is usually a binary outcome coded as 0 and 1.">outcome variable</a> <span class="math inline">\(Y\)</span> from one or more <a href="glossary.html#glossary-predictor-variable" class="glossary" title="A variable used to explain, adjust for, or predict changes in the response.">predictor variables</a>, <span class="math inline">\(X_1, X_2, \ldots, X_p\)</span>. Something like this:</p>
 <p><span class="math display">\[
 Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + ... + \varepsilon
 \]</span></p>
-<p>where <span class="math inline">\(\varepsilon\)</span> is an <span class="glossary">error term</span> that captures the variability in <span class="math inline">\(Y\)</span> that is not explained by the predictors. In the cases we considered, Y was a <span class="glossary">continuous variable</span> (e.g., salary, Naplan score, etc.), and the model described how the <em>expected value</em> of the outcome, <span class="math inline">\(E[Y]\)</span>, changed as the predictors varied. For example, in the case of salary, the model described how the expected salary (<span class="math inline">\(E[Y]\)</span>) of a worker changed as their years of experience (<span class="math inline">\(X\)</span>) increased.</p>
+<p>where <span class="math inline">\(\varepsilon\)</span> is an <a href="glossary.html#glossary-random-error-term" class="glossary" title="The part of a response not explained by the predictors in an additive linear regression model, often written as epsilon.">error term</a> that captures the variability in <span class="math inline">\(Y\)</span> that is not explained by the predictors. In the cases we considered, Y was a <a href="glossary.html#glossary-continuous-variable" class="glossary" title="A numeric variable that can, in principle, take any value on an interval.">continuous variable</a> (e.g., salary, Naplan score, etc.), and the model described how the <a href="glossary.html#glossary-expected-value" class="glossary" title="The long-run average value of a random variable; in logistic regression, E[Y_i] is the event probability p_i for a binary response.">expected value</a> of the outcome, <span class="math inline">\(E[Y]\)</span>, changed as the predictors varied. For example, in the case of salary, the model described how the expected salary (<span class="math inline">\(E[Y]\)</span>) of a worker changed as their years of experience (<span class="math inline">\(X\)</span>) increased.</p>
 <ul class="task-list">
 <li><label><input type="checkbox">Continue</label></li>
 </ul>
-<p>In many real-world situations, however, <em>we want to predict an outcome that is not continuous</em>. Instead, often what we want to predict or explain is a <span class="glossary">categorical variable</span>. The simplest case of this is a <a href="glossary.html#glossary-binary-outcome" class="glossary" title="A response variable with two possible values, often coded as 0 and 1.">binary outcome</a> — that is, an outcome with only two possible categories (e.g.&nbsp;success/failure, yes/no, 0/1) <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>In many real-world situations, however, <em>we want to predict an outcome that is not continuous</em>. Instead, often what we want to predict or explain is a <a href="glossary.html#glossary-categorical-variable" class="glossary" title="A variable whose values are categories or groups rather than measurements on a numeric scale.">categorical variable</a>. The simplest case of this is a <a href="glossary.html#glossary-binary-outcome" class="glossary" title="A response variable with two possible values, often coded as 0 and 1, such as pass/fail or yes/no.">binary outcome</a> — that is, an outcome with only two possible categories (e.g.&nbsp;success/failure, yes/no, 0/1) <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
 <div id="a-binary-outcome-pass-or-fail" class="Example">
 <details class="Example fobx-simplebox fobx-default" open=""><summary><strong>Example 1.1: </strong>A binary outcome: pass or fail</summary><div>
 <p>Johno is a student studying for an important exam. He wants to understand how his study time affects his chances of passing the exam. To this end, he collects data on previous students’ study times and whether they passed or failed the exam. Here is a sample of the data Johno collected:</p>
@@ -28335,7 +28335,7 @@ eyJhdHRyIjp7ImVjaG8iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZXZhbCI6dHJ1ZSwibWVzc2FnZSI6ZmFs
 </div>
 </div>
 </div>
-<p>Johno wants to use this data to model the relationship between study time and the probability of passing the exam. He identifies his outcome variable, <span class="math inline">\(Y_i\)</span>, as the binary variable indicating whether student <span class="math inline">\(i\)</span> passed or failed the exam, and his predictor variable, <span class="math inline">\(X_i\)</span>, as the amount of time that student spent studying. Therefore, Johno’s goal is to produce a statistical model that predicts <span class="math inline">\(Y_i\)</span> (pass/fail) based on <span class="math inline">\(X_i\)</span> (study time): <span class="math display">\[
+<p>Johno wants to use this data to model the relationship between study time and the <a href="glossary.html#glossary-probability" class="glossary" title="A number between 0 and 1 that represents how likely an event is to occur.">probability</a> of passing the exam. He identifies his outcome variable, <span class="math inline">\(Y_i\)</span>, as the binary variable indicating whether student <span class="math inline">\(i\)</span> passed or failed the exam, and his predictor variable, <span class="math inline">\(X_i\)</span>, as the amount of time that student spent studying. Therefore, Johno’s goal is to produce a <a href="glossary.html#glossary-statistical-model" class="glossary" title="A probabilistic description of how a response relates to predictors, combining a systematic component with random variation.">statistical model</a> that predicts <span class="math inline">\(Y_i\)</span> (pass/fail) based on <span class="math inline">\(X_i\)</span> (study time): <span class="math display">\[
 Y_i = f(X_i) + \varepsilon
 \]</span></p>
 </div></details>
@@ -28344,7 +28344,7 @@ Y_i = f(X_i) + \varepsilon
 <h3 data-number="1.1.1" class="anchored" data-anchor-id="from-categories-to-probabilities"><span class="header-section-number">1.1.1</span> From categories to probabilities</h3>
 <section id="the-average-of-a-binary-outcome" class="level4" data-number="1.1.1.1">
 <h4 data-number="1.1.1.1" class="anchored" data-anchor-id="the-average-of-a-binary-outcome"><span class="header-section-number">1.1.1.1</span> The average of a binary outcome</h4>
-<p>Recall that the <em>error term</em> <span class="math inline">\(\varepsilon\)</span> in a regression model captures the difference between the observed outcome <span class="math inline">\(Y\)</span> and the <span class="glossary"><em>expected</em></span> outcome <span class="math inline">\(E[Y]\)</span> from the model.</p>
+<p>Recall that the <em>error term</em> <span class="math inline">\(\varepsilon\)</span> in a regression model captures the difference between the observed outcome <span class="math inline">\(Y\)</span> and the <a href="glossary.html#glossary-expected-value" class="glossary" title="The long-run average value of a random variable; in logistic regression, E[Y_i] is the event probability p_i for a binary response."><em>expected</em></a> outcome <span class="math inline">\(E[Y]\)</span> from the model.</p>
 <div id="expected-value-and-error-term" class="Key-point">
 <details class="Key-point fobx-simplebox fobx-default" open=""><summary><strong>Key-point: </strong>Expected value and error term</summary><div>
 <p>The <em>expected value</em> of a random variable <span class="math inline">\(Y\)</span>, denoted <span class="math inline">\(E[Y]\)</span>, can be thought of as the long-run average value of <span class="math inline">\(Y\)</span> if we were to repeat the process that generates <span class="math inline">\(Y\)</span> many times. That is, if we were to collect many samples of <span class="math inline">\(Y\)</span> under the same conditions, the average of those samples would converge to <span class="math inline">\(E[Y]\)</span>. The error term <span class="math inline">\(\varepsilon\)</span> represents the deviation of an observed value of <span class="math inline">\(Y\)</span> from its expected value <span class="math inline">\(E[Y]\)</span>.</p>
@@ -28356,7 +28356,7 @@ Y_i = f(X_i) + \varepsilon
 <ul class="task-list">
 <li><label><input type="checkbox">Continue</label></li>
 </ul>
-<p>To model a binary outcome statistically, we have to represent it as a <a href="glossary.html#glossary-random-variable" class="glossary" title="A numerical variable whose value depends on the outcome of a random process.">Random Variable</a> rather than just a label. We can do this by coding the two categories as numbers, e.g.&nbsp;<span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. For example, in Johno’s case</p>
+<p>To model a binary outcome statistically, we have to represent it as a <a href="glossary.html#glossary-random-variable" class="glossary" title="A quantity whose value varies across observations or repetitions of a process, described by a probability distribution.">Random Variable</a> rather than just a label. We can do this by coding the two categories as numbers, e.g.&nbsp;<span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. For example, in Johno’s case</p>
 <div id="coding-the-binary-outcome" class="Example">
 <details class="Example fobx-simplebox fobx-default" open=""><summary><strong>Example 1.2: </strong>Coding the binary outcome</summary><div>
 <p>We can code the outcome variable <span class="math inline">\(Y\)</span> as follows: <span class="math display">\[
@@ -28407,7 +28407,7 @@ E[Y] = P(Y=1)
 <p>That is,</p>
 <div id="cnb-4-Key-point" class="Key-point">
 <details class="Key-point fobx-simplebox fobx-default" open=""><summary><strong>Key-point</strong></summary><div>
-<p>The expected value (mean) of a binary variable coded as 0/1 is the <em>probability</em> of the outcome being 1. We label this probability as <span class="math inline">\(p\)</span>: <span class="math display">\[
+<p>The expected value (mean) of a binary variable coded as 0/1 is the <a href="glossary.html#glossary-probability" class="glossary" title="A number between 0 and 1 that represents how likely an event is to occur."><em>probability</em></a> of the outcome being 1. We label this probability as <span class="math inline">\(p\)</span>: <span class="math display">\[
 p = \Pr(Y=1) = E[Y]
 \]</span></p>
 </div></details>
@@ -28576,10 +28576,10 @@ eyJhdHRyIjp7ImVjaG8iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZXZhbCI6dHJ1ZX0sImNvZGUiOiJwcmVk
 </section>
 <section id="from-probabilities-to-odds" class="level3" data-number="1.1.3">
 <h3 data-number="1.1.3" class="anchored" data-anchor-id="from-probabilities-to-odds"><span class="header-section-number">1.1.3</span> From probabilities to odds</h3>
-<p>One way to address this issue is to change what we are modelling so that it behaves more nicely with a linear predictor. For example, we might model the relationship between the predictors and the <em>odds</em> of the outcome, rather than the probability itself.</p>
+<p>One way to address this issue is to change what we are modelling so that it behaves more nicely with a <a href="glossary.html#glossary-linear-predictor" class="glossary" title="The systematic part of a regression model, usually written as eta_i = beta_0 + beta_1 X_i1 + … + beta_k X_ik.">linear predictor</a>. For example, we might model the relationship between the predictors and the <a href="glossary.html#glossary-odds" class="glossary" title="The ratio of the probability that an event occurs to the probability that it does not occur: p / (1 - p)."><em>odds</em></a> of the outcome, rather than the probability itself.</p>
 <div id="odds" class="Key-term">
 <details class="Key-term fobx-simplebox fobx-default" open=""><summary><strong>Key-term: </strong>Odds</summary><div>
-<p>The odds of an event are defined as the ratio of the probability of the event occurring to the probability of it not occurring. If <span class="math inline">\(p\)</span> is the probability of the event, then the odds are given by: <span class="math display">\[
+<p>The odds of an <a href="glossary.html#glossary-event" class="glossary" title="The outcome category coded as 1 in a binary response; logistic regression usually models the probability of this category.">event</a> are defined as the ratio of the probability of the event occurring to the probability of it not occurring. If <span class="math inline">\(p\)</span> is the probability of the event, then the odds are given by: <span class="math display">\[
 \text{odds} = \frac{p}{1 - p}
 \]</span></p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
@@ -28710,7 +28710,7 @@ eyJhdHRyIjp7ImNoZWNrIjp0cnVlLCJjbGFzcyI6IndhaXQiLCJlZGl0Ijp0cnVlLCJlbnZpciI6IkV4
 <p>While odds are an improvement over raw probabilities, they are still bounded below by zero — which means a linear model for the odds could still, in principle, produce impossible negative predictions. We can fix this by taking one more step: the <em>logarithm</em> of the odds.</p>
 <div id="log-odds-logit-1" class="Key-term">
 <details class="Key-term fobx-simplebox fobx-default" open=""><summary><strong>Key-term: </strong>Log-odds (logit)</summary><div>
-<p>The <strong>log-odds</strong>, or <strong>logit</strong>, of a probability <span class="math inline">\(p\)</span> is defined as the natural log of the odds:</p>
+<p>The <a href="glossary.html#glossary-log-odds-logit" class="glossary" title="The natural logarithm of the odds: log(p / (1 - p)). It maps probabilities from (0, 1) onto the whole real line."><strong>log-odds</strong></a>, or <a href="glossary.html#glossary-log-odds-logit" class="glossary" title="The natural logarithm of the odds: log(p / (1 - p)). It maps probabilities from (0, 1) onto the whole real line."><strong>logit</strong></a>, of a probability <span class="math inline">\(p\)</span> is defined as the natural log of the odds:</p>
 <p><span class="math display">\[
 \text{logit}(p) = \log\left(\frac{p}{1-p}\right)
 \]</span></p>
@@ -28816,7 +28816,7 @@ eyJhdHRyIjp7ImNoZWNrIjp0cnVlLCJjbGFzcyI6IndhaXQiLCJlZGl0Ijp0cnVlLCJlbnZpciI6IkV4
 </ul>
 <section id="the-logistic-function" class="level3" data-number="1.2.1">
 <h3 data-number="1.2.1" class="anchored" data-anchor-id="the-logistic-function"><span class="header-section-number">1.2.1</span> The logistic function</h3>
-<p>If we model log-odds with a linear predictor, we need a way to convert predicted log-odds back into a probability. The function that does this is the <strong>logistic function</strong> (also called the <em>inverse logit</em>):</p>
+<p>If we model log-odds with a linear predictor, we need a way to convert predicted log-odds back into a probability. The function that does this is the <a href="glossary.html#glossary-logistic-function" class="glossary" title="The inverse-logit transformation, p = 1 / (1 + exp(-eta)), which maps any real-valued linear predictor to a probability between 0 and 1."><strong>logistic function</strong></a> (also called the <em>inverse logit</em>):</p>
 <p><span class="math display">\[
 p = \frac{e^{\eta}}{1 + e^{\eta}} = \frac{1}{1 + e^{-\eta}}
 \]</span></p>
@@ -28858,7 +28858,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVjaG8iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZXZhbCI6dHJ1
 <p>You can think of the logit as the <em>link</em> from probability to the linear predictor, and the logistic function as the <em>back-transform</em> from the linear predictor to a probability.</p>
 </div></details>
 </div>
-<p>This pair — a linear predictor on the log-odds scale, combined with the logistic function to convert back to probabilities — is the foundation of <strong>logistic regression</strong>, which we cover in the next chapter.</p>
+<p>This pair — a linear predictor on the log-odds scale, combined with the logistic function to convert back to probabilities — is the foundation of <a href="glossary.html#glossary-logistic-regression" class="glossary" title="A regression model for binary outcomes that models the log-odds of an event as a linear function of predictors."><strong>logistic regression</strong></a>, which we cover in the next chapter.</p>
 
 
 <script type="webr-data">
@@ -28884,8 +28884,8 @@ WyJEYXRhL3N0dWRlbnQvc3R1ZGVudC50eHQiLCJEYXRhL3N0dWRlbnQvc3R1ZGVudC1wb3IuY3N2Iiwi
 <hr>
 <ol>
 <li id="fn1"><p>types of random variables are covered in more detail in the Inferential Statistics Short Course.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>The use of 0/1 coding for binary outcomes is similar to the use of <em>dummy variables</em> for categorical predictors in linear regression, where each category is represented by a separate binary variable coded as 0 or 1.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Note that no student in the dataset has 0 study time, so this is an <span class="glossary">extrapolation</span>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>The use of 0/1 coding for binary outcomes is similar to the use of <a href="glossary.html#glossary-dummy-variable" class="glossary" data-term="Dummy variable" title="A 0/1 indicator used to code categories in a regression model relative to a baseline category."><em>dummy variables</em></a> for categorical predictors in linear regression, where each category is represented by a separate binary variable coded as 0 or 1.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Note that no student in the dataset has 0 study time, so this is an <a href="glossary.html#glossary-extrapolation" class="glossary" title="Making predictions outside the observed range or combination of predictor values, where the fitted relationship may not hold.">extrapolation</a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

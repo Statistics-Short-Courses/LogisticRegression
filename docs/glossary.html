@@ -132,13 +132,13 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_3_assessing-model-fit-and-predictions.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch_3_diagnostics-and-predictions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Assessing Model Fit and Predictions</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch_6_extensions-case-study.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch_4_case-study.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Model Building and a Mini Case Study</span></span></a>
   </div>
 </li>
@@ -179,185 +179,369 @@ ul.task-list li input[type="checkbox"] {
 
 
 <div id="glossary">
-<div id="glossary-accuracy" class="glossary-entry">
-<p><strong>Accuracy</strong></p>
-<p>The proportion of all predictions that are correct.</p>
+<div id="glossary-statistical-model" class="glossary-entry">
+<p><strong>Statistical model</strong></p>
+<p>A probabilistic description of how a response relates to predictors, combining a systematic component with random variation.</p>
 </div>
-<div id="glossary-akaike-information-criterion" class="glossary-entry">
-<p><strong>Akaike Information Criterion</strong></p>
-<p>A model comparison metric that balances fit and complexity; lower values indicate a preferred model among those compared.</p>
+<div id="glossary-random-variable" class="glossary-entry">
+<p><strong>Random variable</strong></p>
+<p>A quantity whose value varies across observations or repetitions of a process, described by a probability distribution.</p>
 </div>
-<div id="glossary-auc" class="glossary-entry">
-<p><strong>AUC</strong></p>
-<p>Area under the ROC curve; a summary of classification performance across thresholds.</p>
+<div id="glossary-distribution" class="glossary-entry">
+<p><strong>Distribution</strong></p>
+<p>A description of how the possible values of a random variable are spread across outcomes.</p>
+</div>
+<div id="glossary-probability" class="glossary-entry">
+<p><strong>Probability</strong></p>
+<p>A number between 0 and 1 that represents how likely an event is to occur.</p>
+</div>
+<div id="glossary-expected-value" class="glossary-entry">
+<p><strong>Expected value</strong></p>
+<p>The long-run average value of a random variable; in logistic regression, E[Y_i] is the event probability p_i for a binary response.</p>
+</div>
+<div id="glossary-variance" class="glossary-entry">
+<p><strong>Variance</strong></p>
+<p>A measure of spread around the expected value. For a Bernoulli outcome with event probability p, the variance is p(1 - p).</p>
+</div>
+<div id="glossary-assumption" class="glossary-entry">
+<p><strong>Assumption</strong></p>
+<p>A condition adopted to justify a model or inference procedure, such as independent observations or linearity on the log-odds scale.</p>
+</div>
+<div id="glossary-response-variable" class="glossary-entry">
+<p><strong>Response variable</strong></p>
+<p>The variable you aim to explain or predict; in logistic regression this is usually a binary outcome coded as 0 and 1.</p>
+</div>
+<div id="glossary-predictor-variable" class="glossary-entry">
+<p><strong>Predictor variable</strong></p>
+<p>A variable used to explain, adjust for, or predict changes in the response.</p>
+</div>
+<div id="glossary-continuous-variable" class="glossary-entry">
+<p><strong>Continuous variable</strong></p>
+<p>A numeric variable that can, in principle, take any value on an interval.</p>
+</div>
+<div id="glossary-categorical-variable" class="glossary-entry">
+<p><strong>Categorical variable</strong></p>
+<p>A variable whose values are categories or groups rather than measurements on a numeric scale.</p>
 </div>
 <div id="glossary-binary-outcome" class="glossary-entry">
 <p><strong>Binary outcome</strong></p>
-<p>A response variable with two possible values, often coded as 0 and 1.</p>
+<p>A response variable with two possible values, often coded as 0 and 1, such as pass/fail or yes/no.</p>
 </div>
-<div id="glossary-binomial-distribution" class="glossary-entry">
-<p><strong>Binomial distribution</strong></p>
-<p>A probability distribution for the number of events in repeated binary trials, with event probability p.</p>
+<div id="glossary-event" class="glossary-entry">
+<p><strong>Event</strong></p>
+<p>The outcome category coded as 1 in a binary response; logistic regression usually models the probability of this category.</p>
 </div>
-<div id="glossary-calibration" class="glossary-entry">
-<p><strong>Calibration</strong></p>
-<p>How closely predicted probabilities match observed event rates.</p>
+<div id="glossary-non-event" class="glossary-entry">
+<p><strong>Non-event</strong></p>
+<p>The outcome category coded as 0 in a binary response.</p>
 </div>
-<div id="glossary-class-imbalance" class="glossary-entry">
-<p><strong>Class imbalance</strong></p>
-<p>When one outcome class is much more frequent than the other.</p>
+<div id="glossary-event-rate" class="glossary-entry">
+<p><strong>Event rate</strong></p>
+<p>The proportion of observations in the data for which the event occurs.</p>
 </div>
-<div id="glossary-classification-threshold" class="glossary-entry">
-<p><strong>Classification threshold</strong></p>
-<p>The cutoff used to convert predicted probabilities into classes (for example, predict 1 if p &gt;= 0.5).</p>
+<div id="glossary-linear-function" class="glossary-entry">
+<p><strong>Linear function</strong></p>
+<p>A straight-line relationship of the form f(x) = alpha + beta x.</p>
 </div>
-<div id="glossary-coefficient" class="glossary-entry">
-<p><strong>Coefficient</strong></p>
-<p>A model parameter that describes how a predictor changes the log-odds, holding other predictors constant.</p>
-</div>
-<div id="glossary-confidence-interval" class="glossary-entry">
-<p><strong>Confidence interval</strong></p>
-<p>A range of plausible values for a model parameter based on the data.</p>
-</div>
-<div id="glossary-confusion-matrix" class="glossary-entry">
-<p><strong>Confusion matrix</strong></p>
-<p>A table of predicted versus actual outcomes used to summarize classification performance.</p>
-</div>
-<div id="glossary-deviance" class="glossary-entry">
-<p><strong>Deviance</strong></p>
-<p>A goodness-of-fit measure based on the likelihood; lower is better.</p>
-</div>
-<div id="glossary-factor" class="glossary-entry">
-<p><strong>Factor</strong></p>
-<p>A categorical predictor in R that is represented by discrete levels.</p>
-</div>
-<div id="glossary-false-negative" class="glossary-entry">
-<p><strong>False negative</strong></p>
-<p>A case where the true class is 1 but the model predicts 0.</p>
-</div>
-<div id="glossary-false-positive" class="glossary-entry">
-<p><strong>False positive</strong></p>
-<p>A case where the true class is 0 but the model predicts 1.</p>
-</div>
-<div id="glossary-generalized-linear-model" class="glossary-entry">
-<p><strong>Generalized linear model</strong></p>
-<p>A model class that combines a response distribution and a link function to relate predictors to the expected response.</p>
-</div>
-<div id="glossary-intercept" class="glossary-entry">
-<p><strong>Intercept</strong></p>
-<p>The expected log-odds when all predictors are set to zero (or to their reference values).</p>
-</div>
-<div id="glossary-interaction" class="glossary-entry">
-<p><strong>Interaction</strong></p>
-<p>A term that allows the effect of one predictor to depend on another.</p>
-</div>
-<div id="glossary-likelihood" class="glossary-entry">
-<p><strong>Likelihood</strong></p>
-<p>A measure of how well a model explains the observed data; higher is better.</p>
-</div>
-<div id="glossary-likelihood-ratio-test" class="glossary-entry">
-<p><strong>Likelihood ratio test</strong></p>
-<p>A test that compares nested models using differences in deviance.</p>
+<div id="glossary-linear-model" class="glossary-entry">
+<p><strong>Linear model</strong></p>
+<p>A model whose systematic component is a linear combination of predictors and coefficients.</p>
 </div>
 <div id="glossary-linear-predictor" class="glossary-entry">
 <p><strong>Linear predictor</strong></p>
-<p>The linear combination of predictors, for example beta0 + beta1 x.</p>
+<p>The systematic part of a regression model, usually written as eta_i = beta_0 + beta_1 X_i1 + … + beta_k X_ik.</p>
+</div>
+<div id="glossary-intercept" class="glossary-entry">
+<p><strong>Intercept</strong></p>
+<p>The baseline value of the linear predictor when numeric predictors are zero and categorical predictors are at their reference levels.</p>
+</div>
+<div id="glossary-slope" class="glossary-entry">
+<p><strong>Slope</strong></p>
+<p>The change in the linear predictor for a one-unit increase in a predictor, holding other predictors constant.</p>
+</div>
+<div id="glossary-coefficient" class="glossary-entry">
+<p><strong>Coefficient</strong></p>
+<p>A model parameter multiplying a predictor. In logistic regression, coefficients describe changes in log-odds.</p>
+</div>
+<div id="glossary-random-error-term" class="glossary-entry">
+<p><strong>Random error term</strong></p>
+<p>The part of a response not explained by the predictors in an additive linear regression model, often written as epsilon.</p>
+</div>
+<div id="glossary-error-model" class="glossary-entry">
+<p><strong>Error model</strong></p>
+<p>The probabilistic part of a model describing how observed responses vary. Logistic regression uses a Bernoulli/binomial error model rather than additive normal errors.</p>
+</div>
+<div id="glossary-normal-distribution" class="glossary-entry">
+<p><strong>Normal distribution</strong></p>
+<p>A symmetric, bell-shaped distribution often used to model random variation in continuous outcomes.</p>
+</div>
+<div id="glossary-bernoulli-distribution" class="glossary-entry">
+<p><strong>Bernoulli distribution</strong></p>
+<p>A distribution for a single binary trial, where Y = 1 with probability p and Y = 0 with probability 1 - p.</p>
+</div>
+<div id="glossary-binomial-distribution" class="glossary-entry">
+<p><strong>Binomial distribution</strong></p>
+<p>A probability distribution for the number of events in a fixed number of independent binary trials with the same event probability.</p>
 </div>
 <div id="glossary-link-function" class="glossary-entry">
 <p><strong>Link function</strong></p>
-<p>A function that connects the mean of the response to the linear predictor; for logistic regression the link is the logit.</p>
+<p>A function that connects the expected response to the linear predictor; for logistic regression the link is the logit.</p>
 </div>
-<div id="glossary-logit" class="glossary-entry">
-<p><strong>Logit</strong></p>
-<p>The log of the odds: log(p / (1 - p)).</p>
+<div id="glossary-identity-link" class="glossary-entry">
+<p><strong>Identity link</strong></p>
+<p>The link function used in ordinary linear regression, where the mean response is modelled directly by the linear predictor.</p>
+</div>
+<div id="glossary-generalised-linear-model" class="glossary-entry">
+<p><strong>Generalised linear model</strong></p>
+<p>A model class that combines an outcome distribution, a linear predictor, and a link function.</p>
+</div>
+<div id="glossary-odds" class="glossary-entry">
+<p><strong>Odds</strong></p>
+<p>The ratio of the probability that an event occurs to the probability that it does not occur: p / (1 - p).</p>
+</div>
+<div id="glossary-odds-ratio" class="glossary-entry">
+<p><strong>Odds ratio</strong></p>
+<p>A ratio of two odds values. In logistic regression, exponentiating a coefficient gives the multiplicative change in odds for a one-unit predictor increase.</p>
+</div>
+<div id="glossary-log-odds-logit" class="glossary-entry">
+<p><strong>Log-odds (logit)</strong></p>
+<p>The natural logarithm of the odds: log(p / (1 - p)). It maps probabilities from (0, 1) onto the whole real line.</p>
 </div>
 <div id="glossary-logistic-function" class="glossary-entry">
 <p><strong>Logistic function</strong></p>
-<p>The S-shaped function that maps any real-valued input to a probability between 0 and 1.</p>
+<p>The inverse-logit transformation, p = 1 / (1 + exp(-eta)), which maps any real-valued linear predictor to a probability between 0 and 1.</p>
 </div>
 <div id="glossary-logistic-regression" class="glossary-entry">
 <p><strong>Logistic regression</strong></p>
 <p>A regression model for binary outcomes that models the log-odds of an event as a linear function of predictors.</p>
 </div>
+<div id="glossary-estimation" class="glossary-entry">
+<p><strong>Estimation</strong></p>
+<p>The process of using data to infer unknown model parameters, such as regression coefficients.</p>
+</div>
+<div id="glossary-estimate" class="glossary-entry">
+<p><strong>Estimate</strong></p>
+<p>A value computed from data that approximates an unknown model parameter, often written with a hat or as b_j for an estimated coefficient.</p>
+</div>
+<div id="glossary-ordinary-least-squares" class="glossary-entry">
+<p><strong>Ordinary least squares</strong></p>
+<p>The linear-regression estimation method that chooses coefficients to minimise the sum of squared residuals.</p>
+</div>
 <div id="glossary-maximum-likelihood-estimation" class="glossary-entry">
 <p><strong>Maximum likelihood estimation</strong></p>
-<p>A method for estimating model parameters by choosing values that maximize the likelihood of the observed data.</p>
+<p>A method that estimates parameters by choosing the values that make the observed data most likely under the model.</p>
 </div>
-<div id="glossary-multivariable-logistic-regression" class="glossary-entry">
-<p><strong>Multivariable logistic regression</strong></p>
-<p>A logistic regression model with multiple predictors included simultaneously.</p>
+<div id="glossary-likelihood" class="glossary-entry">
+<p><strong>Likelihood</strong></p>
+<p>A measure of how plausible the observed data are for a given set of model parameters; larger likelihood means the data are more plausible under that model.</p>
 </div>
-<div id="glossary-nested-models" class="glossary-entry">
-<p><strong>Nested models</strong></p>
-<p>Two models where one is a special case of the other (typically by removing one or more terms).</p>
-</div>
-<div id="glossary-null-model" class="glossary-entry">
-<p><strong>Null model</strong></p>
-<p>A model with no predictors, containing only an intercept.</p>
-</div>
-<div id="glossary-odds" class="glossary-entry">
-<p><strong>Odds</strong></p>
-<p>The ratio of the probability of an event to the probability of it not occurring: p / (1 - p).</p>
-</div>
-<div id="glossary-odds-ratio" class="glossary-entry">
-<p><strong>Odds ratio</strong></p>
-<p>The multiplicative change in odds for a one-unit increase in a predictor; exp(coefficient).</p>
-</div>
-<div id="glossary-p-value" class="glossary-entry">
-<p><strong>p-value</strong></p>
-<p>The probability, under a null hypothesis, of observing a result at least as extreme as the one obtained.</p>
+<div id="glossary-fitted-value" class="glossary-entry">
+<p><strong>Fitted value</strong></p>
+<p>The model’s fitted mean response for an observation. In logistic regression, this is usually a fitted probability.</p>
 </div>
 <div id="glossary-predicted-probability" class="glossary-entry">
 <p><strong>Predicted probability</strong></p>
-<p>The model’s estimate of the probability of an event for a given set of predictors.</p>
+<p>The model’s estimate of the probability that the event occurs for a given set of predictor values.</p>
 </div>
-<div id="glossary-probability" class="glossary-entry">
-<p><strong>Probability</strong></p>
-<p>A number between 0 and 1 that represents the chance of an event.</p>
+<div id="glossary-residual" class="glossary-entry">
+<p><strong>Residual</strong></p>
+<p>A diagnostic quantity comparing the observed response with what the fitted model predicts.</p>
 </div>
-<div id="glossary-pseudo-r-squared" class="glossary-entry">
-<p><strong>Pseudo R-squared</strong></p>
-<p>A likelihood-based summary of model fit for logistic regression that is used for rough comparison, not as a direct analogue of linear-model R-squared.</p>
+<div id="glossary-pearson-residual" class="glossary-entry">
+<p><strong>Pearson residual</strong></p>
+<p>A residual scaled by its model-based standard deviation; in logistic regression it compares y_i with p_hat_i relative to Bernoulli variation.</p>
 </div>
-<div id="glossary-random-variable" class="glossary-entry">
-<p><strong>Random variable</strong></p>
-<p>A numerical variable whose value depends on the outcome of a random process.</p>
+<div id="glossary-deviance-residual" class="glossary-entry">
+<p><strong>Deviance residual</strong></p>
+<p>A likelihood-based residual used in generalized linear models to show how much each observation contributes to the model deviance.</p>
 </div>
-<div id="glossary-reference-level" class="glossary-entry">
-<p><strong>Reference level</strong></p>
-<p>The baseline category for a factor against which other levels are compared.</p>
+<div id="glossary-residual-sum-of-squares" class="glossary-entry">
+<p><strong>Residual sum of squares</strong></p>
+<p>The total squared discrepancy between observed values and fitted values in ordinary linear regression.</p>
 </div>
-<div id="glossary-roc-curve" class="glossary-entry">
-<p><strong>ROC curve</strong></p>
-<p>A curve showing the trade-off between sensitivity and 1 - specificity across thresholds.</p>
+<div id="glossary-deviance" class="glossary-entry">
+<p><strong>Deviance</strong></p>
+<p>A likelihood-based lack-of-fit measure for generalized linear models; smaller deviance indicates better fit among comparable models.</p>
+</div>
+<div id="glossary-null-model" class="glossary-entry">
+<p><strong>Null model</strong></p>
+<p>A model with an intercept only and no predictors, used as a baseline for comparison.</p>
 </div>
 <div id="glossary-saturated-model" class="glossary-entry">
 <p><strong>Saturated model</strong></p>
 <p>A model that fits the observed data perfectly by using as many parameters as needed.</p>
 </div>
-<div id="glossary-sensitivity" class="glossary-entry">
-<p><strong>Sensitivity</strong></p>
-<p>The proportion of true positives correctly identified by the model.</p>
+<div id="glossary-nested-models" class="glossary-entry">
+<p><strong>Nested models</strong></p>
+<p>Two models where the smaller model can be obtained from the larger one by removing one or more terms.</p>
 </div>
-<div id="glossary-separation" class="glossary-entry">
-<p><strong>Separation</strong></p>
-<p>A situation where predictors perfectly separate outcomes, leading to unstable estimates.</p>
+<div id="glossary-degrees-of-freedom" class="glossary-entry">
+<p><strong>Degrees of freedom</strong></p>
+<p>The amount of independent information remaining after estimating parameters; model comparisons often use degrees of freedom to account for added terms.</p>
 </div>
-<div id="glossary-specificity" class="glossary-entry">
-<p><strong>Specificity</strong></p>
-<p>The proportion of true negatives correctly identified by the model.</p>
-</div>
-<div id="glossary-true-negative" class="glossary-entry">
-<p><strong>True negative</strong></p>
-<p>A case where the true class is 0 and the model predicts 0.</p>
-</div>
-<div id="glossary-true-positive" class="glossary-entry">
-<p><strong>True positive</strong></p>
-<p>A case where the true class is 1 and the model predicts 1.</p>
+<div id="glossary-standard-error" class="glossary-entry">
+<p><strong>Standard error</strong></p>
+<p>An estimate of how much a statistic, such as a coefficient estimate, would vary across repeated samples.</p>
 </div>
 <div id="glossary-wald-test" class="glossary-entry">
 <p><strong>Wald test</strong></p>
-<p>A hypothesis test that uses an estimated coefficient and its standard error to assess evidence against a null value.</p>
+<p>A hypothesis test that compares an estimated coefficient with its standard error, usually testing whether the coefficient is zero.</p>
+</div>
+<div id="glossary-likelihood-ratio-test" class="glossary-entry">
+<p><strong>Likelihood ratio test</strong></p>
+<p>A test for nested models based on the improvement in likelihood, often reported through a difference in deviance.</p>
+</div>
+<div id="glossary-p-value" class="glossary-entry">
+<p><strong>p-value</strong></p>
+<p>The probability, under the null hypothesis, of observing a result at least as extreme as the one obtained.</p>
+</div>
+<div id="glossary-confidence-interval" class="glossary-entry">
+<p><strong>Confidence interval</strong></p>
+<p>A range of plausible parameter values at a chosen confidence level; logistic-regression intervals are often reported for coefficients or odds ratios.</p>
+</div>
+<div id="glossary-akaike-information-criterion" class="glossary-entry">
+<p><strong>Akaike Information Criterion</strong></p>
+<p>A model comparison metric that balances fit and complexity; lower AIC is preferred among the models being compared.</p>
+</div>
+<div id="glossary-bayesian-information-criterion" class="glossary-entry">
+<p><strong>Bayesian Information Criterion</strong></p>
+<p>A model comparison metric that penalises complexity more strongly than AIC; lower BIC is preferred among the models being compared.</p>
+</div>
+<div id="glossary-pseudo-r-squared" class="glossary-entry">
+<p><strong>Pseudo R-squared</strong></p>
+<p>A likelihood-based summary of logistic-regression fit used for rough comparison, not a direct analogue of linear-regression R-squared.</p>
+</div>
+<div id="glossary-multiple-linear-regression" class="glossary-entry">
+<p><strong>Multiple linear regression</strong></p>
+<p>Linear regression with two or more predictors, allowing adjustment for multiple variables at once.</p>
+</div>
+<div id="glossary-multivariable-logistic-regression" class="glossary-entry">
+<p><strong>Multivariable logistic regression</strong></p>
+<p>Logistic regression with two or more predictors included simultaneously.</p>
+</div>
+<div id="glossary-partial-regression-coefficient" class="glossary-entry">
+<p><strong>Partial regression coefficient</strong></p>
+<p>The coefficient for a predictor interpreted while holding the other predictors in the model constant.</p>
+</div>
+<div id="glossary-factor" class="glossary-entry">
+<p><strong>Factor</strong></p>
+<p>A categorical variable in R with discrete levels; factors are expanded into coded columns when used in regression models.</p>
+</div>
+<div id="glossary-dummy-variable" class="glossary-entry">
+<p><strong>Dummy variable</strong></p>
+<p>A 0/1 indicator used to code categories in a regression model relative to a baseline category.</p>
+</div>
+<div id="glossary-reference-level" class="glossary-entry">
+<p><strong>Reference level</strong></p>
+<p>The baseline category for a factor against which other levels are compared.</p>
+</div>
+<div id="glossary-contrast" class="glossary-entry">
+<p><strong>Contrast</strong></p>
+<p>A coding scheme that maps factor levels to numeric columns for use in a regression model.</p>
+</div>
+<div id="glossary-interaction" class="glossary-entry">
+<p><strong>Interaction</strong></p>
+<p>A model term that allows the effect of one predictor to depend on the value of another predictor.</p>
+</div>
+<div id="glossary-extrapolation" class="glossary-entry">
+<p><strong>Extrapolation</strong></p>
+<p>Making predictions outside the observed range or combination of predictor values, where the fitted relationship may not hold.</p>
+</div>
+<div id="glossary-independence" class="glossary-entry">
+<p><strong>Independence</strong></p>
+<p>The assumption that observations, or their errors, are not correlated with one another.</p>
+</div>
+<div id="glossary-linearity-on-the-log-odds-scale" class="glossary-entry">
+<p><strong>Linearity on the log-odds scale</strong></p>
+<p>The logistic-regression assumption that continuous predictors have approximately linear effects on the log-odds, not necessarily on the probability scale.</p>
+</div>
+<div id="glossary-separation" class="glossary-entry">
+<p><strong>Separation</strong></p>
+<p>A situation where a predictor or combination of predictors perfectly separates the outcome classes, leading to unstable or very large coefficient estimates.</p>
+</div>
+<div id="glossary-class-imbalance" class="glossary-entry">
+<p><strong>Class imbalance</strong></p>
+<p>A situation where one outcome class is much more common than the other, making simple accuracy potentially misleading.</p>
+</div>
+<div id="glossary-overfitting" class="glossary-entry">
+<p><strong>Overfitting</strong></p>
+<p>When a model captures noise in the training data and generalises poorly to new data, often because it is too complex for the amount of information available.</p>
+</div>
+<div id="glossary-influential-point" class="glossary-entry">
+<p><strong>Influential point</strong></p>
+<p>An observation that substantially changes fitted coefficients or predictions when it is removed or down-weighted.</p>
+</div>
+<div id="glossary-cook�s-distance" class="glossary-entry">
+<p><strong>Cook’s distance</strong></p>
+<p>An influence diagnostic that flags observations with unusual impact on fitted coefficients.</p>
+</div>
+<div id="glossary-classification-threshold" class="glossary-entry">
+<p><strong>Classification threshold</strong></p>
+<p>The cutoff used to convert predicted probabilities into predicted classes, such as predicting the event when p_hat &gt;= 0.5.</p>
+</div>
+<div id="glossary-predicted-class" class="glossary-entry">
+<p><strong>Predicted class</strong></p>
+<p>The class label assigned after applying a classification threshold to a predicted probability.</p>
+</div>
+<div id="glossary-confusion-matrix" class="glossary-entry">
+<p><strong>Confusion matrix</strong></p>
+<p>A table of predicted versus actual classes used to summarise classification performance.</p>
+</div>
+<div id="glossary-true-positive" class="glossary-entry">
+<p><strong>True positive</strong></p>
+<p>A case where the actual class is 1 and the model predicts 1.</p>
+</div>
+<div id="glossary-true-negative" class="glossary-entry">
+<p><strong>True negative</strong></p>
+<p>A case where the actual class is 0 and the model predicts 0.</p>
+</div>
+<div id="glossary-false-positive" class="glossary-entry">
+<p><strong>False positive</strong></p>
+<p>A case where the actual class is 0 but the model predicts 1.</p>
+</div>
+<div id="glossary-false-negative" class="glossary-entry">
+<p><strong>False negative</strong></p>
+<p>A case where the actual class is 1 but the model predicts 0.</p>
+</div>
+<div id="glossary-accuracy" class="glossary-entry">
+<p><strong>Accuracy</strong></p>
+<p>The proportion of all classifications that are correct.</p>
+</div>
+<div id="glossary-sensitivity" class="glossary-entry">
+<p><strong>Sensitivity</strong></p>
+<p>The proportion of actual events correctly classified as events.</p>
+</div>
+<div id="glossary-specificity" class="glossary-entry">
+<p><strong>Specificity</strong></p>
+<p>The proportion of actual non-events correctly classified as non-events.</p>
+</div>
+<div id="glossary-roc-curve" class="glossary-entry">
+<p><strong>ROC curve</strong></p>
+<p>A curve showing the trade-off between sensitivity and false positive rate across classification thresholds.</p>
+</div>
+<div id="glossary-auc" class="glossary-entry">
+<p><strong>AUC</strong></p>
+<p>Area under the ROC curve; a threshold-free summary of how well predicted probabilities rank events above non-events.</p>
+</div>
+<div id="glossary-calibration" class="glossary-entry">
+<p><strong>Calibration</strong></p>
+<p>The agreement between predicted probabilities and observed event rates.</p>
+</div>
+<div id="glossary-validation-set" class="glossary-entry">
+<p><strong>Validation set</strong></p>
+<p>Data not used to fit the model, used to assess how well predictions generalise to new observations.</p>
+</div>
+<div id="glossary-cross-validation" class="glossary-entry">
+<p><strong>Cross-validation</strong></p>
+<p>A resampling approach that repeatedly fits a model on part of the data and assesses predictions on held-out parts.</p>
+</div>
+<div id="glossary-scenario-based-prediction" class="glossary-entry">
+<p><strong>Scenario-based prediction</strong></p>
+<p>Prediction for realistic combinations of predictor values, used to communicate model results on a practical scale such as probability.</p>
+</div>
+<div id="glossary-model-comparison" class="glossary-entry">
+<p><strong>Model comparison</strong></p>
+<p>The process of comparing plausible models using evidence such as likelihood ratio tests, information criteria, prediction performance, and interpretability.</p>
 </div>
 </div>
 

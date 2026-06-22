@@ -58,14 +58,14 @@ resources:
 
 ## A quick review of linear models
 
-In the Linear Regression Short Course (LRSC), we used a linear model to predict an [outcome variable]{.glossary} $Y$ from one or more [predictor variables]{.glossary}, $X_1, X_2, \ldots, X_p$. Something like this:
+In the Linear Regression Short Course (LRSC), we used a [linear model]{.glossary} to predict an [outcome variable]{.glossary} $Y$ from one or more [predictor variables]{.glossary}, $X_1, X_2, \ldots, X_p$. Something like this:
 
 $$
 Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + ... + \varepsilon
 $$
 
 where $\varepsilon$ is an [error term]{.glossary} that captures the variability in $Y$ that is not explained by the predictors.
-In the cases we considered, Y was a [continuous variable]{.glossary} (e.g., salary, Naplan score, etc.), and the model described how the *expected value* of the outcome, $E[Y]$, changed as the predictors varied. For example, in the case of salary, the model described how the expected salary ($E[Y]$) of a worker changed as their years of experience ($X$) increased.
+In the cases we considered, Y was a [continuous variable]{.glossary} (e.g., salary, Naplan score, etc.), and the model described how the [expected value]{.glossary} of the outcome, $E[Y]$, changed as the predictors varied. For example, in the case of salary, the model described how the expected salary ($E[Y]$) of a worker changed as their years of experience ($X$) increased.
 
 -  [ ] Continue
 
@@ -109,7 +109,7 @@ student_performance
 ```
 ::::
 
-Johno wants to use this data to model the relationship between study time and the probability of passing the exam. He identifies his outcome variable, $Y_i$, as the binary variable indicating whether student $i$ passed or failed the exam, and his predictor variable, $X_i$, as the amount of time that student spent studying. Therefore, Johno's goal is to produce a statistical model that predicts $Y_i$ (pass/fail) based on $X_i$ (study time): 
+Johno wants to use this data to model the relationship between study time and the [probability]{.glossary} of passing the exam. He identifies his outcome variable, $Y_i$, as the binary variable indicating whether student $i$ passed or failed the exam, and his predictor variable, $X_i$, as the amount of time that student spent studying. Therefore, Johno's goal is to produce a [statistical model]{.glossary} that predicts $Y_i$ (pass/fail) based on $X_i$ (study time):
 $$
 Y_i = f(X_i) + \varepsilon
 $$
@@ -182,7 +182,7 @@ student_performance
 ::::
 :::
 
-[^ch_1_recall_dummy_variables]: The use of 0/1 coding for binary outcomes is similar to the use of *dummy variables* for categorical predictors in linear regression, where each category is represented by a separate binary variable coded as 0 or 1.
+[^ch_1_recall_dummy_variables]: The use of 0/1 coding for binary outcomes is similar to the use of [*dummy variables*]{.glossary term="Dummy variable"} for categorical predictors in linear regression, where each category is represented by a separate binary variable coded as 0 or 1.
 
 - [ ] Continue
 
@@ -194,7 +194,7 @@ $$
 That is, 
 
 ::: Key-point
-The expected value (mean) of a binary variable coded as 0/1 is the *probability* of the outcome being 1. We label this probability as $p$:
+The expected value (mean) of a binary variable coded as 0/1 is the [*probability*]{.glossary} of the outcome being 1. We label this probability as $p$:
 $$
 p = \Pr(Y=1) = E[Y]
 $$
@@ -368,11 +368,11 @@ With a binary outcome, then, the relationship between predictors and probability
 
 ### From probabilities to odds
 
-One way to address this issue is to change what we are modelling so that it behaves more nicely with a linear predictor. For example, we might model the relationship between the predictors and the *odds* of the outcome, rather than the probability itself.
+One way to address this issue is to change what we are modelling so that it behaves more nicely with a [linear predictor]{.glossary}. For example, we might model the relationship between the predictors and the [*odds*]{.glossary} of the outcome, rather than the probability itself.
 
 ::: Key-term
 # Odds
-The odds of an event are defined as the ratio of the probability of the event occurring to the probability of it not occurring. If $p$ is the probability of the event, then the odds are given by:
+The odds of an [event]{.glossary} are defined as the ratio of the probability of the event occurring to the probability of it not occurring. If $p$ is the probability of the event, then the odds are given by:
 $$
 \text{odds} = \frac{p}{1 - p}
 $$
@@ -519,7 +519,7 @@ While odds are an improvement over raw probabilities, they are still bounded bel
 ::: Key-term
 ### Log-odds (logit)
 
-The **log-odds**, or **logit**, of a probability $p$ is defined as the natural log of the odds:
+The [**log-odds**]{.glossary}, or [**logit**]{.glossary}, of a probability $p$ is defined as the natural log of the odds:
 
 $$
 \text{logit}(p) = \log\left(\frac{p}{1-p}\right)
@@ -611,7 +611,7 @@ grade_this_code()
 
 ### The logistic function
 
-If we model log-odds with a linear predictor, we need a way to convert predicted log-odds back into a probability. The function that does this is the **logistic function** (also called the *inverse logit*):
+If we model log-odds with a linear predictor, we need a way to convert predicted log-odds back into a probability. The function that does this is the [**logistic function**]{.glossary} (also called the *inverse logit*):
 
 $$
 p = \frac{e^{\eta}}{1 + e^{\eta}} = \frac{1}{1 + e^{-\eta}}
@@ -662,4 +662,4 @@ $$
 You can think of the logit as the *link* from probability to the linear predictor, and the logistic function as the *back-transform* from the linear predictor to a probability.
 :::
 
-This pair — a linear predictor on the log-odds scale, combined with the logistic function to convert back to probabilities — is the foundation of **logistic regression**, which we cover in the next chapter.
+This pair — a linear predictor on the log-odds scale, combined with the logistic function to convert back to probabilities — is the foundation of [**logistic regression**]{.glossary}, which we cover in the next chapter.

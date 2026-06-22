@@ -11,8 +11,8 @@ book:
     - index.qmd
     - ch_1_logit.qmd
     - ch_2_lr.qmd
-    - ch_3_assessing-model-fit-and-predictions.qmd
-    - ch_6_extensions-case-study.qmd
+    - ch_3_diagnostics-and-predictions.qmd
+    - ch_4_case-study.qmd
     - glossary.qmd
   page-navigation: false
 format:

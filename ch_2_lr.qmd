@@ -64,14 +64,14 @@ fit_study <- glm(pass_exam ~ studytime, data = students, family = binomial)
 # From linear models to fitting logistic regression {#sec-introduction}
 
 In @sec-motivation we introduced the practical problem: our outcome is binary, so the expected value of the outcome is a probability. However, a standard linear regression can output values outside the range of a probability (e.g. we might predict a probability of passing greater than one or less than zero).
-We also saw that this problem can be resolved by not modelling probability directly, but instead *via* the logit:
+We also saw that this problem can be resolved by not modelling probability directly, but instead *via* the [logit]{.glossary}:
 $$
 \text{logit}(p) = \log\left(\frac{p}{1-p}\right),
 $$
 
 which lets us place probabilities on a scale that can be modelled with a straight line.
 
-This key step allows us to use a **Linear Model** {.glossary } to model a binary categorical outcome!
+This key step allows us to use a [linear model]{.glossary} to model a binary categorical outcome!
 
 - [ ] Continue
 
@@ -99,7 +99,7 @@ $$
 The first line describes how the observed outcomes vary around their mean. The second line describes how the mean changes with the predictor.
 
 ::: Key-point
-Linear models have both a **mean** and an **error**. In linear regression, the mean model is the straight line. The error model says observations vary around that line with normally distributed errors and constant variance.
+Linear models have both a **mean** and an **error**. In linear regression, the mean model is the straight line. The [error model]{.glossary} says observations vary around that line with normally distributed errors and constant variance.
 :::
 
 ### The mean model on the logit scale {#sec-logit-mean-model}
@@ -146,9 +146,9 @@ $$
 Y_i \sim \text{Bernoulli}(p_i).
 $$
 
-This is the part of the model that replaces the normal error distribution from linear regression. Instead of saying that a continuous outcome varies around a mean with normally distributed errors, we say that the observed 0/1 outcome is generated from a Bernoulli distribution with event probability $p_i$.
+This is the part of the model that replaces the normal error distribution from linear regression. Instead of saying that a continuous outcome varies around a mean with normally distributed errors, we say that the observed 0/1 outcome is generated from a [Bernoulli distribution]{.glossary} with event probability $p_i$.
 
-This is the one-trial version of the binomial distribution.^[For an introductory review of binomial random variables, see the *Inferential Statistics with R* short course.] It has a single parameter, $p_i$, and two important properties:
+This is the one-trial version of the [binomial distribution]{.glossary}.^[For an introductory review of binomial random variables, see the *Inferential Statistics with R* short course.] It has a single parameter, $p_i$, and two important properties:
 
 $$
 E[Y_i] = p_i
@@ -196,11 +196,11 @@ plot(p, p * (1 - p), type = "l", lwd = 2,
 
 ## Generalised linear models {#sec-glm-framework}
 
-A **generalised linear model** (GLM) has three pieces:
+A [**generalised linear model**]{.glossary} (GLM) has three pieces:
 
 1. A distribution for the outcome.
 2. A linear predictor.
-3. A link function connecting the expected outcome to the linear predictor.
+3. A [link function]{.glossary} connecting the expected outcome to the linear predictor.
 
 For linear regression, these pieces are:
 
@@ -212,7 +212,7 @@ Y_i \sim N(\mu_i, \sigma^2),
 \eta_i = \beta_0 + \beta_1 X_i.
 $$
 
-The link is the identity link because the mean itself is modelled directly by the linear predictor.
+The link is the [identity link]{.glossary} because the mean itself is modelled directly by the linear predictor.
 
 For logistic regression, the pieces are:
 
@@ -239,7 +239,7 @@ The linear predictor is still linear. What changes is the outcome distribution a
 Linear regression and logistic regression have the same basic GLM form: an outcome distribution, a linear predictor, and a link function. The difference is the choice of link and outcome distribution: linear regression uses a normal distribution with an identity link, while logistic regression uses a Bernoulli/binomial distribution with a logit link.
 :::
 
-The sliders below build that model in three linked steps. First, the coefficients define a straight line on the log-odds scale. Second, the inverse-logit transformation converts that line to probabilities. Third, each binary outcome is treated as a Bernoulli draw with probability $p_i$.
+The sliders below build that model in three linked steps. First, the [coefficients]{.glossary term="Coefficient"} define a straight line on the log-odds scale. Second, the [inverse-logit]{.glossary term="Logistic function"} transformation converts that line to probabilities. Third, each binary outcome is treated as a Bernoulli draw with probability $p_i$.
 
 ```{ojs chapter02-logistic-glm-builder-view}
 //| panel: sidebar
@@ -417,7 +417,7 @@ For a Bernoulli outcome, the amount of variation is not controlled by a separate
 
 ## The logistic regression model {#sec-logistic-regression-model}
 
-For the student example with study time as the predictor, the logistic regression model is
+For the student example with study time as the predictor, the [logistic regression]{.glossary} model is
 
 $$
 Y_i \sim \text{Bernoulli}(p_i)
@@ -467,7 +467,7 @@ The curve is S-shaped on the probability scale, but the model is still straight 
 
 ## Fitting GLMs in R {#sec-glm-formula-r}
 
-The R formula looks almost the same as the formula for `lm()`:
+The R function for fitting a glm to data looks almost the same as the formula for linear regression with the `lm()` function:
 
 :::: {.panel-tabset}
 ### Output
@@ -490,12 +490,12 @@ fit_study <- glm(pass_exam ~ studytime,
 summary(fit_study)
 ```
 ::::
-
-The formula `pass_exam ~ studytime` gives the linear predictor:
+Inside the call to `glm()` (telling R we want to fit a generalised linear model), the formula `pass_exam ~ studytime` gives the [linear predictor]{.glossary}:
 
 $$
 \eta_i = \beta_0 + \beta_1 \text{studytime}_i.
 $$
+in the same way as `lm()`. However, we now have the option for an additional argument.
 
 The argument `family = binomial` tells R to use the Bernoulli/binomial error model with the logit link. So the single `glm()` call contains the two changes we need for binary outcomes: a different error model and a different link.
 
@@ -512,7 +512,7 @@ The coefficients $\beta_0$ and $\beta_1$ are the unknown parameters of the data-
 
 For linear regression, `lm()` chooses the line that minimises the sum of squared residuals. This works because the model assumes normally distributed errors around a mean line.
 
-For logistic regression, the outcome is 0 or 1, so squared residuals are no longer the natural fitting criterion. Instead, `glm()` uses **maximum likelihood estimation**. It chooses the coefficient estimates that make the observed sequence of passes and fails most likely under the Bernoulli model.
+For logistic regression, the outcome is 0 or 1, so squared residuals are no longer the natural fitting criterion. Instead, `glm()` uses [**maximum likelihood estimation**]{.glossary}. It chooses the coefficient estimates that make the observed sequence of passes and fails most likely under the Bernoulli model.
 
 Maximum likelihood asks: among all possible coefficient values, which values make the observed data most plausible under the model?
 
@@ -558,9 +558,9 @@ coef(fit_study)
 
 ### Reading coefficients on the log-odds scale {#sec-log-odds-coefficients}
 
-The intercept is the estimated log-odds of passing when `studytime = 0`. In this dataset, no student has study time equal to 0, so the intercept is mainly needed to position the fitted curve.
+The [intercept]{.glossary} is the estimated log-odds of passing when `studytime = 0`. In this dataset, no student has study time equal to 0, so the intercept is mainly needed to position the fitted curve.
 
-The slope is the estimated change in log-odds for a one-unit increase in study time:
+The [slope]{.glossary} is the estimated change in log-odds for a one-unit increase in study time:
 
 $$
 b_1 = \widehat{\Delta \text{log-odds}}.
@@ -572,7 +572,7 @@ A positive coefficient means the predicted probability increases as the predicto
 
 ### Odds ratios {#sec-fitting-odds-ratios}
 
-Exponentiating a coefficient converts it from a change in log-odds to an odds ratio:
+Exponentiating a coefficient converts it from a change in log-odds to an [odds ratio]{.glossary}:
 
 $$
 \text{odds ratio} = e^{b_1}.
@@ -688,7 +688,7 @@ Odds ratios can look large even when the absolute probability change is modest. 
 
 ## Inference for coefficients {#sec-logistic-inference}
 
-The `summary()` output includes a standard error, a test statistic, and a p-value for each coefficient. These are Wald tests. They test whether a coefficient differs from zero on the log-odds scale.
+The `summary()` output includes a [standard error]{.glossary}, a test statistic, and a [p-value]{.glossary} for each coefficient. These are [Wald tests]{.glossary term="Wald test"}. They test whether a coefficient differs from zero on the log-odds scale.
 
 :::: {.panel-tabset}
 ### Output
@@ -706,7 +706,7 @@ coef(summary(fit_study))
 ```
 ::::
 
-Wald confidence intervals can be computed with `confint.default()`:
+Wald [confidence intervals]{.glossary term="Confidence interval"} can be computed with `confint.default()`:
 
 :::: {.panel-tabset}
 ### Output
@@ -748,7 +748,7 @@ Confidence intervals for logistic regression coefficients are intervals for log-
 
 ## Adding predictors {#sec-adding-predictors}
 
-The formula interface extends in the same way as multiple linear regression. A model with previous failures and absences is
+The formula interface extends in the same way as [multiple linear regression]{.glossary}. A model with previous failures and absences is
 
 $$
 \text{logit}(p_i) =
@@ -780,11 +780,11 @@ summary(fit_multi)
 ```
 ::::
 
-Each coefficient is a partial effect on the log-odds scale, holding the other predictors in the model constant.
+Each coefficient is a [partial effect]{.glossary term="Partial regression coefficient"} on the log-odds scale, holding the other predictors in the model constant.
 
 ## Categorical predictors {#sec-logistic-categorical-predictors}
 
-Categorical predictors work as they did in linear regression. R chooses a reference level and estimates comparisons against that level.
+[Categorical predictors]{.glossary term="Categorical variable"} work as they did in linear regression. R chooses a [reference level]{.glossary} and estimates comparisons against that level.
 
 :::: {.panel-tabset}
 ### Output

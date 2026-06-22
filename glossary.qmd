@@ -2,152 +2,453 @@
 glossary-include: auto
 glossary-sort: yaml
 glossary:
-  - term: Accuracy
+  - term: Statistical model
     definition: |
-      The proportion of all predictions that are correct.
-  - term: Akaike Information Criterion
+      A probabilistic description of how a response relates to predictors, combining a systematic component with random variation.
+
+  - term: Random variable
     definition: |
-      A model comparison metric that balances fit and complexity; lower values indicate a preferred model among those compared.
+      A quantity whose value varies across observations or repetitions of a process, described by a probability distribution.
     aliases:
-      - AIC
-  - term: AUC
+      - Random Variable
+
+  - term: Distribution
     definition: |
-      Area under the ROC curve; a summary of classification performance across thresholds.
+      A description of how the possible values of a random variable are spread across outcomes.
+    aliases:
+      - Outcome distribution
+
+  - term: Probability
+    definition: |
+      A number between 0 and 1 that represents how likely an event is to occur.
+
+  - term: Expected value
+    definition: |
+      The long-run average value of a random variable; in logistic regression, E[Y_i] is the event probability p_i for a binary response.
+    aliases:
+      - Expectation
+      - Expected
+      - expected
+
+  - term: Variance
+    definition: |
+      A measure of spread around the expected value. For a Bernoulli outcome with event probability p, the variance is p(1 - p).
+
+  - term: Assumption
+    definition: |
+      A condition adopted to justify a model or inference procedure, such as independent observations or linearity on the log-odds scale.
+
+  - term: Response variable
+    definition: |
+      The variable you aim to explain or predict; in logistic regression this is usually a binary outcome coded as 0 and 1.
+    aliases:
+      - Outcome variable
+      - Outcome
+      - Response
+
+  - term: Predictor variable
+    definition: |
+      A variable used to explain, adjust for, or predict changes in the response.
+    aliases:
+      - Predictor variables
+      - Covariate
+      - Explanatory variable
+
+  - term: Continuous variable
+    definition: |
+      A numeric variable that can, in principle, take any value on an interval.
+
+  - term: Categorical variable
+    definition: |
+      A variable whose values are categories or groups rather than measurements on a numeric scale.
+
   - term: Binary outcome
     definition: |
-      A response variable with two possible values, often coded as 0 and 1.
-  - term: Binomial distribution
-    definition: |
-      A probability distribution for the number of events in repeated binary trials, with event probability p.
-  - term: Calibration
-    definition: |
-      How closely predicted probabilities match observed event rates.
-  - term: Class imbalance
-    definition: |
-      When one outcome class is much more frequent than the other.
-  - term: Classification threshold
-    definition: |
-      The cutoff used to convert predicted probabilities into classes (for example, predict 1 if p >= 0.5).
-  - term: Coefficient
-    definition: |
-      A model parameter that describes how a predictor changes the log-odds, holding other predictors constant.
-  - term: Confidence interval
-    definition: |
-      A range of plausible values for a model parameter based on the data.
-  - term: Confusion matrix
-    definition: |
-      A table of predicted versus actual outcomes used to summarize classification performance.
-  - term: Deviance
-    definition: |
-      A goodness-of-fit measure based on the likelihood; lower is better.
-  - term: Factor
-    definition: |
-      A categorical predictor in R that is represented by discrete levels.
-  - term: False negative
-    definition: |
-      A case where the true class is 1 but the model predicts 0.
-  - term: False positive
-    definition: |
-      A case where the true class is 0 but the model predicts 1.
-  - term: Generalized linear model
-    definition: |
-      A model class that combines a response distribution and a link function to relate predictors to the expected response.
+      A response variable with two possible values, often coded as 0 and 1, such as pass/fail or yes/no.
     aliases:
-      - Generalised linear model
-      - GLM
-  - term: Intercept
+      - Binary response
+      - Binary categorical outcome
+
+  - term: Event
     definition: |
-      The expected log-odds when all predictors are set to zero (or to their reference values).
-  - term: Interaction
+      The outcome category coded as 1 in a binary response; logistic regression usually models the probability of this category.
+
+  - term: Non-event
     definition: |
-      A term that allows the effect of one predictor to depend on another.
-  - term: Likelihood
+      The outcome category coded as 0 in a binary response.
+
+  - term: Event rate
     definition: |
-      A measure of how well a model explains the observed data; higher is better.
-  - term: Likelihood ratio test
+      The proportion of observations in the data for which the event occurs.
+
+  - term: Linear function
     definition: |
-      A test that compares nested models using differences in deviance.
+      A straight-line relationship of the form f(x) = alpha + beta x.
+
+  - term: Linear model
+    definition: |
+      A model whose systematic component is a linear combination of predictors and coefficients.
+    aliases:
+      - Linear Model
+
   - term: Linear predictor
     definition: |
-      The linear combination of predictors, for example beta0 + beta1 x.
+      The systematic part of a regression model, usually written as eta_i = beta_0 + beta_1 X_i1 + ... + beta_k X_ik.
+
+  - term: Intercept
+    definition: |
+      The baseline value of the linear predictor when numeric predictors are zero and categorical predictors are at their reference levels.
+
+  - term: Slope
+    definition: |
+      The change in the linear predictor for a one-unit increase in a predictor, holding other predictors constant.
+
+  - term: Coefficient
+    definition: |
+      A model parameter multiplying a predictor. In logistic regression, coefficients describe changes in log-odds.
+    aliases:
+      - Regression coefficient
+
+  - term: Random error term
+    definition: |
+      The part of a response not explained by the predictors in an additive linear regression model, often written as epsilon.
+    aliases:
+      - Error term
+      - error term
+
+  - term: Error model
+    definition: |
+      The probabilistic part of a model describing how observed responses vary. Logistic regression uses a Bernoulli/binomial error model rather than additive normal errors.
+
+  - term: Normal distribution
+    definition: |
+      A symmetric, bell-shaped distribution often used to model random variation in continuous outcomes.
+
+  - term: Bernoulli distribution
+    definition: |
+      A distribution for a single binary trial, where Y = 1 with probability p and Y = 0 with probability 1 - p.
+    aliases:
+      - Bernoulli draw
+      - Bernoulli random variable
+
+  - term: Binomial distribution
+    definition: |
+      A probability distribution for the number of events in a fixed number of independent binary trials with the same event probability.
+
   - term: Link function
     definition: |
-      A function that connects the mean of the response to the linear predictor; for logistic regression the link is the logit.
-  - term: Logit
+      A function that connects the expected response to the linear predictor; for logistic regression the link is the logit.
+    aliases:
+      - Logit link
+
+  - term: Identity link
     definition: |
-      The log of the odds: log(p / (1 - p)).
+      The link function used in ordinary linear regression, where the mean response is modelled directly by the linear predictor.
+
+  - term: Generalised linear model
+    definition: |
+      A model class that combines an outcome distribution, a linear predictor, and a link function.
+    aliases:
+      - Generalized linear model
+      - GLM
+
+  - term: Odds
+    definition: |
+      The ratio of the probability that an event occurs to the probability that it does not occur: p / (1 - p).
+
+  - term: Odds ratio
+    definition: |
+      A ratio of two odds values. In logistic regression, exponentiating a coefficient gives the multiplicative change in odds for a one-unit predictor increase.
+    aliases:
+      - OR
+
+  - term: Log-odds (logit)
+    definition: |
+      The natural logarithm of the odds: log(p / (1 - p)). It maps probabilities from (0, 1) onto the whole real line.
+    aliases:
+      - Logit
+      - Log-odds
+      - logit
+
   - term: Logistic function
     definition: |
-      The S-shaped function that maps any real-valued input to a probability between 0 and 1.
+      The inverse-logit transformation, p = 1 / (1 + exp(-eta)), which maps any real-valued linear predictor to a probability between 0 and 1.
+    aliases:
+      - Inverse logit
+      - Inverse-logit
+      - plogis
+
   - term: Logistic regression
     definition: |
       A regression model for binary outcomes that models the log-odds of an event as a linear function of predictors.
+
+  - term: Estimation
+    definition: |
+      The process of using data to infer unknown model parameters, such as regression coefficients.
+
+  - term: Estimate
+    definition: |
+      A value computed from data that approximates an unknown model parameter, often written with a hat or as b_j for an estimated coefficient.
+
+  - term: Ordinary least squares
+    definition: |
+      The linear-regression estimation method that chooses coefficients to minimise the sum of squared residuals.
+    aliases:
+      - OLS
+      - Least squares
+
   - term: Maximum likelihood estimation
     definition: |
-      A method for estimating model parameters by choosing values that maximize the likelihood of the observed data.
+      A method that estimates parameters by choosing the values that make the observed data most likely under the model.
     aliases:
       - MLE
-  - term: Multivariable logistic regression
+
+  - term: Likelihood
     definition: |
-      A logistic regression model with multiple predictors included simultaneously.
-  - term: Nested models
+      A measure of how plausible the observed data are for a given set of model parameters; larger likelihood means the data are more plausible under that model.
+
+  - term: Fitted value
     definition: |
-      Two models where one is a special case of the other (typically by removing one or more terms).
-  - term: Null model
-    definition: |
-      A model with no predictors, containing only an intercept.
-  - term: Odds
-    definition: |
-      The ratio of the probability of an event to the probability of it not occurring: p / (1 - p).
-  - term: Odds ratio
-    definition: |
-      The multiplicative change in odds for a one-unit increase in a predictor; exp(coefficient).
-  - term: p-value
-    definition: |
-      The probability, under a null hypothesis, of observing a result at least as extreme as the one obtained.
+      The model's fitted mean response for an observation. In logistic regression, this is usually a fitted probability.
+    aliases:
+      - Predicted value
+      - Fitted probability
+
   - term: Predicted probability
     definition: |
-      The model's estimate of the probability of an event for a given set of predictors.
-  - term: Probability
+      The model's estimate of the probability that the event occurs for a given set of predictor values.
+
+  - term: Residual
     definition: |
-      A number between 0 and 1 that represents the chance of an event.
-  - term: Pseudo R-squared
+      A diagnostic quantity comparing the observed response with what the fitted model predicts.
+
+  - term: Pearson residual
     definition: |
-      A likelihood-based summary of model fit for logistic regression that is used for rough comparison, not as a direct analogue of linear-model R-squared.
-  - term: Random variable
+      A residual scaled by its model-based standard deviation; in logistic regression it compares y_i with p_hat_i relative to Bernoulli variation.
+
+  - term: Deviance residual
     definition: |
-      A numerical variable whose value depends on the outcome of a random process.
+      A likelihood-based residual used in generalized linear models to show how much each observation contributes to the model deviance.
+
+  - term: Residual sum of squares
+    definition: |
+      The total squared discrepancy between observed values and fitted values in ordinary linear regression.
     aliases:
-      - Random Variable
-  - term: Reference level
+      - RSS
+      - Sum of squared residuals
+
+  - term: Deviance
     definition: |
-      The baseline category for a factor against which other levels are compared.
-  - term: ROC curve
+      A likelihood-based lack-of-fit measure for generalized linear models; smaller deviance indicates better fit among comparable models.
+
+  - term: Null model
     definition: |
-      A curve showing the trade-off between sensitivity and 1 - specificity across thresholds.
-    aliases:
-      - Receiver operating characteristic curve
+      A model with an intercept only and no predictors, used as a baseline for comparison.
+
   - term: Saturated model
     definition: |
       A model that fits the observed data perfectly by using as many parameters as needed.
-  - term: Sensitivity
+
+  - term: Nested models
     definition: |
-      The proportion of true positives correctly identified by the model.
-  - term: Separation
+      Two models where the smaller model can be obtained from the larger one by removing one or more terms.
+
+  - term: Degrees of freedom
     definition: |
-      A situation where predictors perfectly separate outcomes, leading to unstable estimates.
-  - term: Specificity
+      The amount of independent information remaining after estimating parameters; model comparisons often use degrees of freedom to account for added terms.
+    aliases:
+      - df
+
+  - term: Standard error
     definition: |
-      The proportion of true negatives correctly identified by the model.
-  - term: True negative
-    definition: |
-      A case where the true class is 0 and the model predicts 0.
-  - term: True positive
-    definition: |
-      A case where the true class is 1 and the model predicts 1.
+      An estimate of how much a statistic, such as a coefficient estimate, would vary across repeated samples.
+
   - term: Wald test
     definition: |
-      A hypothesis test that uses an estimated coefficient and its standard error to assess evidence against a null value.
+      A hypothesis test that compares an estimated coefficient with its standard error, usually testing whether the coefficient is zero.
+
+  - term: Likelihood ratio test
+    definition: |
+      A test for nested models based on the improvement in likelihood, often reported through a difference in deviance.
+    aliases:
+      - LRT
+
+  - term: p-value
+    definition: |
+      The probability, under the null hypothesis, of observing a result at least as extreme as the one obtained.
+
+  - term: Confidence interval
+    definition: |
+      A range of plausible parameter values at a chosen confidence level; logistic-regression intervals are often reported for coefficients or odds ratios.
+
+  - term: Akaike Information Criterion
+    definition: |
+      A model comparison metric that balances fit and complexity; lower AIC is preferred among the models being compared.
+    aliases:
+      - AIC
+
+  - term: Bayesian Information Criterion
+    definition: |
+      A model comparison metric that penalises complexity more strongly than AIC; lower BIC is preferred among the models being compared.
+    aliases:
+      - BIC
+
+  - term: Pseudo R-squared
+    definition: |
+      A likelihood-based summary of logistic-regression fit used for rough comparison, not a direct analogue of linear-regression R-squared.
+
+  - term: Multiple linear regression
+    definition: |
+      Linear regression with two or more predictors, allowing adjustment for multiple variables at once.
+
+  - term: Multivariable logistic regression
+    definition: |
+      Logistic regression with two or more predictors included simultaneously.
+
+  - term: Partial regression coefficient
+    definition: |
+      The coefficient for a predictor interpreted while holding the other predictors in the model constant.
+    aliases:
+      - Partial effect
+
+  - term: Factor
+    definition: |
+      A categorical variable in R with discrete levels; factors are expanded into coded columns when used in regression models.
+
+  - term: Dummy variable
+    definition: |
+      A 0/1 indicator used to code categories in a regression model relative to a baseline category.
+    aliases:
+      - Indicator variable
+
+  - term: Reference level
+    definition: |
+      The baseline category for a factor against which other levels are compared.
+
+  - term: Contrast
+    definition: |
+      A coding scheme that maps factor levels to numeric columns for use in a regression model.
+
+  - term: Interaction
+    definition: |
+      A model term that allows the effect of one predictor to depend on the value of another predictor.
+    aliases:
+      - Interaction term
+
+  - term: Extrapolation
+    definition: |
+      Making predictions outside the observed range or combination of predictor values, where the fitted relationship may not hold.
+
+  - term: Independence
+    definition: |
+      The assumption that observations, or their errors, are not correlated with one another.
+    aliases:
+      - Independent observations
+
+  - term: Linearity on the log-odds scale
+    definition: |
+      The logistic-regression assumption that continuous predictors have approximately linear effects on the log-odds, not necessarily on the probability scale.
+
+  - term: Separation
+    definition: |
+      A situation where a predictor or combination of predictors perfectly separates the outcome classes, leading to unstable or very large coefficient estimates.
+
+  - term: Class imbalance
+    definition: |
+      A situation where one outcome class is much more common than the other, making simple accuracy potentially misleading.
+
+  - term: Overfitting
+    definition: |
+      When a model captures noise in the training data and generalises poorly to new data, often because it is too complex for the amount of information available.
+
+  - term: Influential point
+    definition: |
+      An observation that substantially changes fitted coefficients or predictions when it is removed or down-weighted.
+
+  - term: Cook's distance
+    definition: |
+      An influence diagnostic that flags observations with unusual impact on fitted coefficients.
+
+  - term: Classification threshold
+    definition: |
+      The cutoff used to convert predicted probabilities into predicted classes, such as predicting the event when p_hat >= 0.5.
+    aliases:
+      - Threshold
+      - Cutoff
+      - Decision threshold
+
+  - term: Predicted class
+    definition: |
+      The class label assigned after applying a classification threshold to a predicted probability.
+
+  - term: Confusion matrix
+    definition: |
+      A table of predicted versus actual classes used to summarise classification performance.
+
+  - term: True positive
+    definition: |
+      A case where the actual class is 1 and the model predicts 1.
+
+  - term: True negative
+    definition: |
+      A case where the actual class is 0 and the model predicts 0.
+
+  - term: False positive
+    definition: |
+      A case where the actual class is 0 but the model predicts 1.
+
+  - term: False negative
+    definition: |
+      A case where the actual class is 1 but the model predicts 0.
+
+  - term: Accuracy
+    definition: |
+      The proportion of all classifications that are correct.
+
+  - term: Sensitivity
+    definition: |
+      The proportion of actual events correctly classified as events.
+    aliases:
+      - True positive rate
+      - Recall
+
+  - term: Specificity
+    definition: |
+      The proportion of actual non-events correctly classified as non-events.
+    aliases:
+      - True negative rate
+
+  - term: ROC curve
+    definition: |
+      A curve showing the trade-off between sensitivity and false positive rate across classification thresholds.
+    aliases:
+      - Receiver operating characteristic curve
+
+  - term: AUC
+    definition: |
+      Area under the ROC curve; a threshold-free summary of how well predicted probabilities rank events above non-events.
+    aliases:
+      - Area under the curve
+
+  - term: Calibration
+    definition: |
+      The agreement between predicted probabilities and observed event rates.
+
+  - term: Validation set
+    definition: |
+      Data not used to fit the model, used to assess how well predictions generalise to new observations.
+
+  - term: Cross-validation
+    definition: |
+      A resampling approach that repeatedly fits a model on part of the data and assesses predictions on held-out parts.
+
+  - term: Scenario-based prediction
+    definition: |
+      Prediction for realistic combinations of predictor values, used to communicate model results on a practical scale such as probability.
+
+  - term: Model comparison
+    definition: |
+      The process of comparing plausible models using evidence such as likelihood ratio tests, information criteria, prediction performance, and interpretability.
 ---
 
 # Glossary {#sec-glossary .unnumbered}
