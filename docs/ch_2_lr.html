@@ -27998,29 +27998,29 @@ initializeRuntime();
 
 </script>
 <style>
-.Key-point {
---color1: #FFF9C4;
---color2: #FFEB3B;
-}
 .Key-term {
 --color1: #D1C4E9;
 --color2: #673AB7;
-}
-.Exercise {
---color1: #C8E6C9;
---color2: #4CAF50;
 }
 .Example {
 --color1: #BBDEFB;
 --color2: #2196F3;
 }
-.Note {
+.Key-point {
 --color1: #FFF9C4;
 --color2: #FFEB3B;
 }
 .Assumption {
 --color1: #FFCDD2;
 --color2: #F44336;
+}
+.Exercise {
+--color1: #C8E6C9;
+--color2: #4CAF50;
+}
+.Note {
+--color1: #FFF9C4;
+--color2: #FFEB3B;
 }
 </style>
 
@@ -28868,7 +28868,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <p>Inside the call to <code>glm()</code> (telling R we want to fit a generalised linear model), the formula <code>pass_exam ~ studytime</code> gives the <a href="glossary.html#glossary-linear-predictor" class="glossary" title="The systematic part of a regression model, usually written as eta_i = beta_0 + beta_1 X_i1 + … + beta_k X_ik.">linear predictor</a>:</p>
 <p><span class="math display">\[
 \eta_i = \beta_0 + \beta_1 \text{studytime}_i.
-\]</span> in the same way as `</p>
+\]</span> in the same way as <code>lm()</code>. However, we now have the option for an additional argument.</p>
 <p>The argument <code>family = binomial</code> tells R to use the Bernoulli/binomial error model with the logit link. So the single <code>glm()</code> call contains the two changes we need for binary outcomes: a different error model and a different link.</p>
 <div id="cnb-4-Note" class="Note">
 <details class="Note fobx-simplebox fobx-default" open=""><summary><strong>Note</strong></summary><div>
@@ -28948,6 +28948,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </section>
 <section id="sec-log-odds-coefficients" class="level3" data-number="3.6.2">
 <h3 data-number="3.6.2" class="anchored" data-anchor-id="sec-log-odds-coefficients"><span class="header-section-number">3.6.2</span> Reading coefficients on the log-odds scale</h3>
+<p>In linear regression with an identity link, each parameter is interpreted directly in the units of the outcome. For example, a slope is an expected difference in the outcome for a one-unit increase in the predictor. Logistic regression is different: the model is linear in the <a href="glossary.html#glossary-log-odds-logit" class="glossary" title="The natural logarithm of the odds: log(p / (1 - p)). It maps probabilities from (0, 1) onto the whole real line.">logit</a>, or log-odds, not in the probability itself. We use log-odds because they let us write a linear predictor, but they are not usually easy to interpret directly. Even so, the direction of the effect is still visible from the sign of the coefficient.</p>
 <p>The <a href="glossary.html#glossary-intercept" class="glossary" title="The baseline value of the linear predictor when numeric predictors are zero and categorical predictors are at their reference levels.">intercept</a> is the estimated log-odds of passing when <code>studytime = 0</code>. In this dataset, no student has study time equal to 0, so the intercept is mainly needed to position the fitted curve.</p>
 <p>The <a href="glossary.html#glossary-slope" class="glossary" title="The change in the linear predictor for a one-unit increase in a predictor, holding other predictors constant.">slope</a> is the estimated change in log-odds for a one-unit increase in study time:</p>
 <p><span class="math display">\[
@@ -28965,6 +28966,22 @@ b_1 = \widehat{\Delta \text{log-odds}}.
 <p><span class="math display">\[
 \text{odds ratio} = e^{b_1}.
 \]</span></p>
+<div id="why-exponentiating-gives-a-ratio" class="Note">
+<details class="Note fobx-simplebox fobx-default" open=""><summary><strong>Note: </strong>Why exponentiating gives a ratio</summary><div>
+<p>On the log scale, a difference corresponds to a ratio on the original scale. If the log-odds increase from <span class="math inline">\(\log(\text{odds}_0)\)</span> to <span class="math inline">\(\log(\text{odds}_1)\)</span>, then</p>
+<p><span class="math display">\[
+\begin{aligned}
+b_1
+  &amp;= \log(\text{odds}_1) - \log(\text{odds}_0) \\
+  &amp;= \log\left(\frac{\text{odds}_1}{\text{odds}_0}\right).
+\end{aligned}
+\]</span></p>
+<p>Exponentiating both sides converts the difference in log-odds into a ratio of odds:</p>
+<p><span class="math display">\[
+e^{b_1} = \frac{\text{odds}_1}{\text{odds}_0}.
+\]</span></p>
+</div></details>
+</div>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Output</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Code</a></li></ul>
 <div class="tab-content">
@@ -29056,7 +29073,7 @@ eyJhdHRyIjp7ImNoZWNrIjp0cnVlLCJjbGFzcyI6IndhaXQiLCJlZGl0Ijp0cnVlLCJlbnZpciI6ImV4
 </div>
 </div>
 </div>
-<div id="cnb-9-Note" class="Note">
+<div id="cnb-10-Note" class="Note">
 <details class="Note fobx-simplebox fobx-default" open=""><summary><strong>Note</strong></summary><div>
 <p>Odds ratios can look large even when the absolute probability change is modest. For communication, pair odds ratios with predicted probabilities for realistic scenarios.</p>
 </div></details>
@@ -29125,7 +29142,7 @@ studytime   0.9388289 1.569711</code></pre>
 </div>
 </div>
 </div>
-<div id="cnb-10-Note" class="Note">
+<div id="cnb-11-Note" class="Note">
 <details class="Note fobx-simplebox fobx-default" open=""><summary><strong>Note</strong></summary><div>
 <p>Confidence intervals for logistic regression coefficients are intervals for log-odds changes. Applying <code>exp()</code> converts them to odds-ratio intervals.</p>
 </div></details>
