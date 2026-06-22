@@ -250,16 +250,10 @@ viewof lr_demo_b0 = Inputs.range([-4, 4], {
   label: html`${tex`\beta_0`}: log-odds intercept`
 })
 
-viewof lr_demo_b1 = Inputs.range([-2, 2], {
+viewof lr_demo_b1 = Inputs.range([-8, 8], {
   value: 0.8,
   step: 0.1,
   label: html`${tex`\beta_1`}: log-odds slope`
-})
-
-viewof lr_demo_focus_x = Inputs.range([-4, 4], {
-  value: 1,
-  step: 0.1,
-  label: "Focus x value"
 })
 
 viewof lr_demo_n = Inputs.range([20, 200], {
@@ -268,6 +262,7 @@ viewof lr_demo_n = Inputs.range([20, 200], {
   label: "Bernoulli draws"
 })
 ```
+
 
 ```{ojs chapter02-logistic-glm-builder-plot}
 //| panel: fill
@@ -286,14 +281,6 @@ lr_demo_curve = d3.range(lr_demo_x_domain[0], lr_demo_x_domain[1] + 0.02, 0.04).
   const eta = lr_demo_b0 + lr_demo_b1 * x;
   return {x, eta, p: lr_demo_logistic(eta)};
 })
-
-lr_demo_focus_eta = lr_demo_b0 + lr_demo_b1 * lr_demo_focus_x
-lr_demo_focus_p = lr_demo_logistic(lr_demo_focus_eta)
-lr_demo_focus = [{x: lr_demo_focus_x, eta: lr_demo_focus_eta, p: lr_demo_focus_p}]
-lr_demo_link_curve = d3.range(lr_demo_eta_domain[0], lr_demo_eta_domain[1] + 0.04, 0.08).map(eta => ({
-  eta,
-  p: lr_demo_logistic(eta)
-}))
 
 lr_demo_sample = d3.range(lr_demo_n).map(i => {
   const x = lr_demo_x_domain[0] + (lr_demo_x_domain[1] - lr_demo_x_domain[0]) * lr_demo_frac(i + 1);
@@ -315,24 +302,6 @@ lr_demo_mass = lr_demo_mass_x.flatMap(x => {
     {x, y: 0, probability: 1 - p, label: "Fail"}
   ];
 })
-lr_demo_focus_mass = [
-  {
-    x: lr_demo_focus_x,
-    y: 1,
-    probability: lr_demo_focus_p,
-    label: "Pass",
-    parameter: `p = ${lr_demo_focus_p.toFixed(2)}`
-  },
-  {
-    x: lr_demo_focus_x,
-    y: 0,
-    probability: 1 - lr_demo_focus_p,
-    label: "Fail",
-    parameter: `1 - p = ${(1 - lr_demo_focus_p).toFixed(2)}`
-  }
-]
-lr_demo_mass_label_anchor = lr_demo_focus_x > 2.4 ? "end" : "start"
-lr_demo_mass_label_dx = lr_demo_focus_x > 2.4 ? -10 : 10
 
 lr_demo_logodds_plot = Plot.plot({
   height: 250,
@@ -342,8 +311,7 @@ lr_demo_logodds_plot = Plot.plot({
   y: {domain: lr_demo_eta_domain, label: "Linear predictor, η", grid: true},
   marks: [
     Plot.ruleY([0], {stroke: "#b8b8b8", strokeDasharray: "4 4"}),
-    Plot.line(lr_demo_curve, {x: "x", y: "eta", stroke: "#2a5599", strokeWidth: 2.5}),
-    Plot.dot(lr_demo_focus, {x: "x", y: "eta", r: 5, fill: "#d95f02"})
+    Plot.line(lr_demo_curve, {x: "x", y: "eta", stroke: "#2a5599", strokeWidth: 2.5})
   ]
 })
 
@@ -351,13 +319,11 @@ lr_demo_probability_plot = Plot.plot({
   height: 250,
   marginLeft: 48,
   marginBottom: 42,
-  x: {domain: lr_demo_eta_domain, label: "Linear predictor, η", grid: true},
-  y: {domain: [0, 1], label: "Probability, p", grid: true, percent: true},
+  x: {domain: lr_demo_x_domain, label: "x", grid: true},
+  y: {domain: [0, 1], label: "Probability, p", grid: true, tickFormat: d => (d * 100).toFixed(0) + "%"},
   marks: [
-    Plot.ruleX([0], {stroke: "#b8b8b8", strokeDasharray: "4 4"}),
     Plot.ruleY([0, 0.5, 1], {stroke: "#d9d9d9"}),
-    Plot.line(lr_demo_link_curve, {x: "eta", y: "p", stroke: "#00876c", strokeWidth: 2.5}),
-    Plot.dot(lr_demo_focus, {x: "eta", y: "p", r: 5, fill: "#d95f02"})
+    Plot.line(lr_demo_curve, {x: "x", y: "p", stroke: "#00876c", strokeWidth: 2.5})
   ]
 })
 
@@ -373,7 +339,6 @@ lr_demo_bernoulli_plot = Plot.plot({
     legend: true
   },
   marks: [
-    Plot.ruleX([lr_demo_focus_x], {stroke: "#d95f02", strokeDasharray: "3 3"}),
     Plot.dot(lr_demo_mass, {
       x: "x",
       y: "y",
@@ -381,25 +346,6 @@ lr_demo_bernoulli_plot = Plot.plot({
       fill: "label",
       fillOpacity: 0.2,
       stroke: "label"
-    }),
-    Plot.dot(lr_demo_focus_mass, {
-      x: "x",
-      y: "y",
-      r: d => 4 + 15 * d.probability,
-      fill: "label",
-      fillOpacity: 0.35,
-      stroke: "label",
-      strokeWidth: 1.5
-    }),
-    Plot.text(lr_demo_focus_mass, {
-      x: "x",
-      y: "y",
-      text: "parameter",
-      dx: lr_demo_mass_label_dx,
-      dy: d => d.y === 1 ? -12 : 14,
-      textAnchor: lr_demo_mass_label_anchor,
-      fill: "label",
-      fontWeight: 700
     }),
     Plot.dot(lr_demo_sample, {
       x: "x",
@@ -445,7 +391,6 @@ html`
   <p>${tex`\eta = ${lr_demo_b0.toFixed(1)} + ${lr_demo_b1.toFixed(1)}x`}</p>
   <p>${tex`p = \frac{1}{1 + e^{-\eta}}`}</p>
   <p>${tex`Y \sim \text{Bernoulli}(p)`}</p>
-  <p>At x = ${lr_demo_focus_x.toFixed(1)}: ${tex`\eta`} = ${lr_demo_focus_eta.toFixed(2)}, p = ${lr_demo_focus_p.toFixed(3)}, and ${tex`p(1-p)`} = ${(lr_demo_focus_p * (1 - lr_demo_focus_p)).toFixed(3)}.</p>
 </div>
 <div class="lr-demo-grid">
   <div class="lr-demo-panel">
@@ -455,12 +400,12 @@ html`
   </div>
   <div class="lr-demo-panel">
     <h4>2. Logistic link</h4>
-    <p>The inverse-logit is shown on a fixed, centred log-odds scale.</p>
+    <p>The inverse-logit transforms the current log-odds line into probabilities.</p>
     ${lr_demo_probability_plot}
   </div>
   <div class="lr-demo-panel">
     <h4>3. Bernoulli error model</h4>
-    <p>The labelled slice shows the Bernoulli probabilities p and 1 - p at the selected x.</p>
+    <p>The dot sizes show how the Bernoulli probabilities change across x.</p>
     ${lr_demo_bernoulli_plot}
   </div>
 </div>`

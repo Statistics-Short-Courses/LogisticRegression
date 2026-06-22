@@ -27998,29 +27998,29 @@ initializeRuntime();
 
 </script>
 <style>
+.Note {
+--color1: #FFF9C4;
+--color2: #FFEB3B;
+}
 .Exercise {
 --color1: #C8E6C9;
 --color2: #4CAF50;
 }
-.Key-term {
---color1: #D1C4E9;
---color2: #673AB7;
-}
-.Note {
---color1: #FFF9C4;
---color2: #FFEB3B;
+.Example {
+--color1: #BBDEFB;
+--color2: #2196F3;
 }
 .Key-point {
 --color1: #FFF9C4;
 --color2: #FFEB3B;
 }
+.Key-term {
+--color1: #D1C4E9;
+--color2: #673AB7;
+}
 .Assumption {
 --color1: #FFCDD2;
 --color2: #F44336;
-}
-.Example {
---color1: #BBDEFB;
---color2: #2196F3;
 }
 </style>
 
@@ -28512,23 +28512,17 @@ Y_i \sim \text{Bernoulli}(p_i),
 <span id="cb2-250"><a href="#cb2-250" aria-hidden="true" tabindex="-1"></a>  <span class="dt">label</span><span class="op">:</span> <span class="fu">html</span><span class="vs">`</span><span class="sc">${</span><span class="fu">tex</span><span class="vs">`</span><span class="sc">\b</span><span class="vs">eta_0`</span><span class="sc">}</span><span class="vs">: log-odds intercept`</span></span>
 <span id="cb2-251"><a href="#cb2-251" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb2-252"><a href="#cb2-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-253"><a href="#cb2-253" aria-hidden="true" tabindex="-1"></a>viewof lr_demo_b1 <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="dv">2</span><span class="op">,</span> <span class="dv">2</span>]<span class="op">,</span> {</span>
+<span id="cb2-253"><a href="#cb2-253" aria-hidden="true" tabindex="-1"></a>viewof lr_demo_b1 <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="dv">8</span><span class="op">,</span> <span class="dv">8</span>]<span class="op">,</span> {</span>
 <span id="cb2-254"><a href="#cb2-254" aria-hidden="true" tabindex="-1"></a>  <span class="dt">value</span><span class="op">:</span> <span class="fl">0.8</span><span class="op">,</span></span>
 <span id="cb2-255"><a href="#cb2-255" aria-hidden="true" tabindex="-1"></a>  <span class="dt">step</span><span class="op">:</span> <span class="fl">0.1</span><span class="op">,</span></span>
 <span id="cb2-256"><a href="#cb2-256" aria-hidden="true" tabindex="-1"></a>  <span class="dt">label</span><span class="op">:</span> <span class="fu">html</span><span class="vs">`</span><span class="sc">${</span><span class="fu">tex</span><span class="vs">`</span><span class="sc">\b</span><span class="vs">eta_1`</span><span class="sc">}</span><span class="vs">: log-odds slope`</span></span>
 <span id="cb2-257"><a href="#cb2-257" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb2-258"><a href="#cb2-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-259"><a href="#cb2-259" aria-hidden="true" tabindex="-1"></a>viewof lr_demo_focus_x <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="dv">4</span><span class="op">,</span> <span class="dv">4</span>]<span class="op">,</span> {</span>
-<span id="cb2-260"><a href="#cb2-260" aria-hidden="true" tabindex="-1"></a>  <span class="dt">value</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
-<span id="cb2-261"><a href="#cb2-261" aria-hidden="true" tabindex="-1"></a>  <span class="dt">step</span><span class="op">:</span> <span class="fl">0.1</span><span class="op">,</span></span>
-<span id="cb2-262"><a href="#cb2-262" aria-hidden="true" tabindex="-1"></a>  <span class="dt">label</span><span class="op">:</span> <span class="st">"Focus x value"</span></span>
-<span id="cb2-263"><a href="#cb2-263" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb2-264"><a href="#cb2-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-265"><a href="#cb2-265" aria-hidden="true" tabindex="-1"></a>viewof lr_demo_n <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">20</span><span class="op">,</span> <span class="dv">200</span>]<span class="op">,</span> {</span>
-<span id="cb2-266"><a href="#cb2-266" aria-hidden="true" tabindex="-1"></a>  <span class="dt">value</span><span class="op">:</span> <span class="dv">80</span><span class="op">,</span></span>
-<span id="cb2-267"><a href="#cb2-267" aria-hidden="true" tabindex="-1"></a>  <span class="dt">step</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span></span>
-<span id="cb2-268"><a href="#cb2-268" aria-hidden="true" tabindex="-1"></a>  <span class="dt">label</span><span class="op">:</span> <span class="st">"Bernoulli draws"</span></span>
-<span id="cb2-269"><a href="#cb2-269" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-259"><a href="#cb2-259" aria-hidden="true" tabindex="-1"></a>viewof lr_demo_n <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">20</span><span class="op">,</span> <span class="dv">200</span>]<span class="op">,</span> {</span>
+<span id="cb2-260"><a href="#cb2-260" aria-hidden="true" tabindex="-1"></a>  <span class="dt">value</span><span class="op">:</span> <span class="dv">80</span><span class="op">,</span></span>
+<span id="cb2-261"><a href="#cb2-261" aria-hidden="true" tabindex="-1"></a>  <span class="dt">step</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span></span>
+<span id="cb2-262"><a href="#cb2-262" aria-hidden="true" tabindex="-1"></a>  <span class="dt">label</span><span class="op">:</span> <span class="st">"Bernoulli draws"</span></span>
+<span id="cb2-263"><a href="#cb2-263" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-1-1" data-nodetype="declaration">
@@ -28550,208 +28544,151 @@ Y_i \sim \text{Bernoulli}(p_i),
 </div>
 </div>
 </div>
-<div class="cell-output cell-output-display">
-<div>
-<div id="ojs-cell-1-4" data-nodetype="declaration">
-
-</div>
-</div>
-</div>
 </div>
 <div class="panel-fill panel-grid g-col-24 g-col-lg-17 pt-3 pt-lg-0">
 <div class="g-col-24">
 <div class="cell panel-fill">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="276" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 275;"><span id="cb3-276"><a href="#cb3-276" aria-hidden="true" tabindex="-1"></a>lr_demo_logistic <span class="op">=</span> z <span class="kw">=&gt;</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">exp</span>(<span class="op">-</span>z))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="271" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 270;"><span id="cb3-271"><a href="#cb3-271" aria-hidden="true" tabindex="-1"></a>lr_demo_logistic <span class="op">=</span> z <span class="kw">=&gt;</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">exp</span>(<span class="op">-</span>z))</span>
+<span id="cb3-272"><a href="#cb3-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-273"><a href="#cb3-273" aria-hidden="true" tabindex="-1"></a>lr_demo_frac <span class="op">=</span> i <span class="kw">=&gt;</span> {</span>
+<span id="cb3-274"><a href="#cb3-274" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> raw <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(i <span class="op">*</span> <span class="fl">12.9898</span>) <span class="op">*</span> <span class="fl">43758.5453</span><span class="op">;</span></span>
+<span id="cb3-275"><a href="#cb3-275" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> raw <span class="op">-</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(raw)<span class="op">;</span></span>
+<span id="cb3-276"><a href="#cb3-276" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb3-277"><a href="#cb3-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-278"><a href="#cb3-278" aria-hidden="true" tabindex="-1"></a>lr_demo_frac <span class="op">=</span> i <span class="kw">=&gt;</span> {</span>
-<span id="cb3-279"><a href="#cb3-279" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> raw <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(i <span class="op">*</span> <span class="fl">12.9898</span>) <span class="op">*</span> <span class="fl">43758.5453</span><span class="op">;</span></span>
-<span id="cb3-280"><a href="#cb3-280" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> raw <span class="op">-</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(raw)<span class="op">;</span></span>
-<span id="cb3-281"><a href="#cb3-281" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-282"><a href="#cb3-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-283"><a href="#cb3-283" aria-hidden="true" tabindex="-1"></a>lr_demo_x_domain <span class="op">=</span> [<span class="op">-</span><span class="dv">4</span><span class="op">,</span> <span class="dv">4</span>]</span>
-<span id="cb3-284"><a href="#cb3-284" aria-hidden="true" tabindex="-1"></a>lr_demo_eta_domain <span class="op">=</span> [<span class="op">-</span><span class="dv">12</span><span class="op">,</span> <span class="dv">12</span>]</span>
-<span id="cb3-285"><a href="#cb3-285" aria-hidden="true" tabindex="-1"></a>lr_demo_curve <span class="op">=</span> d3<span class="op">.</span><span class="fu">range</span>(lr_demo_x_domain[<span class="dv">0</span>]<span class="op">,</span> lr_demo_x_domain[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.02</span><span class="op">,</span> <span class="fl">0.04</span>)<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> {</span>
-<span id="cb3-286"><a href="#cb3-286" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> eta <span class="op">=</span> lr_demo_b0 <span class="op">+</span> lr_demo_b1 <span class="op">*</span> x<span class="op">;</span></span>
-<span id="cb3-287"><a href="#cb3-287" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {x<span class="op">,</span> eta<span class="op">,</span> <span class="dt">p</span><span class="op">:</span> <span class="fu">lr_demo_logistic</span>(eta)}<span class="op">;</span></span>
-<span id="cb3-288"><a href="#cb3-288" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb3-289"><a href="#cb3-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-290"><a href="#cb3-290" aria-hidden="true" tabindex="-1"></a>lr_demo_focus_eta <span class="op">=</span> lr_demo_b0 <span class="op">+</span> lr_demo_b1 <span class="op">*</span> lr_demo_focus_x</span>
-<span id="cb3-291"><a href="#cb3-291" aria-hidden="true" tabindex="-1"></a>lr_demo_focus_p <span class="op">=</span> <span class="fu">lr_demo_logistic</span>(lr_demo_focus_eta)</span>
-<span id="cb3-292"><a href="#cb3-292" aria-hidden="true" tabindex="-1"></a>lr_demo_focus <span class="op">=</span> [{<span class="dt">x</span><span class="op">:</span> lr_demo_focus_x<span class="op">,</span> <span class="dt">eta</span><span class="op">:</span> lr_demo_focus_eta<span class="op">,</span> <span class="dt">p</span><span class="op">:</span> lr_demo_focus_p}]</span>
-<span id="cb3-293"><a href="#cb3-293" aria-hidden="true" tabindex="-1"></a>lr_demo_link_curve <span class="op">=</span> d3<span class="op">.</span><span class="fu">range</span>(lr_demo_eta_domain[<span class="dv">0</span>]<span class="op">,</span> lr_demo_eta_domain[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.04</span><span class="op">,</span> <span class="fl">0.08</span>)<span class="op">.</span><span class="fu">map</span>(eta <span class="kw">=&gt;</span> ({</span>
-<span id="cb3-294"><a href="#cb3-294" aria-hidden="true" tabindex="-1"></a>  eta<span class="op">,</span></span>
-<span id="cb3-295"><a href="#cb3-295" aria-hidden="true" tabindex="-1"></a>  <span class="dt">p</span><span class="op">:</span> <span class="fu">lr_demo_logistic</span>(eta)</span>
-<span id="cb3-296"><a href="#cb3-296" aria-hidden="true" tabindex="-1"></a>}))</span>
-<span id="cb3-297"><a href="#cb3-297" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-298"><a href="#cb3-298" aria-hidden="true" tabindex="-1"></a>lr_demo_sample <span class="op">=</span> d3<span class="op">.</span><span class="fu">range</span>(lr_demo_n)<span class="op">.</span><span class="fu">map</span>(i <span class="kw">=&gt;</span> {</span>
-<span id="cb3-299"><a href="#cb3-299" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> x <span class="op">=</span> lr_demo_x_domain[<span class="dv">0</span>] <span class="op">+</span> (lr_demo_x_domain[<span class="dv">1</span>] <span class="op">-</span> lr_demo_x_domain[<span class="dv">0</span>]) <span class="op">*</span> <span class="fu">lr_demo_frac</span>(i <span class="op">+</span> <span class="dv">1</span>)<span class="op">;</span></span>
-<span id="cb3-300"><a href="#cb3-300" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> p <span class="op">=</span> <span class="fu">lr_demo_logistic</span>(lr_demo_b0 <span class="op">+</span> lr_demo_b1 <span class="op">*</span> x)<span class="op">;</span></span>
-<span id="cb3-301"><a href="#cb3-301" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> y <span class="op">=</span> <span class="fu">lr_demo_frac</span>(i <span class="op">+</span> <span class="dv">2001</span>) <span class="op">&lt;</span> p <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb3-302"><a href="#cb3-302" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
-<span id="cb3-303"><a href="#cb3-303" aria-hidden="true" tabindex="-1"></a>    x<span class="op">,</span></span>
-<span id="cb3-304"><a href="#cb3-304" aria-hidden="true" tabindex="-1"></a>    p<span class="op">,</span></span>
-<span id="cb3-305"><a href="#cb3-305" aria-hidden="true" tabindex="-1"></a>    y<span class="op">,</span></span>
-<span id="cb3-306"><a href="#cb3-306" aria-hidden="true" tabindex="-1"></a>    <span class="dt">y_jitter</span><span class="op">:</span> y <span class="op">+</span> (<span class="fu">lr_demo_frac</span>(i <span class="op">+</span> <span class="dv">4001</span>) <span class="op">-</span> <span class="fl">0.5</span>) <span class="op">*</span> <span class="fl">0.08</span></span>
-<span id="cb3-307"><a href="#cb3-307" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
-<span id="cb3-308"><a href="#cb3-308" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb3-309"><a href="#cb3-309" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-310"><a href="#cb3-310" aria-hidden="true" tabindex="-1"></a>lr_demo_mass_x <span class="op">=</span> d3<span class="op">.</span><span class="fu">range</span>(lr_demo_x_domain[<span class="dv">0</span>]<span class="op">,</span> lr_demo_x_domain[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dv">1</span>)</span>
-<span id="cb3-311"><a href="#cb3-311" aria-hidden="true" tabindex="-1"></a>lr_demo_mass <span class="op">=</span> lr_demo_mass_x<span class="op">.</span><span class="fu">flatMap</span>(x <span class="kw">=&gt;</span> {</span>
-<span id="cb3-312"><a href="#cb3-312" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> p <span class="op">=</span> <span class="fu">lr_demo_logistic</span>(lr_demo_b0 <span class="op">+</span> lr_demo_b1 <span class="op">*</span> x)<span class="op">;</span></span>
-<span id="cb3-313"><a href="#cb3-313" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [</span>
-<span id="cb3-314"><a href="#cb3-314" aria-hidden="true" tabindex="-1"></a>    {x<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">probability</span><span class="op">:</span> p<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Pass"</span>}<span class="op">,</span></span>
-<span id="cb3-315"><a href="#cb3-315" aria-hidden="true" tabindex="-1"></a>    {x<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">probability</span><span class="op">:</span> <span class="dv">1</span> <span class="op">-</span> p<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Fail"</span>}</span>
-<span id="cb3-316"><a href="#cb3-316" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">;</span></span>
-<span id="cb3-317"><a href="#cb3-317" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb3-318"><a href="#cb3-318" aria-hidden="true" tabindex="-1"></a>lr_demo_focus_mass <span class="op">=</span> [</span>
-<span id="cb3-319"><a href="#cb3-319" aria-hidden="true" tabindex="-1"></a>  {</span>
-<span id="cb3-320"><a href="#cb3-320" aria-hidden="true" tabindex="-1"></a>    <span class="dt">x</span><span class="op">:</span> lr_demo_focus_x<span class="op">,</span></span>
-<span id="cb3-321"><a href="#cb3-321" aria-hidden="true" tabindex="-1"></a>    <span class="dt">y</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
-<span id="cb3-322"><a href="#cb3-322" aria-hidden="true" tabindex="-1"></a>    <span class="dt">probability</span><span class="op">:</span> lr_demo_focus_p<span class="op">,</span></span>
-<span id="cb3-323"><a href="#cb3-323" aria-hidden="true" tabindex="-1"></a>    <span class="dt">label</span><span class="op">:</span> <span class="st">"Pass"</span><span class="op">,</span></span>
-<span id="cb3-324"><a href="#cb3-324" aria-hidden="true" tabindex="-1"></a>    <span class="dt">parameter</span><span class="op">:</span> <span class="vs">`p = </span><span class="sc">${</span>lr_demo_focus_p<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)<span class="sc">}</span><span class="vs">`</span></span>
-<span id="cb3-325"><a href="#cb3-325" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
-<span id="cb3-326"><a href="#cb3-326" aria-hidden="true" tabindex="-1"></a>  {</span>
-<span id="cb3-327"><a href="#cb3-327" aria-hidden="true" tabindex="-1"></a>    <span class="dt">x</span><span class="op">:</span> lr_demo_focus_x<span class="op">,</span></span>
-<span id="cb3-328"><a href="#cb3-328" aria-hidden="true" tabindex="-1"></a>    <span class="dt">y</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span></span>
-<span id="cb3-329"><a href="#cb3-329" aria-hidden="true" tabindex="-1"></a>    <span class="dt">probability</span><span class="op">:</span> <span class="dv">1</span> <span class="op">-</span> lr_demo_focus_p<span class="op">,</span></span>
-<span id="cb3-330"><a href="#cb3-330" aria-hidden="true" tabindex="-1"></a>    <span class="dt">label</span><span class="op">:</span> <span class="st">"Fail"</span><span class="op">,</span></span>
-<span id="cb3-331"><a href="#cb3-331" aria-hidden="true" tabindex="-1"></a>    <span class="dt">parameter</span><span class="op">:</span> <span class="vs">`1 - p = </span><span class="sc">${</span>(<span class="dv">1</span> <span class="op">-</span> lr_demo_focus_p)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)<span class="sc">}</span><span class="vs">`</span></span>
-<span id="cb3-332"><a href="#cb3-332" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb3-333"><a href="#cb3-333" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb3-334"><a href="#cb3-334" aria-hidden="true" tabindex="-1"></a>lr_demo_mass_label_anchor <span class="op">=</span> lr_demo_focus_x <span class="op">&gt;</span> <span class="fl">2.4</span> <span class="op">?</span> <span class="st">"end"</span> <span class="op">:</span> <span class="st">"start"</span></span>
-<span id="cb3-335"><a href="#cb3-335" aria-hidden="true" tabindex="-1"></a>lr_demo_mass_label_dx <span class="op">=</span> lr_demo_focus_x <span class="op">&gt;</span> <span class="fl">2.4</span> <span class="op">?</span> <span class="op">-</span><span class="dv">10</span> <span class="op">:</span> <span class="dv">10</span></span>
-<span id="cb3-336"><a href="#cb3-336" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-337"><a href="#cb3-337" aria-hidden="true" tabindex="-1"></a>lr_demo_logodds_plot <span class="op">=</span> Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb3-338"><a href="#cb3-338" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">250</span><span class="op">,</span></span>
-<span id="cb3-339"><a href="#cb3-339" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">48</span><span class="op">,</span></span>
-<span id="cb3-340"><a href="#cb3-340" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginBottom</span><span class="op">:</span> <span class="dv">42</span><span class="op">,</span></span>
-<span id="cb3-341"><a href="#cb3-341" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> lr_demo_x_domain<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
-<span id="cb3-342"><a href="#cb3-342" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> lr_demo_eta_domain<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Linear predictor, η"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
-<span id="cb3-343"><a href="#cb3-343" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
-<span id="cb3-344"><a href="#cb3-344" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> <span class="st">"#b8b8b8"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 4"</span>})<span class="op">,</span></span>
-<span id="cb3-345"><a href="#cb3-345" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(lr_demo_curve<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"eta"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#2a5599"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.5</span>})<span class="op">,</span></span>
-<span id="cb3-346"><a href="#cb3-346" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(lr_demo_focus<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"eta"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#d95f02"</span>})</span>
-<span id="cb3-347"><a href="#cb3-347" aria-hidden="true" tabindex="-1"></a>  ]</span>
-<span id="cb3-348"><a href="#cb3-348" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb3-349"><a href="#cb3-349" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-350"><a href="#cb3-350" aria-hidden="true" tabindex="-1"></a>lr_demo_probability_plot <span class="op">=</span> Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb3-351"><a href="#cb3-351" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">250</span><span class="op">,</span></span>
-<span id="cb3-352"><a href="#cb3-352" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">48</span><span class="op">,</span></span>
-<span id="cb3-353"><a href="#cb3-353" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginBottom</span><span class="op">:</span> <span class="dv">42</span><span class="op">,</span></span>
-<span id="cb3-354"><a href="#cb3-354" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> lr_demo_eta_domain<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Linear predictor, η"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
-<span id="cb3-355"><a href="#cb3-355" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Probability, p"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">percent</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
-<span id="cb3-356"><a href="#cb3-356" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
-<span id="cb3-357"><a href="#cb3-357" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([<span class="dv">0</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> <span class="st">"#b8b8b8"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 4"</span>})<span class="op">,</span></span>
-<span id="cb3-358"><a href="#cb3-358" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span><span class="op">,</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> <span class="st">"#d9d9d9"</span>})<span class="op">,</span></span>
-<span id="cb3-359"><a href="#cb3-359" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(lr_demo_link_curve<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"eta"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"p"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#00876c"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.5</span>})<span class="op">,</span></span>
-<span id="cb3-360"><a href="#cb3-360" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(lr_demo_focus<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"eta"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"p"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#d95f02"</span>})</span>
-<span id="cb3-361"><a href="#cb3-361" aria-hidden="true" tabindex="-1"></a>  ]</span>
-<span id="cb3-362"><a href="#cb3-362" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb3-363"><a href="#cb3-363" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-364"><a href="#cb3-364" aria-hidden="true" tabindex="-1"></a>lr_demo_bernoulli_plot <span class="op">=</span> Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb3-365"><a href="#cb3-365" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">250</span><span class="op">,</span></span>
-<span id="cb3-366"><a href="#cb3-366" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">48</span><span class="op">,</span></span>
-<span id="cb3-367"><a href="#cb3-367" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginBottom</span><span class="op">:</span> <span class="dv">42</span><span class="op">,</span></span>
-<span id="cb3-368"><a href="#cb3-368" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> lr_demo_x_domain<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
-<span id="cb3-369"><a href="#cb3-369" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> [<span class="op">-</span><span class="fl">0.15</span><span class="op">,</span> <span class="fl">1.15</span>]<span class="op">,</span> <span class="dt">ticks</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Observed outcome, Y"</span>}<span class="op">,</span></span>
-<span id="cb3-370"><a href="#cb3-370" aria-hidden="true" tabindex="-1"></a>  <span class="dt">color</span><span class="op">:</span> {</span>
-<span id="cb3-371"><a href="#cb3-371" aria-hidden="true" tabindex="-1"></a>    <span class="dt">domain</span><span class="op">:</span> [<span class="st">"Fail"</span><span class="op">,</span> <span class="st">"Pass"</span>]<span class="op">,</span></span>
-<span id="cb3-372"><a href="#cb3-372" aria-hidden="true" tabindex="-1"></a>    <span class="dt">range</span><span class="op">:</span> [<span class="st">"#b94e48"</span><span class="op">,</span> <span class="st">"#2a5599"</span>]<span class="op">,</span></span>
-<span id="cb3-373"><a href="#cb3-373" aria-hidden="true" tabindex="-1"></a>    <span class="dt">legend</span><span class="op">:</span> <span class="kw">true</span></span>
-<span id="cb3-374"><a href="#cb3-374" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
-<span id="cb3-375"><a href="#cb3-375" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
-<span id="cb3-376"><a href="#cb3-376" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([lr_demo_focus_x]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> <span class="st">"#d95f02"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"3 3"</span>})<span class="op">,</span></span>
-<span id="cb3-377"><a href="#cb3-377" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(lr_demo_mass<span class="op">,</span> {</span>
-<span id="cb3-378"><a href="#cb3-378" aria-hidden="true" tabindex="-1"></a>      <span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span></span>
-<span id="cb3-379"><a href="#cb3-379" aria-hidden="true" tabindex="-1"></a>      <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span></span>
-<span id="cb3-380"><a href="#cb3-380" aria-hidden="true" tabindex="-1"></a>      <span class="dt">r</span><span class="op">:</span> d <span class="kw">=&gt;</span> <span class="dv">3</span> <span class="op">+</span> <span class="dv">13</span> <span class="op">*</span> d<span class="op">.</span><span class="at">probability</span><span class="op">,</span></span>
-<span id="cb3-381"><a href="#cb3-381" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> <span class="st">"label"</span><span class="op">,</span></span>
-<span id="cb3-382"><a href="#cb3-382" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.2</span><span class="op">,</span></span>
-<span id="cb3-383"><a href="#cb3-383" aria-hidden="true" tabindex="-1"></a>      <span class="dt">stroke</span><span class="op">:</span> <span class="st">"label"</span></span>
-<span id="cb3-384"><a href="#cb3-384" aria-hidden="true" tabindex="-1"></a>    })<span class="op">,</span></span>
-<span id="cb3-385"><a href="#cb3-385" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(lr_demo_focus_mass<span class="op">,</span> {</span>
-<span id="cb3-386"><a href="#cb3-386" aria-hidden="true" tabindex="-1"></a>      <span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span></span>
-<span id="cb3-387"><a href="#cb3-387" aria-hidden="true" tabindex="-1"></a>      <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span></span>
-<span id="cb3-388"><a href="#cb3-388" aria-hidden="true" tabindex="-1"></a>      <span class="dt">r</span><span class="op">:</span> d <span class="kw">=&gt;</span> <span class="dv">4</span> <span class="op">+</span> <span class="dv">15</span> <span class="op">*</span> d<span class="op">.</span><span class="at">probability</span><span class="op">,</span></span>
-<span id="cb3-389"><a href="#cb3-389" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> <span class="st">"label"</span><span class="op">,</span></span>
-<span id="cb3-390"><a href="#cb3-390" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.35</span><span class="op">,</span></span>
-<span id="cb3-391"><a href="#cb3-391" aria-hidden="true" tabindex="-1"></a>      <span class="dt">stroke</span><span class="op">:</span> <span class="st">"label"</span><span class="op">,</span></span>
-<span id="cb3-392"><a href="#cb3-392" aria-hidden="true" tabindex="-1"></a>      <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.5</span></span>
-<span id="cb3-393"><a href="#cb3-393" aria-hidden="true" tabindex="-1"></a>    })<span class="op">,</span></span>
-<span id="cb3-394"><a href="#cb3-394" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>(lr_demo_focus_mass<span class="op">,</span> {</span>
-<span id="cb3-395"><a href="#cb3-395" aria-hidden="true" tabindex="-1"></a>      <span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span></span>
-<span id="cb3-396"><a href="#cb3-396" aria-hidden="true" tabindex="-1"></a>      <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span></span>
-<span id="cb3-397"><a href="#cb3-397" aria-hidden="true" tabindex="-1"></a>      <span class="dt">text</span><span class="op">:</span> <span class="st">"parameter"</span><span class="op">,</span></span>
-<span id="cb3-398"><a href="#cb3-398" aria-hidden="true" tabindex="-1"></a>      <span class="dt">dx</span><span class="op">:</span> lr_demo_mass_label_dx<span class="op">,</span></span>
-<span id="cb3-399"><a href="#cb3-399" aria-hidden="true" tabindex="-1"></a>      <span class="dt">dy</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">y</span> <span class="op">===</span> <span class="dv">1</span> <span class="op">?</span> <span class="op">-</span><span class="dv">12</span> <span class="op">:</span> <span class="dv">14</span><span class="op">,</span></span>
-<span id="cb3-400"><a href="#cb3-400" aria-hidden="true" tabindex="-1"></a>      <span class="dt">textAnchor</span><span class="op">:</span> lr_demo_mass_label_anchor<span class="op">,</span></span>
-<span id="cb3-401"><a href="#cb3-401" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> <span class="st">"label"</span><span class="op">,</span></span>
-<span id="cb3-402"><a href="#cb3-402" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fontWeight</span><span class="op">:</span> <span class="dv">700</span></span>
-<span id="cb3-403"><a href="#cb3-403" aria-hidden="true" tabindex="-1"></a>    })<span class="op">,</span></span>
-<span id="cb3-404"><a href="#cb3-404" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(lr_demo_sample<span class="op">,</span> {</span>
-<span id="cb3-405"><a href="#cb3-405" aria-hidden="true" tabindex="-1"></a>      <span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span></span>
-<span id="cb3-406"><a href="#cb3-406" aria-hidden="true" tabindex="-1"></a>      <span class="dt">y</span><span class="op">:</span> <span class="st">"y_jitter"</span><span class="op">,</span></span>
-<span id="cb3-407"><a href="#cb3-407" aria-hidden="true" tabindex="-1"></a>      <span class="dt">r</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span></span>
-<span id="cb3-408"><a href="#cb3-408" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">y</span> <span class="op">===</span> <span class="dv">1</span> <span class="op">?</span> <span class="st">"Pass"</span> <span class="op">:</span> <span class="st">"Fail"</span><span class="op">,</span></span>
-<span id="cb3-409"><a href="#cb3-409" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.65</span></span>
-<span id="cb3-410"><a href="#cb3-410" aria-hidden="true" tabindex="-1"></a>    })</span>
-<span id="cb3-411"><a href="#cb3-411" aria-hidden="true" tabindex="-1"></a>  ]</span>
-<span id="cb3-412"><a href="#cb3-412" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb3-413"><a href="#cb3-413" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-414"><a href="#cb3-414" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`</span></span>
-<span id="cb3-415"><a href="#cb3-415" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;style&gt;</span></span>
-<span id="cb3-416"><a href="#cb3-416" aria-hidden="true" tabindex="-1"></a><span class="vs">.lr-demo-grid {</span></span>
-<span id="cb3-417"><a href="#cb3-417" aria-hidden="true" tabindex="-1"></a><span class="vs">  display: grid;</span></span>
-<span id="cb3-418"><a href="#cb3-418" aria-hidden="true" tabindex="-1"></a><span class="vs">  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));</span></span>
-<span id="cb3-419"><a href="#cb3-419" aria-hidden="true" tabindex="-1"></a><span class="vs">  gap: 0.9rem;</span></span>
-<span id="cb3-420"><a href="#cb3-420" aria-hidden="true" tabindex="-1"></a><span class="vs">  align-items: start;</span></span>
-<span id="cb3-421"><a href="#cb3-421" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
-<span id="cb3-422"><a href="#cb3-422" aria-hidden="true" tabindex="-1"></a><span class="vs">.lr-demo-panel {</span></span>
-<span id="cb3-423"><a href="#cb3-423" aria-hidden="true" tabindex="-1"></a><span class="vs">  min-width: 0;</span></span>
-<span id="cb3-424"><a href="#cb3-424" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
-<span id="cb3-425"><a href="#cb3-425" aria-hidden="true" tabindex="-1"></a><span class="vs">.lr-demo-panel h4 {</span></span>
-<span id="cb3-426"><a href="#cb3-426" aria-hidden="true" tabindex="-1"></a><span class="vs">  margin: 0 0 0.25rem 0;</span></span>
-<span id="cb3-427"><a href="#cb3-427" aria-hidden="true" tabindex="-1"></a><span class="vs">  font-size: 0.95rem;</span></span>
-<span id="cb3-428"><a href="#cb3-428" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
-<span id="cb3-429"><a href="#cb3-429" aria-hidden="true" tabindex="-1"></a><span class="vs">.lr-demo-panel p {</span></span>
-<span id="cb3-430"><a href="#cb3-430" aria-hidden="true" tabindex="-1"></a><span class="vs">  margin: 0 0 0.45rem 0;</span></span>
-<span id="cb3-431"><a href="#cb3-431" aria-hidden="true" tabindex="-1"></a><span class="vs">  font-size: 0.85rem;</span></span>
-<span id="cb3-432"><a href="#cb3-432" aria-hidden="true" tabindex="-1"></a><span class="vs">  line-height: 1.3;</span></span>
-<span id="cb3-433"><a href="#cb3-433" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
-<span id="cb3-434"><a href="#cb3-434" aria-hidden="true" tabindex="-1"></a><span class="vs">.lr-demo-equations {</span></span>
-<span id="cb3-435"><a href="#cb3-435" aria-hidden="true" tabindex="-1"></a><span class="vs">  margin: 0 0 0.9rem 0;</span></span>
-<span id="cb3-436"><a href="#cb3-436" aria-hidden="true" tabindex="-1"></a><span class="vs">  padding: 0.6rem 0.75rem;</span></span>
-<span id="cb3-437"><a href="#cb3-437" aria-hidden="true" tabindex="-1"></a><span class="vs">  border-left: 4px solid #2a5599;</span></span>
-<span id="cb3-438"><a href="#cb3-438" aria-hidden="true" tabindex="-1"></a><span class="vs">  background: #f7f9fc;</span></span>
-<span id="cb3-439"><a href="#cb3-439" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
-<span id="cb3-440"><a href="#cb3-440" aria-hidden="true" tabindex="-1"></a><span class="vs">.lr-demo-equations p {</span></span>
-<span id="cb3-441"><a href="#cb3-441" aria-hidden="true" tabindex="-1"></a><span class="vs">  margin: 0.1rem 0;</span></span>
-<span id="cb3-442"><a href="#cb3-442" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
-<span id="cb3-443"><a href="#cb3-443" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/style&gt;</span></span>
-<span id="cb3-444"><a href="#cb3-444" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;div class="lr-demo-equations"&gt;</span></span>
-<span id="cb3-445"><a href="#cb3-445" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;p&gt;</span><span class="sc">${</span><span class="fu">tex</span><span class="vs">`</span><span class="sc">\e</span><span class="vs">ta = </span><span class="sc">${</span>lr_demo_b0<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="sc">}</span><span class="vs"> + </span><span class="sc">${</span>lr_demo_b1<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="sc">}</span><span class="vs">x`</span><span class="sc">}</span><span class="vs">&lt;/p&gt;</span></span>
-<span id="cb3-446"><a href="#cb3-446" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;p&gt;</span><span class="sc">${</span><span class="fu">tex</span><span class="vs">`p = </span><span class="sc">\f</span><span class="vs">rac{1}{1 + e^{-</span><span class="sc">\e</span><span class="vs">ta}}`</span><span class="sc">}</span><span class="vs">&lt;/p&gt;</span></span>
-<span id="cb3-447"><a href="#cb3-447" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;p&gt;</span><span class="sc">${</span><span class="fu">tex</span><span class="vs">`Y </span><span class="sc">\s</span><span class="vs">im </span><span class="sc">\t</span><span class="vs">ext{Bernoulli}(p)`</span><span class="sc">}</span><span class="vs">&lt;/p&gt;</span></span>
-<span id="cb3-448"><a href="#cb3-448" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;p&gt;At x = </span><span class="sc">${</span>lr_demo_focus_x<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="sc">}</span><span class="vs">: </span><span class="sc">${</span><span class="fu">tex</span><span class="vs">`</span><span class="sc">\e</span><span class="vs">ta`</span><span class="sc">}</span><span class="vs"> = </span><span class="sc">${</span>lr_demo_focus_eta<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)<span class="sc">}</span><span class="vs">, p = </span><span class="sc">${</span>lr_demo_focus_p<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>)<span class="sc">}</span><span class="vs">, and </span><span class="sc">${</span><span class="fu">tex</span><span class="vs">`p(1-p)`</span><span class="sc">}</span><span class="vs"> = </span><span class="sc">${</span>(lr_demo_focus_p <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> lr_demo_focus_p))<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>)<span class="sc">}</span><span class="vs">.&lt;/p&gt;</span></span>
-<span id="cb3-449"><a href="#cb3-449" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;</span></span>
-<span id="cb3-450"><a href="#cb3-450" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;div class="lr-demo-grid"&gt;</span></span>
-<span id="cb3-451"><a href="#cb3-451" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div class="lr-demo-panel"&gt;</span></span>
-<span id="cb3-452"><a href="#cb3-452" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;h4&gt;1. Linear predictor&lt;/h4&gt;</span></span>
-<span id="cb3-453"><a href="#cb3-453" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;p&gt;The coefficients move and tilt a straight line on the log-odds scale.&lt;/p&gt;</span></span>
-<span id="cb3-454"><a href="#cb3-454" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span>lr_demo_logodds_plot<span class="sc">}</span></span>
-<span id="cb3-455"><a href="#cb3-455" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
-<span id="cb3-456"><a href="#cb3-456" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div class="lr-demo-panel"&gt;</span></span>
-<span id="cb3-457"><a href="#cb3-457" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;h4&gt;2. Logistic link&lt;/h4&gt;</span></span>
-<span id="cb3-458"><a href="#cb3-458" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;p&gt;The inverse-logit is shown on a fixed, centred log-odds scale.&lt;/p&gt;</span></span>
-<span id="cb3-459"><a href="#cb3-459" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span>lr_demo_probability_plot<span class="sc">}</span></span>
-<span id="cb3-460"><a href="#cb3-460" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
-<span id="cb3-461"><a href="#cb3-461" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div class="lr-demo-panel"&gt;</span></span>
-<span id="cb3-462"><a href="#cb3-462" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;h4&gt;3. Bernoulli error model&lt;/h4&gt;</span></span>
-<span id="cb3-463"><a href="#cb3-463" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;p&gt;The labelled slice shows the Bernoulli probabilities p and 1 - p at the selected x.&lt;/p&gt;</span></span>
-<span id="cb3-464"><a href="#cb3-464" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span>lr_demo_bernoulli_plot<span class="sc">}</span></span>
-<span id="cb3-465"><a href="#cb3-465" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
-<span id="cb3-466"><a href="#cb3-466" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-278"><a href="#cb3-278" aria-hidden="true" tabindex="-1"></a>lr_demo_x_domain <span class="op">=</span> [<span class="op">-</span><span class="dv">4</span><span class="op">,</span> <span class="dv">4</span>]</span>
+<span id="cb3-279"><a href="#cb3-279" aria-hidden="true" tabindex="-1"></a>lr_demo_eta_domain <span class="op">=</span> [<span class="op">-</span><span class="dv">12</span><span class="op">,</span> <span class="dv">12</span>]</span>
+<span id="cb3-280"><a href="#cb3-280" aria-hidden="true" tabindex="-1"></a>lr_demo_curve <span class="op">=</span> d3<span class="op">.</span><span class="fu">range</span>(lr_demo_x_domain[<span class="dv">0</span>]<span class="op">,</span> lr_demo_x_domain[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.02</span><span class="op">,</span> <span class="fl">0.04</span>)<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> {</span>
+<span id="cb3-281"><a href="#cb3-281" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> eta <span class="op">=</span> lr_demo_b0 <span class="op">+</span> lr_demo_b1 <span class="op">*</span> x<span class="op">;</span></span>
+<span id="cb3-282"><a href="#cb3-282" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {x<span class="op">,</span> eta<span class="op">,</span> <span class="dt">p</span><span class="op">:</span> <span class="fu">lr_demo_logistic</span>(eta)}<span class="op">;</span></span>
+<span id="cb3-283"><a href="#cb3-283" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-284"><a href="#cb3-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-285"><a href="#cb3-285" aria-hidden="true" tabindex="-1"></a>lr_demo_sample <span class="op">=</span> d3<span class="op">.</span><span class="fu">range</span>(lr_demo_n)<span class="op">.</span><span class="fu">map</span>(i <span class="kw">=&gt;</span> {</span>
+<span id="cb3-286"><a href="#cb3-286" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> x <span class="op">=</span> lr_demo_x_domain[<span class="dv">0</span>] <span class="op">+</span> (lr_demo_x_domain[<span class="dv">1</span>] <span class="op">-</span> lr_demo_x_domain[<span class="dv">0</span>]) <span class="op">*</span> <span class="fu">lr_demo_frac</span>(i <span class="op">+</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb3-287"><a href="#cb3-287" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> p <span class="op">=</span> <span class="fu">lr_demo_logistic</span>(lr_demo_b0 <span class="op">+</span> lr_demo_b1 <span class="op">*</span> x)<span class="op">;</span></span>
+<span id="cb3-288"><a href="#cb3-288" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> y <span class="op">=</span> <span class="fu">lr_demo_frac</span>(i <span class="op">+</span> <span class="dv">2001</span>) <span class="op">&lt;</span> p <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-289"><a href="#cb3-289" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb3-290"><a href="#cb3-290" aria-hidden="true" tabindex="-1"></a>    x<span class="op">,</span></span>
+<span id="cb3-291"><a href="#cb3-291" aria-hidden="true" tabindex="-1"></a>    p<span class="op">,</span></span>
+<span id="cb3-292"><a href="#cb3-292" aria-hidden="true" tabindex="-1"></a>    y<span class="op">,</span></span>
+<span id="cb3-293"><a href="#cb3-293" aria-hidden="true" tabindex="-1"></a>    <span class="dt">y_jitter</span><span class="op">:</span> y <span class="op">+</span> (<span class="fu">lr_demo_frac</span>(i <span class="op">+</span> <span class="dv">4001</span>) <span class="op">-</span> <span class="fl">0.5</span>) <span class="op">*</span> <span class="fl">0.08</span></span>
+<span id="cb3-294"><a href="#cb3-294" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb3-295"><a href="#cb3-295" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-296"><a href="#cb3-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-297"><a href="#cb3-297" aria-hidden="true" tabindex="-1"></a>lr_demo_mass_x <span class="op">=</span> d3<span class="op">.</span><span class="fu">range</span>(lr_demo_x_domain[<span class="dv">0</span>]<span class="op">,</span> lr_demo_x_domain[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dv">1</span>)</span>
+<span id="cb3-298"><a href="#cb3-298" aria-hidden="true" tabindex="-1"></a>lr_demo_mass <span class="op">=</span> lr_demo_mass_x<span class="op">.</span><span class="fu">flatMap</span>(x <span class="kw">=&gt;</span> {</span>
+<span id="cb3-299"><a href="#cb3-299" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> p <span class="op">=</span> <span class="fu">lr_demo_logistic</span>(lr_demo_b0 <span class="op">+</span> lr_demo_b1 <span class="op">*</span> x)<span class="op">;</span></span>
+<span id="cb3-300"><a href="#cb3-300" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [</span>
+<span id="cb3-301"><a href="#cb3-301" aria-hidden="true" tabindex="-1"></a>    {x<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">probability</span><span class="op">:</span> p<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Pass"</span>}<span class="op">,</span></span>
+<span id="cb3-302"><a href="#cb3-302" aria-hidden="true" tabindex="-1"></a>    {x<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">probability</span><span class="op">:</span> <span class="dv">1</span> <span class="op">-</span> p<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Fail"</span>}</span>
+<span id="cb3-303"><a href="#cb3-303" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">;</span></span>
+<span id="cb3-304"><a href="#cb3-304" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-305"><a href="#cb3-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-306"><a href="#cb3-306" aria-hidden="true" tabindex="-1"></a>lr_demo_logodds_plot <span class="op">=</span> Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb3-307"><a href="#cb3-307" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">250</span><span class="op">,</span></span>
+<span id="cb3-308"><a href="#cb3-308" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">48</span><span class="op">,</span></span>
+<span id="cb3-309"><a href="#cb3-309" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginBottom</span><span class="op">:</span> <span class="dv">42</span><span class="op">,</span></span>
+<span id="cb3-310"><a href="#cb3-310" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> lr_demo_x_domain<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb3-311"><a href="#cb3-311" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> lr_demo_eta_domain<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Linear predictor, η"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb3-312"><a href="#cb3-312" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb3-313"><a href="#cb3-313" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> <span class="st">"#b8b8b8"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4 4"</span>})<span class="op">,</span></span>
+<span id="cb3-314"><a href="#cb3-314" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(lr_demo_curve<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"eta"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#2a5599"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.5</span>})</span>
+<span id="cb3-315"><a href="#cb3-315" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb3-316"><a href="#cb3-316" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-317"><a href="#cb3-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-318"><a href="#cb3-318" aria-hidden="true" tabindex="-1"></a>lr_demo_probability_plot <span class="op">=</span> Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb3-319"><a href="#cb3-319" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">250</span><span class="op">,</span></span>
+<span id="cb3-320"><a href="#cb3-320" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">48</span><span class="op">,</span></span>
+<span id="cb3-321"><a href="#cb3-321" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginBottom</span><span class="op">:</span> <span class="dv">42</span><span class="op">,</span></span>
+<span id="cb3-322"><a href="#cb3-322" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> lr_demo_x_domain<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb3-323"><a href="#cb3-323" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Probability, p"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> d <span class="kw">=&gt;</span> (d <span class="op">*</span> <span class="dv">100</span>)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">0</span>) <span class="op">+</span> <span class="st">"%"</span>}<span class="op">,</span></span>
+<span id="cb3-324"><a href="#cb3-324" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb3-325"><a href="#cb3-325" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span><span class="op">,</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> <span class="st">"#d9d9d9"</span>})<span class="op">,</span></span>
+<span id="cb3-326"><a href="#cb3-326" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">line</span>(lr_demo_curve<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"p"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#00876c"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.5</span>})</span>
+<span id="cb3-327"><a href="#cb3-327" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb3-328"><a href="#cb3-328" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-329"><a href="#cb3-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-330"><a href="#cb3-330" aria-hidden="true" tabindex="-1"></a>lr_demo_bernoulli_plot <span class="op">=</span> Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb3-331"><a href="#cb3-331" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">250</span><span class="op">,</span></span>
+<span id="cb3-332"><a href="#cb3-332" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">48</span><span class="op">,</span></span>
+<span id="cb3-333"><a href="#cb3-333" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginBottom</span><span class="op">:</span> <span class="dv">42</span><span class="op">,</span></span>
+<span id="cb3-334"><a href="#cb3-334" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> lr_demo_x_domain<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb3-335"><a href="#cb3-335" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> [<span class="op">-</span><span class="fl">0.15</span><span class="op">,</span> <span class="fl">1.15</span>]<span class="op">,</span> <span class="dt">ticks</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Observed outcome, Y"</span>}<span class="op">,</span></span>
+<span id="cb3-336"><a href="#cb3-336" aria-hidden="true" tabindex="-1"></a>  <span class="dt">color</span><span class="op">:</span> {</span>
+<span id="cb3-337"><a href="#cb3-337" aria-hidden="true" tabindex="-1"></a>    <span class="dt">domain</span><span class="op">:</span> [<span class="st">"Fail"</span><span class="op">,</span> <span class="st">"Pass"</span>]<span class="op">,</span></span>
+<span id="cb3-338"><a href="#cb3-338" aria-hidden="true" tabindex="-1"></a>    <span class="dt">range</span><span class="op">:</span> [<span class="st">"#b94e48"</span><span class="op">,</span> <span class="st">"#2a5599"</span>]<span class="op">,</span></span>
+<span id="cb3-339"><a href="#cb3-339" aria-hidden="true" tabindex="-1"></a>    <span class="dt">legend</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb3-340"><a href="#cb3-340" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb3-341"><a href="#cb3-341" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb3-342"><a href="#cb3-342" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(lr_demo_mass<span class="op">,</span> {</span>
+<span id="cb3-343"><a href="#cb3-343" aria-hidden="true" tabindex="-1"></a>      <span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span></span>
+<span id="cb3-344"><a href="#cb3-344" aria-hidden="true" tabindex="-1"></a>      <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span></span>
+<span id="cb3-345"><a href="#cb3-345" aria-hidden="true" tabindex="-1"></a>      <span class="dt">r</span><span class="op">:</span> d <span class="kw">=&gt;</span> <span class="dv">3</span> <span class="op">+</span> <span class="dv">13</span> <span class="op">*</span> d<span class="op">.</span><span class="at">probability</span><span class="op">,</span></span>
+<span id="cb3-346"><a href="#cb3-346" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> <span class="st">"label"</span><span class="op">,</span></span>
+<span id="cb3-347"><a href="#cb3-347" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.2</span><span class="op">,</span></span>
+<span id="cb3-348"><a href="#cb3-348" aria-hidden="true" tabindex="-1"></a>      <span class="dt">stroke</span><span class="op">:</span> <span class="st">"label"</span></span>
+<span id="cb3-349"><a href="#cb3-349" aria-hidden="true" tabindex="-1"></a>    })<span class="op">,</span></span>
+<span id="cb3-350"><a href="#cb3-350" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(lr_demo_sample<span class="op">,</span> {</span>
+<span id="cb3-351"><a href="#cb3-351" aria-hidden="true" tabindex="-1"></a>      <span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span></span>
+<span id="cb3-352"><a href="#cb3-352" aria-hidden="true" tabindex="-1"></a>      <span class="dt">y</span><span class="op">:</span> <span class="st">"y_jitter"</span><span class="op">,</span></span>
+<span id="cb3-353"><a href="#cb3-353" aria-hidden="true" tabindex="-1"></a>      <span class="dt">r</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span></span>
+<span id="cb3-354"><a href="#cb3-354" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">y</span> <span class="op">===</span> <span class="dv">1</span> <span class="op">?</span> <span class="st">"Pass"</span> <span class="op">:</span> <span class="st">"Fail"</span><span class="op">,</span></span>
+<span id="cb3-355"><a href="#cb3-355" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.65</span></span>
+<span id="cb3-356"><a href="#cb3-356" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb3-357"><a href="#cb3-357" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb3-358"><a href="#cb3-358" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-359"><a href="#cb3-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-360"><a href="#cb3-360" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`</span></span>
+<span id="cb3-361"><a href="#cb3-361" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;style&gt;</span></span>
+<span id="cb3-362"><a href="#cb3-362" aria-hidden="true" tabindex="-1"></a><span class="vs">.lr-demo-grid {</span></span>
+<span id="cb3-363"><a href="#cb3-363" aria-hidden="true" tabindex="-1"></a><span class="vs">  display: grid;</span></span>
+<span id="cb3-364"><a href="#cb3-364" aria-hidden="true" tabindex="-1"></a><span class="vs">  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));</span></span>
+<span id="cb3-365"><a href="#cb3-365" aria-hidden="true" tabindex="-1"></a><span class="vs">  gap: 0.9rem;</span></span>
+<span id="cb3-366"><a href="#cb3-366" aria-hidden="true" tabindex="-1"></a><span class="vs">  align-items: start;</span></span>
+<span id="cb3-367"><a href="#cb3-367" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb3-368"><a href="#cb3-368" aria-hidden="true" tabindex="-1"></a><span class="vs">.lr-demo-panel {</span></span>
+<span id="cb3-369"><a href="#cb3-369" aria-hidden="true" tabindex="-1"></a><span class="vs">  min-width: 0;</span></span>
+<span id="cb3-370"><a href="#cb3-370" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb3-371"><a href="#cb3-371" aria-hidden="true" tabindex="-1"></a><span class="vs">.lr-demo-panel h4 {</span></span>
+<span id="cb3-372"><a href="#cb3-372" aria-hidden="true" tabindex="-1"></a><span class="vs">  margin: 0 0 0.25rem 0;</span></span>
+<span id="cb3-373"><a href="#cb3-373" aria-hidden="true" tabindex="-1"></a><span class="vs">  font-size: 0.95rem;</span></span>
+<span id="cb3-374"><a href="#cb3-374" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb3-375"><a href="#cb3-375" aria-hidden="true" tabindex="-1"></a><span class="vs">.lr-demo-panel p {</span></span>
+<span id="cb3-376"><a href="#cb3-376" aria-hidden="true" tabindex="-1"></a><span class="vs">  margin: 0 0 0.45rem 0;</span></span>
+<span id="cb3-377"><a href="#cb3-377" aria-hidden="true" tabindex="-1"></a><span class="vs">  font-size: 0.85rem;</span></span>
+<span id="cb3-378"><a href="#cb3-378" aria-hidden="true" tabindex="-1"></a><span class="vs">  line-height: 1.3;</span></span>
+<span id="cb3-379"><a href="#cb3-379" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb3-380"><a href="#cb3-380" aria-hidden="true" tabindex="-1"></a><span class="vs">.lr-demo-equations {</span></span>
+<span id="cb3-381"><a href="#cb3-381" aria-hidden="true" tabindex="-1"></a><span class="vs">  margin: 0 0 0.9rem 0;</span></span>
+<span id="cb3-382"><a href="#cb3-382" aria-hidden="true" tabindex="-1"></a><span class="vs">  padding: 0.6rem 0.75rem;</span></span>
+<span id="cb3-383"><a href="#cb3-383" aria-hidden="true" tabindex="-1"></a><span class="vs">  border-left: 4px solid #2a5599;</span></span>
+<span id="cb3-384"><a href="#cb3-384" aria-hidden="true" tabindex="-1"></a><span class="vs">  background: #f7f9fc;</span></span>
+<span id="cb3-385"><a href="#cb3-385" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb3-386"><a href="#cb3-386" aria-hidden="true" tabindex="-1"></a><span class="vs">.lr-demo-equations p {</span></span>
+<span id="cb3-387"><a href="#cb3-387" aria-hidden="true" tabindex="-1"></a><span class="vs">  margin: 0.1rem 0;</span></span>
+<span id="cb3-388"><a href="#cb3-388" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb3-389"><a href="#cb3-389" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/style&gt;</span></span>
+<span id="cb3-390"><a href="#cb3-390" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;div class="lr-demo-equations"&gt;</span></span>
+<span id="cb3-391"><a href="#cb3-391" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;p&gt;</span><span class="sc">${</span><span class="fu">tex</span><span class="vs">`</span><span class="sc">\e</span><span class="vs">ta = </span><span class="sc">${</span>lr_demo_b0<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="sc">}</span><span class="vs"> + </span><span class="sc">${</span>lr_demo_b1<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="sc">}</span><span class="vs">x`</span><span class="sc">}</span><span class="vs">&lt;/p&gt;</span></span>
+<span id="cb3-392"><a href="#cb3-392" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;p&gt;</span><span class="sc">${</span><span class="fu">tex</span><span class="vs">`p = </span><span class="sc">\f</span><span class="vs">rac{1}{1 + e^{-</span><span class="sc">\e</span><span class="vs">ta}}`</span><span class="sc">}</span><span class="vs">&lt;/p&gt;</span></span>
+<span id="cb3-393"><a href="#cb3-393" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;p&gt;</span><span class="sc">${</span><span class="fu">tex</span><span class="vs">`Y </span><span class="sc">\s</span><span class="vs">im </span><span class="sc">\t</span><span class="vs">ext{Bernoulli}(p)`</span><span class="sc">}</span><span class="vs">&lt;/p&gt;</span></span>
+<span id="cb3-394"><a href="#cb3-394" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;</span></span>
+<span id="cb3-395"><a href="#cb3-395" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;div class="lr-demo-grid"&gt;</span></span>
+<span id="cb3-396"><a href="#cb3-396" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div class="lr-demo-panel"&gt;</span></span>
+<span id="cb3-397"><a href="#cb3-397" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;h4&gt;1. Linear predictor&lt;/h4&gt;</span></span>
+<span id="cb3-398"><a href="#cb3-398" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;p&gt;The coefficients move and tilt a straight line on the log-odds scale.&lt;/p&gt;</span></span>
+<span id="cb3-399"><a href="#cb3-399" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span>lr_demo_logodds_plot<span class="sc">}</span></span>
+<span id="cb3-400"><a href="#cb3-400" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
+<span id="cb3-401"><a href="#cb3-401" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div class="lr-demo-panel"&gt;</span></span>
+<span id="cb3-402"><a href="#cb3-402" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;h4&gt;2. Logistic link&lt;/h4&gt;</span></span>
+<span id="cb3-403"><a href="#cb3-403" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;p&gt;The inverse-logit transforms the current log-odds line into probabilities.&lt;/p&gt;</span></span>
+<span id="cb3-404"><a href="#cb3-404" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span>lr_demo_probability_plot<span class="sc">}</span></span>
+<span id="cb3-405"><a href="#cb3-405" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
+<span id="cb3-406"><a href="#cb3-406" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div class="lr-demo-panel"&gt;</span></span>
+<span id="cb3-407"><a href="#cb3-407" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;h4&gt;3. Bernoulli error model&lt;/h4&gt;</span></span>
+<span id="cb3-408"><a href="#cb3-408" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;p&gt;The dot sizes show how the Bernoulli probabilities change across x.&lt;/p&gt;</span></span>
+<span id="cb3-409"><a href="#cb3-409" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span>lr_demo_bernoulli_plot<span class="sc">}</span></span>
+<span id="cb3-410"><a href="#cb3-410" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
+<span id="cb3-411"><a href="#cb3-411" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-2-1" data-nodetype="declaration">
@@ -28831,56 +28768,7 @@ Y_i \sim \text{Bernoulli}(p_i),
 </div>
 <div class="cell-output cell-output-display">
 <div>
-<div id="ojs-cell-2-12" data-nodetype="declaration">
-
-</div>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<div id="ojs-cell-2-13" data-nodetype="declaration">
-
-</div>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<div id="ojs-cell-2-14" data-nodetype="declaration">
-
-</div>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<div id="ojs-cell-2-15" data-nodetype="declaration">
-
-</div>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<div id="ojs-cell-2-16" data-nodetype="declaration">
-
-</div>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<div id="ojs-cell-2-17" data-nodetype="declaration">
-
-</div>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<div id="ojs-cell-2-18" data-nodetype="declaration">
-
-</div>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<div id="ojs-cell-2-19" data-nodetype="expression">
+<div id="ojs-cell-2-12" data-nodetype="expression">
 
 </div>
 </div>
@@ -30785,7 +30673,7 @@ if (window.location.href.includes('displayall')) {
 
 
 <script type="ojs-module-contents">
-eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBscl9kZW1vX2IwID0gSW5wdXRzLnJhbmdlKFstNCwgNF0sIHtcbiAgdmFsdWU6IC0xLjUsXG4gIHN0ZXA6IDAuMSxcbiAgbGFiZWw6IGh0bWxgJHt0ZXhgXFxiZXRhXzBgfTogbG9nLW9kZHMgaW50ZXJjZXB0YFxufSlcblxudmlld29mIGxyX2RlbW9fYjEgPSBJbnB1dHMucmFuZ2UoWy0yLCAyXSwge1xuICB2YWx1ZTogMC44LFxuICBzdGVwOiAwLjEsXG4gIGxhYmVsOiBodG1sYCR7dGV4YFxcYmV0YV8xYH06IGxvZy1vZGRzIHNsb3BlYFxufSlcblxudmlld29mIGxyX2RlbW9fZm9jdXNfeCA9IElucHV0cy5yYW5nZShbLTQsIDRdLCB7XG4gIHZhbHVlOiAxLFxuICBzdGVwOiAwLjEsXG4gIGxhYmVsOiBcIkZvY3VzIHggdmFsdWVcIlxufSlcblxudmlld29mIGxyX2RlbW9fbiA9IElucHV0cy5yYW5nZShbMjAsIDIwMF0sIHtcbiAgdmFsdWU6IDgwLFxuICBzdGVwOiAxMCxcbiAgbGFiZWw6IFwiQmVybm91bGxpIGRyYXdzXCJcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJcbmxyX2RlbW9fbG9naXN0aWMgPSB6ID0+IDEgLyAoMSArIE1hdGguZXhwKC16KSlcblxubHJfZGVtb19mcmFjID0gaSA9PiB7XG4gIGNvbnN0IHJhdyA9IE1hdGguc2luKGkgKiAxMi45ODk4KSAqIDQzNzU4LjU0NTM7XG4gIHJldHVybiByYXcgLSBNYXRoLmZsb29yKHJhdyk7XG59XG5cbmxyX2RlbW9feF9kb21haW4gPSBbLTQsIDRdXG5scl9kZW1vX2V0YV9kb21haW4gPSBbLTEyLCAxMl1cbmxyX2RlbW9fY3VydmUgPSBkMy5yYW5nZShscl9kZW1vX3hfZG9tYWluWzBdLCBscl9kZW1vX3hfZG9tYWluWzFdICsgMC4wMiwgMC4wNCkubWFwKHggPT4ge1xuICBjb25zdCBldGEgPSBscl9kZW1vX2IwICsgbHJfZGVtb19iMSAqIHg7XG4gIHJldHVybiB7eCwgZXRhLCBwOiBscl9kZW1vX2xvZ2lzdGljKGV0YSl9O1xufSlcblxubHJfZGVtb19mb2N1c19ldGEgPSBscl9kZW1vX2IwICsgbHJfZGVtb19iMSAqIGxyX2RlbW9fZm9jdXNfeFxubHJfZGVtb19mb2N1c19wID0gbHJfZGVtb19sb2dpc3RpYyhscl9kZW1vX2ZvY3VzX2V0YSlcbmxyX2RlbW9fZm9jdXMgPSBbe3g6IGxyX2RlbW9fZm9jdXNfeCwgZXRhOiBscl9kZW1vX2ZvY3VzX2V0YSwgcDogbHJfZGVtb19mb2N1c19wfV1cbmxyX2RlbW9fbGlua19jdXJ2ZSA9IGQzLnJhbmdlKGxyX2RlbW9fZXRhX2RvbWFpblswXSwgbHJfZGVtb19ldGFfZG9tYWluWzFdICsgMC4wNCwgMC4wOCkubWFwKGV0YSA9PiAoe1xuICBldGEsXG4gIHA6IGxyX2RlbW9fbG9naXN0aWMoZXRhKVxufSkpXG5cbmxyX2RlbW9fc2FtcGxlID0gZDMucmFuZ2UobHJfZGVtb19uKS5tYXAoaSA9PiB7XG4gIGNvbnN0IHggPSBscl9kZW1vX3hfZG9tYWluWzBdICsgKGxyX2RlbW9feF9kb21haW5bMV0gLSBscl9kZW1vX3hfZG9tYWluWzBdKSAqIGxyX2RlbW9fZnJhYyhpICsgMSk7XG4gIGNvbnN0IHAgPSBscl9kZW1vX2xvZ2lzdGljKGxyX2RlbW9fYjAgKyBscl9kZW1vX2IxICogeCk7XG4gIGNvbnN0IHkgPSBscl9kZW1vX2ZyYWMoaSArIDIwMDEpIDwgcCA/IDEgOiAwO1xuICByZXR1cm4ge1xuICAgIHgsXG4gICAgcCxcbiAgICB5LFxuICAgIHlfaml0dGVyOiB5ICsgKGxyX2RlbW9fZnJhYyhpICsgNDAwMSkgLSAwLjUpICogMC4wOFxuICB9O1xufSlcblxubHJfZGVtb19tYXNzX3ggPSBkMy5yYW5nZShscl9kZW1vX3hfZG9tYWluWzBdLCBscl9kZW1vX3hfZG9tYWluWzFdICsgMC4wMSwgMSlcbmxyX2RlbW9fbWFzcyA9IGxyX2RlbW9fbWFzc194LmZsYXRNYXAoeCA9PiB7XG4gIGNvbnN0IHAgPSBscl9kZW1vX2xvZ2lzdGljKGxyX2RlbW9fYjAgKyBscl9kZW1vX2IxICogeCk7XG4gIHJldHVybiBbXG4gICAge3gsIHk6IDEsIHByb2JhYmlsaXR5OiBwLCBsYWJlbDogXCJQYXNzXCJ9LFxuICAgIHt4LCB5OiAwLCBwcm9iYWJpbGl0eTogMSAtIHAsIGxhYmVsOiBcIkZhaWxcIn1cbiAgXTtcbn0pXG5scl9kZW1vX2ZvY3VzX21hc3MgPSBbXG4gIHtcbiAgICB4OiBscl9kZW1vX2ZvY3VzX3gsXG4gICAgeTogMSxcbiAgICBwcm9iYWJpbGl0eTogbHJfZGVtb19mb2N1c19wLFxuICAgIGxhYmVsOiBcIlBhc3NcIixcbiAgICBwYXJhbWV0ZXI6IGBwID0gJHtscl9kZW1vX2ZvY3VzX3AudG9GaXhlZCgyKX1gXG4gIH0sXG4gIHtcbiAgICB4OiBscl9kZW1vX2ZvY3VzX3gsXG4gICAgeTogMCxcbiAgICBwcm9iYWJpbGl0eTogMSAtIGxyX2RlbW9fZm9jdXNfcCxcbiAgICBsYWJlbDogXCJGYWlsXCIsXG4gICAgcGFyYW1ldGVyOiBgMSAtIHAgPSAkeygxIC0gbHJfZGVtb19mb2N1c19wKS50b0ZpeGVkKDIpfWBcbiAgfVxuXVxubHJfZGVtb19tYXNzX2xhYmVsX2FuY2hvciA9IGxyX2RlbW9fZm9jdXNfeCA+IDIuNCA/IFwiZW5kXCIgOiBcInN0YXJ0XCJcbmxyX2RlbW9fbWFzc19sYWJlbF9keCA9IGxyX2RlbW9fZm9jdXNfeCA+IDIuNCA/IC0xMCA6IDEwXG5cbmxyX2RlbW9fbG9nb2Rkc19wbG90ID0gUGxvdC5wbG90KHtcbiAgaGVpZ2h0OiAyNTAsXG4gIG1hcmdpbkxlZnQ6IDQ4LFxuICBtYXJnaW5Cb3R0b206IDQyLFxuICB4OiB7ZG9tYWluOiBscl9kZW1vX3hfZG9tYWluLCBsYWJlbDogXCJ4XCIsIGdyaWQ6IHRydWV9LFxuICB5OiB7ZG9tYWluOiBscl9kZW1vX2V0YV9kb21haW4sIGxhYmVsOiBcIkxpbmVhciBwcmVkaWN0b3IsIM63XCIsIGdyaWQ6IHRydWV9LFxuICBtYXJrczogW1xuICAgIFBsb3QucnVsZVkoWzBdLCB7c3Ryb2tlOiBcIiNiOGI4YjhcIiwgc3Ryb2tlRGFzaGFycmF5OiBcIjQgNFwifSksXG4gICAgUGxvdC5saW5lKGxyX2RlbW9fY3VydmUsIHt4OiBcInhcIiwgeTogXCJldGFcIiwgc3Ryb2tlOiBcIiMyYTU1OTlcIiwgc3Ryb2tlV2lkdGg6IDIuNX0pLFxuICAgIFBsb3QuZG90KGxyX2RlbW9fZm9jdXMsIHt4OiBcInhcIiwgeTogXCJldGFcIiwgcjogNSwgZmlsbDogXCIjZDk1ZjAyXCJ9KVxuICBdXG59KVxuXG5scl9kZW1vX3Byb2JhYmlsaXR5X3Bsb3QgPSBQbG90LnBsb3Qoe1xuICBoZWlnaHQ6IDI1MCxcbiAgbWFyZ2luTGVmdDogNDgsXG4gIG1hcmdpbkJvdHRvbTogNDIsXG4gIHg6IHtkb21haW46IGxyX2RlbW9fZXRhX2RvbWFpbiwgbGFiZWw6IFwiTGluZWFyIHByZWRpY3RvciwgzrdcIiwgZ3JpZDogdHJ1ZX0sXG4gIHk6IHtkb21haW46IFswLCAxXSwgbGFiZWw6IFwiUHJvYmFiaWxpdHksIHBcIiwgZ3JpZDogdHJ1ZSwgcGVyY2VudDogdHJ1ZX0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5ydWxlWChbMF0sIHtzdHJva2U6IFwiI2I4YjhiOFwiLCBzdHJva2VEYXNoYXJyYXk6IFwiNCA0XCJ9KSxcbiAgICBQbG90LnJ1bGVZKFswLCAwLjUsIDFdLCB7c3Ryb2tlOiBcIiNkOWQ5ZDlcIn0pLFxuICAgIFBsb3QubGluZShscl9kZW1vX2xpbmtfY3VydmUsIHt4OiBcImV0YVwiLCB5OiBcInBcIiwgc3Ryb2tlOiBcIiMwMDg3NmNcIiwgc3Ryb2tlV2lkdGg6IDIuNX0pLFxuICAgIFBsb3QuZG90KGxyX2RlbW9fZm9jdXMsIHt4OiBcImV0YVwiLCB5OiBcInBcIiwgcjogNSwgZmlsbDogXCIjZDk1ZjAyXCJ9KVxuICBdXG59KVxuXG5scl9kZW1vX2Jlcm5vdWxsaV9wbG90ID0gUGxvdC5wbG90KHtcbiAgaGVpZ2h0OiAyNTAsXG4gIG1hcmdpbkxlZnQ6IDQ4LFxuICBtYXJnaW5Cb3R0b206IDQyLFxuICB4OiB7ZG9tYWluOiBscl9kZW1vX3hfZG9tYWluLCBsYWJlbDogXCJ4XCIsIGdyaWQ6IHRydWV9LFxuICB5OiB7ZG9tYWluOiBbLTAuMTUsIDEuMTVdLCB0aWNrczogWzAsIDFdLCBsYWJlbDogXCJPYnNlcnZlZCBvdXRjb21lLCBZXCJ9LFxuICBjb2xvcjoge1xuICAgIGRvbWFpbjogW1wiRmFpbFwiLCBcIlBhc3NcIl0sXG4gICAgcmFuZ2U6IFtcIiNiOTRlNDhcIiwgXCIjMmE1NTk5XCJdLFxuICAgIGxlZ2VuZDogdHJ1ZVxuICB9LFxuICBtYXJrczogW1xuICAgIFBsb3QucnVsZVgoW2xyX2RlbW9fZm9jdXNfeF0sIHtzdHJva2U6IFwiI2Q5NWYwMlwiLCBzdHJva2VEYXNoYXJyYXk6IFwiMyAzXCJ9KSxcbiAgICBQbG90LmRvdChscl9kZW1vX21hc3MsIHtcbiAgICAgIHg6IFwieFwiLFxuICAgICAgeTogXCJ5XCIsXG4gICAgICByOiBkID0+IDMgKyAxMyAqIGQucHJvYmFiaWxpdHksXG4gICAgICBmaWxsOiBcImxhYmVsXCIsXG4gICAgICBmaWxsT3BhY2l0eTogMC4yLFxuICAgICAgc3Ryb2tlOiBcImxhYmVsXCJcbiAgICB9KSxcbiAgICBQbG90LmRvdChscl9kZW1vX2ZvY3VzX21hc3MsIHtcbiAgICAgIHg6IFwieFwiLFxuICAgICAgeTogXCJ5XCIsXG4gICAgICByOiBkID0+IDQgKyAxNSAqIGQucHJvYmFiaWxpdHksXG4gICAgICBmaWxsOiBcImxhYmVsXCIsXG4gICAgICBmaWxsT3BhY2l0eTogMC4zNSxcbiAgICAgIHN0cm9rZTogXCJsYWJlbFwiLFxuICAgICAgc3Ryb2tlV2lkdGg6IDEuNVxuICAgIH0pLFxuICAgIFBsb3QudGV4dChscl9kZW1vX2ZvY3VzX21hc3MsIHtcbiAgICAgIHg6IFwieFwiLFxuICAgICAgeTogXCJ5XCIsXG4gICAgICB0ZXh0OiBcInBhcmFtZXRlclwiLFxuICAgICAgZHg6IGxyX2RlbW9fbWFzc19sYWJlbF9keCxcbiAgICAgIGR5OiBkID0+IGQueSA9PT0gMSA/IC0xMiA6IDE0LFxuICAgICAgdGV4dEFuY2hvcjogbHJfZGVtb19tYXNzX2xhYmVsX2FuY2hvcixcbiAgICAgIGZpbGw6IFwibGFiZWxcIixcbiAgICAgIGZvbnRXZWlnaHQ6IDcwMFxuICAgIH0pLFxuICAgIFBsb3QuZG90KGxyX2RlbW9fc2FtcGxlLCB7XG4gICAgICB4OiBcInhcIixcbiAgICAgIHk6IFwieV9qaXR0ZXJcIixcbiAgICAgIHI6IDMsXG4gICAgICBmaWxsOiBkID0+IGQueSA9PT0gMSA/IFwiUGFzc1wiIDogXCJGYWlsXCIsXG4gICAgICBmaWxsT3BhY2l0eTogMC42NVxuICAgIH0pXG4gIF1cbn0pXG5cbmh0bWxgXG48c3R5bGU+XG4ubHItZGVtby1ncmlkIHtcbiAgZGlzcGxheTogZ3JpZDtcbiAgZ3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiByZXBlYXQoYXV0by1maXQsIG1pbm1heCgyNDBweCwgMWZyKSk7XG4gIGdhcDogMC45cmVtO1xuICBhbGlnbi1pdGVtczogc3RhcnQ7XG59XG4ubHItZGVtby1wYW5lbCB7XG4gIG1pbi13aWR0aDogMDtcbn1cbi5sci1kZW1vLXBhbmVsIGg0IHtcbiAgbWFyZ2luOiAwIDAgMC4yNXJlbSAwO1xuICBmb250LXNpemU6IDAuOTVyZW07XG59XG4ubHItZGVtby1wYW5lbCBwIHtcbiAgbWFyZ2luOiAwIDAgMC40NXJlbSAwO1xuICBmb250LXNpemU6IDAuODVyZW07XG4gIGxpbmUtaGVpZ2h0OiAxLjM7XG59XG4ubHItZGVtby1lcXVhdGlvbnMge1xuICBtYXJnaW46IDAgMCAwLjlyZW0gMDtcbiAgcGFkZGluZzogMC42cmVtIDAuNzVyZW07XG4gIGJvcmRlci1sZWZ0OiA0cHggc29saWQgIzJhNTU5OTtcbiAgYmFja2dyb3VuZDogI2Y3ZjlmYztcbn1cbi5sci1kZW1vLWVxdWF0aW9ucyBwIHtcbiAgbWFyZ2luOiAwLjFyZW0gMDtcbn1cbjwvc3R5bGU+XG48ZGl2IGNsYXNzPVwibHItZGVtby1lcXVhdGlvbnNcIj5cbiAgPHA+JHt0ZXhgXFxldGEgPSAke2xyX2RlbW9fYjAudG9GaXhlZCgxKX0gKyAke2xyX2RlbW9fYjEudG9GaXhlZCgxKX14YH08L3A+XG4gIDxwPiR7dGV4YHAgPSBcXGZyYWN7MX17MSArIGVeey1cXGV0YX19YH08L3A+XG4gIDxwPiR7dGV4YFkgXFxzaW0gXFx0ZXh0e0Jlcm5vdWxsaX0ocClgfTwvcD5cbiAgPHA+QXQgeCA9ICR7bHJfZGVtb19mb2N1c194LnRvRml4ZWQoMSl9OiAke3RleGBcXGV0YWB9ID0gJHtscl9kZW1vX2ZvY3VzX2V0YS50b0ZpeGVkKDIpfSwgcCA9ICR7bHJfZGVtb19mb2N1c19wLnRvRml4ZWQoMyl9LCBhbmQgJHt0ZXhgcCgxLXApYH0gPSAkeyhscl9kZW1vX2ZvY3VzX3AgKiAoMSAtIGxyX2RlbW9fZm9jdXNfcCkpLnRvRml4ZWQoMyl9LjwvcD5cbjwvZGl2PlxuPGRpdiBjbGFzcz1cImxyLWRlbW8tZ3JpZFwiPlxuICA8ZGl2IGNsYXNzPVwibHItZGVtby1wYW5lbFwiPlxuICAgIDxoND4xLiBMaW5lYXIgcHJlZGljdG9yPC9oND5cbiAgICA8cD5UaGUgY29lZmZpY2llbnRzIG1vdmUgYW5kIHRpbHQgYSBzdHJhaWdodCBsaW5lIG9uIHRoZSBsb2ctb2RkcyBzY2FsZS48L3A+XG4gICAgJHtscl9kZW1vX2xvZ29kZHNfcGxvdH1cbiAgPC9kaXY+XG4gIDxkaXYgY2xhc3M9XCJsci1kZW1vLXBhbmVsXCI+XG4gICAgPGg0PjIuIExvZ2lzdGljIGxpbms8L2g0PlxuICAgIDxwPlRoZSBpbnZlcnNlLWxvZ2l0IGlzIHNob3duIG9uIGEgZml4ZWQsIGNlbnRyZWQgbG9nLW9kZHMgc2NhbGUuPC9wPlxuICAgICR7bHJfZGVtb19wcm9iYWJpbGl0eV9wbG90fVxuICA8L2Rpdj5cbiAgPGRpdiBjbGFzcz1cImxyLWRlbW8tcGFuZWxcIj5cbiAgICA8aDQ+My4gQmVybm91bGxpIGVycm9yIG1vZGVsPC9oND5cbiAgICA8cD5UaGUgbGFiZWxsZWQgc2xpY2Ugc2hvd3MgdGhlIEJlcm5vdWxsaSBwcm9iYWJpbGl0aWVzIHAgYW5kIDEgLSBwIGF0IHRoZSBzZWxlY3RlZCB4LjwvcD5cbiAgICAke2xyX2RlbW9fYmVybm91bGxpX3Bsb3R9XG4gIDwvZGl2PlxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdscl9kZW1vX2IwJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2xyX2RlbW9fYjEnKSJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnbHJfZGVtb19mb2N1c194JykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2xyX2RlbW9fbicpIn1dfQ==
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBscl9kZW1vX2IwID0gSW5wdXRzLnJhbmdlKFstNCwgNF0sIHtcbiAgdmFsdWU6IC0xLjUsXG4gIHN0ZXA6IDAuMSxcbiAgbGFiZWw6IGh0bWxgJHt0ZXhgXFxiZXRhXzBgfTogbG9nLW9kZHMgaW50ZXJjZXB0YFxufSlcblxudmlld29mIGxyX2RlbW9fYjEgPSBJbnB1dHMucmFuZ2UoWy04LCA4XSwge1xuICB2YWx1ZTogMC44LFxuICBzdGVwOiAwLjEsXG4gIGxhYmVsOiBodG1sYCR7dGV4YFxcYmV0YV8xYH06IGxvZy1vZGRzIHNsb3BlYFxufSlcblxudmlld29mIGxyX2RlbW9fbiA9IElucHV0cy5yYW5nZShbMjAsIDIwMF0sIHtcbiAgdmFsdWU6IDgwLFxuICBzdGVwOiAxMCxcbiAgbGFiZWw6IFwiQmVybm91bGxpIGRyYXdzXCJcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJcbmxyX2RlbW9fbG9naXN0aWMgPSB6ID0+IDEgLyAoMSArIE1hdGguZXhwKC16KSlcblxubHJfZGVtb19mcmFjID0gaSA9PiB7XG4gIGNvbnN0IHJhdyA9IE1hdGguc2luKGkgKiAxMi45ODk4KSAqIDQzNzU4LjU0NTM7XG4gIHJldHVybiByYXcgLSBNYXRoLmZsb29yKHJhdyk7XG59XG5cbmxyX2RlbW9feF9kb21haW4gPSBbLTQsIDRdXG5scl9kZW1vX2V0YV9kb21haW4gPSBbLTEyLCAxMl1cbmxyX2RlbW9fY3VydmUgPSBkMy5yYW5nZShscl9kZW1vX3hfZG9tYWluWzBdLCBscl9kZW1vX3hfZG9tYWluWzFdICsgMC4wMiwgMC4wNCkubWFwKHggPT4ge1xuICBjb25zdCBldGEgPSBscl9kZW1vX2IwICsgbHJfZGVtb19iMSAqIHg7XG4gIHJldHVybiB7eCwgZXRhLCBwOiBscl9kZW1vX2xvZ2lzdGljKGV0YSl9O1xufSlcblxubHJfZGVtb19zYW1wbGUgPSBkMy5yYW5nZShscl9kZW1vX24pLm1hcChpID0+IHtcbiAgY29uc3QgeCA9IGxyX2RlbW9feF9kb21haW5bMF0gKyAobHJfZGVtb194X2RvbWFpblsxXSAtIGxyX2RlbW9feF9kb21haW5bMF0pICogbHJfZGVtb19mcmFjKGkgKyAxKTtcbiAgY29uc3QgcCA9IGxyX2RlbW9fbG9naXN0aWMobHJfZGVtb19iMCArIGxyX2RlbW9fYjEgKiB4KTtcbiAgY29uc3QgeSA9IGxyX2RlbW9fZnJhYyhpICsgMjAwMSkgPCBwID8gMSA6IDA7XG4gIHJldHVybiB7XG4gICAgeCxcbiAgICBwLFxuICAgIHksXG4gICAgeV9qaXR0ZXI6IHkgKyAobHJfZGVtb19mcmFjKGkgKyA0MDAxKSAtIDAuNSkgKiAwLjA4XG4gIH07XG59KVxuXG5scl9kZW1vX21hc3NfeCA9IGQzLnJhbmdlKGxyX2RlbW9feF9kb21haW5bMF0sIGxyX2RlbW9feF9kb21haW5bMV0gKyAwLjAxLCAxKVxubHJfZGVtb19tYXNzID0gbHJfZGVtb19tYXNzX3guZmxhdE1hcCh4ID0+IHtcbiAgY29uc3QgcCA9IGxyX2RlbW9fbG9naXN0aWMobHJfZGVtb19iMCArIGxyX2RlbW9fYjEgKiB4KTtcbiAgcmV0dXJuIFtcbiAgICB7eCwgeTogMSwgcHJvYmFiaWxpdHk6IHAsIGxhYmVsOiBcIlBhc3NcIn0sXG4gICAge3gsIHk6IDAsIHByb2JhYmlsaXR5OiAxIC0gcCwgbGFiZWw6IFwiRmFpbFwifVxuICBdO1xufSlcblxubHJfZGVtb19sb2dvZGRzX3Bsb3QgPSBQbG90LnBsb3Qoe1xuICBoZWlnaHQ6IDI1MCxcbiAgbWFyZ2luTGVmdDogNDgsXG4gIG1hcmdpbkJvdHRvbTogNDIsXG4gIHg6IHtkb21haW46IGxyX2RlbW9feF9kb21haW4sIGxhYmVsOiBcInhcIiwgZ3JpZDogdHJ1ZX0sXG4gIHk6IHtkb21haW46IGxyX2RlbW9fZXRhX2RvbWFpbiwgbGFiZWw6IFwiTGluZWFyIHByZWRpY3RvciwgzrdcIiwgZ3JpZDogdHJ1ZX0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5ydWxlWShbMF0sIHtzdHJva2U6IFwiI2I4YjhiOFwiLCBzdHJva2VEYXNoYXJyYXk6IFwiNCA0XCJ9KSxcbiAgICBQbG90LmxpbmUobHJfZGVtb19jdXJ2ZSwge3g6IFwieFwiLCB5OiBcImV0YVwiLCBzdHJva2U6IFwiIzJhNTU5OVwiLCBzdHJva2VXaWR0aDogMi41fSlcbiAgXVxufSlcblxubHJfZGVtb19wcm9iYWJpbGl0eV9wbG90ID0gUGxvdC5wbG90KHtcbiAgaGVpZ2h0OiAyNTAsXG4gIG1hcmdpbkxlZnQ6IDQ4LFxuICBtYXJnaW5Cb3R0b206IDQyLFxuICB4OiB7ZG9tYWluOiBscl9kZW1vX3hfZG9tYWluLCBsYWJlbDogXCJ4XCIsIGdyaWQ6IHRydWV9LFxuICB5OiB7ZG9tYWluOiBbMCwgMV0sIGxhYmVsOiBcIlByb2JhYmlsaXR5LCBwXCIsIGdyaWQ6IHRydWUsIHRpY2tGb3JtYXQ6IGQgPT4gKGQgKiAxMDApLnRvRml4ZWQoMCkgKyBcIiVcIn0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5ydWxlWShbMCwgMC41LCAxXSwge3N0cm9rZTogXCIjZDlkOWQ5XCJ9KSxcbiAgICBQbG90LmxpbmUobHJfZGVtb19jdXJ2ZSwge3g6IFwieFwiLCB5OiBcInBcIiwgc3Ryb2tlOiBcIiMwMDg3NmNcIiwgc3Ryb2tlV2lkdGg6IDIuNX0pXG4gIF1cbn0pXG5cbmxyX2RlbW9fYmVybm91bGxpX3Bsb3QgPSBQbG90LnBsb3Qoe1xuICBoZWlnaHQ6IDI1MCxcbiAgbWFyZ2luTGVmdDogNDgsXG4gIG1hcmdpbkJvdHRvbTogNDIsXG4gIHg6IHtkb21haW46IGxyX2RlbW9feF9kb21haW4sIGxhYmVsOiBcInhcIiwgZ3JpZDogdHJ1ZX0sXG4gIHk6IHtkb21haW46IFstMC4xNSwgMS4xNV0sIHRpY2tzOiBbMCwgMV0sIGxhYmVsOiBcIk9ic2VydmVkIG91dGNvbWUsIFlcIn0sXG4gIGNvbG9yOiB7XG4gICAgZG9tYWluOiBbXCJGYWlsXCIsIFwiUGFzc1wiXSxcbiAgICByYW5nZTogW1wiI2I5NGU0OFwiLCBcIiMyYTU1OTlcIl0sXG4gICAgbGVnZW5kOiB0cnVlXG4gIH0sXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5kb3QobHJfZGVtb19tYXNzLCB7XG4gICAgICB4OiBcInhcIixcbiAgICAgIHk6IFwieVwiLFxuICAgICAgcjogZCA9PiAzICsgMTMgKiBkLnByb2JhYmlsaXR5LFxuICAgICAgZmlsbDogXCJsYWJlbFwiLFxuICAgICAgZmlsbE9wYWNpdHk6IDAuMixcbiAgICAgIHN0cm9rZTogXCJsYWJlbFwiXG4gICAgfSksXG4gICAgUGxvdC5kb3QobHJfZGVtb19zYW1wbGUsIHtcbiAgICAgIHg6IFwieFwiLFxuICAgICAgeTogXCJ5X2ppdHRlclwiLFxuICAgICAgcjogMyxcbiAgICAgIGZpbGw6IGQgPT4gZC55ID09PSAxID8gXCJQYXNzXCIgOiBcIkZhaWxcIixcbiAgICAgIGZpbGxPcGFjaXR5OiAwLjY1XG4gICAgfSlcbiAgXVxufSlcblxuaHRtbGBcbjxzdHlsZT5cbi5sci1kZW1vLWdyaWQge1xuICBkaXNwbGF5OiBncmlkO1xuICBncmlkLXRlbXBsYXRlLWNvbHVtbnM6IHJlcGVhdChhdXRvLWZpdCwgbWlubWF4KDI0MHB4LCAxZnIpKTtcbiAgZ2FwOiAwLjlyZW07XG4gIGFsaWduLWl0ZW1zOiBzdGFydDtcbn1cbi5sci1kZW1vLXBhbmVsIHtcbiAgbWluLXdpZHRoOiAwO1xufVxuLmxyLWRlbW8tcGFuZWwgaDQge1xuICBtYXJnaW46IDAgMCAwLjI1cmVtIDA7XG4gIGZvbnQtc2l6ZTogMC45NXJlbTtcbn1cbi5sci1kZW1vLXBhbmVsIHAge1xuICBtYXJnaW46IDAgMCAwLjQ1cmVtIDA7XG4gIGZvbnQtc2l6ZTogMC44NXJlbTtcbiAgbGluZS1oZWlnaHQ6IDEuMztcbn1cbi5sci1kZW1vLWVxdWF0aW9ucyB7XG4gIG1hcmdpbjogMCAwIDAuOXJlbSAwO1xuICBwYWRkaW5nOiAwLjZyZW0gMC43NXJlbTtcbiAgYm9yZGVyLWxlZnQ6IDRweCBzb2xpZCAjMmE1NTk5O1xuICBiYWNrZ3JvdW5kOiAjZjdmOWZjO1xufVxuLmxyLWRlbW8tZXF1YXRpb25zIHAge1xuICBtYXJnaW46IDAuMXJlbSAwO1xufVxuPC9zdHlsZT5cbjxkaXYgY2xhc3M9XCJsci1kZW1vLWVxdWF0aW9uc1wiPlxuICA8cD4ke3RleGBcXGV0YSA9ICR7bHJfZGVtb19iMC50b0ZpeGVkKDEpfSArICR7bHJfZGVtb19iMS50b0ZpeGVkKDEpfXhgfTwvcD5cbiAgPHA+JHt0ZXhgcCA9IFxcZnJhY3sxfXsxICsgZV57LVxcZXRhfX1gfTwvcD5cbiAgPHA+JHt0ZXhgWSBcXHNpbSBcXHRleHR7QmVybm91bGxpfShwKWB9PC9wPlxuPC9kaXY+XG48ZGl2IGNsYXNzPVwibHItZGVtby1ncmlkXCI+XG4gIDxkaXYgY2xhc3M9XCJsci1kZW1vLXBhbmVsXCI+XG4gICAgPGg0PjEuIExpbmVhciBwcmVkaWN0b3I8L2g0PlxuICAgIDxwPlRoZSBjb2VmZmljaWVudHMgbW92ZSBhbmQgdGlsdCBhIHN0cmFpZ2h0IGxpbmUgb24gdGhlIGxvZy1vZGRzIHNjYWxlLjwvcD5cbiAgICAke2xyX2RlbW9fbG9nb2Rkc19wbG90fVxuICA8L2Rpdj5cbiAgPGRpdiBjbGFzcz1cImxyLWRlbW8tcGFuZWxcIj5cbiAgICA8aDQ+Mi4gTG9naXN0aWMgbGluazwvaDQ+XG4gICAgPHA+VGhlIGludmVyc2UtbG9naXQgdHJhbnNmb3JtcyB0aGUgY3VycmVudCBsb2ctb2RkcyBsaW5lIGludG8gcHJvYmFiaWxpdGllcy48L3A+XG4gICAgJHtscl9kZW1vX3Byb2JhYmlsaXR5X3Bsb3R9XG4gIDwvZGl2PlxuICA8ZGl2IGNsYXNzPVwibHItZGVtby1wYW5lbFwiPlxuICAgIDxoND4zLiBCZXJub3VsbGkgZXJyb3IgbW9kZWw8L2g0PlxuICAgIDxwPlRoZSBkb3Qgc2l6ZXMgc2hvdyBob3cgdGhlIEJlcm5vdWxsaSBwcm9iYWJpbGl0aWVzIGNoYW5nZSBhY3Jvc3MgeC48L3A+XG4gICAgJHtscl9kZW1vX2Jlcm5vdWxsaV9wbG90fVxuICA8L2Rpdj5cbjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnbHJfZGVtb19iMCcpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdscl9kZW1vX2IxJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2xyX2RlbW9fbicpIn1dfQ==
 </script>
 <script type="module">
 window._ojs.runtime.setLocalResolver({});
