@@ -558,6 +558,8 @@ coef(fit_study)
 
 ### Reading coefficients on the log-odds scale {#sec-log-odds-coefficients}
 
+In linear regression with an identity link, each parameter is interpreted directly in the units of the outcome. For example, a slope is an expected difference in the outcome for a one-unit increase in the predictor. Logistic regression is different: the model is linear in the [logit]{.glossary}, or log-odds, not in the probability itself. We use log-odds because they let us write a linear predictor, but they are not usually easy to interpret directly. Even so, the direction of the effect is still visible from the sign of the coefficient.
+
 The [intercept]{.glossary} is the estimated log-odds of passing when `studytime = 0`. In this dataset, no student has study time equal to 0, so the intercept is mainly needed to position the fitted curve.
 
 The [slope]{.glossary} is the estimated change in log-odds for a one-unit increase in study time:
@@ -577,6 +579,26 @@ Exponentiating a coefficient converts it from a change in log-odds to an [odds r
 $$
 \text{odds ratio} = e^{b_1}.
 $$
+
+::: Note
+### Why exponentiating gives a ratio
+
+On the log scale, a difference corresponds to a ratio on the original scale. If the log-odds increase from $\log(\text{odds}_0)$ to $\log(\text{odds}_1)$, then
+
+$$
+\begin{aligned}
+b_1
+  &= \log(\text{odds}_1) - \log(\text{odds}_0) \\
+  &= \log\left(\frac{\text{odds}_1}{\text{odds}_0}\right).
+\end{aligned}
+$$
+
+Exponentiating both sides converts the difference in log-odds into a ratio of odds:
+
+$$
+e^{b_1} = \frac{\text{odds}_1}{\text{odds}_0}.
+$$
+:::
 
 :::: {.panel-tabset}
 ### Output
