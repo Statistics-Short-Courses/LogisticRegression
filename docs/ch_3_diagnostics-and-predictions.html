@@ -27998,29 +27998,29 @@ initializeRuntime();
 
 </script>
 <style>
-.Key-term {
---color1: #D1C4E9;
---color2: #673AB7;
-}
-.Exercise {
---color1: #C8E6C9;
---color2: #4CAF50;
+.Note {
+--color1: #FFF9C4;
+--color2: #FFEB3B;
 }
 .Assumption {
 --color1: #FFCDD2;
 --color2: #F44336;
 }
-.Key-point {
---color1: #FFF9C4;
---color2: #FFEB3B;
+.Key-term {
+--color1: #D1C4E9;
+--color2: #673AB7;
 }
 .Example {
 --color1: #BBDEFB;
 --color2: #2196F3;
 }
-.Note {
+.Key-point {
 --color1: #FFF9C4;
 --color2: #FFEB3B;
+}
+.Exercise {
+--color1: #C8E6C9;
+--color2: #4CAF50;
 }
 </style>
 
@@ -28165,7 +28165,19 @@ window.Quarto = {
 </script>
 
 <style type="text/css">:root {--incorrect: #983E82;--incorrect_alpha: #edaddd;--correct: #59935B;--correct_alpha: #c0edc2;--highlight: #467AAC;--highlight_alpha: #D1E4FF;--highlight_gray: #C3C3C3;--background_question: #7f7f7f0d;--background_input: white;--text_input: black;--webex-reveal-main-font-size: 1.5rem; --webex-reveal-main-color: var(--r-main-color);}:root .quarto-dark, :root .color-theme-2 {--highlight: #5687B9;--background_input: black;--text_input: white;}.reveal .webex-question * {font-size: var(--webex-reveal-main-font-size) !important;color: var(--webex-reveal-main-color) !important;} .webex-group .webex-question {display: none;}.webex-group .webex-question.active {display: block;}.webex-check {}.webex-box {border: 2px solid var(--highlight);padding: 0.5em;margin: 1em 0;border-radius: .25em;background-color: var(--background_question);}.webex-filename {display: block;font-family: "Lucida Console", "Courier New", monospace;color: gray;text-align: right;}.webex-filename > p { margin: 0; }.webex-total_correct {margin-left: 1em;}.unchecked .webex-total_correct {display: none;}.unchecked .webex-incorrect,.unchecked .webex-correct {border: 2px solid transparent !important;background-color: transparent !important;}.unchecked select.webex-incorrect,.unchecked select.webex-correct,.unchecked input.webex-incorrect,.unchecked input.webex-correct {border: 2px solid var(--highlight) !important;background-color: var(--background_input) !important;color: var(--text_input) !important;}.webex-select, .webex-solveme,.unchecked .webex-radiogroup > .webex-incorrect,.unchecked .webex-radiogroup > .webex-correct{border: 2px solid var(--highlight);background-color: var(--background_input);color: var(--text_input) !important;border-radius: 0.25em;width: auto;max-width: 90%;}.webex-question .tolerance + .webex-solveme {border-top-left-radius: 0;border-bottom-left-radius: 0;border-left: none;padding-left: 0.5em;}.webex-question .tolerance {border-color: var(--highlight);border-radius: 0.25em;background-color: #CECECE;color: gray;text-align: right;border-top-right-radius: 0;border-bottom-right-radius: 0;border-style: solid;border-right: none;padding-right: .5em;padding-left: .25em;}.webex-check:not(.unchecked) .tolerance:has(+ .webex-solveme.webex-incorrect) {border-color: var(--incorrect);color: var(--incorrect);}.webex-check:not(.unchecked) .tolerance:has(+ .webex-solveme.webex-correct) {border-color: var(--correct);color: var(--correct);}.webex-incorrect, .webex-checkboxgroup, .webex-solveme. .webex-radiogroup {border-radius: 0.25em;}.webex-checkboxgroup {margin-bottom: 1em;}.webex-incorrect,.webex-checkboxgroup > .webex-incorrect,.webex-solveme.webex-incorrect,.webex-radiogroup > .webex-incorrect {border: 2px solid var(--incorrect);background-color: var(--incorrect_alpha);}.webex-correct, .webex-checkboxgroup > .webex-correct,.webex-solveme.webex-correct,.webex-radiogroup >.webex-correct {border: 2px solid var(--correct);background-color: var(--correct_alpha);}.unchecked .webex-incorrect > span::after,.unchecked .webex-incorrect + .webex-icon::after,.unchecked .webex-correct > span::after,.unchecked .webex-correct + .webex-icon::after {content: "";}.webex-incorrect > span::after,.webex-incorrect + .webex-icon::after {content: "\00a0\00a0\2715";}.webex-correct > span::after,.webex-correct + .webex-icon::after {content: "\00a0\00a0\2713";}.webex-solution {display: none;padding: 0.5em;margin-bottom: 10px;border: 2px solid var(--highlight_gray);border-radius: 5px;}.webex-solution.visible {display: block;}.webex-solution > ul {padding-left: 2em;}ul.webex-button-list {display: flex;flex-wrap: wrap;width: 100%;list-style: none;padding: 0 !important; margin: 0 !important; }ul.webex-button-list > li {padding: 0;}ul.webex-button-list > li {margin-bottom: 0 !important; }ul.webex-button-list > li:first-child {margin-right: auto;margin-top: 0; }.webex-solution button,.webex-box .webex-button {height: 2em;min-width: 2em;margin-bottom: 0;margin-right: 0.25em;border-radius: 0.5em;background-color: transparent;border-color: var(--highlight);color: var(--highlight);padding: 0 0.5em;font-size: 1.2em;white-space: nowrap;}.webex-button:hover {background-color: var(--highlight_alpha);}.webex-solution pre.sourceCode {border-color: var(--correct);}ul.webex-button-list > li:last-child > .webex-button { margin-right: 0;}.webex-checkboxgroup > label,.unchecked .webex-checkboxgroup > label,.webex-radiogroup label {font-weight: 400;display: block;border: 2px solid transparent;background-color: inherit;border-radius: 0.25em;}.webex-checkboxgroup label > input[type=checkbox],.webex-radiogroup label > input[type=radio] {margin: 0.1em 0.5em 0 0.25em;position: relative;top: 0.125em;}.webex-radiogroup {margin: 1em 0;}.webex-box > ul:not(.webex-button-list) {list-style: none;margin: 0;padding: 0 0 1em 0.25em;}.webex-box > ul:not(.webex-button-list) > li {margin: 0 0 0.25em 0;}.webex-box > ul:not(.webex-button-list) > li > select {margin: 0 0.5em 0 0;}.webex-checkboxgroup > label {display: block;}.webex-checkboxgroup > label > span {font-weight: normal;}.unchecked .webex-checkboxgroup .webex-incorrect,.unchecked .webex-checkboxgroup .webex-correct {border: 2px solid transparent !important;background-color: transparent !important;}.unchecked .webex-checkboxgroup > label.webex-correct,.unchecked .webex-checkboxgroup > label.webex-incorrect {background-color: transparent;}section { counter-reset: webex-ex; }.webex-box.numbered, .webex-group.numbered {counter-increment: webex-ex;position: relative;border-left: 4px solid var(--highlight);background-color: var(--background_question);border-radius: .25rem;padding: 1rem 1rem 1rem 1.25rem;margin: 1rem 0;box-shadow: 0 1px 2px rgba(0,0,0,.06);}.webex-box.numbered::before, .webex-group.numbered::before {content: "Exercise " counter(webex-ex);position: absolute;top: -0.75rem;left: 1rem;font-weight: 600;padding: 0.1rem 0.5rem;border-radius: 0.5rem;background-color: var(--highlight_alpha);color: var(--highlight);border: 1px solid var(--highlight);}.webex-box.numbered[data-title]::before,.webex-group.numbered[data-title]::before {content: attr(data-title) " " counter(webex-ex);}</style>
-<style type="text/css">body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="true"])) ~ *,
+<style type="text/css">
+#title-block-header:has(+ p .course-banner) {
+display: none;
+}
+.course-banner {
+display: block;
+width: 100%;
+max-width: 960px;
+height: auto;
+margin: 0 auto 1.75rem;
+}
+
+body#progressive section:has(.cell.wait[data-check="true"]:not([data-complete="true"])) ~ *,
 body#progressive section:has(ul.task-list input[type="checkbox"]:not(:checked)) ~ * {
 display: none !important;
 }

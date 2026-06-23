@@ -3,6 +3,8 @@ format: live-html
 ---
 {{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
 
+![Logistic Regression with R](logistic-regression-with-r-banner-v3.svg){.course-banner}
+
 # Course Overview {.unnumbered}
 
 ## Who this course is for
